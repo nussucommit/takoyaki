@@ -7,6 +7,7 @@ ruby '2.5.0'
 # Rails version
 gem 'rails'
 # Use postgres as database
+gem 'sqlite3'
 gem 'pg', '< 1'
 # Use Puma as the app server
 gem 'puma'
