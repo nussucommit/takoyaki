@@ -26,6 +26,4 @@
 # rubocop:enable Metrics/LineLength
 
 FactoryBot.define do
-  factory :user do
-  end
 end
