@@ -1,4 +1,5 @@
-# rubocop:disable Metrics/LineLength
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: announcements

@@ -1,4 +1,5 @@
-# rubocop:disable Metrics/LineLength
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: announcements
@@ -23,9 +24,9 @@
 
 FactoryBot.define do
   factory :announcement do
-    date "2018-02-03 14:37:02"
+    date '2018-02-03 14:37:02'
     user nil
-    subject "MyText"
-    details "MyText"
+    subject 'MyText'
+    details 'MyText'
   end
 end
