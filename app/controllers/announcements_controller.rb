@@ -5,6 +5,10 @@ class AnnouncementsController < ApplicationController
   	@announcements = Announcement.all
   end
 
+  def show
+  	@announcement = Announcement.find params[:id]
+  end
+
   def new
     @announcements = Announcement.new
     @users = User.all
