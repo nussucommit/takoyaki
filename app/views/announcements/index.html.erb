@@ -13,7 +13,6 @@
               <th>Date</th>
               <th>Subject</th>
               <th>Details</th>
-              <th>Created At</th>
               <th>Updated At</th>
             </tr>
 
@@ -22,10 +21,9 @@
                 <td><%= a.date.localtime.strftime("%D, %I:%M %p") %></td>
                 <td><%= a.subject %></td>
                 <td><%= a.details %></td>
-                <td><%= a.created_at.localtime.strftime("%D, %I:%M %p") %></td>
                 <td><%= a.updated_at.localtime.strftime("%D, %I:%M %p") %></td>
-                <td><%= link_to 'Show', "#", 'data-target' => "#show_modal_#{a.id}", 'data-toggle' => 'modal'  %></td>     
-                <td><%= link_to 'Edit', "#", 'data-target' => "#edit_modal_#{a.id}", 'data-toggle' => 'modal'  %></td>
+                <td><%= link_to 'Show', "#", 'data-target' => "#show_modal_#{a.id}", 'data-toggle' => 'modal' %></td>     
+                <td><%= link_to 'Edit', "#", 'data-target' => "#edit_modal_#{a.id}", 'data-toggle' => 'modal' %></td>
                 <td><%= link_to 'Delete', a, method: :delete, data: { confirm: 'Are you sure?' } %></td>
               </tr>
             <% end %>
@@ -47,7 +45,7 @@
         <div class="modal-content">
 
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Show</h5>
+            <h5 class="modal-title">Show</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -73,7 +71,7 @@
       <div class="modal-content">
 
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">New</h5>
+          <h5 class="modal-title">New</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -99,7 +97,7 @@
         <div class="modal-content">
 
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Edit</h5>
+            <h5 class="modal-title">Edit</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
