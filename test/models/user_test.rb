@@ -1,4 +1,3 @@
-# frozen_string_literal: true
 # == Schema Information
 #
 # Table name: users
@@ -26,8 +25,10 @@
 #  index_users_on_reset_password_token  (reset_password_token) UNIQUE
 #
 
-require 'rails_helper'
+require 'test_helper'
 
-RSpec.describe User, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+class UserTest < ActiveSupport::TestCase
+  # test "the truth" do
+  #   assert true
+  # end
 end
