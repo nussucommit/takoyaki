@@ -5,12 +5,29 @@ class AnnouncementsController < ApplicationController
   	@announcements = Announcement.all
   end
 
+  # show
   def show
   	@announcement = Announcement.find params[:id]
   end
 
+  # new
   def new
     @announcements = Announcement.new
-    @users = User.all
   end
+
+  def create
+    announcement = Announcement.new announcement_new_params
+    announcement.date = DateTime.now
+
+    if announcement.save
+      redirect_to announcements_path
+    else
+      redirect_to new_announcements_path
+    end
+  end
+
+  private
+    def announcement_new_params
+      params.require(:announcement).permit(:subject, :details)
+    end
 end
