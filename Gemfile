@@ -37,6 +37,8 @@ gem 'autoprefixer-rails'
 group :development do
   # Favicon set
   gem 'rails_real_favicon', '>= 0.0.7'
+  # Generate Entity-Relationship Diagram
+  gem 'rails-erd', require: false
 end
 
 ### END ASSETS
@@ -76,6 +78,8 @@ group :development, :test do
   gem 'rspec-rails'
   # Factory bot: factories for testing
   gem 'factory_bot_rails'
+  # Shoulda Matchers: matchers for testing -- experimental gem for Rails 5
+  gem 'shoulda-matchers', git: 'https://github.com/thoughtbot/shoulda-matchers.git', branch: 'rails-5'
 end
 
 ### END UTILITIES
