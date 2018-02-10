@@ -1,5 +1,9 @@
-<%= announcement.label :subject %>
-<%= announcement.text_field :subject %><br>
-<%= announcement.label :details %>
-<%= announcement.text_field :details %><br>
-<%= announcement.submit "Create" %>
+<%= form_for announcement do |a| %>
+
+  <%= a.label :subject %>
+  <%= a.text_field :subject %><br>
+  <%= a.label :details %>
+  <%= a.text_field :details %><br>
+  <%= a.submit "Create" %>
+
+<% end %>
