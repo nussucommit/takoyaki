@@ -31,5 +31,5 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
   has_many :duties
-  has_many :timeslots, foreign_key: :default_user_id, inverse_of: :timeslot
+  has_many :timeslots, foreign_key: :default_user_id, inverse_of: :user
 end
