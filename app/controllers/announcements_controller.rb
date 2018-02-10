@@ -11,9 +11,6 @@ class AnnouncementsController < ApplicationController
   end
 
   # new
-  def new
-    @announcements = Announcement.new
-  end
 
   def create
     announcement = Announcement.new announcement_new_params
@@ -21,8 +18,6 @@ class AnnouncementsController < ApplicationController
 
     if announcement.save
       redirect_to announcements_path
-    else
-      redirect_to new_announcements_path
     end
   end
 
