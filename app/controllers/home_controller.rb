@@ -4,6 +4,9 @@ class HomeController < ApplicationController
 
 		if user_signed_in?
 			@uu=current_user
+			if @uu.email=="jiang@u.nus.edu"
+				@uu.add_role :admin
+			end
 			#redirect_to new_user_session_path
 		else
 			redirect_to new_user_session_path

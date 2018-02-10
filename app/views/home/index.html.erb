@@ -2,5 +2,8 @@
 <% if user_signed_in? %>
 <%= @uu.email%>
 <% end %>
+<% if can? :create, User%>
+   Can create new user!
+<% end %>
 <%= link_to 'Change password', edit_user_registration_path %>
 <%= link_to 'Logout', destroy_user_session_path, method: :delete %>
