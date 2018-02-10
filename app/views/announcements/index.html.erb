@@ -26,6 +26,7 @@
                 <td><%= a.updated_at %></td>
                 <td><%= link_to 'Show', "#", 'data-target' => "#show_modal_#{a.id}", 'data-toggle' => 'modal'  %></td>     
                 <td><%= link_to 'Edit', "#", 'data-target' => "#edit_modal_#{a.id}", 'data-toggle' => 'modal'  %></td>
+                <td><%= link_to 'Delete', a, method: :delete, data: { confirm: 'Are you sure?' } %></td>
               </tr>
             <% end %>
           </table>
