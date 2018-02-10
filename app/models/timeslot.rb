@@ -30,4 +30,6 @@
 class Timeslot < ApplicationRecord
   has_many :duties
   belongs_to :user, foreign_key: :default_user_id, inverse_of: :user
+  belongs_to :place
+  belongs_to :time_range
 end

@@ -12,5 +12,4 @@
 # rubocop:enable Metrics/LineLength
 
 class Place < ApplicationRecord
-  belongs_to :timeslot
 end

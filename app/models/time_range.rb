@@ -13,5 +13,4 @@
 # rubocop:enable Metrics/LineLength
 
 class TimeRange < ApplicationRecord
-  belongs_to :timeslot
 end
