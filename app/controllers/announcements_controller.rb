@@ -11,7 +11,6 @@ class AnnouncementsController < ApplicationController
   end
 
   # new
-
   def create
     announcement = Announcement.new announcement_new_params
     announcement.date = DateTime.now
@@ -21,8 +20,21 @@ class AnnouncementsController < ApplicationController
     end
   end
 
+  # edit
+  def update
+    announcement = Announcement.find params[:id]
+    
+    if announcement.update announcement_edit_params
+      redirect_to announcements_path
+    end
+  end
+
   private
     def announcement_new_params
+      params.require(:announcement).permit(:subject, :details)
+    end
+
+    def announcement_edit_params
       params.require(:announcement).permit(:subject, :details)
     end
 end
