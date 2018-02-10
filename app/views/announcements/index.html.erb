@@ -1,30 +1,92 @@
-
+<header>
+  HEADER
+</header>
 
 <body>
+  <div class="contianer">
+    <div class="row">
+      <div class="col-md-3">
+        <h1>Announcements</h1>
 
-	<div class="contianer">
-		<div class="row">
-			<div class="col-md-3">
-				<h1>Announcements</h1>
-				<div class="form-group">
+          <table>
+            <tr>
+              <th>Date</th>
+              <th>Subject</th>
+              <th>Details</th>
+              <th>Created At</th>
+              <th>Updated At</th>
+            </tr>
 
+            <% @announcements.each do |a| %>
+              <tr>
+                <td><%= a.date %></td>
+                <td><%= a.subject %></td>
+                <td><%= a.details %></td>
+                <td><%= a.created_at %></td>
+                <td><%= a.updated_at %></td>
+                <td><%= link_to 'Show', "#", 'data-target' => "#show_modal_#{a.id}", 'data-toggle' => 'modal'  %></td>     
+                <td><%= link_to 'Edit', "#", 'data-target' => "#edit_modal_#{a.id}", 'data-toggle' => 'modal'  %></td>
+              </tr>
+            <% end %>
+          </table>
 
+        <p><%= link_to 'Submit New Announcement', "#", 'data-target' => "#new_modal", 'data-toggle' => 'modal'  %></p>
 
+      </div>
+      <div class="col-md-8 offset-md-1">
+          <h1>Schedule</h1>
+      </div>
+    </div>
+  </div>
 
+  <!-- Show Modal -->
+  <% @announcements.each do |announcement| %>
+    <div class="modal fade" id="show_modal_<%= announcement.id %>" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Show</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            
+                <%= render 'show', announcement: announcement %>
+            
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
 
+  <!-- New Modal -->
+  <div class="modal fade" id="new_modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+  <%= @announcements = Announcement.new %>
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">New</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          
+          <%= form_for @announcements do |announcement| %>
+              <%= render 'new', announcement: announcement %>
+          <% end %>
 
-					  <label for="comment">Message</label>
-					    <textarea class="form-control" rows="5" id="comment"></textarea>
-				</div>
-	
-			</div>
-			<div class="col-md-8 offset-md-1">
-				<h1>Schedule</h1>
-			</div>
-		
-		
-		</div>
-	</div>
-			
-
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Submit</button>
+        </div>
+      </div>
+    </div>
+  </div>
+        
 </body>
