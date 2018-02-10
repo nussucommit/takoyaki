@@ -43,7 +43,7 @@ Date::DAYNAMES.each do |day|
       mc = (open == '0830' || close == '2100')
     end
 
-    Timeslot.create(mc_only: mc, day: day, default_user_id: User.take,
+    Timeslot.create(mc_only: mc, day: day, default_user: User.take,
                     time_range: tr, place: Place.find_by(name: 'YIH'))
   end
 end
@@ -59,7 +59,7 @@ Date::DAYNAMES.each do |day|
     next if (day == 'Saturday') && (open < '0800' || close > '1700')
     next if open < '0800' || close > '2100'
 
-    Timeslot.create(mc_only: mc, day: day, default_user_id: User.take,
+    Timeslot.create(mc_only: mc, day: day, default_user: User.take,
                     time_range: tr, place: Place.find_by(name: 'AS8'))
   end
 end
