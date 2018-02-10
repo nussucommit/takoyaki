@@ -2,48 +2,43 @@
 
 class AnnouncementsController < ApplicationController
   def index
-  	@announcements = Announcement.all
+    @announcements = Announcement.all
   end
 
   # show
   def show
-  	@announcement = Announcement.find params[:id]
+    @announcement = Announcement.find params[:id]
   end
 
   # new
   def create
     announcement = Announcement.new announcement_new_params
-    announcement.date = DateTime.now
+    announcement.date = DateTime.now.getlocal
 
-    if announcement.save
-      redirect_to announcements_path
-    end
+    redirect_to announcements_path if announcement.save
   end
 
   # edit
   def update
     announcement = Announcement.find params[:id]
-    
-    if announcement.update announcement_edit_params
-      redirect_to announcements_path
-    end
+
+    redirect_to announcements_path if announcement.update announcement_edit_params
   end
 
   # delete
   def destroy
     announcement = Announcement.find params[:id]
 
-    if announcement.destroy
-      redirect_to announcements_path
-    end
+    redirect_to announcements_path if announcement.destroy
   end
 
   private
-    def announcement_new_params
-      params.require(:announcement).permit(:subject, :details)
-    end
 
-    def announcement_edit_params
-      params.require(:announcement).permit(:subject, :details)
-    end
+  def announcement_new_params
+    params.require(:announcement).permit(:subject, :details)
+  end
+
+  def announcement_edit_params
+    params.require(:announcement).permit(:subject, :details)
+  end
 end
