@@ -29,6 +29,15 @@ class AnnouncementsController < ApplicationController
     end
   end
 
+  # delete
+  def destroy
+    announcement = Announcement.find params[:id]
+
+    if announcement.destroy
+      redirect_to announcements_path
+    end
+  end
+
   private
     def announcement_new_params
       params.require(:announcement).permit(:subject, :details)
