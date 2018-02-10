@@ -1,0 +1,9 @@
+<h1>Edit Announcement <%= announcement.id %></h1>
+
+<%= form_for announcement do |a| %>
+  <%= a.label :subject %>
+  <%= a.text_field :subject %><br>
+  <%= a.label :details %>
+  <%= a.text_field :details %><br>
+  <%= a.submit "Edit" %>
+<% end %>
