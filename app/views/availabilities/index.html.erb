@@ -1,3 +1,30 @@
 <h1>Schedule Availability</h1>
 
 <%= link_to 'Logout', destroy_user_session_path, method: :delete %>
+
+<%= form_tag("/availabilities", method: "post") do %>
+
+  <table border="1">
+  <tr>
+    <th></th>
+    <% @availabilities[0].each do |availability| %>
+      <% time_range = TimeRange.find(availability.time_range_id) %>
+      <th> <%= time_range.start_time.strftime("%H:%M") %> - <%= time_range.end_time.strftime("%H:%M") %> </th>
+    <% end %>
+  </tr>
+  <% @availabilities.each do |availability_day| %>
+    <tr>
+      <td><%= availability_day[0].day %></td>
+      <% availability_day.each do |availability| %>
+        <td align="center">
+          <%= check_box_tag 'availability_ids[]', availability.id, availability.status == 1 -%>
+        </td>
+      <% end %>
+    </tr>
+  <% end %>
+  </table>
+
+
+  <%= submit_tag("Update") %>
+
+<% end %>
