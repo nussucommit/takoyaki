@@ -1,4 +1,8 @@
 class UsersController < ApplicationController
+	before_action :allow_without_password, only: [:update]
+
+  
+
 	def role_adder(role)
   	  if params[role] == "1"
     	@user.add_role(role)
@@ -15,11 +19,10 @@ class UsersController < ApplicationController
 		@user=User.find params[:id]
 		@roles = [:admin, :manager, :member]
 		
-		
 	end
 	def update
 		@user=User.find params[:id]
-		@roles = [:admin, :manager, :member]
+
 		@roles.each { |r| role_adder(r) }
 
 		if @user.update(user_params)
@@ -41,4 +44,11 @@ class UsersController < ApplicationController
 		params.require(:user)
 		params.require(:roles)
 	end
+	private
+    def allow_without_password
+      if params[:user][:password].blank? && params[:user][:password_confirmation].blank?
+          params[:user].delete(:password)
+          params[:user].delete(:password_confirmation)
+      end
+    end
 end
