@@ -77,6 +77,8 @@ group :development, :test do
   gem 'rspec-rails'
   # Factory bot: factories for testing
   gem 'factory_bot_rails'
+  # Shoulda matchers
+  gem 'shoulda-matchers', git: 'https://github.com/thoughtbot/shoulda-matchers.git', branch: 'rails-5'
 end
 
 ### END UTILITIES
