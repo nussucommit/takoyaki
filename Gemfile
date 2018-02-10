@@ -37,6 +37,7 @@ gem 'autoprefixer-rails'
 group :development do
   # Favicon set
   gem 'rails_real_favicon', '>= 0.0.7'
+  gem 'rails-erd', require: false
 end
 
 ### END ASSETS

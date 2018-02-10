@@ -5,3 +5,6 @@ NUSSU commIT Duty Website, iteration 4
 
 ## Schema Diagram
 ![Schema diagram](schema.jpg)
+
+To generate the current Entity-Relationship Diagrams, install `graphviz` (`sudo apt install graphfiz` or `brew install graphfiz`),
+then run `bundle exec erd`
