@@ -1,0 +1,24 @@
+<div class="container-fluid">
+
+  <div class="col-md-12">
+    <div class="schedule-container scrollable">
+      <div class="schedule-timings">
+        <% @first.to_i.step(@last.to_i, 3600) do |t| %>
+          <span class="schedule-time"><%= Time.at(t).localtime.strftime('%H%M') %></span>
+        <% end %>
+      </div>
+      <ol class="schedule-days list-unstyled">
+        <% (1..7).each do |i| %>
+          <li class="schedule-day">
+            <span class="schedule-day-name">
+              <%= Date::ABBR_DAYNAMES[i % 7] %>
+            </span>
+            <div class="schedule-row">
+
+            </div>
+            </li>
+        <% end %>
+      </ol>
+    </div>
+  </div>
+</div>

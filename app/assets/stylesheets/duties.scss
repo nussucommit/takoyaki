@@ -1,0 +1,50 @@
+// Place all the styles related to the duties controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.scrollable {
+  overflow: auto;
+}
+
+.schedule-container {
+  min-width: 57.6rem;
+}
+
+.schedule-timings {
+  margin-left: 4rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.schedule-time {
+  transform: translateX(-50%);
+}
+
+.schedule-days {
+  margin: 0;
+  border: 1px solid gray;
+  border-left-width: 0;
+  border-radius: 0.25rem;
+}
+
+.schedule-day {
+  position: relative;
+  display: flex;
+  flex: 1 0 auto;
+  min-height: 3.6rem;
+  border-bottom: 1px solid gray;
+}
+
+.schedule-day-name {
+  padding: 1rem;
+  display: flex;
+  flex: 0 0 3.5rem;
+  border-width: 0 1px;
+  justify-content: center;
+  text-transform: uppercase;
+}
+
+.schedule-row {
+  background: linear-gradient(to right, gray 50%, transparent 50%);
+  background-size: 15.3846% 15.3846%;
+}
