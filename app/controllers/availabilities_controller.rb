@@ -1,67 +1,46 @@
 class AvailabilitiesController < ApplicationController
   before_action :authenticate_user!
   def index
-    if user_signed_in?
-
-    else
-      redirect_to new_user_session_path
-    end
-    @availabilities = []
-    time_ranges = TimeRange.all
-    for day in 0..6 do
-      cur = []
-      for time_range in time_ranges do
-        tmp = Availability.where(user_id: current_user.id, time_range_id: time_range.id, day: day)[0]
-        if tmp.nil?
-          tmp = create_new_availability(time_range.id, day)
-        end
-        cur.push(tmp)
-      end
-      @availabilities.push(cur)
-    end
-  end
-
-  def create_new_availability(time_range_id, day)
-    tmp = Availability.new
-    tmp.user_id = current_user.id
-    tmp.day = day
-    tmp.time_range_id = time_range_id
-    tmp.status = 0
-    tmp.save
-    tmp
+    @availabilities = load_availabilities()
   end
 
   def create
-
-    @availabilities = []
-    time_ranges = TimeRange.all
-    for day in 0..6 do
-      cur = []
-      for time_range in time_ranges do
-        tmp = Availability.where(user_id: current_user.id, time_range_id: time_range.id, day: day)[0]
-        if tmp.nil?
-          tmp = create_new_availability(time_range.id, day)
-        end
-        cur.push(tmp)
-      end
-      @availabilities.push(cur)
-    end
-
-    for i in @availabilities do
-      for j in i do
-        if params[:availability_ids].include? j.id.to_s
-          set(j, 1)
-        else
-          set(j, 0)
-        end
-      end
+    Availability.where(user_id: current_user.id).each do |availability|
+      set(availability, params[:availability_ids].include?(availability.id.to_s))
     end
   end
 
-  def set(x, y)
-    x.status = y
-    x.save
+private
+
+  def set(availability, status)
+    availability.status = status ? 1 : 0
+    availability.save
   end
 
+  def load_availabilities
+    availabilities = []
+    7.times { |day| availabilities.push(get_availabilities_day(day)) }
+    availabilities
+  end
 
+  def get_availabilities_day(day)
+    availabilities = []
+    TimeRange.all.each do |time_range|
+      availabilities.push(get_availability(day, time_range.id))
+    end
+    availabilities
+  end
+
+  def get_availability(day, time_range_id)
+    availability = Availability.where(user_id: current_user.id, day: day,
+        time_range_id: time_range_id)[0]
+    if availability.nil?
+      availability = create_new_availability(day, time_range_id)
+    availability
+  end
+
+  def create_new_availability(day, time_range_id)
+    Availability.create(user_id: current_user.id, day: day,
+        time_range_id: time_range_id)
+  end
 end
