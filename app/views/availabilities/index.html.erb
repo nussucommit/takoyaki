@@ -7,8 +7,7 @@
   <table border="1">
   <tr>
     <th></th>
-    <% @availabilities[0].each do |availability| %>
-      <% time_range = TimeRange.find(availability.time_range_id) %>
+    <% @time_ranges.each do |time_range| %>
       <th> <%= time_range.start_time.strftime("%H:%M") %> - <%= time_range.end_time.strftime("%H:%M") %> </th>
     <% end %>
   </tr>
@@ -17,7 +16,7 @@
       <td><%= availability_day[0].day %></td>
       <% availability_day.each do |availability| %>
         <td align="center">
-          <%= check_box_tag 'availability_ids[]', availability.id, availability.status == 1 -%>
+          <%= check_box_tag 'availability_ids[]', availability.id, Availability.statuses[availability.status] == 1 -%>
         </td>
       <% end %>
     </tr>

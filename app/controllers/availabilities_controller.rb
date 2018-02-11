@@ -3,6 +3,7 @@
 class AvailabilitiesController < ApplicationController
   before_action :authenticate_user!
   def index
+    @time_ranges = TimeRange.all
     @availabilities = load_availabilities
   end
 
@@ -26,7 +27,8 @@ class AvailabilitiesController < ApplicationController
 
   def get_availabilities_day(day)
     availabilities = []
-    TimeRange.all.each do |time_range|
+
+    @time_ranges.each do |time_range|
       availabilities.push(get_availability(day, time_range.id))
     end
     availabilities
