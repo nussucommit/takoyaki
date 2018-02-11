@@ -7,6 +7,6 @@ NUSSU commIT Duty Website, iteration 4
 ![ERD](schema.png)
 
 ### Generate ERD
-To generate the current Entity-Relationship Diagram, install `graphviz` (`sudo apt install graphfiz` or `brew install graphfiz`),
+To generate the current Entity-Relationship Diagram, install `graphviz` (`sudo apt install graphviz` or `brew install graphviz`),
 then run `rake generate_erd`. This is also run as a post-migration hook
 
