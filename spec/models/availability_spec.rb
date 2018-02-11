@@ -28,4 +28,40 @@ require 'rails_helper'
 RSpec.describe Availability, type: :model do
   it { should belong_to(:user) }
   it { should belong_to(:time_range) }
+  it 'saves given a valid Availability' do
+    TimeRange.create(start_time: Time.now, end_time: Time.now)
+    User.create(email: "a@test.com", password: "abcdef")
+    availability = Availability.new(user_id: User.take.id, time_range_id: TimeRange.take.id, status: 1, day: 6)
+    expect(availability.save).to be true
+    availability = Availability.new(user_id: User.take.id, time_range_id: TimeRange.take.id, status: "Available", day: "Monday")
+    expect(availability.save).to be true
+  end
+  it 'raises ArgumentError if day is out of range' do
+    TimeRange.create(start_time: Time.now, end_time: Time.now)
+    User.create(email: "a@test.com", password: "abcdef")
+    expect { Availability.new(user_id: User.take.id, time_range_id: TimeRange.take.id, status: 1, day: 7) }.to raise_error(ArgumentError)
+    expect { Availability.new(user_id: User.take.id, time_range_id: TimeRange.take.id, status: 1, day: -1) }.to raise_error(ArgumentError)
+    expect { Availability.new(user_id: User.take.id, time_range_id: TimeRange.take.id, status: 1, day: 0.5) }.to raise_error(ArgumentError)
+    expect { Availability.new(user_id: User.take.id, time_range_id: TimeRange.take.id, status: 1, day: "takoyaki") }.to raise_error(ArgumentError)
+  end
+  it 'raises ArgumentError if status is out of range' do
+    TimeRange.create(start_time: Time.now, end_time: Time.now)
+    User.create(email: "a@test.com", password: "abcdef")
+    expect { Availability.new(user_id: User.take.id, time_range_id: TimeRange.take.id, status: -1, day: 6) }.to raise_error(ArgumentError)
+    expect { Availability.new(user_id: User.take.id, time_range_id: TimeRange.take.id, status: 2, day: 6) }.to raise_error(ArgumentError)
+  end
+  it 'does not save if User does not exist' do
+    TimeRange.create(start_time: Time.now, end_time: Time.now)
+    availability = Availability.new(user_id: 1, time_range_id: TimeRange.take.id, status: 1, day: 6)
+    expect(availability.save).to be false
+    availability = Availability.new(user_id: nil, time_range_id: TimeRange.take.id, status: 1, day: 6)
+    expect(availability.save).to be false
+  end
+  it 'does not save if TimeRange does not exist' do
+    User.create(email: "a@test.com", password: "abcdef")
+    availability = Availability.new(user_id: User.take.id, time_range_id: 1, status: 1, day: 6)
+    expect(availability.save).to be false
+    availability = Availability.new(user_id: User.take.id, time_range_id: nil, status: 1, day: 6)
+    expect(availability.save).to be false
+  end
 end
