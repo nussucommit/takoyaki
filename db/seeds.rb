@@ -14,15 +14,14 @@
 Place.create(name: 'YIH')
 Place.create(name: 'AS8')
 
+Time.zone = 'Singapore'
+
 ('08:00'.to_time.to_i..'09:30'.to_time.to_i).step(30.minutes).each do |time|
   start = Time.zone.at(time)
-  puts start
   TimeRange.create(start_time: start, end_time: start + 30.minutes)
 end
-puts "Second Part: "
 ('10:00'.to_time.to_i..'20:00'.to_time.to_i).step(1.hour.to_i).each do |time|
   start = Time.zone.at(time)
-  puts start
   TimeRange.create(start_time: start, end_time: start + 1.hour)
 end
 
@@ -30,25 +29,20 @@ User.create(email: 'test@example.com', password: '123456')
 
 # Timeslots in YIH
 Date::DAYNAMES.each do |day|
-  puts day
   TimeRange.all.each do |tr|
     mc = nil
     open = tr.start_time.in_time_zone.strftime('%H%M')
     close = tr.end_time.in_time_zone.strftime('%H%M')
-    puts open
-    puts close 
+
     if day == 'Sunday'
-      next if open < '0130' || close > '0700'
-      mc = (open == '0130' || close == '0700')
-      puts mc
+      next if open < '0930' || close > '1500'
+      mc = (open == '0930' || close == '1500')
     elsif day == 'Saturday'
-      next if open < '0030' || close > '0900'
-      mc = (open == '0030' || close == '0900')
-      puts mc
+      next if open < '0830' || close > '1700'
+      mc = (open == '0830' || close == '1700')
     else
-      next if open < '0030' || close > '1300'
-      mc = (open == '0030' || close == '1300')
-      puts mc
+      next if open < '0830' || close > '2100'
+      mc = (open == '0830' || close == '2100')
     end
 
     Timeslot.create(mc_only: mc, day: day, default_user: User.take,
@@ -64,8 +58,8 @@ Date::DAYNAMES.each do |day|
     close = tr.end_time.in_time_zone.strftime('%H%M')
 
     next if day == 'Sunday'
-    next if (day == 'Saturday') && (open < '0800' || close > '0900')
-    next if open < '0000' || close > '1200'
+    next if (day == 'Saturday') && (open < '0800' || close > '1700')
+    next if open < '0800' || close > '2100'
 
     Timeslot.create(mc_only: mc, day: day, default_user: User.take,
                     time_range: tr, place: Place.find_by(name: 'AS8'))
