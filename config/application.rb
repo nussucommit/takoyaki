@@ -22,4 +22,3 @@ module Takoyaki
     config.time_zone = 'Singapore'
   end
 end
-
