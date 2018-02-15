@@ -2,23 +2,27 @@
 
   <div class="col-md-12">
     <div class="schedule-container scrollable">
-      <div class="schedule-timings">
-        <% @first.to_i.step(@last.to_i, 3600) do |t| %>
-          <span class="schedule-time"><%= Time.at(t).localtime.strftime('%H%M') %></span>
-        <% end %>
-      </div>
-      <ol class="schedule-days list-unstyled">
+      <table>
+        <tr>
+          <th> Days </th>
+          <% TimeRange.all.each do |tr| %>
+            <th> <%= tr.start_time.strftime('%H%M') %> - <%= tr.end_time.strftime('%H%M') %> </th>
+          <% end %>
+        </tr>
         <% (1..7).each do |i| %>
-          <li class="schedule-day">
-            <span class="schedule-day-name">
-              <%= Date::ABBR_DAYNAMES[i % 7] %>
-            </span>
-            <div class="schedule-row">
-
-            </div>
-            </li>
+          <tr>
+            <% day = Date::DAYNAMES[i % 7] %>
+            <td> <%= day %> </td>
+            <% Timeslot.where(day: day).each do |ts| %>
+              <td> <%= User.find_by(id: ts.default_user_id).email %> </td>
+            <% end %>
+          </tr>
         <% end %>
-      </ol>
+      </table>
+        <%= form_tag generate_path method: "post" %>
+           <%= label_tag(:num_weeks, "Generate for how many weeks ?") %>
+           <%= text_field_tag(:num_weeks) %>
+           <%= submit_tag("Generate") %>
     </div>
   </div>
 </div>

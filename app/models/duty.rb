@@ -26,4 +26,5 @@
 class Duty < ApplicationRecord
   belongs_to :user
   belongs_to :timeslot
+  #validates_uniqueness_of :date, scope = [:timeslot_id, :user_id]
 end
