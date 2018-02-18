@@ -10,13 +10,13 @@ class DutiesController < ApplicationController
   end
 
   def generate
-    start_date = Date.today.beginning_of_week
+    start_date = Time.zone.today.beginning_of_week
     end_date = start_date + (7 * params[:num_weeks].to_i).day 
     (start_date..end_date).each do |date| 
       day = Date::DAYNAMES[date.wday]
       Timeslot.where(day: day).each do |ts|
         default_user = User.find_by(id: ts.default_user_id)
-        Duty.create(user: default_user, timeslot: ts, date: date) if !Duty.find_by(user:default_user, timeslot: ts, date: date)
+        Duty.create(user: default_user, timeslot: ts, date: date) unless Duty.find_by(user:default_user, timeslot: ts, date: date)
       end
     end
     redirect_to duties_path
