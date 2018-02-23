@@ -1,5 +1,4 @@
 <div class="modal fade" id="new_modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true" data-backdrop="static">
-    <%= new_announcement = Announcement.new %>
     <div class="modal-dialog" role="document">
       <div class="modal-content">
 
@@ -12,12 +11,12 @@
 
         <div class="modal-body">
 
-          <%= form_for new_announcement do |a| %>
+          <%= form_for @new_announcements do |a| %>
 
             <%= a.label :subject, class: 'font-group' %>
             <%= a.text_field :subject, class: 'font-group form-control' %><br>
             <%= a.label :details, class: 'font-group' %>
-            <%= a.text_area :details, class: 'font-group form-control' %><br>
+            <%= a.text_area :details, rows: 10, class: 'font-group form-control' %><br>
 
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
