@@ -1,0 +1,260 @@
+@import 'bootstrap';
+
+html, body {
+  top: 0;
+  margin: 0;
+  padding: 0;
+  background-color: white;
+  height: 100%;
+  width: 100%;
+  font-family: Verdana, sans-serif;
+}
+
+body {
+  position: absolute;
+  background: url(commit.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+p.alert {
+  color: white;
+  font-weight: bold;
+  text-shadow: 0px 0px 10px #000;
+}
+
+div.container {
+  transform: translate(-50%,-50%);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
+
+div.field {
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+input#user_email, input#user_password {
+  background-color: rgba(0, 0, 0, 0);
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-bottom: 2px solid #feb600;// #484848;
+  box-shadow: 0 8px 10px -7px Grey;
+  color: black;
+  font-size: 16px;
+  height: 40px;
+  width: 100%; // 250px;
+  padding-left: 5%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+input:focus {
+  outline: none;
+}
+
+input#user_remember_me {
+  vertical-align: middle;
+  margin-top: 0;
+}
+
+::placeholder {
+  color: DarkGrey;
+}
+
+label {
+  vertical-align: middle;
+  color: DimGrey;
+  font-size: 14px;
+  font-family: sans-serif;
+  margin-bottom: 0;
+  font-weight: normal;
+}
+
+div.actions {
+  margin-top: 40px;
+}
+
+.actions input {
+  background-color: #feb600;
+  border: 2px solid #feb600;
+  border-radius: 50px; // 50px;
+  height: 46px;
+  width: 200px; //279.27px;
+  color: black;
+  font-weight: bold;
+  font-size: 14px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  box-shadow: 0px 2px 8px rgba(0,0,0,0.5),
+              inset 1px 1px 3px -1px #ffd700;
+  text-shadow: 0px -1px 0px rgba(0,0,0,1),
+               0px 1px 0px rgba(255,255,255,0.2);
+}
+
+.actions input:hover {
+  background-color: rgba(255,255,255,0);
+  color: black; //#FFCC00;
+  box-shadow: inset 0 2px 4px white;
+}
+
+.box {
+  padding-left: 3%;
+  padding-right: 3%;
+}
+
+.account-wall {
+  height: 100%;
+  background-color: rgba(255,255,255,0.9);
+  padding-top: 10%;
+  padding-bottom: 10%;
+  box-shadow: 0 0 30px Grey;
+  text-align: center;
+}
+
+form#new_user.new_user {
+  padding-left: 15%;
+  padding-right: 15%;
+  text-align: left;
+  margin-bottom: 10px;
+}
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  color: #feb600;
+  height: 30px;
+  margin: 0 auto;
+  background-color: rgba(0,0,0,0.7);
+}
+
+.footer div.container {
+  height: 100%;
+}
+
+.footer p {
+  font-size: 10px;
+  line-height: 30px;
+  margin-bottom: 0;
+}
+
+a {
+  font-family: sans-serif;
+  font-size: 12px;
+  text-decoration: none;
+  color: DimGrey;
+}
+
+a:hover {
+  text-decoration: underline;
+  color: #feb600;
+}
+
+// password
+.password h3 {
+  text-align: left;
+  margin-top: 0;
+}
+
+.password p {
+  text-align: left;
+  font-size: 11px;
+  color: Grey;
+  margin-bottom: 20px;
+}
+
+.password div.account-wall {
+  padding-left: 15%;
+  padding-right: 15%;
+  padding-top: 10%;
+  padding-bottom: 8%;
+}
+
+.password form#new_user.new_user {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.password .actions input {
+  margin-top: 25px;
+  text-shadow: 0px -0.3px 0px rgba(0,0,0,1),
+               0px 0.5px 0px rgba(255,255,255,0.2);
+
+}
+
+h2 {
+  font-size: 12px;
+  color: red;
+}
+
+ul {
+  padding-left: 0;
+  list-style-type: none;
+  font-size: 12px;
+  color: red;
+}
+
+@media (max-width: 1200px) {
+
+div.container, .row, .box {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+.account-wall {
+  width: 100%;
+  top: 50%;
+  padding-top: 20%;
+  padding-bottom: 20%;
+}
+
+input#user_email, input#user_password {
+  font-size: 40px;
+  height: 50px;
+  margin-top: 20%;
+  margin-bottom: 5%;
+}
+
+label {
+  font-size: 30px;
+  margin-left: 10px;
+}
+
+input#user_remember_me {
+  height: 30px;
+  width: 30px;
+}
+
+.actions input {
+  margin-top: 80px;
+  height: 80px;
+  width: 400px;
+  font-size: 30px;
+}
+
+a {
+  font-size: 25px;
+}
+
+.password h3 {
+  font-size: 50px;
+}
+
+.password p {
+  font-size: 25px;
+}
+
+.password div.actions {
+  margin-top: 120px;
+  margin-bottom: 70px;
+}
+}
