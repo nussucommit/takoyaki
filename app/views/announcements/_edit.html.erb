@@ -1,9 +1,33 @@
-<h1>Edit Announcement <%= announcement.id %></h1>
+<% @announcements.each do |announcement| %>
+  <div class="modal fade" id="edit_modal_<%= announcement.id %>" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
 
-<%= form_for announcement do |a| %>
-  <%= a.label :subject %>
-  <%= a.text_field :subject %><br>
-  <%= a.label :details %>
-  <%= a.text_field :details %><br>
-  <%= a.submit "Edit", class: 'btn btn-primary' %>
+        <div class="modal-header">
+          <h5 class="modal-title title">Edit</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+
+        <div class="modal-body">
+		      <%= form_for announcement do |a| %>
+            <%= a.label :subject, class: 'font-group' %>
+            <%= a.text_field :subject, class: 'font-group form-control' %><br>
+            <%= a.label :details, class: 'font-group' %>
+            <%= a.text_area :details, class: 'font-group form-control' %><br>
+
+        </div>
+
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <%= a.submit "Edit", class: 'btn btn-primary' %>
+
+          <% end %>
+          
+        </div>
+      </div>
+    </div>
+  </div>
 <% end %>
+
