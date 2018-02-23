@@ -12,9 +12,13 @@
             <div class="post">
               <div class="title"><%= a.subject %></div>
               <div class="date">Posted on <%= a.created_at.localtime.strftime("%d %B %C%y, %I:%M %p") %></div>
-              <div class="content"><%= a.details %></div>
+              <div class="content">
+                <%= truncate(a.details, length: 90) %>
+                <% if a.details.mb_chars.length > 90 %>
+                  <%= link_to ' Read more', "#", 'data-target' => "#show_modal_#{a.id}", 'data-toggle' => 'modal' %>
+                <% end %>    
+              </div>
               <div class="buttons">
-                <%= link_to 'Show', "#", 'data-target' => "#show_modal_#{a.id}", 'data-toggle' => 'modal' %>     
                 <%= link_to 'Edit', "#", 'data-target' => "#edit_modal_#{a.id}", 'data-toggle' => 'modal' %>
                 <%= link_to 'Delete', a, method: :delete, data: { confirm: 'Are you sure?' } %>
               </div>
