@@ -12,3 +12,34 @@
  */
 
 @import 'bootstrap';
+
+h1 {
+	font-size: 2em;
+}
+
+.sidebar {
+	border: 3px solid black;
+	text-align: center;
+}
+
+.post {
+	border: 1px solid black;
+	margin-bottom: 5px;
+}
+
+.title {
+	font-size: 2em;
+	font-weight: bold;
+}
+
+.date {
+	font-size: 0.7em;
+}
+
+.content {
+	overflow-wrap: break-word;
+	padding: 5px;
+}
+
+.buttons {
+}

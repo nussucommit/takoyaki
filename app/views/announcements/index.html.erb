@@ -3,31 +3,23 @@
 </header>
 
 <body>
-  <div class="contianer">
+  <div class="container-fluid">
     <div class="row">
-      <div class="col-md-3">
+      <div class="col-md-3 sidebar">
         <h1>Announcements</h1>
 
-          <table>
-            <tr>
-              <th>Date</th>
-              <th>Subject</th>
-              <th>Details</th>
-              <th>Updated At</th>
-            </tr>
-
-            <% @announcements.each do |a| %>
-              <tr>
-                <td><%= a.date.localtime.strftime("%D, %I:%M %p") %></td>
-                <td><%= a.subject %></td>
-                <td><%= a.details %></td>
-                <td><%= a.updated_at.localtime.strftime("%D, %I:%M %p") %></td>
-                <td><%= link_to 'Show', "#", 'data-target' => "#show_modal_#{a.id}", 'data-toggle' => 'modal' %></td>     
-                <td><%= link_to 'Edit', "#", 'data-target' => "#edit_modal_#{a.id}", 'data-toggle' => 'modal' %></td>
-                <td><%= link_to 'Delete', a, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-              </tr>
-            <% end %>
-          </table>
+          <% @announcements.each do |a| %>
+            <div class="post">
+              <div class="title"><%= a.subject %></div>
+              <div class="date">Posted on <%= a.created_at.localtime.strftime("%d %B %C%y, %I:%M %p") %></div>
+              <div class="content"><%= a.details %></div>
+              <div class="buttons">
+                <%= link_to 'Show', "#", 'data-target' => "#show_modal_#{a.id}", 'data-toggle' => 'modal' %>     
+                <%= link_to 'Edit', "#", 'data-target' => "#edit_modal_#{a.id}", 'data-toggle' => 'modal' %>
+                <%= link_to 'Delete', a, method: :delete, data: { confirm: 'Are you sure?' } %>
+              </div>
+            </div>
+          <% end %>
 
         <p><%= link_to 'Submit New Announcement', "#", 'data-target' => "#new_modal", 'data-toggle' => 'modal'  %></p>
 
