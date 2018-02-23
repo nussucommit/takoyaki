@@ -3,6 +3,7 @@
 class AnnouncementsController < ApplicationController
   def index
     @announcements = Announcement.all
+    @new_announcements = Announcement.new
   end
 
   def show
