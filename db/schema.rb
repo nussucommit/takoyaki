@@ -15,6 +15,15 @@ ActiveRecord::Schema.define(version: 20180210035022) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "announcements", force: :cascade do |t|
+    t.datetime "date"
+    t.bigint   "user_id",    :index=>{:name=>"index_announcements_on_user_id"}
+    t.text     "subject"
+    t.text     "details"
+    t.datetime "created_at", :null=>false
+    t.datetime "updated_at", :null=>false
+  end
+
   create_table "duties", force: :cascade do |t|
     t.bigint   "user_id",     :index=>{:name=>"index_duties_on_user_id"}
     t.bigint   "timeslot_id", :index=>{:name=>"index_duties_on_timeslot_id"}
@@ -61,6 +70,7 @@ ActiveRecord::Schema.define(version: 20180210035022) do
     t.datetime "updated_at",             :null=>false
   end
 
+  add_foreign_key "announcements", "users"
   add_foreign_key "duties", "timeslots"
   add_foreign_key "duties", "users"
   add_foreign_key "timeslots", "places"
