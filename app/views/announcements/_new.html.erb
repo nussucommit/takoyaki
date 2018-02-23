@@ -1,9 +1,33 @@
-<%= form_for announcement do |a| %>
+<div class="modal fade" id="new_modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true" data-backdrop="static">
+    <%= new_announcement = Announcement.new %>
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
 
-  <%= a.label :subject %>
-  <%= a.text_field :subject %><br>
-  <%= a.label :details %>
-  <%= a.text_field :details %><br>
-  <%= a.submit "Create" %>
+        <div class="modal-header">
+          <h5 class="modal-title title">Submit New Announcement</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
 
-<% end %>
+        <div class="modal-body">
+
+          <%= form_for new_announcement do |a| %>
+
+            <%= a.label :subject, class: 'font-group' %>
+            <%= a.text_field :subject, class: 'font-group form-control' %><br>
+            <%= a.label :details, class: 'font-group' %>
+            <%= a.text_area :details, class: 'font-group form-control' %><br>
+
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <%= a.submit "Create", class: 'btn btn-primary' %>
+
+            <% end %>
+            
+            </div>
+
+      </div>
+    </div>
+  </div>
+
