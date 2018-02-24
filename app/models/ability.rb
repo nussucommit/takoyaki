@@ -1,14 +1,14 @@
+# frozen_string_literal: true
+
 class Ability
   include CanCan::Ability
 
   def initialize(user)
     # Define abilities for the passed in user here. For example:
     #
-    @user =user || User.new # guest user (not logged in)
-    @user.roles.each {|role| send(role.name.downcase)}
-    if @user.roles.size==0  #for guest#
-      can :read, :all
-    end
+    @user = user || User.new # guest user (not logged in)
+    @user.roles.each { |role| send(role.name.downcase) }
+    can :read, :all if @user.roles.empty? # for guest#
     #
     # The first argument to `can` is the action you are giving the user
     # permission to do.
@@ -27,9 +27,10 @@ class Ability
     #
     # See the wiki for details:
     # https://github.com/CanCanCommunity/cancancan/wiki/Defining-Abilities
-
   end
+
   def manager
+    
   end
 
   def admin

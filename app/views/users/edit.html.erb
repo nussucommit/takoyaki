@@ -7,7 +7,7 @@
 
 <fieldset>
 <legend>User Roles</legend>
-    <% @roles.each do |role| %>
+    <% Role::ROLES.each do |role| %>
       <%= f.label(role) do %>
        <%= role %>
        <%= hidden_field_tag(role, 0) %>
