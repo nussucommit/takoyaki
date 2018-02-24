@@ -23,7 +23,18 @@
   <% end %>
   </table>
 
+        
+  <%= submit_tag("Update", :id => 'update-button', :data => { disable_with: false }) %>
+  <%= submit_tag("Reset", :id => 'reset-button', :data => { disable_with: false }) %>
 
-  <%= submit_tag("Update") %>
-
+  <script>
+    $('#reset-button').click(function(e){
+      e.preventDefault();
+      $('input[type=checkbox]').each(function(id){ 
+        $(this).prop('checked', false);
+      });
+      $('#update-button').click();
+    });
+  </script>
+  
 <% end %>
