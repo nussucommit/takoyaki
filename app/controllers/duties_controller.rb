@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class DutiesController < ApplicationController
-  def index 
+  def index; end
 
   def generate_duties
     start_date = Time.zone.today.beginning_of_week

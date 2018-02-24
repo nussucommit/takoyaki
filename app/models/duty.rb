@@ -26,17 +26,16 @@
 class Duty < ApplicationRecord
   belongs_to :user
   belongs_to :timeslot
-  #validates_uniqueness_of :date, scope = [:timeslot_id, :user_id]
+  # validates_uniqueness_of :date, scope = [:timeslot_id, :user_id]
 
   def generate(start_date, end_date)
-    (start_date..end_date).each do |date| 
+    (start_date..end_date).each do |date|
       day = Date::DAYNAMES[date.wday]
-      Timeslot.where(day: day).each do |ts|
+      Timeslot.find_each(day: day) do |ts|
         default_user = User.find_by(id: ts.default_user_id)
-        Duty.find_by_or_create(user: default_user, timeslot: ts, date: date)
+        Duty.find_or_create_by(user: default_user, timeslot: ts, date: date)
       end
     end
     redirect_to duties_path
   end
-
 end
