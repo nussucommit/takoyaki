@@ -4,7 +4,6 @@ Rails.application.routes.draw do
   devise_for :users
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
-  resources :duties do
-    post '/generate', to: 'duties#generate_duties'
-  end
+  post '/generate', to: 'duties#generate_duties'
+  resources :duties
 end

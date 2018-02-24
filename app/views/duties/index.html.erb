@@ -1,28 +1,29 @@
 <div class="container-fluid">
-
   <div class="col-md-12">
     <div class="schedule-container scrollable">
-      <table>
-        <tr>
-          <th> Days </th>
-          <% TimeRange.all.each do |tr| %>
-            <th> <%= tr.start_time.strftime('%H%M') %> - <%= tr.end_time.strftime('%H%M') %> </th>
-          <% end %>
-        </tr>
-        <% 7.times do |i| %>
+
+      <table class="table table-striped-columns">
+        <thead>
           <tr>
-            <% day = Date::DAYNAMES[i % 7] %>
-            <td> <%= day %> </td>
-            <% Timeslot.where(day: day).each do |ts| %>
-              <td> <%= User.find_by(id: ts.default_user_id).email %> </td>
+            <td class="schedule-timings"></td>
+            <% @first.to_i.step(@last.to_i, 3600) do |t| %>
+            <td class="schedule-timings" colspan="2">
+              <div class="schedule-time"><%= Time.at(t).localtime.strftime('%H%M') %></div>
+            </td>
             <% end %>
           </tr>
-        <% end %>
+        </thead>
+        <tbody>
+          <% (1..7).each do |i| %><!-- 7.times started from 0, would start week from Monday -->
+          <tr>
+            <td class="schedule-daynames"><%= Date::DAYNAMES[i % 7] %></td>
+            <% @first.to_i.step(@last.to_i, 1800) do |t| %>
+              <td></td>
+            <% end %>
+          </tr>
+          <% end %>
+        </tbody>
       </table>
-        <%= form_tag generate_path method: "post" %>
-           <%= label_tag(:num_weeks, "Generate for how many weeks ?") %>
-           <%= text_field_tag(:num_weeks) %>
-           <%= submit_tag("Generate") %>
     </div>
   </div>
 </div>

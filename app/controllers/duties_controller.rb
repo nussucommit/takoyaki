@@ -1,11 +1,9 @@
 # frozen_string_literal: true
 
 class DutiesController < ApplicationController
-  def index; end
-
-  def generate_duties
-    start_date = Time.zone.today.beginning_of_week
-    end_date = start_date + (7 * params[:num_weeks].to_i).day
-    Duty.generate(start_date, end_date)
+  def index
+    time_range = TimeRange.order(:start_time)
+    @first = time_range.first.start_time
+    @last = time_range.last.end_time
   end
 end

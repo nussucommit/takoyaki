@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180210035022) do
+ActiveRecord::Schema.define(version: 20180214091028) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -38,7 +38,7 @@ ActiveRecord::Schema.define(version: 20180210035022) do
 
   create_table "timeslots", force: :cascade do |t|
     t.boolean  "mc_only"
-    t.date     "day"
+    t.text     "day"
     t.bigint   "default_user_id", :index=>{:name=>"index_timeslots_on_default_user_id"}
     t.bigint   "time_range_id",   :index=>{:name=>"index_timeslots_on_time_range_id"}
     t.bigint   "place_id",        :index=>{:name=>"index_timeslots_on_place_id"}

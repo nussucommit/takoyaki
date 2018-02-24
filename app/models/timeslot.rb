@@ -1,12 +1,11 @@
 # frozen_string_literal: true
-
 # == Schema Information
 #
 # Table name: timeslots
 #
 #  id              :integer          not null, primary key
 #  mc_only         :boolean
-#  day             :date
+#  day             :text
 #  default_user_id :integer
 #  time_range_id   :integer
 #  place_id        :integer
@@ -25,7 +24,6 @@
 #  fk_rails_...  (place_id => places.id)
 #  fk_rails_...  (time_range_id => time_ranges.id)
 #
-# rubocop:enable Metrics/LineLength
 
 class Timeslot < ApplicationRecord
   has_many :duties
