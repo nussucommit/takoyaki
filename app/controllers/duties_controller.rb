@@ -2,11 +2,6 @@
 
 class DutiesController < ApplicationController
   def index
-    @duties = Duty.all
-    tr = TimeRange.all.sort_by(&:start_time)
-    @first = tr.first.start_time
-    @last = tr.last.end_time
-    @Timeslot = Timeslot.all
   end
 
   def generate
@@ -16,7 +11,7 @@ class DutiesController < ApplicationController
       day = Date::DAYNAMES[date.wday]
       Timeslot.where(day: day).each do |ts|
         default_user = User.find_by(id: ts.default_user_id)
-        Duty.create(user: default_user, timeslot: ts, date: date) unless Duty.find_by(user:default_user, timeslot: ts, date: date)
+        Duty.find_by_or_create(user: default_user, timeslot: ts, date: date)
       end
     end
     redirect_to duties_path

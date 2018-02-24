@@ -9,7 +9,7 @@
             <th> <%= tr.start_time.strftime('%H%M') %> - <%= tr.end_time.strftime('%H%M') %> </th>
           <% end %>
         </tr>
-        <% (1..7).each do |i| %>
+        <% 7.times do |i| %>
           <tr>
             <% day = Date::DAYNAMES[i % 7] %>
             <td> <%= day %> </td>
