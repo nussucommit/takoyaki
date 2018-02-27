@@ -14,8 +14,6 @@
 Place.create(name: 'YIH')
 Place.create(name: 'AS8')
 
-Time.zone = 'Singapore'
-
 ('08:00'.to_time.to_i..'09:30'.to_time.to_i).step(30.minutes).each do |time|
   start = Time.zone.at(time)
   TimeRange.create(start_time: start, end_time: start + 30.minutes)
