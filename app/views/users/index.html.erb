@@ -7,8 +7,9 @@
     <th>Matric number</th>
     <th>Contact number</th>
     <th>E-mail</th>
-    <th>Show</th>
-    <th>Edit</th>
+    <th>Edit Password</th>
+    <th>Edit Profile</th>
+    <th>Allocate Role</th>
     <th>Delete</th>
   </tr>
   <% @users.each do |p| %>
@@ -19,7 +20,7 @@
       <td><%= p.contact_num %></td>
 
       <td><%= p.email %></td>
-
+      <td><%= link_to 'Edit Password', new_user_password_path(p) %></td>
       <td><%= link_to 'Show', edit_user_registration_path(p) %></td>
       <td><%= link_to 'Allocate role', edit_user_path(p) %></td>
       <td><%= link_to 'Delete', user_path(p), method: :delete, data:{confirm: 'Are you sure?'} %></td>

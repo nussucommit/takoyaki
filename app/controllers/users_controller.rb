@@ -1,13 +1,11 @@
 # frozen_string_literal: true
 
 class UsersController < ApplicationController
-  #before_action :authenticate_user!
-  #before_action :check_admin
+  before_action :authenticate_user!
+  before_action :check_admin
   def check_admin
-    if current_user.has_role?(:admin)
-      redirect_to homes_path
-    else
-      redirect_to users_path
+    if !current_user.has_role?(:admin)
+       redirect_to root_path
     end
   end
   def role_adder(role)
@@ -32,10 +30,12 @@ class UsersController < ApplicationController
     Role::ROLES.each do |r|
       role_adder(r)
     end
-
     redirect_to users_path
+    #else
+    #  redirect_to edit_user_path
+    
   end
-
+  
   def show
     @user = User.find params[:id]
   end
