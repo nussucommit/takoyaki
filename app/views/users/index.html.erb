@@ -1,17 +1,27 @@
 <h1> The user </h1>
+<%= link_to 'Add user', new_user_registration_path %>
+
 <table>
   <tr>
     <th>Username</th>
+    <th>Matric number</th>
+    <th>Contact number</th>
+    <th>E-mail</th>
     <th>Show</th>
     <th>Edit</th>
     <th>Delete</th>
   </tr>
   <% @users.each do |p| %>
     <tr>
+      <td><%= p.username %></td>
+      <td><%= p.matric_num %></td>
+
+      <td><%= p.contact_num %></td>
+
       <td><%= p.email %></td>
-      
-      <td><%= link_to 'Show', user_path(p) %></td>
-      <td><%= link_to 'Edit', edit_user_path(p) %></td>
+
+      <td><%= link_to 'Show', edit_user_registration_path(p) %></td>
+      <td><%= link_to 'Allocate role', edit_user_path(p) %></td>
       <td><%= link_to 'Delete', user_path(p), method: :delete, data:{confirm: 'Are you sure?'} %></td>
     </tr>
   <% end %>

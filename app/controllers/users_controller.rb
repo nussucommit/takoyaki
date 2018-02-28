@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class UsersController < ApplicationController
-  before_action :authenticate_user!
-  before_action :check_admin
+  #before_action :authenticate_user!
+  #before_action :check_admin
   def check_admin
     if current_user.has_role?(:admin)
       redirect_to homes_path
