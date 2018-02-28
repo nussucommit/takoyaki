@@ -5,8 +5,18 @@
 		<%= f.text_field :username%>
 	</p>
 
-<fieldset>
-<legend>User Roles</legend>
+  <div class="field">
+    <%= f.label :password, "Password" %><br />
+    <%= f.password_field :password, :autocomplete => "off"  %>
+  </div>
+  <div class="field">
+    <%= f.label :password_confirmation %><br />
+    <%= f.password_field :password_confirmation %>
+  </div>
+
+
+  <fieldset>
+  <legend>User Roles</legend>
     <% Role::ROLES.each do |role| %>
       <%= f.label(role) do %>
        <%= role %>
@@ -14,7 +24,7 @@
        <%= check_box_tag(role, 1, @user.has_role?(role)) %>
     <% end %>
   <% end %>
-</fieldset>
+  </fieldset>
 
 
   <p>
