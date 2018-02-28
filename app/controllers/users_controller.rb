@@ -29,13 +29,10 @@ class UsersController < ApplicationController
     Role::ROLES.each do |r|
       role_adder(r)
     end
-    if @user.update(user_params)
+    @user.update(user_params)
       # Sign in the user by passing validation in case their password changed
-      bypass_sign_in(@user)
-      redirect_to users_path
-    else
-      render "edit"
-    end
+    #bypass_sign_in(@user)
+    redirect_to users_path
   end
 
  
