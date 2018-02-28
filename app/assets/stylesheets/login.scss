@@ -1,10 +1,19 @@
 @import 'bootstrap';
 
+$white: #ffffff;
+$black: #000000;
+$yellow: #feb600;
+$grey: #808080;
+$darkGrey: #a9a9a9;
+$dimGrey: #696969;
+$red: #ff0000;
+$lightYellow: #ffd700;
+
 html, body {
   top: 0;
   margin: 0;
   padding: 0;
-  background-color: white;
+  background-color: $white;
   height: 100%;
   width: 100%;
   font-family: Verdana, sans-serif;
@@ -19,7 +28,7 @@ body {
 }
 
 p.alert {
-  color: white;
+  color: $white;
   font-weight: bold;
   text-shadow: 0px 0px 10px #000;
 }
@@ -37,16 +46,16 @@ div.field {
 }
 
 input#user_email, input#user_password {
-  background-color: rgba(0, 0, 0, 0);
+  background-color: rgba(0,0,0,0);
   border-top: none;
   border-left: none;
   border-right: none;
-  border-bottom: 2px solid #feb600;// #484848;
-  box-shadow: 0 8px 10px -7px Grey;
-  color: black;
+  border-bottom: 2px solid $yellow;
+  box-shadow: 0 8px 10px -7px $grey;
+  color: $black;
   font-size: 16px;
   height: 40px;
-  width: 100%; // 250px;
+  width: 100%;
   padding-left: 5%;
   display: block;
   margin-left: auto;
@@ -63,12 +72,12 @@ input#user_remember_me {
 }
 
 ::placeholder {
-  color: DarkGrey;
+  color: $darkGrey;
 }
 
 label {
   vertical-align: middle;
-  color: DimGrey;
+  color: $dimGrey;
   font-size: 14px;
   font-family: sans-serif;
   margin-bottom: 0;
@@ -80,11 +89,11 @@ div.actions {
 }
 
 .actions input {
-  background-color: #feb600;
-  border: 2px solid #feb600;
-  border-radius: 50px; // 50px;
+  background-color: $yellow;
+  border: 2px solid $yellow;
+  border-radius: 50px;
   height: 46px;
-  width: 200px; //279.27px;
+  width: 200px;
   color: black;
   font-weight: bold;
   font-size: 14px;
@@ -92,15 +101,15 @@ div.actions {
   margin-left: auto;
   margin-right: auto;
   box-shadow: 0px 2px 8px rgba(0,0,0,0.5),
-              inset 1px 1px 3px -1px #ffd700;
+              inset 1px 1px 3px -1px $lightYellow;
   text-shadow: 0px -1px 0px rgba(0,0,0,1),
                0px 1px 0px rgba(255,255,255,0.2);
 }
 
 .actions input:hover {
   background-color: rgba(255,255,255,0);
-  color: black; //#FFCC00;
-  box-shadow: inset 0 2px 4px white;
+  color: $black;
+  box-shadow: inset 0 2px 4px $white;
 }
 
 .box {
@@ -113,7 +122,7 @@ div.actions {
   background-color: rgba(255,255,255,0.9);
   padding-top: 10%;
   padding-bottom: 10%;
-  box-shadow: 0 0 30px Grey;
+  box-shadow: 0 0 30px $grey;
   text-align: center;
 }
 
@@ -129,7 +138,7 @@ form#new_user.new_user {
   bottom: 0;
   left: 0;
   width: 100%;
-  color: #feb600;
+  color: $yellow;
   height: 30px;
   margin: 0 auto;
   background-color: rgba(0,0,0,0.7);
@@ -149,12 +158,12 @@ a {
   font-family: sans-serif;
   font-size: 12px;
   text-decoration: none;
-  color: DimGrey;
+  color: $dimGrey;
 }
 
 a:hover {
   text-decoration: underline;
-  color: #feb600;
+  color: $yellow;
 }
 
 // password
@@ -166,7 +175,7 @@ a:hover {
 .password p {
   text-align: left;
   font-size: 11px;
-  color: Grey;
+  color: $grey;
   margin-bottom: 20px;
 }
 
@@ -198,63 +207,63 @@ ul {
   padding-left: 0;
   list-style-type: none;
   font-size: 12px;
-  color: red;
+  color: $red;
 }
 
 @media (max-width: 1200px) {
 
-div.container, .row, .box {
-  width: 100%;
-  height: 100%;
-  padding: 0;
-  margin: 0;
-}
+  div.container, .row, .box {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+  }
 
-.account-wall {
-  width: 100%;
-  top: 50%;
-  padding-top: 20%;
-  padding-bottom: 20%;
-}
+  .account-wall {
+    width: 100%;
+    top: 50%;
+    padding-top: 20%;
+    padding-bottom: 20%;
+  }
 
-input#user_email, input#user_password {
-  font-size: 40px;
-  height: 50px;
-  margin-top: 20%;
-  margin-bottom: 5%;
-}
+  input#user_email, input#user_password {
+    font-size: 40px;
+    height: 50px;
+    margin-top: 20%;
+    margin-bottom: 5%;
+  }
 
-label {
-  font-size: 30px;
-  margin-left: 10px;
-}
+  label {
+    font-size: 30px;
+    margin-left: 10px;
+  }
 
-input#user_remember_me {
-  height: 30px;
-  width: 30px;
-}
+  input#user_remember_me {
+    height: 30px;
+    width: 30px;
+  }
 
-.actions input {
-  margin-top: 80px;
-  height: 80px;
-  width: 400px;
-  font-size: 30px;
-}
+  .actions input {
+    margin-top: 80px;
+    height: 80px;
+    width: 400px;
+    font-size: 30px;
+  }
 
-a {
-  font-size: 25px;
-}
+  a {
+    font-size: 25px;
+  }
 
-.password h3 {
-  font-size: 50px;
-}
+  .password h3 {
+    font-size: 50px;
+  }
 
-.password p {
-  font-size: 25px;
-}
+  .password p {
+    font-size: 25px;
+  }
 
-.password div.actions {
-  margin-top: 120px;
-  margin-bottom: 70px;
-}
+  .password div.actions {
+    margin-top: 120px;
+    margin-bottom: 70px;
+  }
 }
