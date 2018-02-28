@@ -5,7 +5,7 @@ class UsersController < ApplicationController
   before_action :check_admin
   def check_admin
     if current_user.has_role?(:admin)
-      
+      redirect_to homes_path
     else
       redirect_to users_path
     end
