@@ -1,31 +1,34 @@
-<div class="password container">
-  <div class="row">
-    <div class="box col-sm-12 col-md-6 col-md-offset-3">
-      <div class="account-wall">
-        <h3>Forgot your password?</h3>
-        <p>Enter your email address and we'll send you password reset instructions.</p>
-        <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
-          <%= devise_error_messages! %>
+<div class="login">
+  <p class="notice"><%= notice %></p>
+  <p class="alert"><%= alert %></p>
+  <div class="password container">
+    <div class="row">
+      <div class="box col-sm-12 col-md-6 col-md-offset-3">
+        <div class="account-wall">
+          <h3>Forgot your password?</h3>
+          <p>Enter your email address and we'll send you password reset instructions.</p>
+          <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
+            <%= devise_error_messages! %>
 
-          <div class="field">
-            <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "Email" %>
-          </div>
+            <div class="field">
+              <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "Email" %>
+            </div>
 
-          <div class="actions">
-            <%= f.submit "Reset password" %>
-          </div>
-        <% end %>
-        <a href="/my/users/sign_in">Log In</a><br />
-        <a href="/my/users/unlock/new">Didn't receive unlock instructions?</a><br />
+            <div class="actions">
+              <%= f.submit "Reset password" %>
+            </div>
+          <% end %>
+          <a href="/my/users/sign_in">Log In</a><br />
+          <a href="/my/users/unlock/new">Didn't receive unlock instructions?</a><br />
+        </div>
       </div>
     </div>
   </div>
-</div>
 
-<div class="footer">
-  <div class="container">  
-    <p class="muted text-center col-sm-12 col-md-4 col-md-offset-4">Copyright &copy; 201x-201x NUSSU CommIT Technical Cell</p>
-  </div>  
+  <div class="footer">
+    <div class="container">  
+      <p class="muted text-center col-sm-12 col-md-4 col-md-offset-4">Copyright &copy; 201x-201x NUSSU CommIT Technical Cell</p>
+    </div>  
+  </div>
 </div>
-
 <%# <%= render "devise/shared/links" %>
