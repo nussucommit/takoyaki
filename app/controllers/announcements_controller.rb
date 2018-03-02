@@ -12,7 +12,6 @@ class AnnouncementsController < ApplicationController
 
   def create
     announcement = Announcement.new announcement_params
-    announcement.date = Time.zone.now
 
     redirect_to announcements_path if announcement.save
   end
