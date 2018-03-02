@@ -17,14 +17,17 @@ $lightYellow: #ffd700;
   }
 
   h1 {
-    width: 90%;
+    width: 100%;
     margin-top: 0;
-    margin-left: 5%;
-    padding-top: 3%;
+    padding-top: 3.5%;
     padding-left: 5%;
-    padding-bottom: 1.5%;
-    border-bottom: 2px solid $grey;
+    padding-bottom: 2%;
     color: $yellow;
+    background-color: black;
+    box-shadow: 0px 1px 10px $grey,
+                inset 1px -3px 3px -1px $grey;
+    text-shadow: 0 -0.5px 0 $lightYellow,
+                 0 0.5px 0 $lightYellow;
     font-family: Verdana, sans-serif;
   }
 
