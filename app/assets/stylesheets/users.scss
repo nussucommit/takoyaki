@@ -8,20 +8,14 @@ $grey: #808080;
 $dimGrey: #696969;
 $lightYellow: #ffd700;
 
-.profile {
-  height: 100%;
+.list {
   width: 100%;
-
-  div.container {
-    transform: translate(-50%, -50%);
-    position: absolute;
-    top: 50%;
-    left: 50%;
-  }
+  height: 100%;
 
   h1 {
     width: 90%;
     margin-top: 0;
+    margin-bottom: 2%;
     margin-left: 5%;
     padding-top: 3%;
     padding-left: 5%;
@@ -31,73 +25,52 @@ $lightYellow: #ffd700;
     font-family: Verdana, sans-serif;
   }
 
-  .box {
-    padding-top: 20%;
+  a {
     padding-left: 5%;
-    padding-right: 5%;
+  }
+
+  .row {
+    padding-left: 2%;
+    padding-right: 2%;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    border-style: hidden;
+  }
+
+  .name, .matric, .contact, .cell, .pos, .role, .del {
+    width: 15%;
     text-align: center;
   }
 
-  form#edit_user.edit_user {
-    text-align: left;
+  .email {
+    width: 25%;
+    text-align: center;
   }
 
-  div.field {
-    width: 100%;
-    margin-bottom: 5%;
-  }
-
-  input {
-    width: 100%;
-    height: 40px;
-    border: 2px solid $yellow;
-    border-radius: 50px;
-    padding-left: 3%;
-    color: $black;
-  }
-
-  input:focus {
-    outline: none;
-  }
-
-  label {
-    color: $grey;
-    padding-left: 3%;
-    font-family: Verdana, sans-serif;
-    font-weight: normal;
-  }
-
-  div.actions {
-    margin-left: 25%;
-    margin-right: 25%;
-    margin-top: 12%;
-    margin-bottom: 3%;
-  }
-
-  .actions input:hover {
-    background-color: $lightYellow;
-    font-size: 18px;
-  }
-
-  .actions input {
-    height: 50px;
-    background-color: $yellow;
-    color: $black;
-    font-size: 16px;
-    box-shadow: inset 1px 1px 3px -1px $lightYellow;
-    text-shadow: 0 -0.8px 0 rgba(0,0,0,1),
-                 0 1px 0 rgba(255,255,255,0.2);
-  }
-
-  a {
-    color: $grey;
+  .role, .del {
     font-size: 12px;
+    padding-left: 5px;
+    padding-right: 5px;
   }
 
-  a:hover {
-    color: $yellow;
+  th {
+    font-weight: normal;
+    font-size: 16px;
+    height: 50px;
   }
 
+  td {
+    color: $grey;
+    height: 30px;
+  }
+
+  th, td {
+    border: 0.5px solid $dimGrey;
+  }
+  
   @media (max-device-width: 400px) {
     h1 {
       margin-top: 10%;
@@ -107,8 +80,9 @@ $lightYellow: #ffd700;
       height: 100%;
     }
 
-    .box {
-      margin-top: 20%;
+    table {
+      margin-top: 2%;
     }
   }
+
 }

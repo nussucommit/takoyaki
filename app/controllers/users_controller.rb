@@ -2,7 +2,7 @@
 
 class UsersController < ApplicationController
   before_action :authenticate_user!
-  before_action :check_admin
+  before_action :check_admin, except: [:index]
   def check_admin
     if !current_user.has_role?(:admin)
        redirect_to root_path
