@@ -16,8 +16,8 @@
     background-color: #000;
     box-shadow: 0px 1px 10px $grey,
                 inset 1px -3px 3px -1px $grey;
-    text-shadow: 0 -0.5px 0 $light_yellow,
-                 0 0.5px 0 $light_yellow;
+    text-shadow: 0 -0.5px 0 $light-yellow,
+                 0 0.5px 0 $light-yellow;
     font-family: Verdana, sans-serif;
   }
 
@@ -34,7 +34,7 @@
     margin-top: 2%;
     width: 100%;
     border-collapse: collapse;
-    border: 0.5px solid $dim_grey;
+    border: 0.5px solid $dim-grey;
     box-shadow: 0 0 10px 1px $grey;
   }
 
@@ -70,7 +70,7 @@
   }
 
   tr:nth-child(odd) {
-    background-color: $dark_cream;
+    background-color: $dark-cream;
   }
  
   @media (max-device-width: 400px) {

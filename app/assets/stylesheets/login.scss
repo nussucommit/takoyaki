@@ -3,7 +3,7 @@
   height: 100%;
   width: 100%;
   position: absolute;
-  background: url(commit.jpg);
+  background: image-url('commit.jpg');
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
@@ -57,12 +57,12 @@
   }
 
   ::placeholder {
-    color: $dark_grey;
+    color: $dark-grey;
   }
 
   label {
     vertical-align: middle;
-    color: $dim_grey;
+    color: $dim-grey;
     font-size: 14px;
     font-family: sans-serif;
     margin-bottom: 0;
@@ -86,7 +86,7 @@
     margin-left: auto;
     margin-right: auto;
     box-shadow: 0px 2px 8px rgba(0,0,0,0.5),
-                inset 1px 1px 3px -1px $light_yellow;
+                inset 1px 1px 3px -1px $light-yellow;
     text-shadow: 0px -1px 0px rgba(0,0,0,1),
                  0px 1px 0px rgba(255,255,255,0.2);
   }
@@ -144,7 +144,7 @@
     font-family: sans-serif;
     font-size: 12px;
     text-decoration: none;
-    color: $dim_grey;
+    color: $dim-grey;
   }
 
   a:hover {
