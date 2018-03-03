@@ -19,7 +19,7 @@ module DutiesHelper
     result = []
     duties = Duty.where(date: day)
                  .joins(:timeslot).where('timeslots.place' => place)
-                 .ordered_by_start_time
+                 .ordered_by_start_time.includes(:timeslot, :user)
     return [{ name: nil, colspan: ((last.end_time - first.start_time) / (0.5).hour).round }] if duties.empty?
     first_duty = duties.first.timeslot.time_range
     if first.start_time < first_duty.start_time
