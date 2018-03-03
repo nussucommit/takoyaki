@@ -27,5 +27,7 @@
 
 FactoryBot.define do
   factory :user do
+    email 'lhl@pmo.gov.sg'
+    password '123456'
   end
 end

@@ -6,7 +6,7 @@
 #
 #  id              :integer          not null, primary key
 #  mc_only         :boolean
-#  day             :date
+#  day             :text
 #  default_user_id :integer
 #  time_range_id   :integer
 #  place_id        :integer
@@ -25,11 +25,11 @@
 #  fk_rails_...  (place_id => places.id)
 #  fk_rails_...  (time_range_id => time_ranges.id)
 #
-# rubocop:enable Metrics/LineLength
 
 class Timeslot < ApplicationRecord
   has_many :duties, dependent: :destroy
   belongs_to :default_user, class_name: 'User', inverse_of: :timeslots
   belongs_to :place
   belongs_to :time_range
+  enum day: Date::DAYNAMES
 end

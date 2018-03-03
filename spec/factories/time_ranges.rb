@@ -14,7 +14,7 @@
 
 FactoryBot.define do
   factory :time_range do
-    start_time '2018-01-31 20:11:16'
-    end_time '2018-01-31 20:11:16'
+    sequence(:start_time) { |n| '08:00'.in_time_zone + n.hours }
+    sequence(:end_time) { |n| '09:00'.in_time_zone + n.hours }
   end
 end
