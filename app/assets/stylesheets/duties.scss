@@ -17,7 +17,6 @@
 td.schedule-daynames {
   font-weight: bold;
   width: 4em;
-  background-color: inherit !important;
 }
 
 td.schedule-timings {
@@ -27,4 +26,12 @@ td.schedule-timings {
 
 .table-striped-columns tbody td:nth-of-type(2n) {
   background-color: rgba(0, 0, 0, 0.05);
+}
+
+.no-padding {
+  padding: 0;
+}
+
+.schedule-left {
+  width: fit-content;
 }
