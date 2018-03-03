@@ -26,3 +26,6 @@
 
 # OS Generated Files
 .DS_Store
+
+# coverage
+coverage/*
