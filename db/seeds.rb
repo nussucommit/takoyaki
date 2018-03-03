@@ -63,3 +63,5 @@ Date::DAYNAMES.each do |day|
                     time_range: tr, place: Place.find_by(name: 'AS8'))
   end
 end
+
+Duty.generate(Time.zone.today - 7, Time.zone.today + 7)
