@@ -22,28 +22,55 @@ RSpec.describe AnnouncementsController, type: :controller do
 	end
 
   describe 'POST #create' do
-    it 'creates a new announcement' do
-      expect do
+    context 'valid attributes' do
+      it 'creates a new announcement' do
+        expect do
+          post :create, params: { announcement: attributes_for(:announcement) }
+        end.to change(Announcement, :count).by(1)
+      end
+
+      it 'redirects to announcement_path' do
         post :create, params: { announcement: attributes_for(:announcement) }
-      end.to change(Announcement, :count).by(1)
+        should redirect_to announcements_path
+      end
     end
 
-    it 'redirects to announcement_path' do
-      post :create, params: { announcement: attributes_for(:announcement) }
-      should redirect_to announcements_path
+    context 'invalid attributes' do
+      it 'does not create new announcement with invalid subject' do
+        expect do
+          post :create, params: { announcement: attributes_for(:invalid_subject) }
+        end.to change(Announcement, :count).by(0)
+      end
+
+      it 'does not create new announcement with invalid details' do
+        expect do
+          post :create, params: { announcement: attributes_for(:invalid_details) }
+        end.to change(Announcement, :count).by(0)
+      end
     end
   end
 
   describe 'PUT #update' do
-    it 'updates an announcement' do
-      announcement = FactoryBot.create(:announcement)
-      put :update, params: { id: announcement.id, announcement: { :subject => "new subject", :details => "new details" } }
+    context 'valid attributes' do
+      it 'updates an announcement' do
+        announcement = FactoryBot.create(:announcement)
+        put :update, params: { id: announcement.id, announcement: { :subject => "new subject", :details => "new details" } }
+      end
+
+      it 'redirects to announcement_path' do
+        announcement = FactoryBot.create(:announcement)
+        put :update, params: { id: announcement.id, announcement: { :subject => "new subject", :details => "new details" } }
+        should redirect_to announcements_path
+      end
     end
 
-    it 'redirects to announcement_path' do
-      announcement = FactoryBot.create(:announcement)
-      put :update, params: { id: announcement.id, announcement: { :subject => "new subject", :details => "new details" } }
-      should redirect_to announcements_path
+    context 'invalid attributes' do
+      it 'does not update new announcement with invalid subject' do
+        announcement = FactoryBot.create(:announcement)
+        put :update, params: { id: announcement.id, announcement: { :subject => "", :details => "new details" } }
+        announcement.subject.should == "MyText"
+        announcement.details.should == "MyText"
+      end
     end
   end
 
