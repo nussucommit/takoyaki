@@ -76,4 +76,4 @@ Shoulda::Matchers.configure do |config|
   end
 end
 
-require 'support/factory_bot' 
+require 'support/factory_bot'

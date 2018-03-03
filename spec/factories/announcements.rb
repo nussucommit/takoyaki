@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: announcements
@@ -17,12 +18,12 @@ FactoryBot.define do
   end
 
   factory :invalid_subject, class: Announcement do
-  	subject nil
-  	details 'Invalid Subject'
+    subject nil
+    details 'Invalid Subject'
   end
 
   factory :invalid_details, class: Announcement do
-  	subject 'Invalid Details'
-  	details nil
+    subject 'Invalid Details'
+    details nil
   end
 end
