@@ -10,7 +10,7 @@ RSpec.describe AnnouncementsController, type: :controller do
     end
 
     it 'populates an array of contacts' do
-      announcement = create(:announcement)
+      create(:announcement)
       get :index
     end
 
@@ -38,14 +38,16 @@ RSpec.describe AnnouncementsController, type: :controller do
       it 'does not create new announcement with invalid subject' do
         expect do
           post :create, params: { announcement: attributes_for(
-            :announcement, :subject => "") }
+            :announcement, subject: ''
+          ) }
         end.to change(Announcement, :count).by(0)
       end
 
       it 'does not create new announcement with invalid details' do
         expect do
           post :create, params: { announcement: attributes_for(
-            :announcement, :details => "") }
+            :announcement, details: ''
+          ) }
         end.to change(Announcement, :count).by(0)
       end
     end
@@ -55,12 +57,16 @@ RSpec.describe AnnouncementsController, type: :controller do
     context 'valid attributes' do
       it 'updates an announcement' do
         announcement = create(:announcement)
-        put :update, params: { id: announcement.id, announcement: attributes_for(:announcement, :subject => "new subject", :details => "new details") }
+        put :update, params: { id: announcement.id, announcement:
+          attributes_for(:announcement, subject: 'new subject', details: 'new
+            details') }
       end
 
       it 'redirects to announcement_path' do
         announcement = create(:announcement)
-        put :update, params: { id: announcement.id, announcement: attributes_for(:announcement, :subject => "new subject", :details => "new details") }
+        put :update, params: { id: announcement.id, announcement:
+          attributes_for(:announcement, subject: 'new subject', details: 'new
+            details') }
         should redirect_to announcements_path
       end
     end
