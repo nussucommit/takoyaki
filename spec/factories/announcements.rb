@@ -16,14 +16,4 @@ FactoryBot.define do
     a.subject 'MyText'
     a.details 'MyText'
   end
-
-  factory :invalid_subject, class: Announcement do
-    subject nil
-    details 'Invalid Subject'
-  end
-
-  factory :invalid_details, class: Announcement do
-    subject 'Invalid Details'
-    details nil
-  end
 end

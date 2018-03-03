@@ -15,17 +15,17 @@ require 'rails_helper'
 
 RSpec.describe Announcement, type: :model do
   it 'saves given a valid Announcement' do
-    announcement = FactoryBot.build(:announcement)
+    announcement = build(:announcement)
     expect(announcement.save).to be true
   end
 
   it 'does not save given an Announcement with no subject' do
-    announcement = FactoryBot.build(:invalid_subject)
+    announcement = build(:announcement, subject: nil)
     expect(announcement.save).to be false
   end
 
   it 'does not save given an Announcement with no details' do
-    announcement = FactoryBot.build(:invalid_details)
+    announcement = build(:announcement, subject: nil)
     expect(announcement.save).to be false
   end
 end

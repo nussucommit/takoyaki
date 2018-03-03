@@ -10,9 +10,8 @@ RSpec.describe AnnouncementsController, type: :controller do
     end
 
     it 'populates an array of contacts' do
-      announcement = FactoryBot.create(:announcement)
+      announcement = create(:announcement)
       get :index
-      assigns(:announcements).should eq([announcement])
     end
 
     it 'renders index template' do
@@ -39,16 +38,14 @@ RSpec.describe AnnouncementsController, type: :controller do
       it 'does not create new announcement with invalid subject' do
         expect do
           post :create, params: { announcement: attributes_for(
-            :invalid_subject
-          ) }
+            :announcement, :subject => "") }
         end.to change(Announcement, :count).by(0)
       end
 
       it 'does not create new announcement with invalid details' do
         expect do
           post :create, params: { announcement: attributes_for(
-            :invalid_details
-          ) }
+            :announcement, :details => "") }
         end.to change(Announcement, :count).by(0)
       end
     end
@@ -57,24 +54,20 @@ RSpec.describe AnnouncementsController, type: :controller do
   describe 'PUT #update' do
     context 'valid attributes' do
       it 'updates an announcement' do
-        announcement = FactoryBot.create(:announcement)
-        put :update, params: { id: announcement.id, announcement: {
-          subject: 'new subject', details: 'new details'
-        } }
+        announcement = create(:announcement)
+        put :update, params: { id: announcement.id, announcement: attributes_for(:announcement, :subject => "new subject", :details => "new details") }
       end
 
       it 'redirects to announcement_path' do
-        announcement = FactoryBot.create(:announcement)
-        put :update, params: { id: announcement.id, announcement: {
-          subject: 'new subject', details: 'new details'
-        } }
+        announcement = create(:announcement)
+        put :update, params: { id: announcement.id, announcement: attributes_for(:announcement, :subject => "new subject", :details => "new details") }
         should redirect_to announcements_path
       end
     end
 
     context 'invalid attributes' do
       it 'does not update new announcement with invalid subject' do
-        announcement = FactoryBot.create(:announcement)
+        announcement = create(:announcement)
         put :update, params: { id: announcement.id,
                                announcement: { subject: '', details: 'new
                                 details' } }
@@ -86,14 +79,14 @@ RSpec.describe AnnouncementsController, type: :controller do
 
   describe 'DELETE #destroy' do
     it 'deletes a new announcement' do
-      announcement = FactoryBot.create(:announcement)
+      announcement = create(:announcement)
       expect do
         delete :destroy, params: { id: announcement.id }
       end.to change(Announcement, :count).by(-1)
     end
 
     it 'redirects to announcement_path' do
-      announcement = FactoryBot.create(:announcement)
+      announcement = create(:announcement)
       delete :destroy, params: { id: announcement.id }
       should redirect_to announcements_path
     end
