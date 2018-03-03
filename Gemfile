@@ -89,6 +89,10 @@ group :development, :test do
   gem 'rubocop'
   # SCSS linter
   gem 'scss_lint', require: false
+  # Coveralls code coverage monitoring
+  gem 'coveralls', require: false
+  # Simple code coverage
+  gem 'simplecov', :require => false
 end
 
 ### END QUALITY

@@ -27,7 +27,6 @@ User.create(email: 'test@example.com', password: '123456')
 User.create(email: 'anu@asd.com', password: '123456')
 User.create(email: 'lhl@pmo.gov.sg', password: '123456')
 
-
 # Timeslots in YIH
 Date::DAYNAMES.each do |day|
   TimeRange.all.each do |tr|

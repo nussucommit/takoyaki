@@ -352,6 +352,7 @@ DEPENDENCIES
   schema_validations
   scss_lint
   shoulda-matchers!
+  simplecov
   sitemap_generator
   spring
   therubyracer
