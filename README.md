@@ -3,5 +3,18 @@ NUSSU commIT Duty Website, iteration 4
 
 [![Build Status](https://travis-ci.org/commit-tech/takoyaki.svg?branch=master)](https://travis-ci.org/commit-tech/takoyaki)
 
-## Schema Diagram
-![Schema diagram](schema.jpg)
+## Entity-Relationship Diagram
+![ERD](schema.png)
+
+### Generate ERD
+To generate the current Entity-Relationship Diagram, install `graphviz` (`sudo apt install graphviz` or `brew install graphviz`),
+then run `rake generate_erd`. This is also run as a post-migration hook (i.e. after `bin/rails db:migrate`)
+
+## Installation
+Make sure you have Ruby 2.5.0, Bundler, and PostgreSQL 9.6 installed.
+```bash
+cp config/database.yml.example config/database.yml
+bundle install
+bin/rails db:setup
+bin/rails server
+```
