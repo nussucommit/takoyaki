@@ -18,7 +18,7 @@ class DutiesController < ApplicationController
 
   private
 
-  def generate_header_iterator
+  def generate_header_iter
     time_range = TimeRange.order(:start_time)
     first_time = time_range.first.start_time
     last_time = time_range.last.start_time
