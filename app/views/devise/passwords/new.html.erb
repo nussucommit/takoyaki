@@ -18,8 +18,7 @@
               <%= f.submit "Reset password" %>
             </div>
           <% end %>
-          <a href="/my/users/sign_in">Log In</a><br />
-          <a href="/my/users/unlock/new">Didn't receive unlock instructions?</a><br />
+          <%= render "devise/shared/links" %>
         </div>
       </div>
     </div>
@@ -27,8 +26,7 @@
 
   <div class="footer">
     <div class="container">  
-      <p class="muted text-center col-sm-12 col-md-4 col-md-offset-4">Copyright &copy; 201x-201x NUSSU CommIT Technical Cell</p>
+      <p class="muted text-center col-sm-12 col-md-4 offset-md-4">Copyright &copy; 201x-201x NUSSU CommIT Technical Cell</p>
     </div>  
   </div>
 </div>
-<%# <%= render "devise/shared/links" %>

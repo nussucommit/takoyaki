@@ -1,14 +1,6 @@
 // Place all the styles related to the Users controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
-$black: #000000;
-$white: #ffffff;
-$yellow: #feb600;
-$grey: #808080;
-$dimGrey: #696969;
-$lightYellow: #ffd700;
-$darkCream: #f6e1af;
-$cream: #fff8dc;
 
 .list {
   width: 100%;
@@ -21,11 +13,11 @@ $cream: #fff8dc;
     padding-left: 5%;
     padding-bottom: 2%;
     color: $yellow;
-    background-color: black;
+    background-color: #000;
     box-shadow: 0px 1px 10px $grey,
                 inset 1px -3px 3px -1px $grey;
-    text-shadow: 0 -0.5px 0 $lightYellow,
-                 0 0.5px 0 $lightYellow;
+    text-shadow: 0 -0.5px 0 $light_yellow,
+                 0 0.5px 0 $light_yellow;
     font-family: Verdana, sans-serif;
   }
 
@@ -42,7 +34,7 @@ $cream: #fff8dc;
     margin-top: 2%;
     width: 100%;
     border-collapse: collapse;
-    border: 0.5px solid $dimGrey;
+    border: 0.5px solid $dim_grey;
     box-shadow: 0 0 10px 1px $grey;
   }
 
@@ -78,14 +70,10 @@ $cream: #fff8dc;
   }
 
   tr:nth-child(odd) {
-    background-color: $darkCream;
+    background-color: $dark_cream;
   }
  
   @media (max-device-width: 400px) {
-    h1 {
-      margin-top: 10%;
-    }
-
     div.container {
       height: 100%;
     }
