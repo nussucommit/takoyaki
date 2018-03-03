@@ -2,7 +2,6 @@
 
 class DutiesController < ApplicationController
   def index
-    Bullet.enable = false
     @header_iter = generate_header_iter
     @start_date = Time.zone.today.beginning_of_week
     @end_date = @start_date + 6.days
