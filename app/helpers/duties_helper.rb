@@ -11,6 +11,9 @@ module DutiesHelper
 
   private
 
+  # To be optimised later on
+  # rubocop:disable Metrics/LineLength, Metrics/AbcSize, Metrics/MethodLength
+
   def process_day_place(day, place)
     result = []
     duties = Duty.where(date: day)
@@ -49,6 +52,8 @@ module DutiesHelper
     end
     result
   end
+
+  # rubocop:enable Metrics/LineLength, Metrics/AbcSize, Metrics/MethodLength
 
   def calc_colspan(start_time, end_time)
     ((end_time - start_time) / 0.5.hours).round
