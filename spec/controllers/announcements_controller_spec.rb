@@ -72,8 +72,8 @@ RSpec.describe AnnouncementsController, type: :controller do
         put :update, params: { id: announcement.id,
                                announcement: { subject: '', details: 'new
                                 details' } }
-        announcement.subject.should be == 'MyText'
-        announcement.details.should be == 'MyText'
+        expect(announcement.subject).to eq('MyText')
+        expect(announcement.details).to eq('MyText')
       end
     end
   end
