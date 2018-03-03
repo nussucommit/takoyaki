@@ -28,7 +28,7 @@
 # rubocop:enable Metrics/LineLength
 
 class Timeslot < ApplicationRecord
-  has_many :duties
+  has_many :duties, dependent: :destroy
   belongs_to :default_user, class_name: 'User', inverse_of: :timeslots
   belongs_to :place
   belongs_to :time_range
