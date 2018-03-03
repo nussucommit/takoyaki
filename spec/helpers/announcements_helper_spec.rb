@@ -14,7 +14,8 @@ require 'rails_helper'
 # end
 RSpec.describe AnnouncementsHelper, type: :helper do
   it 'format_time working sucessfully' do
-    today = Time.zone.now.strftime('%d %B %C%y, %I:%M %p')
-    expect(today).to eq(format_time(Time.zone.now))
+    expect('03 March 2018, 04:04 AM').to eq(format_time(
+                                              Time.zone.new(2018, 3, 3, 4, 4, 0)
+    ))
   end
 end

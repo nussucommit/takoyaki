@@ -13,11 +13,6 @@ RSpec.describe AnnouncementsController, type: :controller do
       create(:announcement)
       get :index
     end
-
-    it 'renders index template' do
-      get :index
-      expect(response).to render_template('announcements/index')
-    end
   end
 
   describe 'POST #create' do

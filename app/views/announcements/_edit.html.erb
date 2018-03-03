@@ -11,7 +11,7 @@
         </div>
 
         <div class="modal-body">
-		      <%= form_for announcement, :html => {:class => "announcement-form"}  do |a| %>
+          <%= form_for announcement, :html => {:class => "announcement-form"}  do |a| %>
             <%= a.label :subject, class: 'font-group' %>
             <%= a.text_field :subject, class: 'font-group form-control', required: true %><br>
             <%= a.label :details, class: 'font-group' %>
