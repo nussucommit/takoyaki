@@ -6,7 +6,9 @@
 }
 
 .schedule-container {
-  min-width: 57.6rem;
+  width: 100%;
+  display: flex;
+  flex-wrap: nowrap;
 }
 
 .schedule-time {
@@ -46,4 +48,15 @@ td.schedule-timings {
 .schedule-name-empty {
   border: 1px solid #000 !important;
   background-color: #808080;
+}
+
+.duty-table {
+  padding-left: 20px;
+  table-layout:fixed;
+}
+
+.text-overflow-ellipsis {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }

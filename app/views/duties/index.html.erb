@@ -1,5 +1,5 @@
 <div class="container-fluid">
-  <div class="scrollable" style="width: 100%; display: flex; flex-wrap: nowrap;">
+  <div class="scrollable schedule-container">
         <div class="schedule-left">
         <table class="table table-sm">
           <!-- Empty row to accommodate the timing -->
@@ -26,7 +26,7 @@
         </table>
         </div>
         <div style="flex-grow: 100;">
-        <table class="table table-sm" style="padding-left: 20px; table-layout:fixed;">
+        <table class="table table-sm duty-table">
           <thead>
             <tr>
               <% @header_iter.each do |t| %>
@@ -44,8 +44,7 @@
                   <% if duty[:name].nil? %>
                     <td class="schedule-name-empty" colspan="<%= duty[:colspan] %>">&nbsp;</td>
                   <% else %>
-                    <td class="schedule-name" colspan="<%= duty[:colspan] %>"><div style="overflow: hidden;
-white-space: nowrap; text-overflow: ellipsis;"><%= duty[:name] %></div></td>
+                    <td class="schedule-name" colspan="<%= duty[:colspan] %>"><div class="text-overflow-ellipsis"><%= duty[:name] %></div></td>
                   <% end %>
                 <% end %>
                 </tr>
