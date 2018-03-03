@@ -38,13 +38,17 @@ RSpec.describe AnnouncementsController, type: :controller do
     context 'invalid attributes' do
       it 'does not create new announcement with invalid subject' do
         expect do
-          post :create, params: { announcement: attributes_for(:invalid_subject) }
+          post :create, params: { announcement: attributes_for(
+            :invalid_subject
+          ) }
         end.to change(Announcement, :count).by(0)
       end
 
       it 'does not create new announcement with invalid details' do
         expect do
-          post :create, params: { announcement: attributes_for(:invalid_details) }
+          post :create, params: { announcement: attributes_for(
+            :invalid_details
+          ) }
         end.to change(Announcement, :count).by(0)
       end
     end
@@ -54,12 +58,16 @@ RSpec.describe AnnouncementsController, type: :controller do
     context 'valid attributes' do
       it 'updates an announcement' do
         announcement = FactoryBot.create(:announcement)
-        put :update, params: { id: announcement.id, announcement: { subject: 'new subject', details: 'new details' } }
+        put :update, params: { id: announcement.id, announcement: {
+          subject: 'new subject', details: 'new details'
+        } }
       end
 
       it 'redirects to announcement_path' do
         announcement = FactoryBot.create(:announcement)
-        put :update, params: { id: announcement.id, announcement: { subject: 'new subject', details: 'new details' } }
+        put :update, params: { id: announcement.id, announcement: {
+          subject: 'new subject', details: 'new details'
+        } }
         should redirect_to announcements_path
       end
     end
@@ -67,9 +75,11 @@ RSpec.describe AnnouncementsController, type: :controller do
     context 'invalid attributes' do
       it 'does not update new announcement with invalid subject' do
         announcement = FactoryBot.create(:announcement)
-        put :update, params: { id: announcement.id, announcement: { subject: '', details: 'new details' } }
-        announcement.subject.should == 'MyText'
-        announcement.details.should == 'MyText'
+        put :update, params: { id: announcement.id,
+                               announcement: { subject: '', details: 'new
+                                details' } }
+        announcement.subject.should be == 'MyText'
+        announcement.details.should be == 'MyText'
       end
     end
   end

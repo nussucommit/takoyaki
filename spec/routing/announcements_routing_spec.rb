@@ -13,7 +13,8 @@ RSpec.describe AnnouncementsController, type: :routing do
     end
 
     it 'routes to #destroy' do
-      expect(delete: '/announcements/1').to route_to('announcements#destroy', id: '1')
+      expect(delete: '/announcements/1').to route_to('announcements#destroy',
+                                                     id: '1')
     end
   end
 end
