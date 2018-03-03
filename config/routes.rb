@@ -6,4 +6,6 @@ Rails.application.routes.draw do
 
   post '/generate', to: 'duties#generate_duties'
   resources :duties
+
+  resources :announcements, only: %i[index create destroy update]
 end
