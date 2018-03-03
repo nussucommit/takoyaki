@@ -2,17 +2,14 @@
 
 module DutiesHelper
   def process_duties(start_date, end_date)
-    result = []
-    (start_date..end_date).each do |day|
-      tmp = []
-      Place.all.each do |place|
-        tmp.push(process_day_place(day, place))
-      end
-      result.push(tmp)
+    start_date.upto(end_date).map do |day| 
+    	Place.all.map do |place| 
+    		process_day_place(day, place)
+    	end
     end
-    result
   end
 
+  private 
   def process_day_place(day, place)
     first = TimeRange.all.first
     last = TimeRange.all.last
