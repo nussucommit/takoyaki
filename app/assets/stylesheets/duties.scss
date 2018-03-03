@@ -17,6 +17,8 @@
 td.schedule-daynames {
   font-weight: bold;
   width: 4em;
+  vertical-align: middle;
+  text-align: center;
 }
 
 td.schedule-timings {
@@ -25,6 +27,13 @@ td.schedule-timings {
   min-width: 50px;
 }
 
+@media (min-width: 768px) {
+  td.schedule-timings {
+    padding: 0;
+    margin: 0;
+    width: 150px;
+  }
+}
 
 .no-padding {
   padding: 0;
@@ -37,6 +46,8 @@ td.schedule-timings {
 .schedule-name {
   border: 1px solid #000 !important;
   text-align: center;
+  text-overflow: ellipsis;
+  width: 170px;
 }
 
 .schedule-name-empty {

@@ -3,14 +3,14 @@
 module DutiesHelper
 
   def process_duties(start_date, end_date)
-    start_date.upto(end_date).map do |day| 
-    	Place.all.map do |place| 
-    		process_day_place(day, place)
-    	end
+    start_date.upto(end_date).map do |day|
+      Place.all.map do |place|
+        process_day_place(day, place)
+      end
     end
   end
 
-  private 
+  private
 
   def process_day_place(day, place)
 

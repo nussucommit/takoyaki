@@ -24,8 +24,9 @@ end
 end
 
 User.create(email: 'test@example.com', password: '123456')
-User.create(email: 'test2@example.com', password: '123456')
-User.create(email: 'test3@example.com', password: '123456')
+User.create(email: 'anu@asd.com', password: '123456')
+User.create(email: 'lhl@pmo.gov.sg', password: '123456')
+
 
 # Timeslots in YIH
 Date::DAYNAMES.each do |day|
@@ -45,7 +46,8 @@ Date::DAYNAMES.each do |day|
       mc = (open == '0830' || close == '2100')
     end
 
-    Timeslot.create(mc_only: mc, day: day, default_user: User.order("RANDOM()").first,
+    Timeslot.create(mc_only: mc, day: day,
+                    default_user: User.offset(rand(User.count)).first,
                     time_range: tr, place: Place.find_by(name: 'YIH'))
   end
 end
@@ -61,7 +63,10 @@ Date::DAYNAMES.each do |day|
     next if (day == 'Saturday') && (open < '0800' || close > '1700')
     next if open < '0800' || close > '2100'
 
-    Timeslot.create(mc_only: mc, day: day, default_user: User.take,
+    Timeslot.create(mc_only: mc, day: day,
+                    default_user: User.offset(rand(User.count)).first,
                     time_range: tr, place: Place.find_by(name: 'AS8'))
   end
 end
+
+Duty.generate(Time.zone.today - 7, Time.zone.today + 7)
