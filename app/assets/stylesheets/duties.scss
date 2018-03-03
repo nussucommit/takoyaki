@@ -22,11 +22,9 @@ td.schedule-daynames {
 td.schedule-timings {
   padding: 0;
   margin: 0;
+  min-width: 50px;
 }
 
-.table-striped-columns tbody td:nth-of-type(2n) {
-  background-color: rgba(0, 0, 0, 0.05);
-}
 
 .no-padding {
   padding: 0;
@@ -34,4 +32,14 @@ td.schedule-timings {
 
 .schedule-left {
   width: fit-content;
+}
+
+.schedule-name {
+  border: 1px solid #000 !important;
+  text-align: center;
+}
+
+.schedule-name-empty {
+  border: 1px solid #000 !important;
+  background-color: gray;
 }

@@ -34,14 +34,18 @@
             </tr>
           </thead>
           <tbody>
-            <% names=[{ color: "#FF0000", name: "Viriyadhika" }, { color: "#FF00FF", name: "Sreyans" }, { name: "Julius", color: "#0000FF" }, { name: "Guek Ling", color: "#FFFF00" }] %>
-            <% (1..7).each do |i| %><!-- 7.times started from 0, would start week from Monday -->
-            <tr>
-              <% @timetable_iter.each do |t| %>
-                <% tmp = names.sample %>
-                <td style="white-space: nowrap; color: <%= choose_fgcolour(tmp[:color]) %>;background-color:<%= tmp[:color] %>"><%= tmp[:name] %></td>
+            <% process_duties(@start_date, @end_date).each do |day| %>
+              <% day.each do |place| %>
+                <tr>
+                <% place.each do |duty| %>
+                  <% if duty[:name].nil? %>
+                    <td class="schedule-name-empty" colspan="<%= duty[:colspan] %>">&nbsp;</td>
+                  <% else %>
+                    <td class="schedule-name" colspan="<%= duty[:colspan] %>"><%= duty[:name] %></td>
+                  <% end %>
+                <% end %>
+                </tr>
               <% end %>
-            </tr>
             <% end %>
           </tbody>
         </table>
