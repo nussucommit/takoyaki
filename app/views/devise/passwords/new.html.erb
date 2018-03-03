@@ -18,8 +18,7 @@
               <%= f.submit "Reset password" %>
             </div>
           <% end %>
-          <a href="/my/users/sign_in">Log In</a><br />
-          <a href="/my/users/unlock/new">Didn't receive unlock instructions?</a><br />
+          <%= render "devise/shared/links" %>
         </div>
       </div>
     </div>
@@ -31,4 +30,3 @@
     </div>  
   </div>
 </div>
-<%# <%= render "devise/shared/links" %>
