@@ -17,7 +17,6 @@
                 <td><%= place.name %></td>
                 </tr>
               <% end %>
-            </tr>
           <% end %>
 
         </table>
@@ -51,8 +50,9 @@
         </table>
         <%= form_tag generate_path method: "post" %>
           <%= label_tag(:num_weeks, "Generate for how many weeks ?") %>
-          <%= text_field_tag(:num_weeks) %> 
+          <%= text_field_tag(:num_weeks) %>
           <%= submit_tag("Generate") %>
+        <% end %>
       </div>
   </div>
 </div>

@@ -3,6 +3,8 @@
 class DutiesController < ApplicationController
   def index
     Bullet.enable = false
+    time_range = TimeRange.order(:start_time)
+    @header_iter = time_range.first.start_time.to_i.step(time_range.last.start_time.to_i, 1.hour)
     @start_date = Time.zone.today.beginning_of_week
     @end_date = @start_date + 6.days
     @places = Place.all
