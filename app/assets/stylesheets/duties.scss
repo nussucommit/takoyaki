@@ -1,6 +1,11 @@
 // Place all the styles related to the duties controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.next-week {
+  width: 100%;
+  text-align: right;
+}
 .scrollable {
   overflow: auto;
 }
@@ -46,8 +51,8 @@ td.schedule-timings {
 }
 
 .schedule-name-empty {
+  background-color: #AAAAAA;
   border: 1px solid #000 !important;
-  background-color: #808080;
 }
 
 .duty-table {
