@@ -11,10 +11,10 @@
           <% @announcements.each do |a| %>
             <div class="post">
               <div class="title"><%= a.subject %></div>
-              <div class="date">Posted on <%= a.created_at.localtime.strftime("%d %B %C%y, %I:%M %p") %></div>
+              <div class="date">Posted on <%= format_time(a.created_at) %></div>
               <div class="content">
-                <%= truncate(a.details, length: 90) %>
-                <% if a.details.mb_chars.length > 90 %>
+                <%= truncate(a.details, length: AnnouncementsHelper::DetailsLength) %>
+                <% if a.details.mb_chars.length > AnnouncementsHelper::DetailsLength %>
                   <%= link_to ' Read more', "#", 'data-target' => "#show_modal_#{a.id}", 'data-toggle' => 'modal' %>
                 <% end %>    
               </div>
