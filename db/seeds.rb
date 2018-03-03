@@ -24,6 +24,8 @@ end
 end
 
 User.create(email: 'test@example.com', password: '123456')
+User.create(email: 'test2@example.com', password: '123456')
+User.create(email: 'test3@example.com', password: '123456')
 
 # Timeslots in YIH
 Date::DAYNAMES.each do |day|
@@ -43,7 +45,7 @@ Date::DAYNAMES.each do |day|
       mc = (open == '0830' || close == '2100')
     end
 
-    Timeslot.create(mc_only: mc, day: day, default_user: User.take,
+    Timeslot.create(mc_only: mc, day: day, default_user: User.order("RANDOM()").first,
                     time_range: tr, place: Place.find_by(name: 'YIH'))
   end
 end
