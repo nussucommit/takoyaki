@@ -28,15 +28,15 @@ gem 'jquery-rails'
 gem 'turbolinks'
 gem 'jquery-turbolinks'
 # Use Bootstrap, the CSS framework (getbootstrap.com)
-gem 'bootstrap-sass'
+gem 'bootstrap'
 # Javascript interpreter
 gem 'therubyracer', platforms: :ruby
-# Autoprefixer for SCSS
-gem 'autoprefixer-rails'
 
 group :development do
   # Favicon set
   gem 'rails_real_favicon', '>= 0.0.7'
+  # Generate Entity-Relationship Diagram
+  gem 'rails-erd', require: false
 end
 
 ### END ASSETS
@@ -64,8 +64,6 @@ group :development do
   gem 'spring'
   # Shoot those n+1 queries!
   gem 'bullet'
-  # Trace routes
-  gem 'traceroute'
 end
 
 group :development, :test do
@@ -76,6 +74,10 @@ group :development, :test do
   gem 'rspec-rails'
   # Factory bot: factories for testing
   gem 'factory_bot_rails'
+  # Shoulda Matchers: matchers for testing -- experimental gem for Rails 5
+  gem 'shoulda-matchers', git: 'https://github.com/thoughtbot/shoulda-matchers.git', branch: 'rails-5'
+  # Trace routes
+  gem 'traceroute'
 end
 
 ### END UTILITIES
@@ -121,7 +123,7 @@ gem 'cancancan'
 # Adds various security stuff. You need protection!
 gem 'rack-protection'
 
-group :development do
+group :development, :test do
   # Security checkup
   gem 'brakeman'
 end
