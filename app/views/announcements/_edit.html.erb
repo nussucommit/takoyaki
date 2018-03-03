@@ -11,16 +11,16 @@
         </div>
 
         <div class="modal-body">
-		      <%= form_for announcement do |a| %>
+		      <%= form_for announcement, :html => {:class => "announcement-form"}  do |a| %>
             <%= a.label :subject, class: 'font-group' %>
-            <%= a.text_field :subject, class: 'font-group form-control' %><br>
+            <%= a.text_field :subject, class: 'font-group form-control', required: true %><br>
             <%= a.label :details, class: 'font-group' %>
-            <%= a.text_area :details, rows: 10, class: 'font-group form-control' %><br>
+            <%= a.text_area :details, rows: 10, class: 'font-group form-control', required: true %><br>
 
         </div>
 
         <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-secondary close-button" data-dismiss="modal">Close</button>
             <%= a.submit "Edit", class: 'btn btn-primary' %>
 
           <% end %>
