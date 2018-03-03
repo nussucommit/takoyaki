@@ -10,13 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180210035022) do
+ActiveRecord::Schema.define(version: 20180303014519) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "announcements", force: :cascade do |t|
-    t.datetime "date"
     t.text     "subject"
     t.text     "details"
     t.datetime "created_at", :null=>false
