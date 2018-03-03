@@ -1,7 +1,13 @@
 # frozen_string_literal: true
 
+require 'simplecov'
 require 'coveralls'
-Coveralls.wear!
+SimpleCov.formatters = SimpleCov::Formatter::MultiFormatter.new([
+  SimpleCov::Formatter::HTMLFormatter,
+  Coveralls::SimpleCov::Formatter
+])
+
+SimpleCov.start 'rails'
 
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 require 'spec_helper'
