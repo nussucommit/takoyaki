@@ -13,7 +13,7 @@ class UsersController < ApplicationController
     elsif params[role] == '0'
       @user.remove_role(role)
     end
-    end
+  end
 
   def index
     @users = User.all
