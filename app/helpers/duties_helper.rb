@@ -2,20 +2,20 @@
 
 module DutiesHelper
   def process_duties(start_date, end_date)
+    all_duties = Duty.includes(:user, timeslot: [:time_range])
+                     .order('time_ranges.start_time')
+
     start_date.upto(end_date).map do |day|
       Place.all.map do |place|
-        process_day_place(day, place)
+        process_day_place(all_duties.where(date: day, 'timeslots.place' => place))
       end
     end
   end
 
   private
 
-  def process_day_place(day, place)
+  def process_day_place(duties)
     result = []
-    duties = Duty.where(date: day)
-                 .joins(:timeslot).where('timeslots.place' => place)
-                 .ordered_by_start_time.includes(:timeslot, :user, :time_range)
     if duties.empty?
       return [{ name: nil, colspan: calc_colspan(TimeRange.first.start_time, TimeRange.last.end_time) }]
     end
@@ -28,7 +28,7 @@ module DutiesHelper
 
     result += process_duty(duties)
 
-    ending_time = TimeRange.last.start_time
+    ending_time = TimeRange.order(:start_time).last.start_time
     ending_duty = duties.last.timeslot.time_range.start_time
     if ending_time > ending_duty
       result.push(name: nil, colspan: calc_colspan(ending_duty, ending_time))
@@ -41,7 +41,8 @@ module DutiesHelper
     colspan = 0
     result = []
     duties.each_with_index do |duty, index|
-      colspan += calc_colspan(duty.timeslot.time_range.start_time, duty.timeslot.time_range.end_time)
+      time_range = duty.timeslot.time_range
+      colspan += calc_colspan(time_range.start_time, time_range.end_time)
       unless duties[index]&.user&.email == duties[index + 1]&.user&.email
         result.push(name: duty.user.email, colspan: colspan)
         colspan = 0
