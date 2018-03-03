@@ -21,18 +21,11 @@ td.schedule-daynames {
   text-align: center;
 }
 
+
 td.schedule-timings {
   padding: 0;
   margin: 0;
-  min-width: 50px;
-}
-
-@media (min-width: 768px) {
-  td.schedule-timings {
-    padding: 0;
-    margin: 0;
-    width: 150px;
-  }
+  width: 150px;
 }
 
 .no-padding {

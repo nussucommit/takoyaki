@@ -100,7 +100,7 @@ gem 'browser_details'
 
 group :development, :production do
   # Database profiler
-  gem 'rack-mini-profiler', require: false
+  gem 'rack-mini-profiler'
   # Auto-email exceptions
   gem 'exception_notification'
 end
