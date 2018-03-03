@@ -10,12 +10,13 @@ class DutiesController < ApplicationController
     @start_date = Time.zone.today.beginning_of_week
     @end_date = @start_date + 6.days
     @places = Place.all
-    @duty_array = (@start_date..@end_date).to_a.map do |date|
-      @places.to_a.map do |place|
-        Duty.where(date: date)
-            .joins(:timeslot).where('timeslots.place' => place).to_a
-      end
-    end
+  end
+
+  def generate_duties
+    start_date = Date.today.beginning_of_week
+    end_date = start_date + (params[:num_weeks].to_i * 7 - 1).days
+    Duty.generate(start_date, end_date)
+    redirect_to duties_path
   end
 end
   

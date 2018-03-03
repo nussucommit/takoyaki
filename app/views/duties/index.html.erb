@@ -45,6 +45,10 @@
             <% end %>
           </tbody>
         </table>
-        </div>
+        <%= form_tag generate_path method: "post" %>
+          <%= label_tag(:num_weeks, "Generate for how many weeks ?") %>
+          <%= text_field_tag(:num_weeks) %> 
+          <%= submit_tag("Generate") %>
+      </div>
   </div>
 </div>
