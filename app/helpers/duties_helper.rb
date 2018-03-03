@@ -24,14 +24,12 @@ module DutiesHelper
       result.push(name: nil, colspan: ((first_duty.start_time - first.start_time) / 0.5.hours).round)
     end
     duties = duties.to_a
-    colspan = 1
+    colspan = 0
     duties.each_with_index do |duty, index|
-      if duties[index]&.user&.email == duties[index + 1]&.user&.email
-        duration = ((duty.timeslot.time_range.end_time - duty.timeslot.time_range.start_time) / 0.5.hours).round
-        colspan += duration
-      else
+      colspan += ((duty.timeslot.time_range.end_time - duty.timeslot.time_range.start_time) / 0.5.hours).round
+      unless duties[index]&.user&.email == duties[index + 1]&.user&.email
         result.push(name: duty.user.email, colspan: colspan)
-        colspan = 1
+        colspan = 0
       end
     end
     last_duty = duties.last.timeslot.time_range

@@ -1,9 +1,12 @@
 <div class="container-fluid">
   <div class="scrollable" style="width: 100%; display: flex; flex-wrap: nowrap;">
         <div class="schedule-left">
-        <table class="table">
+        <table class="table table-sm">
           <!-- Empty row to accommodate the timing -->
-          <tr><td></td></tr>
+          <thead>
+            <tr><td class="schedule-timings"><div class="schedule-time">&nbsp;</div></td></tr>
+          </thead>
+          <tbody>
           <% (@start_date..@end_date).each do |day| %>
             <tr>
               <td class="schedule-daynames" rowspan="<%= @places.length %>"><%= day.strftime("%a, %d/%m/%y") %></td>
@@ -18,11 +21,12 @@
                 </tr>
               <% end %>
           <% end %>
+          </tbody>
 
         </table>
         </div>
         <div style="flex-grow: 100;">
-        <table class="table" style="padding-left: 20px;">
+        <table class="table table-sm" style="padding-left: 20px; table-layout:fixed;">
           <thead>
             <tr>
               <% @header_iter.each do |t| %>
@@ -40,7 +44,8 @@
                   <% if duty[:name].nil? %>
                     <td class="schedule-name-empty" colspan="<%= duty[:colspan] %>">&nbsp;</td>
                   <% else %>
-                    <td class="schedule-name" colspan="<%= duty[:colspan] %>"><%= duty[:name] %></td>
+                    <td class="schedule-name" colspan="<%= duty[:colspan] %>"><div style="overflow: hidden;
+white-space: nowrap; text-overflow: ellipsis;"><%= duty[:name] %></div></td>
                   <% end %>
                 <% end %>
                 </tr>
