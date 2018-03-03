@@ -13,5 +13,8 @@ require 'rails_helper'
 #   end
 # end
 RSpec.describe AnnouncementsHelper, type: :helper do
-  pending "add some examples to (or delete) #{__FILE__}"
+  it 'format_time working sucessfully' do
+    today = Time.zone.now.strftime('%d %B %C%y, %I:%M %p')
+    expect(today).to eq(format_time(Time.zone.now))
+  end
 end
