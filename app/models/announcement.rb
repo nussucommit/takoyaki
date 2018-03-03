@@ -4,8 +4,8 @@
 # Table name: announcements
 #
 #  id         :integer          not null, primary key
-#  subject    :text
-#  details    :text
+#  subject    :text             not null
+#  details    :text             not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
