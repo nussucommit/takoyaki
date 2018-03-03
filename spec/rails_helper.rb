@@ -2,10 +2,9 @@
 
 require 'simplecov'
 require 'coveralls'
-SimpleCov.formatters = SimpleCov::Formatter::MultiFormatter.new([
-  SimpleCov::Formatter::HTMLFormatter,
-  Coveralls::SimpleCov::Formatter
-])
+SimpleCov.formatters = SimpleCov::Formatter::MultiFormatter.new(
+  [SimpleCov::Formatter::HTMLFormatter, Coveralls::SimpleCov::Formatter]
+)
 
 SimpleCov.start 'rails'
 
