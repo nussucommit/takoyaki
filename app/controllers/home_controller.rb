@@ -5,7 +5,7 @@ class HomeController < ApplicationController
   def index
     if user_signed_in?
       @uu = current_user
-      #@uu.add_role :admin if @uu.email == 'jiang@u.nus.edu'
+      # @uu.add_role :admin if @uu.email == 'jiang@u.nus.edu'
       # redirect_to new_user_session_path
     else
       redirect_to new_user_session_path
