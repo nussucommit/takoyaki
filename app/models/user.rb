@@ -30,6 +30,7 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
-  has_many :duties
-  has_many :timeslots, foreign_key: :default_user_id, inverse_of: :user
+  has_many :duties, dependent: :nullify
+  has_many :timeslots, foreign_key: :default_user_id, inverse_of: :user,
+                       dependent: :nullify
 end
