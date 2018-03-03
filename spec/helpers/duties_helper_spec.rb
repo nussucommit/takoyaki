@@ -12,6 +12,7 @@ require 'rails_helper'
 #     end
 #   end
 # end
+# TODO: Add tests
 RSpec.describe DutiesHelper, type: :helper do
   pending "add some examples to (or delete) #{__FILE__}"
 end

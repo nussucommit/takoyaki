@@ -7,19 +7,22 @@ module DutiesHelper
 
     start_date.upto(end_date).map do |day|
       Place.all.map do |place|
-        process_day_place(all_duties.where(date: day, 'timeslots.place' => place))
+        process_day_place(all_duties.where(date: day,
+                                           'timeslots.place' => place))
       end
     end
   end
 
   private
 
-  # TODO: To be optimised later on
+  # TODO: To be refactored later on
   # rubocop:disable Metrics/LineLength, Metrics/AbcSize, Metrics/MethodLength
   def process_day_place(duties)
     result = []
     if duties.empty?
-      return [{ name: nil, colspan: calc_colspan(TimeRange.first.start_time, TimeRange.last.end_time) }]
+      return [{ name: nil,
+                colspan: calc_colspan(TimeRange.first.start_time,
+                                      TimeRange.last.end_time) }]
     end
 
     starting_time = TimeRange.order(:start_time).first.start_time

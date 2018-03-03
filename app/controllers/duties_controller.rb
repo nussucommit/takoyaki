@@ -3,8 +3,9 @@
 class DutiesController < ApplicationController
   def index
     @header_iter = generate_header_iter
-    @start_date = (params[:start_date] || Time.zone.today.beginning_of_week).to_date
-    @end_date = (@start_date).to_date + 6.days
+    @start_date = (params[:start_date] || Time.zone.today.beginning_of_week)
+                  .to_date
+    @end_date = @start_date.to_date + 6.days
     @places = Place.all
   end
 
@@ -23,6 +24,4 @@ class DutiesController < ApplicationController
     last_time = time_range.last.start_time
     first_time.to_i.step(last_time.to_i, 1.hour)
   end
-
-
 end

@@ -1,33 +1,34 @@
-<%= link_to '<button class="btn btn-large btn-primary" type="button">Previous Week</button>'.html_safe, duties_path(start_date: @start_date - 7), method: :get %>
-<%= link_to '<button class="btn btn-large btn-primary" type="button" style="float:right">Next Week</button>'.html_safe, duties_path(start_date: @start_date + 7), method: :get %>
 <div class="container-fluid">
+  <%= link_to 'Previous Week', duties_path(start_date: @start_date - 7), class: 'btn btn-large btn-light' %>
+  <%= link_to 'Next Week', duties_path(start_date: @start_date + 7), class: 'btn btn-large btn-light' %>
+
   <div class="scrollable schedule-container">
     <div class="schedule-left">
-    <table class="table table-sm">
-      <!-- Empty row to accommodate the timing -->
-      <thead>
-        <tr><td class="schedule-timings"><div class="schedule-time">&nbsp;</div></td></tr>
-      </thead>
-      <tbody>
-      <% (@start_date..@end_date).each do |day| %>
-        <tr>
-          <td class="schedule-daynames" rowspan="<%= @places.length %>"><%= day.strftime("%a, %d/%m/%y") %></td>
-          <% first = true %>
-          <% @places.each do |place| %>
-            <% if first %>
-              <% first = false %>
-            <% else %>
+      <table class="table table-sm">
+        <!-- Empty row to accommodate the timing -->
+        <thead>
+          <tr><td class="schedule-timings"><div class="schedule-time">&nbsp;</div></td></tr>
+        </thead>
+        <tbody>
+          <% (@start_date..@end_date).each do |day| %>
+            <% first = true %>
+            <% @places.each do |place| %>
               <tr>
+                <% if first %>
+                  <td class="schedule-daynames" rowspan="<%= @places.length %>">
+                    <%= day.strftime("%a, %d/%m/%y") %>
+                  </td>
+                  <% first = false %>
+                <% end %>
+                <td><%= place.name %></td>
+              </tr>
             <% end %>
-            <td><%= place.name %></td>
-            </tr>
           <% end %>
-      <% end %>
-      </tbody>
+        </tbody>
 
       </table>
-      </div>
-      <div style="flex-grow: 100;">
+    </div>
+    <div style="flex-grow: 100;">
       <table class="table table-sm duty-table">
         <thead>
           <tr>
@@ -46,7 +47,9 @@
                 <% if duty[:name].nil? %>
                   <td class="schedule-name-empty" colspan="<%= duty[:colspan] %>">&nbsp;</td>
                 <% else %>
-                  <td class="schedule-name" colspan="<%= duty[:colspan] %>"><div class="text-overflow-ellipsis"><%= duty[:name] %></div></td>
+                  <td class="schedule-name" colspan="<%= duty[:colspan] %>">
+                    <div class="text-overflow-ellipsis"><%= duty[:name] %></div>
+                  </td>
                 <% end %>
               <% end %>
               </tr>
@@ -56,8 +59,9 @@
       </table>
     </div>
   </div>
-  <%= form_tag(generate_path, method: "post") do %>
-    <%= label_tag(:num_weeks, "Generate for how many weeks ?") %>
+
+  <%= form_tag(generate_duties_path, method: "post") do %>
+    <%= label_tag(:num_weeks, "Generate for how many weeks?") %>
     <%= text_field_tag(:num_weeks) %>
     <%= submit_tag("Generate") %>
   <% end %>

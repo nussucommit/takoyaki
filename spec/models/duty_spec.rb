@@ -41,12 +41,12 @@ RSpec.describe Duty, type: :model do
 
   it 'ordered_by_start_time' do
     create_list(:time_range, 10)
-    Duty.generate(Time.zone.today.beginning_of_week, Time.zone.today)
-    ok = true
-    Duty.where(date: Time.zone.today.beginning_of_week).ordered_by_start_time.each_cons(2) do |a, b|
-      ok = false unless a < b
-    end
-    expect(ok).to eq(true)
-  end
 
+    today = Time.zone.today
+    Duty.generate(today.beginning_of_week, today)
+    expect(
+      Duty.where(date: today.beginning_of_week).order(:start_time)
+          .each_cons(2).all? { |a, b| a < b }
+    ).to be(true)
+  end
 end
