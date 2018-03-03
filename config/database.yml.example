@@ -20,4 +20,3 @@ test:
 production:
   <<: *default
   database: takoyaki
-  
