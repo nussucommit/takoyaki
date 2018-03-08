@@ -2,7 +2,7 @@
   <%= link_to 'Previous Week', duties_path(start_date: @start_date - 7), class: 'btn btn-large btn-light' %>
   <%= link_to 'Next Week', duties_path(start_date: @start_date + 7), class: 'btn btn-large btn-light' %>
 
-  <div class="scrollable schedule-container">
+  <div class="schedule-container">
     <div class="schedule-left">
       <table class="table table-sm">
         <!-- Empty row to accommodate the timing -->
@@ -28,7 +28,7 @@
 
       </table>
     </div>
-    <div style="flex-grow: 100;">
+    <div style="flex-grow: 100;" class="scrollable">
       <table class="table table-sm duty-table">
         <thead>
           <tr>
