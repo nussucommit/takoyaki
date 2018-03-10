@@ -28,11 +28,9 @@ gem 'jquery-rails'
 gem 'turbolinks'
 gem 'jquery-turbolinks'
 # Use Bootstrap, the CSS framework (getbootstrap.com)
-gem 'bootstrap-sass'
+gem 'bootstrap'
 # Javascript interpreter
 gem 'therubyracer', platforms: :ruby
-# Autoprefixer for SCSS
-gem 'autoprefixer-rails'
 
 group :development do
   # Favicon set
@@ -102,7 +100,7 @@ gem 'browser_details'
 
 group :development, :production do
   # Database profiler
-  gem 'rack-mini-profiler', require: false
+  gem 'rack-mini-profiler'
   # Auto-email exceptions
   gem 'exception_notification'
 end

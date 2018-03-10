@@ -1,12 +1,11 @@
 # frozen_string_literal: true
-
 # == Schema Information
 #
 # Table name: timeslots
 #
 #  id              :integer          not null, primary key
 #  mc_only         :boolean
-#  day             :date
+#  day             :text
 #  default_user_id :integer
 #  time_range_id   :integer
 #  place_id        :integer
@@ -25,13 +24,12 @@
 #  fk_rails_...  (place_id => places.id)
 #  fk_rails_...  (time_range_id => time_ranges.id)
 #
-# rubocop:enable Metrics/LineLength
 
 require 'rails_helper'
 
 RSpec.describe Timeslot, type: :model do
   it { should have_many(:duties) }
-  it { should belong_to(:user) }
+  it { should belong_to(:default_user).class_name('User') }
   it { should belong_to(:place) }
   it { should belong_to(:time_range) }
 end

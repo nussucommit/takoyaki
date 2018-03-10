@@ -1,0 +1,31 @@
+<% @announcements.each do |announcement| %>
+  <div class="modal fade" id="edit_modal_<%= announcement.id %>" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <h5 class="modal-title title">Edit</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+
+        <%= form_for announcement, :html => { class: "announcement-form" } do |a| %>
+          <div class="modal-body">
+            <%= a.label :subject, class: 'font-group' %>
+            <%= a.text_field :subject, class: 'font-group form-control', required: true %><br>
+            <%= a.label :details, class: 'font-group' %>
+            <%= a.text_area :details, rows: 10, class: 'font-group form-control', required: true %><br>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary close-button" data-dismiss="modal">Close</button>
+            <%= a.submit "Edit", class: 'btn btn-primary' %>
+          </div>
+
+        <% end %>
+      </div>
+    </div>
+  </div>
+<% end %>
+

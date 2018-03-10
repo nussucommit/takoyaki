@@ -20,13 +20,13 @@ Layout/EmptyLinesAroundArguments:
 
 Metrics/BlockLength:
   Exclude:
-    - 'test/**/*'
+    - 'spec/**/*'
     - 'app/models/concerns/*'
     - 'app/controllers/concerns/*'
 
 Metrics/ClassLength:
   Exclude:
-    - 'test/**/*'
+    - 'spec/**/*'
 
 Naming/FileName:
   Exclude:
@@ -38,9 +38,6 @@ Rails:
 Rails/HasAndBelongsToMany:
   Exclude:
     - 'app/models/role.rb'
-
-Rails/HasManyOrHasOneDependent:
-  Enabled: false
 
 Rails/SaveBang:
   Enabled: false
