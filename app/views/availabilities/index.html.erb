@@ -23,11 +23,14 @@
         <td><%= availability_day[0].day %></td>
         <% availability_day.each do |availability| %>
           <td align="center"
+            <%= "onclick = toggle(" + availability.id.to_s + ")" %>
+            <%= "id = cell_" + availability.id.to_s %>
             <% time_range = TimeRange.where(id: availability.time_range_id)[0] %>
             <% if time_range.end_time - time_range.start_time > 3599 %>
               colspan="2"
             <% end %> >
-            <%= check_box_tag 'availability_ids[]', availability.id, Availability.statuses[availability.status] == 1 -%>
+            <%= check_box_tag 'availability_ids[]', availability.id,
+              Availability.statuses[availability.status] == 1, :style => "visibility: hidden; display: none:" -%>
           </td>
         <% end %>
       </tr>
@@ -38,12 +41,13 @@
   <%= submit_tag("Cancel", :id => 'cancel-button',  :data => { disable_with: false }) %>
 <% end %>
 
-
 <script>
+  window.onload = load;
   $('#clear-all-button').click(function(e){
     e.preventDefault();
-    $('input[type=checkbox]').each(function(id){ 
+    $('input[type=checkbox]').each(function(id){
       $(this).prop('checked', false);
+      update($(this).val());
     });
   });
 
@@ -51,6 +55,29 @@
     e.preventDefault();
     location = location;
   });
+
+  function toggle(id) {
+    var cb = get_checkbox(id);
+    cb.checked = !cb.checked;
+    update(id);
+  }
+
+  function update(id) {
+    var cb = get_checkbox(id);
+    var td = document.getElementById("cell_" + id);
+    td.className = cb.checked ? 'yes' : 'no';
+  }
+
+  function get_checkbox(id) {
+    return document.querySelectorAll("input[type='checkbox'][value='" + id + "']")[0];
+  }
+
+  function load() {
+    $('input[type=checkbox]').each(function(id){
+      update($(this).val());
+    });
+  }
+
 </script>
 
 <style>
@@ -63,5 +90,11 @@
     position: relative;
     left: -20px;
     font-weight: normal;
+  }
+  td.yes {
+    background-color: chartreuse;
+  }
+  td.no {
+    background-color: crimson;
   }
 </style>

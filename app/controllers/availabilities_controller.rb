@@ -10,7 +10,6 @@ class AvailabilitiesController < ApplicationController
   end
 
   def create
-    print "Posted"
     availability_ids = unless params.key?(:availability_ids) 
       then [] else params[:availability_ids] end
     Availability.where(user_id: current_user.id).each do |availability|
