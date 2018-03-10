@@ -1,45 +1,47 @@
-<h1>Schedule Availability</h1>
+<div class="container-fluid">
+  <h1>Schedule Availability</h1>
 
-<%= link_to 'Logout', destroy_user_session_path, method: :delete %>
+  <%= link_to 'Logout', destroy_user_session_path, method: :delete %>
 
-<%= form_tag("/availabilities", method: "post") do %>
-  <table width="100%">
-    </colgroup>
-    <tr>
-      <th></th>
-      <% start_time = @start_time %>
-      <% end_time = @end_time %>
-      <% while start_time <= end_time do %>
-        <th colspan="2">
-          <span class="lbl">
-            <%= start_time.strftime("%H:%M") %>
-          </span>
-        </th>
-        <% start_time += 3600 %>
-      <% end %>
-    </tr>
-    <% @availabilities.each do |availability_day| %>
+  <%= form_tag("/availabilities", method: "post") do %>
+    <table class="table table-sm">
       <tr>
-        <td><%= availability_day[0].day %></td>
-        <% availability_day.each do |availability| %>
-          <td align="center"
-            <%= "onclick = toggle(" + availability.id.to_s + ")" %>
-            <%= "id = cell_" + availability.id.to_s %>
-            <% time_range = TimeRange.where(id: availability.time_range_id)[0] %>
-            <% if time_range.end_time - time_range.start_time > 3599 %>
-              colspan="2"
-            <% end %> >
-            <%= check_box_tag 'availability_ids[]', availability.id,
-              Availability.statuses[availability.status] == 1, :style => "visibility: hidden; display: none:" -%>
-          </td>
+        <th></th>
+        <% start_time = @start_time %>
+        <% end_time = @end_time %>
+        <% while start_time <= end_time do %>
+          <th colspan="2">
+            <span class="lbl">
+              <%= start_time.strftime("%H:%M") %>
+            </span>
+          </th>
+          <% start_time += 3600 %>
         <% end %>
       </tr>
-    <% end %>
-  </table>
-  <%= submit_tag("Update", :id => 'update-button', :data => { disable_with: false }) %>
-  <%= submit_tag("Clear All", :id => 'clear-all-button', :data => { disable_with: false }) %>
-  <%= submit_tag("Cancel", :id => 'cancel-button',  :data => { disable_with: false }) %>
-<% end %>
+      <% @availabilities.each do |availability_day| %>
+        <tr>
+          <td class="dayname"><%= availability_day[0].day[0..2] %></td>
+          <% availability_day.each do |availability| %>
+            <td align="center" class="checkbox_cell"
+              <%= "onclick = toggle(" + availability.id.to_s + ")" %>
+              <%= "id = cell_" + availability.id.to_s %>
+              <% time_range = TimeRange.where(id: availability.time_range_id)[0] %>
+              <% if time_range.end_time - time_range.start_time > 3599 %>
+                colspan="2"
+              <% end %> >
+              <%= check_box_tag 'availability_ids[]', availability.id,
+                Availability.statuses[availability.status] == 1, :style => "visibility: hidden; display: none:" -%>
+            </td>
+          <% end %>
+        </tr>
+      <% end %>
+    </table>
+    <%= submit_tag("Update", :id => 'update-button', :data => { disable_with: false }, :class => "btn btn-large btn-light") %>
+    <%= submit_tag("Clear All", :id => 'clear-all-button', :data => { disable_with: false }, :class => "btn btn-large btn-light")%>
+    <%= submit_tag("Cancel", :id => 'cancel-button',  :data => { disable_with: false }, :class => "btn btn-large btn-light") %>
+  <% end %>
+
+</div>
 
 <script>
   window.onload = load;
@@ -79,22 +81,3 @@
   }
 
 </script>
-
-<style>
-  table td {
-    border: 1px solid lightgray;
-    line-height: 40px;
-  }
-  .lbl {
-    display: block;
-    position: relative;
-    left: -20px;
-    font-weight: normal;
-  }
-  td.yes {
-    background-color: chartreuse;
-  }
-  td.no {
-    background-color: crimson;
-  }
-</style>

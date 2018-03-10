@@ -1,3 +1,28 @@
 // Place all the styles related to the availabilities controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.dayname {
+  font-weight: bold;
+  vertical-align: middle;
+  text-align: center;
+  width: 4em;
+}
+
+table td {
+  line-height: 40px;
+}
+.lbl {
+  display: block;
+  position: relative;
+  left: -25px;
+  font-weight: normal;
+}
+td.yes {
+  background-color: chartreuse;
+  border: 1px solid lightgray;
+}
+td.no {
+  background-color: crimson;
+  border: 1px solid lightgray;
+}
