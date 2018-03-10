@@ -8,6 +8,7 @@ class AvailabilitiesController < ApplicationController
   end
 
   def create
+    print "Posted"
     availability_ids = unless params.key?(:availability_ids) 
       then [] else params[:availability_ids] end
     Availability.where(user_id: current_user.id).each do |availability|
@@ -15,11 +16,6 @@ class AvailabilitiesController < ApplicationController
         availability_ids.include?(availability.id.to_s))
     end
   end
-  
-  # def apalah
-  #   redirect_to user_session_path
-  #   # raise 'indomie'
-  # end
 
   def set(availability, status)
     availability.status = status ? 1 : 0

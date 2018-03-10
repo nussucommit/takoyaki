@@ -25,15 +25,20 @@
 
         
   <%= submit_tag("Update", :id => 'update-button', :data => { disable_with: false }) %>
-  <%= submit_tag("Reset", :id => 'reset-button', :data => { disable_with: false }) %>
+  <%= submit_tag("Clear All", :id => 'clear-all-button', :data => { disable_with: false }) %>
+  <%= submit_tag("Cancel", :id => 'cancel-button',  :data => { disable_with: false }) %>
 
   <script>
-    $('#reset-button').click(function(e){
+    $('#clear-all-button').click(function(e){
       e.preventDefault();
       $('input[type=checkbox]').each(function(id){ 
         $(this).prop('checked', false);
       });
-      $('#update-button').click();
+    });
+
+    $('#cancel-button').click(function(e){
+      e.preventDefault();
+      location = location;
     });
   </script>
   
