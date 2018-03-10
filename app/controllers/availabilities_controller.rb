@@ -9,7 +9,7 @@ class AvailabilitiesController < ApplicationController
     @end_time = get_end_time
   end
 
-  def create
+  def update_availabilities
     availability_ids = unless params.key?(:availability_ids) 
       then [] else params[:availability_ids] end
     Availability.where(user_id: current_user.id).each do |availability|
