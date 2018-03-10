@@ -3,43 +3,65 @@
 <%= link_to 'Logout', destroy_user_session_path, method: :delete %>
 
 <%= form_tag("/availabilities", method: "post") do %>
-
-  <table border="1">
-  <tr>
-    <th></th>
-    <% @time_ranges.each do |time_range| %>
-      <th> <%= time_range.start_time.strftime("%H:%M") %> - <%= time_range.end_time.strftime("%H:%M") %> </th>
-    <% end %>
-  </tr>
-  <% @availabilities.each do |availability_day| %>
+  <table width="100%">
+    </colgroup>
     <tr>
-      <td><%= availability_day[0].day %></td>
-      <% availability_day.each do |availability| %>
-        <td align="center">
-          <%= check_box_tag 'availability_ids[]', availability.id, Availability.statuses[availability.status] == 1 -%>
-        </td>
+      <th></th>
+      <% start_time = @start_time %>
+      <% end_time = @end_time %>
+      <% while start_time <= end_time do %>
+        <th colspan="2">
+          <span class="lbl">
+            <%= start_time.strftime("%H:%M") %>
+          </span>
+        </th>
+        <% start_time += 3600 %>
       <% end %>
     </tr>
-  <% end %>
+    <% @availabilities.each do |availability_day| %>
+      <tr>
+        <td><%= availability_day[0].day %></td>
+        <% availability_day.each do |availability| %>
+          <td align="center"
+            <% time_range = TimeRange.where(id: availability.time_range_id)[0] %>
+            <% if time_range.end_time - time_range.start_time > 3599 %>
+              colspan="2"
+            <% end %> >
+            <%= check_box_tag 'availability_ids[]', availability.id, Availability.statuses[availability.status] == 1 -%>
+          </td>
+        <% end %>
+      </tr>
+    <% end %>
   </table>
-
-        
   <%= submit_tag("Update", :id => 'update-button', :data => { disable_with: false }) %>
   <%= submit_tag("Clear All", :id => 'clear-all-button', :data => { disable_with: false }) %>
   <%= submit_tag("Cancel", :id => 'cancel-button',  :data => { disable_with: false }) %>
-
-  <script>
-    $('#clear-all-button').click(function(e){
-      e.preventDefault();
-      $('input[type=checkbox]').each(function(id){ 
-        $(this).prop('checked', false);
-      });
-    });
-
-    $('#cancel-button').click(function(e){
-      e.preventDefault();
-      location = location;
-    });
-  </script>
-  
 <% end %>
+
+
+<script>
+  $('#clear-all-button').click(function(e){
+    e.preventDefault();
+    $('input[type=checkbox]').each(function(id){ 
+      $(this).prop('checked', false);
+    });
+  });
+
+  $('#cancel-button').click(function(e){
+    e.preventDefault();
+    location = location;
+  });
+</script>
+
+<style>
+  table td {
+    border: 1px solid lightgray;
+    line-height: 30px;
+  }
+  .lbl {
+    display: block;
+    position: relative;
+    left: -20px;
+    font-weight: normal;
+  }
+</style>

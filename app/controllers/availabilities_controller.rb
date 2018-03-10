@@ -3,8 +3,10 @@
 class AvailabilitiesController < ApplicationController
   before_action :authenticate_user!
   def index
-    @time_ranges = TimeRange.all
+    @time_ranges = TimeRange.all.to_a.sort_by! { |x| x.start_time }
     @availabilities = load_availabilities
+    @start_time = get_start_time
+    @end_time = get_end_time
   end
 
   def create
@@ -48,5 +50,12 @@ class AvailabilitiesController < ApplicationController
                         time_range_id: time_range_id)
   end
   
+  def get_start_time
+    @time_ranges[0].start_time.beginning_of_hour
+  end
+
+  def get_end_time
+    (@time_ranges[-1].end_time-1).beginning_of_hour + 3600
+  end
   
 end
