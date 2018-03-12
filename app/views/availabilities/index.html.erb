@@ -11,7 +11,7 @@
         <% end_time = @end_time %>
         <% while start_time <= end_time do %>
           <th colspan="2">
-            <span class="lbl">
+            <span class="time-label">
               <%= start_time.strftime("%H:%M") %>
             </span>
           </th>
@@ -67,7 +67,7 @@
   function update(id) {
     var cb = get_checkbox(id);
     var td = document.getElementById("cell_" + id);
-    td.className = cb.checked ? 'yes' : 'no';
+    td.className = cb.checked ? 'availability-yes' : 'availability-no';
   }
 
   function get_checkbox(id) {

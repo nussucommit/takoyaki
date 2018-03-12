@@ -27,5 +27,5 @@ class Availability < ApplicationRecord
   belongs_to :user
   belongs_to :time_range
   enum day: Date::DAYNAMES.map(&:to_sym)
-  enum status: [:Unavailable, :Available]
+  enum status: %i[Unavailable Available]
 end

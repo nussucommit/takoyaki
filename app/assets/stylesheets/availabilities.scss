@@ -2,6 +2,8 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+@import "colors";
+
 .dayname {
   font-weight: bold;
   vertical-align: middle;
@@ -12,17 +14,17 @@
 table td {
   line-height: 40px;
 }
-.lbl {
+.time-label {
   display: block;
   position: relative;
   left: -25px;
   font-weight: normal;
 }
-td.yes {
-  background-color: chartreuse;
-  border: 1px solid lightgray;
+.availability-yes {
+  background-color: $color-green;
+  border: 1px solid white;
 }
-td.no {
-  background-color: crimson;
-  border: 1px solid lightgray;
+.availability-no {
+  background-color: $color-red;
+  border: 1px solid white;
 }

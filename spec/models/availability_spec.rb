@@ -33,7 +33,7 @@ RSpec.describe Availability, type: :model do
     create(:user)
     availability = Availability.new(user_id: User.take.id, time_range_id: TimeRange.take.id, status: 1, day: 6)
     expect(availability.save).to be true
-    availability = Availability.new(user_id: User.take.id, time_range_id: TimeRange.take.id, status: "Available", day: "Monday")
+    availability = Availability.new(user_id: User.take.id, time_range_id: TimeRange.take.id, status: 'Available', day: 'Monday')
     expect(availability.save).to be true
   end
   it 'raises ArgumentError if day is out of range' do
@@ -42,7 +42,7 @@ RSpec.describe Availability, type: :model do
     expect { Availability.new(user_id: User.take.id, time_range_id: TimeRange.take.id, status: 1, day: 7) }.to raise_error(ArgumentError)
     expect { Availability.new(user_id: User.take.id, time_range_id: TimeRange.take.id, status: 1, day: -1) }.to raise_error(ArgumentError)
     expect { Availability.new(user_id: User.take.id, time_range_id: TimeRange.take.id, status: 1, day: 0.5) }.to raise_error(ArgumentError)
-    expect { Availability.new(user_id: User.take.id, time_range_id: TimeRange.take.id, status: 1, day: "takoyaki") }.to raise_error(ArgumentError)
+    expect { Availability.new(user_id: User.take.id, time_range_id: TimeRange.take.id, status: 1, day: 'takoyaki') }.to raise_error(ArgumentError)
   end
   it 'raises ArgumentError if status is out of range' do
     create(:time_range)

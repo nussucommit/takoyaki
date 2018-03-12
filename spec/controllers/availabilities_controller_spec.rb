@@ -12,5 +12,4 @@ RSpec.describe AvailabilitiesController, type: :controller do
     end
     it { should respond_with :ok }
   end
-
 end
