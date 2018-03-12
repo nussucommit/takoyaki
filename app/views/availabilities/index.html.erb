@@ -9,7 +9,7 @@
         <th></th>
         <% start_time = @start_time %>
         <% end_time = @end_time %>
-        <% start_time.step(end_time, 1.hour) do |current_time| %>
+        <% while start_time <= end_time do %>
           <th colspan="2">
             <span class="time-label">
               <%= start_time.strftime("%H:%M") %>
