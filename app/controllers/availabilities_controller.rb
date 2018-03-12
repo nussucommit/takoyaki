@@ -20,6 +20,8 @@ class AvailabilitiesController < ApplicationController
     end
   end
 
+  private
+
   def set(availability, status)
     availability.status = status ? 1 : 0
     availability.save

@@ -25,8 +25,9 @@
 
 FactoryBot.define do
   factory :availability do
-    user nil
+    association :user, factory: :user
+    association :time_range, factory: :time_range
     day 1
-    time_range nil
+    status 1
   end
 end

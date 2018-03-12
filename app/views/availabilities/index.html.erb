@@ -9,13 +9,13 @@
         <th></th>
         <% start_time = @start_time %>
         <% end_time = @end_time %>
-        <% while start_time <= end_time do %>
+        <% start_time.step(end_time, 1.hour) do |current_time| %>
           <th colspan="2">
             <span class="time-label">
               <%= start_time.strftime("%H:%M") %>
             </span>
           </th>
-          <% start_time += 3600 %>
+          <% start_time += 1.hour %>
         <% end %>
       </tr>
       <% @availabilities.each do |availability_day| %>
@@ -23,10 +23,10 @@
           <td class="dayname"><%= availability_day[0].day[0..2] %></td>
           <% availability_day.each do |availability| %>
             <td align="center" class="checkbox_cell"
-              <%= "onclick = toggle(" + availability.id.to_s + ")" %>
-              <%= "id = cell_" + availability.id.to_s %>
+              <%= "onclick = toggle(#{availability.id})" %>
+              <%= "id = cell_#{availability.id.to_s}" %>
               <% time_range = TimeRange.where(id: availability.time_range_id)[0] %>
-              <% if time_range.end_time - time_range.start_time > 3599 %>
+              <% if time_range.end_time - time_range.start_time >= 1.hour %>
                 colspan="2"
               <% end %> >
               <%= check_box_tag 'availability_ids[]', availability.id,
