@@ -2,15 +2,18 @@
 
 class AvailabilitiesController < ApplicationController
   before_action :authenticate_user!
+
   def index
-    @time_ranges = TimeRange.all.to_a.sort_by!(&:start_time)
+    @time_ranges = TimeRange.order(:start_time)
     @availabilities = load_availabilities
-    @start_time = get_start_time
-    @end_time = get_end_time
+    @start_time = start_time
+    @end_time = end_time
   end
 
   def update_availabilities
-    availability_ids = if params.key?(:availability_ids) then params[:availability_ids] else [] end
+    availability_ids = if params.key?(:availability_ids)
+                         params[:availability_ids] else []
+                       end
     Availability.where(user_id: current_user.id).each do |availability|
       set(availability,
           availability_ids.include?(availability.id.to_s))
@@ -48,11 +51,11 @@ class AvailabilitiesController < ApplicationController
                         time_range_id: time_range_id)
   end
 
-  def get_start_time
+  def start_time
     @time_ranges[0].start_time.beginning_of_hour
   end
 
-  def get_end_time
+  def end_time
     (@time_ranges[-1].end_time - 1).beginning_of_hour + 3600
   end
 end

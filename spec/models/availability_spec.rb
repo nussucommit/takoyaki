@@ -31,37 +31,66 @@ RSpec.describe Availability, type: :model do
   it 'saves given a valid Availability' do
     create(:time_range)
     create(:user)
-    availability = Availability.new(user_id: User.take.id, time_range_id: TimeRange.take.id, status: 1, day: 6)
+    availability = Availability.new(user_id: User.take.id,
+                                    time_range_id: TimeRange.take.id,
+                                    status: 1, day: 6)
     expect(availability.save).to be true
-    availability = Availability.new(user_id: User.take.id, time_range_id: TimeRange.take.id, status: 'Available', day: 'Monday')
+    availability = Availability.new(user_id: User.take.id,
+                                    time_range_id: TimeRange.take.id,
+                                    status: 'Available', day: 'Monday')
     expect(availability.save).to be true
   end
   it 'raises ArgumentError if day is out of range' do
     create(:time_range)
     create(:user)
-    expect { Availability.new(user_id: User.take.id, time_range_id: TimeRange.take.id, status: 1, day: 7) }.to raise_error(ArgumentError)
-    expect { Availability.new(user_id: User.take.id, time_range_id: TimeRange.take.id, status: 1, day: -1) }.to raise_error(ArgumentError)
-    expect { Availability.new(user_id: User.take.id, time_range_id: TimeRange.take.id, status: 1, day: 0.5) }.to raise_error(ArgumentError)
-    expect { Availability.new(user_id: User.take.id, time_range_id: TimeRange.take.id, status: 1, day: 'takoyaki') }.to raise_error(ArgumentError)
+    expect do
+      Availability.new(user_id: User.take.id,
+                       time_range_id: TimeRange.take.id, status: 1, day: 7)
+    end.to raise_error(ArgumentError)
+    expect do
+      Availability.new(user_id: User.take.id,
+                       time_range_id: TimeRange.take.id, status: 1, day: -1)
+    end.to raise_error(ArgumentError)
+    expect do
+      Availability.new(user_id: User.take.id,
+                       time_range_id: TimeRange.take.id, status: 1, day: 0.5)
+    end.to raise_error(ArgumentError)
+    expect do
+      Availability.new(user_id: User.take.id,
+                       time_range_id: TimeRange.take.id, status: 1,
+                       day: 'takoyaki')
+    end.to raise_error(ArgumentError)
   end
   it 'raises ArgumentError if status is out of range' do
     create(:time_range)
     create(:user)
-    expect { Availability.new(user_id: User.take.id, time_range_id: TimeRange.take.id, status: -1, day: 6) }.to raise_error(ArgumentError)
-    expect { Availability.new(user_id: User.take.id, time_range_id: TimeRange.take.id, status: 2, day: 6) }.to raise_error(ArgumentError)
+    expect do
+      Availability.new(user_id: User.take.id, time_range_id: TimeRange.take.id,
+                       status: -1, day: 6)
+    end.to raise_error(ArgumentError)
+    expect do
+      Availability.new(user_id: User.take.id, time_range_id: TimeRange.take.id,
+                       status: 2, day: 6)
+    end.to raise_error(ArgumentError)
   end
   it 'does not save if User does not exist' do
     create(:time_range)
-    availability = Availability.new(user_id: 1, time_range_id: TimeRange.take.id, status: 1, day: 6)
+    availability = Availability.new(user_id: 1,
+                                    time_range_id: TimeRange.take.id,
+                                    status: 1, day: 6)
     expect(availability.save).to be false
-    availability = Availability.new(user_id: nil, time_range_id: TimeRange.take.id, status: 1, day: 6)
+    availability = Availability.new(user_id: nil,
+                                    time_range_id: TimeRange.take.id,
+                                    status: 1, day: 6)
     expect(availability.save).to be false
   end
   it 'does not save if TimeRange does not exist' do
     create(:user)
-    availability = Availability.new(user_id: User.take.id, time_range_id: 1, status: 1, day: 6)
+    availability = Availability.new(user_id: User.take.id,
+                                    time_range_id: 1, status: 1, day: 6)
     expect(availability.save).to be false
-    availability = Availability.new(user_id: User.take.id, time_range_id: nil, status: 1, day: 6)
+    availability = Availability.new(user_id: User.take.id,
+                                    time_range_id: nil, status: 1, day: 6)
     expect(availability.save).to be false
   end
 end

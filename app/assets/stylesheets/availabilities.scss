@@ -21,10 +21,10 @@ table td {
   font-weight: normal;
 }
 .availability-yes {
-  background-color: $color-green;
-  border: 1px solid white;
+  background-color: white;
+  border: 1px solid black;
 }
 .availability-no {
-  background-color: $color-red;
-  border: 1px solid white;
+  background-color: $color-grey;
+  border: 1px solid black;
 }
