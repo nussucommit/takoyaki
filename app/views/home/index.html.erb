@@ -5,5 +5,6 @@
 <% if current_user.has_role?(:admin)%>
    <%= link_to 'User Admin Console', users_path %>
 <% end %>
-<%= link_to 'Change password', edit_user_registration_path %>
+<%= link_to 'Change profile', edit_user_registration_path %>
+<%= link_to 'Change password', edit_user_path(current_user) %>
 <%= link_to 'Logout', destroy_user_session_path, method: :delete %>

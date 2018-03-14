@@ -2,7 +2,7 @@
 
 class UsersController < ApplicationController
   before_action :authenticate_user!
-  before_action :check_admin
+  #before_action :check_admin
   def check_admin
     if !current_user.has_role?(:admin)
        redirect_to root_path
@@ -17,6 +17,7 @@ class UsersController < ApplicationController
     end
 
   def index
+    check_admin
     @users = User.all
   end
 
@@ -26,8 +27,10 @@ class UsersController < ApplicationController
 
   def update
     @user = User.find params[:id]
-    Role::ROLES.each do |r|
-      role_adder(r)
+    if current_user.has_role?(:admin)
+      Role::ROLES.each do |r|
+        role_adder(r)
+      end
     end
     @user.update(user_params)
       # Sign in the user by passing validation in case their password changed

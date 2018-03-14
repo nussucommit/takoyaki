@@ -1,3 +1,8 @@
+<% if current_user.has_role?(:admin)%>
+  <h1>Edit password or Allocate roles </h1>
+<%else%>
+  <h1>Edit your password</h1>
+<% end %>
 
 <%= form_with(model: @user) do |f| %>
 	<p>
@@ -13,8 +18,8 @@
     <%= f.label :password_confirmation %><br />
     <%= f.password_field :password_confirmation %>
   </div>
-
-
+  <% if current_user.has_role?(:admin)%>
+  
   <fieldset>
   <legend>User Roles</legend>
     <% Role::ROLES.each do |role| %>
@@ -25,6 +30,7 @@
     <% end %>
   <% end %>
   </fieldset>
+  <% end %>
 
 
   <p>
