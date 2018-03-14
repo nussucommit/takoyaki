@@ -7,7 +7,7 @@ class Ability
     # Define abilities for the passed in user here. For example:
     #
     @user = user || User.new # guest user (not logged in)
-    @user.roles.each { |role| send(role.name.downcase) }
+    @user.roles.each { |role| __send__(role.name.downcase) }
     can :read, :all if @user.roles.empty? # for guest#
     #
     # The first argument to `can` is the action you are giving the user
@@ -29,9 +29,7 @@ class Ability
     # https://github.com/CanCanCommunity/cancancan/wiki/Defining-Abilities
   end
 
-  def manager
-    
-  end
+  def manager; end
 
   def admin
     manager

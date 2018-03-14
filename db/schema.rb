@@ -10,10 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180228084204) do
+ActiveRecord::Schema.define(version: 20180303035722) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "announcements", force: :cascade do |t|
+    t.text     "subject",    :null=>false
+    t.text     "details",    :null=>false
+    t.datetime "created_at", :null=>false
+    t.datetime "updated_at", :null=>false
+  end
 
   create_table "duties", force: :cascade do |t|
     t.bigint   "user_id",     :index=>{:name=>"index_duties_on_user_id"}
@@ -47,11 +54,11 @@ ActiveRecord::Schema.define(version: 20180228084204) do
   create_table "timeslots", force: :cascade do |t|
     t.boolean  "mc_only"
     t.date     "day"
-    t.bigint   "user_id",       :index=>{:name=>"index_timeslots_on_user_id"}
-    t.bigint   "time_range_id", :index=>{:name=>"index_timeslots_on_time_range_id"}
-    t.bigint   "place_id",      :index=>{:name=>"index_timeslots_on_place_id"}
-    t.datetime "created_at",    :null=>false
-    t.datetime "updated_at",    :null=>false
+    t.bigint   "default_user_id", :index=>{:name=>"index_timeslots_on_default_user_id"}
+    t.bigint   "time_range_id",   :index=>{:name=>"index_timeslots_on_time_range_id"}
+    t.bigint   "place_id",        :index=>{:name=>"index_timeslots_on_place_id"}
+    t.datetime "created_at",      :null=>false
+    t.datetime "updated_at",      :null=>false
   end
 
   create_table "users", force: :cascade do |t|
@@ -86,5 +93,5 @@ ActiveRecord::Schema.define(version: 20180228084204) do
   add_foreign_key "duties", "users"
   add_foreign_key "timeslots", "places"
   add_foreign_key "timeslots", "time_ranges"
-  add_foreign_key "timeslots", "users"
+  add_foreign_key "timeslots", "users", column: "default_user_id"
 end

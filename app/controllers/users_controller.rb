@@ -2,19 +2,18 @@
 
 class UsersController < ApplicationController
   before_action :authenticate_user!
-  #before_action :check_admin
+  #before_action :check_admin, except: [:index]
   def check_admin
-    if !current_user.has_role?(:admin)
-       redirect_to root_path
-    end
+    redirect_to root_path unless current_user.has_role?(:admin)
   end
+
   def role_adder(role)
     if params[role] == '1'
       @user.add_role(role)
     elsif params[role] == '0'
       @user.remove_role(role)
     end
-    end
+  end
 
   def index
     check_admin
@@ -33,12 +32,11 @@ class UsersController < ApplicationController
       end
     end
     @user.update(user_params)
-      # Sign in the user by passing validation in case their password changed
-    #bypass_sign_in(@user)
+    # Sign in the user by passing validation in case their password changed
+    # bypass_sign_in(@user)
     redirect_to users_path
   end
 
- 
   def destroy
     @user = User.find params[:id]
     @user.destroy
@@ -48,6 +46,4 @@ class UsersController < ApplicationController
   private def user_params
     params.require(:user).permit(:password, :password_confirmation)
   end
-
-  
 end

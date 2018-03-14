@@ -21,3 +21,11 @@
 /yarn-error.log
 
 .byebug_history
+
+/config/database.yml
+
+# OS Generated Files
+.DS_Store
+
+# coverage
+coverage/*
