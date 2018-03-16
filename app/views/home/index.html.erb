@@ -1,6 +1,6 @@
 <h1> Hello! </h1>
 <% if user_signed_in? %>
-<%= @uu.username%>
+  <%= current_user.username %>
 <% end %>
 <% if current_user.has_role?(:admin)%>
    <%= link_to 'User Admin Console', users_path %>
