@@ -12,9 +12,11 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 # Admin User
-User.create(username: 'admin', email: 'admin@example.com', password: '123456')
-u = User.find_by(username: 'admin')
-u.add_role :admin
+admin = User.create(username: 'admin', email: 'admin@example.com',
+                    password: '123456')
+admin.add_role :admin
+
+User.create(username: 'test', email: 'test@example.com', password: '123456')
 
 Place.create(name: 'YIH')
 Place.create(name: 'AS8')
@@ -46,7 +48,8 @@ Date::DAYNAMES.each do |day|
       mc = (open == '0830' || close == '2100')
     end
 
-    Timeslot.create(mc_only: mc, day: day, default_user: User.take,
+    Timeslot.create(mc_only: mc, day: day,
+                    default_user: User.offset(rand(User.count)).first,
                     time_range: tr, place: Place.find_by(name: 'YIH'))
   end
 end
@@ -62,7 +65,10 @@ Date::DAYNAMES.each do |day|
     next if (day == 'Saturday') && (open < '0800' || close > '1700')
     next if open < '0800' || close > '2100'
 
-    Timeslot.create(mc_only: mc, day: day, default_user: User.take,
+    Timeslot.create(mc_only: mc, day: day,
+                    default_user: User.offset(rand(User.count)).first,
                     time_range: tr, place: Place.find_by(name: 'AS8'))
   end
 end
+
+Duty.generate(Time.zone.today - 7, Time.zone.today + 7)

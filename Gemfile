@@ -89,10 +89,6 @@ group :development, :test do
   gem 'rubocop'
   # SCSS linter
   gem 'scss_lint', require: false
-  # Coveralls code coverage monitoring
-  gem 'coveralls', require: false
-  # Simple code coverage
-  gem 'simplecov', :require => false
 end
 
 ### END QUALITY
@@ -104,7 +100,7 @@ gem 'browser_details'
 
 group :development, :production do
   # Database profiler
-  gem 'rack-mini-profiler', require: false
+  gem 'rack-mini-profiler'
   # Auto-email exceptions
   gem 'exception_notification'
 end

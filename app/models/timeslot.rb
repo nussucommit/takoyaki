@@ -6,7 +6,7 @@
 #
 #  id              :integer          not null, primary key
 #  mc_only         :boolean
-#  day             :date
+#  day             :text
 #  default_user_id :integer
 #  time_range_id   :integer
 #  place_id        :integer
@@ -31,4 +31,5 @@ class Timeslot < ApplicationRecord
   belongs_to :default_user, class_name: 'User', inverse_of: :timeslots
   belongs_to :place
   belongs_to :time_range
+  enum day: Date::DAYNAMES
 end

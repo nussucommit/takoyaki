@@ -2,6 +2,7 @@
 NUSSU commIT Duty Website, iteration 4
 
 [![Build Status](https://travis-ci.org/commit-tech/takoyaki.svg?branch=master)](https://travis-ci.org/commit-tech/takoyaki)
+[![Coverage Status](https://coveralls.io/repos/github/commit-tech/takoyaki/badge.svg?branch=master)](https://coveralls.io/github/commit-tech/takoyaki?branch=master)
 
 ## Entity-Relationship Diagram
 ![ERD](schema.png)
