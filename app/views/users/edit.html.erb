@@ -1,40 +1,38 @@
 <% if current_user.has_role?(:admin)%>
-  <h1>Edit password or Allocate roles </h1>
+  <h1>Edit password or Allocate roles</h1>
 <%else%>
   <h1>Edit your password</h1>
 <% end %>
 
 <%= form_with(model: @user) do |f| %>
-	<p>
-		<%= f.label :username%>
-		<%= f.text_field :username%>
-	</p>
+  <p>
+    <%= f.label :username %>
+    <%= f.text_field :username %>
+  </p>
 
   <div class="field">
-    <%= f.label :password, "Password" %><br />
-    <%= f.password_field :password, :autocomplete => "off"  %>
+    <p><%= f.label :password, "Password" %></p>
+    <%= f.password_field :password, autocomplete: "off" %>
   </div>
   <div class="field">
-    <%= f.label :password_confirmation %><br />
+    <p><%= f.label :password_confirmation %></p>
     <%= f.password_field :password_confirmation %>
   </div>
   <% if current_user.has_role?(:admin)%>
-  
-  <fieldset>
-  <legend>User Roles</legend>
-    <% Role::ROLES.each do |role| %>
-      <%= f.label(role) do %>
-       <%= role %>
-       <%= hidden_field_tag(role, 0) %>
-       <%= check_box_tag(role, 1, @user.has_role?(role)) %>
-    <% end %>
+    <fieldset>
+      <legend>User Roles</legend>
+      <% Role::ROLES.each do |role| %>
+        <%= f.label(role) do %>
+          <%= role %>
+          <%= hidden_field_tag(role, 0) %>
+          <%= check_box_tag(role, 1, @user.has_role?(role)) %>
+        <% end %>
+      <% end %>
+    </fieldset>
   <% end %>
-  </fieldset>
-  <% end %>
-
 
   <p>
     <%= f.submit "Save"%>
   </p>
- 
+
 <% end %>

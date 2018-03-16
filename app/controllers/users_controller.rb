@@ -3,17 +3,6 @@
 class UsersController < ApplicationController
   before_action :authenticate_user!
   # before_action :check_admin, except: [:index]
-  def check_admin
-    redirect_to root_path unless current_user.has_role?(:admin)
-  end
-
-  def role_adder(role)
-    if params[role] == '1'
-      @user.add_role(role)
-    elsif params[role] == '0'
-      @user.remove_role(role)
-    end
-  end
 
   def index
     check_admin
@@ -28,7 +17,7 @@ class UsersController < ApplicationController
     @user = User.find params[:id]
     if current_user.has_role?(:admin)
       Role::ROLES.each do |r|
-        role_adder(r)
+        role_adder(@user, r)
       end
     end
     @user.update(user_params)
@@ -43,7 +32,21 @@ class UsersController < ApplicationController
     redirect_to users_path
   end
 
-  private def user_params
+  private
+
+  def user_params
     params.require(:user).permit(:password, :password_confirmation)
+  end
+
+  def check_admin
+    redirect_to root_path unless current_user.has_role?(:admin)
+  end
+
+  def role_adder(user, role)
+    if params[role] == '1'
+      user.add_role(role)
+    elsif params[role] == '0'
+      user.remove_role(role)
+    end
   end
 end
