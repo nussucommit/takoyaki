@@ -5,25 +5,23 @@ require 'rails_helper'
 RSpec.describe AnnouncementsController, type: :controller do
   describe 'GET #index' do
     it 'does it successfully' do
+      sign_in create(:user)
       get :index
       should respond_with :ok
-    end
-
-    it 'populates an array of contacts' do
-      create(:announcement)
-      get :index
     end
   end
 
   describe 'POST #create' do
     context 'valid attributes' do
       it 'creates a new announcement' do
+        sign_in create(:user)
         expect do
           post :create, params: { announcement: attributes_for(:announcement) }
         end.to change(Announcement, :count).by(1)
       end
 
       it 'redirects to announcement_path' do
+        sign_in create(:user)
         post :create, params: { announcement: attributes_for(:announcement) }
         should redirect_to announcements_path
       end
@@ -31,6 +29,7 @@ RSpec.describe AnnouncementsController, type: :controller do
 
     context 'invalid attributes' do
       it 'does not create new announcement with invalid subject' do
+        sign_in create(:user)
         expect do
           post :create, params: { announcement: attributes_for(
             :announcement, subject: ''
@@ -39,6 +38,7 @@ RSpec.describe AnnouncementsController, type: :controller do
       end
 
       it 'does not create new announcement with invalid details' do
+        sign_in create(:user)
         expect do
           post :create, params: { announcement: attributes_for(
             :announcement, details: ''
@@ -51,6 +51,7 @@ RSpec.describe AnnouncementsController, type: :controller do
   describe 'PUT #update' do
     context 'valid attributes' do
       it 'updates an announcement' do
+        sign_in create(:user)
         announcement = create(:announcement)
         put :update, params: { id: announcement.id, announcement:
           attributes_for(:announcement, subject: 'new subject', details: 'new
@@ -58,6 +59,7 @@ RSpec.describe AnnouncementsController, type: :controller do
       end
 
       it 'redirects to announcement_path' do
+        sign_in create(:user)
         announcement = create(:announcement)
         put :update, params: { id: announcement.id, announcement:
           attributes_for(:announcement, subject: 'new subject', details: 'new
@@ -68,6 +70,7 @@ RSpec.describe AnnouncementsController, type: :controller do
 
     context 'invalid attributes' do
       it 'does not update new announcement with invalid subject' do
+        sign_in create(:user)
         announcement = create(:announcement)
         put :update, params: { id: announcement.id,
                                announcement: { subject: '', details: 'new
@@ -80,6 +83,7 @@ RSpec.describe AnnouncementsController, type: :controller do
 
   describe 'DELETE #destroy' do
     it 'deletes a new announcement' do
+      sign_in create(:user)
       announcement = create(:announcement)
       expect do
         delete :destroy, params: { id: announcement.id }
@@ -87,6 +91,7 @@ RSpec.describe AnnouncementsController, type: :controller do
     end
 
     it 'redirects to announcement_path' do
+      sign_in create(:user)
       announcement = create(:announcement)
       delete :destroy, params: { id: announcement.id }
       should redirect_to announcements_path

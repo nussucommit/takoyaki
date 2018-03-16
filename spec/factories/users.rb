@@ -32,8 +32,12 @@
 #
 
 FactoryBot.define do
+  sequence :email do |n|
+    "test#{n}@example.com"
+  end
+
   factory :user do
-    email 'lhl@pmo.gov.sg'
+    email
     password '123456'
   end
 end
