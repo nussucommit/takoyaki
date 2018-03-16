@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  root to: 'home#index'
+  root to: 'duties#index'
 
   devise_for :users, controllers: { registrations: 'registrations' }
 
