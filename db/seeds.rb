@@ -11,6 +11,13 @@
 #                          { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
+# Admin User
+admin = User.create(username: 'admin', email: 'admin@example.com',
+                    password: '123456')
+admin.add_role :admin
+
+User.create(username: 'test', email: 'test@example.com', password: '123456')
+
 Place.create(name: 'YIH')
 Place.create(name: 'AS8')
 
@@ -22,10 +29,6 @@ end
   start = Time.zone.at(time)
   TimeRange.create(start_time: start, end_time: start + 1.hour)
 end
-
-User.create(email: 'test@example.com', password: '123456')
-User.create(email: 'anu@asd.com', password: '123456')
-User.create(email: 'lhl@pmo.gov.sg', password: '123456')
 
 # Timeslots in YIH
 Date::DAYNAMES.each do |day|

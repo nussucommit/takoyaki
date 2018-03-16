@@ -36,6 +36,14 @@ ActiveRecord::Schema.define(version: 20180303035722) do
     t.datetime "updated_at", :null=>false
   end
 
+  create_table "roles", force: :cascade do |t|
+    t.string   "name",          :index=>{:name=>"index_roles_on_name_and_resource_type_and_resource_id", :with=>["resource_type", "resource_id"]}
+    t.string   "resource_type", :index=>{:name=>"index_roles_on_resource_type_and_resource_id", :with=>["resource_id"]}
+    t.bigint   "resource_id"
+    t.datetime "created_at",    :null=>false
+    t.datetime "updated_at",    :null=>false
+  end
+
   create_table "time_ranges", force: :cascade do |t|
     t.time     "start_time"
     t.time     "end_time"
@@ -64,8 +72,21 @@ ActiveRecord::Schema.define(version: 20180303035722) do
     t.datetime "last_sign_in_at"
     t.inet     "current_sign_in_ip"
     t.inet     "last_sign_in_ip"
+    t.integer  "failed_attempts",        :default=>0, :null=>false
+    t.string   "unlock_token"
+    t.datetime "locked_at"
     t.datetime "created_at",             :null=>false
     t.datetime "updated_at",             :null=>false
+    t.string   "username",               :index=>{:name=>"index_users_on_username", :unique=>true}
+    t.string   "matric_num"
+    t.string   "contact_num"
+  end
+
+  create_table "users_roles", id: false, force: :cascade do |t|
+    t.bigint "user_id", :index=>{:name=>"index_users_roles_on_user_id"}
+    t.bigint "role_id", :index=>{:name=>"index_users_roles_on_role_id"}
+
+    t.index ["user_id", "role_id"], :name=>"index_users_roles_on_user_id_and_role_id"
   end
 
   add_foreign_key "duties", "timeslots"

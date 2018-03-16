@@ -25,7 +25,6 @@
 #  fk_rails_...  (place_id => places.id)
 #  fk_rails_...  (time_range_id => time_ranges.id)
 #
-# rubocop:enable Metrics/LineLength
 
 require 'rails_helper'
 
