@@ -25,18 +25,18 @@ function getCheckbox(id) {
 }
 
 function load() {
-  $('input[type=checkbox]').each(function(id){
+  $('input[type=checkbox]').each(function(id) {
     updateCheckbox($(this).val(), false);
   });
   $('#clear-all-button').click(function(e){
     e.preventDefault();
-    $('input[type=checkbox]').each(function(id){
+    $('input[type=checkbox]').each(function(id) {
       $(this).prop('checked', false);
       updateCheckbox($(this).val(), true);
     });
     disableButton("clear-all-button");
   });
-  $('#cancel-button').click(function(e){
+  $('#cancel-button').click(function(e) {
     e.preventDefault();
     location = location;
   });
