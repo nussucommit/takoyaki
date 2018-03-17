@@ -1,13 +1,13 @@
 <div class="container-fluid">
   <div class="row">
-      <div class="col-md-4 sidebar-container">
+      <div class="col-md-3 sidebar-container">
         <h1>Announcements</h1>
 
           <%= render :partial => 'announcements/index' %>
 
       </div>
 
-      <div class="col-md-8">
+      <div class="col-md-9">
         <h1>Duty Timetable for the Week</h1>
 
         <%= link_to 'Previous Week', duties_path(start_date: @start_date - 7), class: 'btn btn-large btn-light' %>

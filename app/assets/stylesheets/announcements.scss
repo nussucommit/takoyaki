@@ -7,6 +7,20 @@ h1 {
   text-align: center;
 }
 
+@media (min-width: 768px) {
+  h1 {
+    font-size: 1.3em;
+    text-align: center;
+  }
+}
+
+@media (min-width: 1024px) {
+  h1 {
+    font-size: 1.7em;
+    text-align: center;
+  }
+}
+
 .sidebar-container {
   border: 3px solid #000;
 }
