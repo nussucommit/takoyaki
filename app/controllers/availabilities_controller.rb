@@ -27,18 +27,11 @@ class AvailabilitiesController < ApplicationController
   end
 
   def load_availabilities
-    availabilities = []
-    7.times { |day| availabilities.push(get_availabilities_day(day)) }
-    availabilities
+    7.times.map { |day| get_availabilities_day(day) }
   end
 
   def get_availabilities_day(day)
-    availabilities = []
-
-    @time_ranges.each do |time_range|
-      availabilities.push(get_availability(day, time_range.id))
-    end
-    availabilities
+    @time_ranges.each.map { |time_range| get_availability(day, time_range.id) }
   end
 
   def get_availability(day, time_range_id)
