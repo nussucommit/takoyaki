@@ -7,8 +7,7 @@ class DutiesController < ApplicationController
                   .to_date
     @end_date = @start_date.to_date + 6.days
     @places = Place.all
-    @announcements = Announcement.order(created_at: :desc).limit(3)
-    @new_announcements = Announcement.new
+    prepare_announcements
   end
 
   def generate_duties
@@ -25,5 +24,10 @@ class DutiesController < ApplicationController
     first_time = time_range.first.start_time
     last_time = time_range.last.start_time
     first_time.to_i.step(last_time.to_i, 1.hour)
+  end
+
+  def prepare_announcements
+    @announcements = Announcement.order(created_at: :desc).limit(3)
+    @new_announcement = Announcement.new
   end
 end
