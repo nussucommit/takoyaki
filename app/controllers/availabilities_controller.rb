@@ -11,13 +11,12 @@ class AvailabilitiesController < ApplicationController
   end
 
   def update_availabilities
-    availability_ids = if params.key?(:availability_ids)
-                         params[:availability_ids] else []
-                       end
+    availability_ids = params[:availability_ids] || []
     Availability.where(user_id: current_user.id).each do |availability|
       set(availability,
           availability_ids.include?(availability.id.to_s))
     end
+    redirect_to availabilities_path
   end
 
   private
