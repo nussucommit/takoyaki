@@ -28,14 +28,14 @@
                 colspan="2"
               <% end %> >
               <%= check_box_tag 'availability_ids[]', availability.id,
-                Availability.statuses[availability.status] == 1, :style => "visibility: hidden; display: none:" -%>
+                availability.status, :style => "visibility: hidden; display: none:" -%>
             </td>
           <% end %>
         </tr>
       <% end %>
     </table>
     <%= submit_tag("Update", :id => 'update-button', :data => { disable_with: false }, :class => "btn btn-large btn-light") %>
+  <% end %>
     <%= submit_tag("Clear All", :id => 'clear-all-button', :data => { disable_with: false }, :class => "btn btn-large btn-light")%>
     <%= submit_tag("Cancel", :id => 'cancel-button',  :data => { disable_with: false }, :class => "btn btn-large btn-light") %>
-  <% end %>
 </div>

@@ -2,18 +2,6 @@
 // All this logic will automatically be available in application.js.
 
 window.onload = load;
-$('#clear-all-button').click(function(e){
-  e.preventDefault();
-  $('input[type=checkbox]').each(function(id){
-    $(this).prop('checked', false);
-    update($(this).val());
-  });
-});
-
-$('#cancel-button').click(function(e){
-  e.preventDefault();
-  location = location;
-});
 
 function toggle(id) {
   var cb = get_checkbox(id);
@@ -34,5 +22,16 @@ function get_checkbox(id) {
 function load() {
   $('input[type=checkbox]').each(function(id){
     update($(this).val());
+  });
+  $('#clear-all-button').click(function(e){
+    e.preventDefault();
+    $('input[type=checkbox]').each(function(id){
+      $(this).prop('checked', false);
+      update($(this).val());
+    });
+  });
+  $('#cancel-button').click(function(e){
+    e.preventDefault();
+    location = location;
   });
 }

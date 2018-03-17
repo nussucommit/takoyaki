@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-
 # == Schema Information
 #
 # Table name: availabilities
@@ -10,7 +9,7 @@
 #  time_range_id :integer
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
-#  status        :integer
+#  status        :boolean
 #
 # Indexes
 #
