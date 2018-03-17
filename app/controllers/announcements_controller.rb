@@ -2,7 +2,6 @@
 
 class AnnouncementsController < ApplicationController
   def index
-    @announcements = Announcement.all
     @announcements = Announcement.order(created_at: :desc).limit(3)
     @new_announcements = Announcement.new
   end

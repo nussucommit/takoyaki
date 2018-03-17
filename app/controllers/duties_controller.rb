@@ -7,7 +7,6 @@ class DutiesController < ApplicationController
                   .to_date
     @end_date = @start_date.to_date + 6.days
     @places = Place.all
-    @announcements = Announcement.all
     @announcements = Announcement.order(created_at: :desc).limit(3)
     @new_announcements = Announcement.new
   end
