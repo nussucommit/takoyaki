@@ -14,19 +14,19 @@ class AnnouncementsController < ApplicationController
   def create
     announcement = Announcement.new announcement_params
 
-    redirect_to announcements_path if announcement.save
+    redirect_to duties_path if announcement.save
   end
 
   def update
     announcement = Announcement.find params[:id]
 
-    redirect_to announcements_path if announcement.update announcement_params
+    redirect_to duties_path if announcement.update announcement_params
   end
 
   def destroy
     announcement = Announcement.find params[:id]
 
-    redirect_to announcements_path if announcement.destroy
+    redirect_to duties_path if announcement.destroy
   end
 
   private
