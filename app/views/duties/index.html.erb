@@ -7,7 +7,10 @@
       <table class="table table-sm">
         <!-- Empty row to accommodate the timing -->
         <thead>
-          <tr><td class="schedule-timings"><div class="schedule-time">&nbsp;</div></td></tr>
+          <tr>
+            <td class="schedule-timings"><div class="schedule-time">&nbsp;</div></td>
+            <td></td>
+          </tr>
         </thead>
         <tbody>
           <% (@start_date..@end_date).each do |day| %>
@@ -28,7 +31,7 @@
 
       </table>
     </div>
-    <div style="flex-grow: 100;" class="scrollable">
+    <div class="schedule-right scrollable">
       <table class="table table-sm duty-table">
         <thead>
           <tr>

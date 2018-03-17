@@ -1,0 +1,47 @@
+<div class="list">
+  <h1>Members List</h1>
+  <% if current_user.has_role?(:admin) %>
+    <%= link_to 'Add user', new_user_registration_path %>
+  <% end %>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12 col-md-12">
+        <table>
+          <tr>
+            <th class="name">Name</th>
+            <th class="matric">Matric number</th>
+            <th class="contact">Contact number</th>
+            <th class="email">E-mail</th>
+            <th class="cell">Cell</th>
+            <th class="pos">Position</th>
+
+            <% if current_user.has_role?(:admin) %>
+              <!-- <th>Edit Profile</th> -->
+              <th class="role">Allocate Role</th>
+              <th class="del">Delete</th>
+            <% end %>
+
+          </tr>
+          <% @users.each do |p| %>
+            <tr>
+              <td class="name"><%= p.username %></td>
+              <td class="matric"><%= p.matric_num %></td>
+              <td class="contact"><%= p.contact_num %></td>
+              <td class="email"><%= p.email %></td>
+              <td class="cell"></td>
+              <td class="pos"></td>
+              <% if current_user.has_role?(:admin) %>
+              <!--
+                <td><%= link_to 'Show', edit_user_registration_path(p) %></td>
+              -->
+                <td class="role"><%= link_to 'Allocate role', edit_user_path(p) %></td>
+                <td class="del"><%= link_to 'Delete', user_path(p), method: :delete, data:{confirm: 'Are you sure?'} %></td>
+              <% end %>
+            </tr>
+          <% end %>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

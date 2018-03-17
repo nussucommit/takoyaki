@@ -2,10 +2,23 @@
 
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
   <%= devise_error_messages! %>
+  <div class="field">
+    <%= f.label :username %><br />
+    <%= f.text_field :username, autofocus: true%>
+  </div>
+  <div class="field">
+    <%= f.label :matric_num %><br />
+    <%= f.text_field :matric_num%>
+  </div>
+
+  <div class="field">
+    <%= f.label :contact_number %><br />
+    <%= f.text_field :contact_num%>
+  </div>
 
   <div class="field">
     <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+    <%= f.email_field :email%>
   </div>
 
   <div class="field">
@@ -25,5 +38,13 @@
     <%= f.submit "Sign up" %>
   </div>
 <% end %>
-
+<!--
+<% for role in Role.all %>
+<div>
+  <%= check_box_tag "user[role_ids][]", role.id, @user.roles.include?(role) %>
+  <%=h role.name %>
+</div>
+<% end %>
+<%= hidden_field_tag "user[role_ids][]", "" %>
+-->
 <%= render "devise/shared/links" %>
