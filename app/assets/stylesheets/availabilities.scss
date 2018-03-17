@@ -29,10 +29,6 @@ table td {
   border: 1px solid black;
 }
 
-.btn-warning {
-  color: white;
-}
-
-.btn-warning:hover {
+.btn-warning, .btn-warning:link, .btn-warning:visited, .btn-warning:hover, .btn-warning:active {
   color: white;
 }

@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   root to: 'home#index'
   devise_for :users
 
-  resources :availabilities do
+  resources :availabilities, only: [:index] do
     collection do
       post '/', to: 'availabilities#update_availabilities'
     end
