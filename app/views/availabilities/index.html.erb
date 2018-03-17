@@ -37,5 +37,15 @@
     <%= submit_tag("Update", :id => 'update-button', :data => { disable_with: false }, :class => "btn btn-large btn-light disabled") %>
     <%= submit_tag("Clear All", :id => 'clear-all-button', :data => { disable_with: false }, :class => "btn btn-large btn-warning")%>
     <%= submit_tag("Cancel", :id => 'cancel-button',  :data => { disable_with: false }, :class => "btn btn-large btn-light disabled") %>
+    <span class="instruction">
+      <div style="display: inline-block;">
+        <div class="box-yes"></div>
+        <div class="instruction-label">YES</div>
+      </div>
+      <div style="display: inline-block;">
+        <div class="box-no"></div>
+        <div class="instruction-label">NO</div>
+      </div>
+    </span>
   <% end %>
 </div>

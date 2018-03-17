@@ -32,3 +32,32 @@ table td {
 .btn-warning, .btn-warning:link, .btn-warning:visited, .btn-warning:hover, .btn-warning:active {
   color: white;
 }
+
+.instruction {
+  float:right;
+  margin-right: 100px;
+}
+
+.box-no {
+  display:inline-block;
+  width: 20px;
+  height:20px;
+  border:1px solid black;
+  background-color: $light-grey;
+}
+
+.box-yes {
+  display:inline-block;
+  width: 20px;
+  height:20px;
+  border:1px solid black;
+  background-color: white;
+}
+
+.instruction-label {
+  margin-right: 30px;
+  margin-left: 5px;
+  position: relative;
+  top: -4px;
+  display:inline-block;
+}
