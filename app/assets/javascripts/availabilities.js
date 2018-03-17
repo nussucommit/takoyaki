@@ -4,13 +4,13 @@
 window.onload = load;
 
 function toggle(id) {
-  var cb = get_checkbox(id);
+  var cb = getCheckbox(id);
   cb.checked = !cb.checked;
-  update(id, true);
+  updateCheckbox(id, true);
 }
 
-function update(id, set) {
-  var cb = get_checkbox(id);
+function updateCheckbox(id, set) {
+  var cb = getCheckbox(id);
   var td = document.getElementById("cell_" + id);
   td.className = cb.checked ? 'availability-yes' : 'availability-no';
   if (set) {
@@ -20,19 +20,19 @@ function update(id, set) {
   }
 }
 
-function get_checkbox(id) {
+function getCheckbox(id) {
   return document.querySelectorAll("input[type='checkbox'][value='" + id + "']")[0];
 }
 
 function load() {
   $('input[type=checkbox]').each(function(id){
-    update($(this).val(), false);
+    updateCheckbox($(this).val(), false);
   });
   $('#clear-all-button').click(function(e){
     e.preventDefault();
     $('input[type=checkbox]').each(function(id){
       $(this).prop('checked', false);
-      update($(this).val(), true);
+      updateCheckbox($(this).val(), true);
     });
     disableButton("clear-all-button");
   });
