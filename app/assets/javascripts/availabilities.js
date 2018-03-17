@@ -16,7 +16,7 @@ function update(id, set) {
   if (set) {
     enableButton("update-button", "primary");
     enableButton("cancel-button", "danger");
-    enableButton("clear-all-button", "warning");
+    enableButton("clear-all-button", "warning white-text");
   }
 }
 
