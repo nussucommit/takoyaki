@@ -26,7 +26,7 @@ class AvailabilitiesController < ApplicationController
   end
 
   def load_availabilities
-    7.times.map { |day| get_availabilities_day(day) }
+    Array.new(7) { |day| get_availabilities_day(day) }
   end
 
   def get_availabilities_day(day)
@@ -34,8 +34,8 @@ class AvailabilitiesController < ApplicationController
   end
 
   def get_availability(day, time_range_id)
-    Availability.where(user_id: current_user.id, day: day,
-                       time_range_id: time_range_id)[0] ||
+    Availability.find_by(user_id: current_user.id, day: day,
+                         time_range_id: time_range_id) ||
       create_new_availability(day, time_range_id)
   end
 
@@ -49,6 +49,6 @@ class AvailabilitiesController < ApplicationController
   end
 
   def end_time
-    (@time_ranges[-1].end_time - 1).beginning_of_hour + 3600
+    (@time_ranges[-1].end_time - 1).beginning_of_hour + 1.hour
   end
 end

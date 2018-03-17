@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: availabilities
@@ -30,17 +31,12 @@ RSpec.describe Availability, type: :model do
 
   it 'saves given a valid Availability' do
     expect(create(:availability)).to be_valid
-    expect(create(:availability, status: 'available', day: 'Saturday'))
-      .to be_valid
   end
   it 'raises ArgumentError if day is out of range' do
     expect { create(:availability, day: 7) }.to raise_error(ArgumentError)
     expect { create(:availability, day: -1) }.to raise_error(ArgumentError)
     expect { create(:availability, day: 0.5) }.to raise_error(ArgumentError)
     expect { create(:availability, day: '1') }.to raise_error(ArgumentError)
-  end
-  it 'raises ArgumentError if status is out of range' do
-    expect { create(:availability, status: 2) }.to raise_error(ArgumentError)
   end
   it 'does not save if User does not exist' do
     expect(build(:availability, user_id: nil).save).to be false

@@ -34,8 +34,8 @@
         </tr>
       <% end %>
     </table>
-    <%= submit_tag("Update", :id => 'update-button', :data => { disable_with: false }, :class => "btn btn-large btn-light") %>
+    <%= submit_tag("Update", :id => 'update-button', :data => { disable_with: false }, :class => "btn btn-large btn-light disabled") %>
+    <%= submit_tag("Clear All", :id => 'clear-all-button', :data => { disable_with: false }, :class => "btn btn-large btn-warning")%>
+    <%= submit_tag("Cancel", :id => 'cancel-button',  :data => { disable_with: false }, :class => "btn btn-large btn-light disabled") %>
   <% end %>
-    <%= submit_tag("Clear All", :id => 'clear-all-button', :data => { disable_with: false }, :class => "btn btn-large btn-light")%>
-    <%= submit_tag("Cancel", :id => 'cancel-button',  :data => { disable_with: false }, :class => "btn btn-large btn-light") %>
 </div>
