@@ -13,17 +13,13 @@ class AvailabilitiesController < ApplicationController
   def update_availabilities
     availability_ids = params[:availability_ids] || []
     Availability.where(user_id: current_user.id).each do |availability|
-      set(availability,
-          availability_ids.include?(availability.id.to_s))
+      availability.update(status:
+        availability_ids.include?(availability.id.to_s))
     end
     redirect_to availabilities_path
   end
 
   private
-
-  def set(availability, status)
-    availability.update(status: status)
-  end
 
   def load_availabilities
     Array.new(7) { |day| get_availabilities_day(day) }

@@ -21,7 +21,6 @@
 #  fk_rails_...  (timeslot_id => timeslots.id)
 #  fk_rails_...  (user_id => users.id)
 #
-# rubocop:enable Metrics/LineLength
 
 require 'rails_helper'
 
