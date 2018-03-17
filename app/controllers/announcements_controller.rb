@@ -1,10 +1,6 @@
 # frozen_string_literal: true
 
 class AnnouncementsController < ApplicationController
-  def show
-    @announcement = Announcement.find params[:id]
-  end
-
   def create
     announcement = Announcement.new announcement_params
 
