@@ -12,11 +12,13 @@ function toggle(id) {
 function updateCheckbox(id, set) {
   var cb = getCheckbox(id);
   var td = document.getElementById("cell_" + id);
-  td.className = cb.checked ? 'availability-yes' : 'availability-no';
   if (set) {
+    td.className = cb.checked ? 'availability-yes-pending' : 'availability-no-pending';
     enableButton("update-button", "primary");
     enableButton("cancel-button", "danger");
     enableButton("clear-all-button", "warning white-text");
+  } else {
+    td.className = cb.checked ? 'availability-yes' : 'availability-no';
   }
 }
 

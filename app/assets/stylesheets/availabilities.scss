@@ -14,17 +14,30 @@
 table td {
   line-height: 40px;
 }
+
 .time-label {
   display: block;
   position: relative;
   left: -25px;
   font-weight: normal;
 }
+
 .availability-yes {
   background-color: white;
   border: 1px solid black;
 }
+
 .availability-no {
+  background-color: $light-grey;
+  border: 1px solid black;
+}
+
+.availability-yes-pending {
+  background-color: white;
+  border: 1px solid black;
+}
+
+.availability-no-pending {
   background-color: $light-grey;
   border: 1px solid black;
 }
