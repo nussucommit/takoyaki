@@ -97,6 +97,7 @@
   }
 
   .box {
+    min-width: 200px;
     padding-left: 3%;
     padding-right: 3%;
   }
@@ -118,7 +119,7 @@
   }
 
   .footer {
-    position: absolute;
+    position: fixed;
     bottom: 0;
     left: 0;
     width: 100%;
@@ -195,7 +196,7 @@
     color: $red;
   }
 
-  @media (max-device-width: 800px) {
+  @media (max-device-width: 700px) {
 
     div.container, .row, .box {
       width: 100%;
@@ -205,8 +206,8 @@
     }
 
     img {
-      width: 500px;
-      height: 300px;
+      width: 80%;
+      height: 30%;
     }
 
     .account-wall {
@@ -219,48 +220,20 @@
     }
 
     input#user_username, input#user_email, input#user_password {
-      font-size: 40px;
-      height: 50px;
+      height: 5%;
       margin-top: 10%;
       margin-bottom: 5%;
     }
 
-    label {
-      font-size: 30px;
-      margin-left: 10px;
-    }
-
     input#user_remember_me {
-      height: 30px;
-      width: 30px;
+      height: 15px;
+      width: 15px;
     }
 
     .actions input {
-      margin-top: 5%;;
-      height: 80px;
-      width: 400px;
-      font-size: 30px;
-    }
-
-    a {
-      font-size: 25px;
-    }
-
-    .password h3 {
-      font-size: 50px;
-    }
-
-    .password p {
-      font-size: 25px;
-    }
-
-    .password div.actions {
-      margin-top: 120px;
-      margin-bottom: 70px;
-    }
-
-    .footer {
-      position: fixed;
+      margin-top: 3%;;
+      height: 5%;
+      width: 60%;
     }
   }
 }

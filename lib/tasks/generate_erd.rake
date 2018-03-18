@@ -1,9 +1,15 @@
 # frozen_string_literal: true
 
 def generate_erd
-  `erd --inheritance --filetype=dot --direct --attributes=foreign_keys,content`
-  `dot -Tpng erd.dot > schema.png`
-  File.delete('erd.dot')
+  if system('sh -c \'command -v dot\' > /dev/null')
+    system('erd --inheritance --filetype=dot --direct '\
+           '--attributes=foreign_keys,content')
+    system('dot -Tpng erd.dot > schema.png')
+    File.delete('erd.dot')
+  else
+    puts 'You don\'t have Graphviz installed!'
+    puts 'Skipping ERD generation'
+  end
 end
 
 task :generate_erd do
