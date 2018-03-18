@@ -1,8 +1,6 @@
 // Place all the behaviors and hooks related to the matching controller here.
 // All this logic will automatically be available in application.js.
 
-window.onload = load;
-
 function toggle(id) {
   var cb = getCheckbox(id);
   cb.checked = !cb.checked;
@@ -30,7 +28,7 @@ function load() {
   $('input[type=checkbox]').each(function(id) {
     updateCheckbox($(this).val(), false);
   });
-  $('#clear-all-button').click(function(e){
+  $('#clear-all-button').click(function(e) {
     e.preventDefault();
     $('input[type=checkbox]').each(function(id) {
       $(this).prop('checked', false);
@@ -57,3 +55,5 @@ function enableButton(buttonName, type) {
   button.className = "btn btn-large btn-" + type;
   button.disabled = false;
 }
+
+$(document).ready(load);
