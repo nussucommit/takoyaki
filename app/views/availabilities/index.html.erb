@@ -18,18 +18,9 @@
       </tr>
       <% @availabilities.each do |availability_day| %>
         <tr>
-          <td class="dayname"><%= availability_day[0].day[0..2] %></td>
+          <td class="dayname"><%= availability_day[0].day %></td>
           <% availability_day.each do |availability| %>
-            <td align="center" class="checkbox_cell"
-              <%= "onclick = toggle(#{availability.id})" %>
-              <%= "id = cell_#{availability.id.to_s}" %>
-              <% time_range = TimeRange.where(id: availability.time_range_id)[0] %>
-              <% if time_range.end_time - time_range.start_time >= 1.hour %>
-                colspan="2"
-              <% end %> >
-              <%= check_box_tag 'availability_ids[]', availability.id,
-                availability.status, :style => "visibility: hidden; display: none:" -%>
-            </td>
+            <%= generate_cell(availability) %>
           <% end %>
         </tr>
       <% end %>
