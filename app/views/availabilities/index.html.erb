@@ -10,7 +10,7 @@
         <% while start_time <= end_time do %>
           <th colspan="2">
             <span class="time-label">
-              <%= start_time.strftime("%H:%M") %>
+              <%= start_time.strftime("%H%M") %>
             </span>
           </th>
           <% start_time += 1.hour %>
@@ -25,9 +25,9 @@
         </tr>
       <% end %>
     </table>
-    <%= submit_tag("Update", :id => 'update-button', :data => { disable_with: false }, :class => "btn btn-large btn-light disabled") %>
-    <%= submit_tag("Clear All", :id => 'clear-all-button', :data => { disable_with: false }, :class => "btn btn-large btn-warning white-text")%>
-    <%= submit_tag("Cancel", :id => 'cancel-button',  :data => { disable_with: false }, :class => "btn btn-large btn-light disabled") %>
+    <%= submit_tag("Update", id: 'update-button', data: { disable_with: false }, class: "btn btn-large btn-light disabled") %>
+    <%= submit_tag("Clear All", id: 'clear-all-button', data: { disable_with: false }, class: "btn btn-large btn-warning white-text")%>
+    <%= submit_tag("Cancel", id: 'cancel-button', data: { disable_with: false }, class: "btn btn-large btn-light disabled") %>
     <span class="instruction">
       <div style="display: inline-block;">
         <div class="box-yes"></div>
