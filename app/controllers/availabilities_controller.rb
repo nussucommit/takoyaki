@@ -6,6 +6,7 @@ class AvailabilitiesController < ApplicationController
   def index
     @time_ranges = TimeRange.order(:start_time)
     @availabilities = load_availabilities
+    create_missing_availabilities
     @start_time = start_time
     @end_time = end_time
   end
@@ -13,8 +14,8 @@ class AvailabilitiesController < ApplicationController
   def update_availabilities
     availability_ids = params[:availability_ids] || []
     Availability.where(user_id: current_user.id).each do |availability|
-      availability.update(status:
-        availability_ids.include?(availability.id.to_s))
+      available = availability_ids.include?(availability.id.to_s)
+      availability.update(status: available) if availability.status != available
     end
     redirect_to availabilities_path
   end
@@ -22,18 +23,26 @@ class AvailabilitiesController < ApplicationController
   private
 
   def load_availabilities
-    Array.new(7) { |day| get_availabilities_day(day) }
+    Hash[Availability.where(user: current_user).joins(:time_range)
+                     .order('day', 'time_ranges.start_time')
+                     .to_a.map do |availability|
+           [[availability.day, availability.time_range_id], availability]
+         end
+    ]
   end
 
-  def get_availabilities_day(day)
-    @time_ranges.each.map { |time_range| get_availability(day, time_range.id) }
+  def create_missing_availabilities
+    Availability.days.each do |day, _index|
+      @time_ranges.each do |time_range|
+        next if @availabilities.key?([day, time_range.id])
+        @availabilities[[day, time_range.id]] = Availability.create(
+          user_id: current_user.id, day: day,
+          time_range_id: time_range.id, status: false
+        )
+      end
+    end
   end
 
-  def get_availability(day, time_range_id)
-    Availability.find_or_create_by(user_id: current_user.id, day: day,
-                                   time_range_id: time_range_id)
-  end
-  
   def start_time
     @time_ranges.first.start_time.beginning_of_hour
   end

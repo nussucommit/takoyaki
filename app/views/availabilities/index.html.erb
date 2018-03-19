@@ -15,11 +15,11 @@
           <% start_time += 1.hour %>
         <% end %>
       </tr>
-      <% @availabilities.each do |availability_day| %>
+      <% Availability.days.each do |day, _index| %>
         <tr>
-          <td class="dayname"><%= availability_day[0].day %></td>
-          <% availability_day.each do |availability| %>
-            <%= generate_cell(availability) %>
+          <td class="dayname"><%= day %></td>
+          <% @time_ranges.each do |time_range| %>
+            <%= generate_cell(day, time_range) %>
           <% end %>
         </tr>
       <% end %>
