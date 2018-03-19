@@ -5,11 +5,11 @@
 #
 #  id            :integer          not null, primary key
 #  user_id       :integer
-#  day           :integer
+#  day           :integer          not null
 #  time_range_id :integer
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
-#  status        :boolean
+#  status        :boolean          not null
 #
 # Indexes
 #
