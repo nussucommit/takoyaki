@@ -30,21 +30,15 @@ class AvailabilitiesController < ApplicationController
   end
 
   def get_availability(day, time_range_id)
-    Availability.find_by(user_id: current_user.id, day: day,
-                         time_range_id: time_range_id) ||
-      create_new_availability(day, time_range_id)
+    Availability.find_or_create_by(user_id: current_user.id, day: day,
+                                   time_range_id: time_range_id)
   end
-
-  def create_new_availability(day, time_range_id)
-    Availability.create(user_id: current_user.id, day: day,
-                        time_range_id: time_range_id)
-  end
-
+  
   def start_time
-    @time_ranges[0].start_time.beginning_of_hour
+    @time_ranges.first.start_time.beginning_of_hour
   end
 
   def end_time
-    (@time_ranges[-1].end_time - 1).beginning_of_hour + 1.hour
+    (@time_ranges.last.end_time - 1).beginning_of_hour + 1.hour
   end
 end
