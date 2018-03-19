@@ -1,7 +1,6 @@
 <div class="container-fluid">
   <h1>Schedule Availability</h1>
-  <%= link_to 'Logout', destroy_user_session_path, method: :delete %>
-  <%= form_tag("/availabilities", method: "post") do %>
+  <%= form_tag(availabilities_path, method: "post") do %>
     <table class="table table-sm">
       <tr>
         <th></th>
