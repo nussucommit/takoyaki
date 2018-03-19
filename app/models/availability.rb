@@ -6,16 +6,18 @@
 #
 #  id            :integer          not null, primary key
 #  user_id       :integer
-#  day           :integer
+#  day           :integer          not null
 #  time_range_id :integer
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
-#  status        :boolean
+#  status        :boolean          not null
 #
 # Indexes
 #
-#  index_availabilities_on_time_range_id  (time_range_id)
-#  index_availabilities_on_user_id        (user_id)
+#  index_availabilities_on_time_range_id                      (time_range_id)
+#  index_availabilities_on_user_id                            (user_id)
+#  index_availabilities_on_user_id_and_time_range_id_and_day
+#    (user_id,time_range_id,day) UNIQUE
 #
 # Foreign Keys
 #

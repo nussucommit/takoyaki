@@ -12,6 +12,7 @@
 }
 
 table td {
+  touch-action: manipulation;
   line-height: 40px;
 }
 
@@ -47,6 +48,7 @@ table td {
 }
 
 .instruction {
+  display: inline-block;
   float: right;
   margin-right: 100px;
 }
@@ -69,8 +71,12 @@ table td {
 
 .instruction-label {
   display: inline-block;
-  margin-right: 30px;
+  margin-right: 20px;
   margin-left: 5px;
   position: relative;
   top: -4px;
+}
+
+html {
+  min-width: 1024px;
 }

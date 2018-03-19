@@ -1,7 +1,6 @@
-<div class="container-fluid">
+<div style="width:100%;">
   <h1>Schedule Availability</h1>
-  <%= link_to 'Logout', destroy_user_session_path, method: :delete %>
-  <%= form_tag("/availabilities", method: "post") do %>
+  <%= form_tag(availabilities_path, method: "post") do %>
     <table class="table table-sm">
       <tr>
         <th></th>
@@ -16,27 +15,29 @@
           <% start_time += 1.hour %>
         <% end %>
       </tr>
-      <% @availabilities.each do |availability_day| %>
+      <% Availability.days.each do |day, _index| %>
         <tr>
-          <td class="dayname"><%= availability_day[0].day %></td>
-          <% availability_day.each do |availability| %>
-            <%= generate_cell(availability) %>
+          <td class="dayname"><%= day %></td>
+          <% @time_ranges.each do |time_range| %>
+            <%= generate_cell(day, time_range) %>
           <% end %>
         </tr>
       <% end %>
     </table>
-    <%= submit_tag("Update", id: 'update-button', data: { disable_with: false }, class: "btn btn-large btn-light disabled") %>
-    <%= submit_tag("Clear All", id: 'clear-all-button', data: { disable_with: false }, class: "btn btn-large btn-warning white-text")%>
-    <%= submit_tag("Cancel", id: 'cancel-button', data: { disable_with: false }, class: "btn btn-large btn-light disabled") %>
-    <span class="instruction">
-      <div style="display: inline-block;">
-        <div class="box-yes"></div>
-        <div class="instruction-label">YES</div>
-      </div>
-      <div style="display: inline-block;">
-        <div class="box-no"></div>
-        <div class="instruction-label">NO</div>
-      </div>
-    </span>
+    <div style="display: inline-block; width: 100%;">
+      <%= submit_tag("Update", id: 'update-button', data: { disable_with: false }, class: "btn btn-large btn-light disabled") %>
+      <%= submit_tag("Clear All", id: 'clear-all-button', data: { disable_with: false }, class: "btn btn-large btn-warning white-text")%>
+      <%= submit_tag("Cancel", id: 'cancel-button', data: { disable_with: false }, class: "btn btn-large btn-light disabled") %>
+      <span class="instruction">
+        <div style="display: inline-block;">
+          <div class="box-yes"></div>
+          <div class="instruction-label">YES</div>
+        </div>
+        <div style="display: inline-block;">
+          <div class="box-no"></div>
+          <div class="instruction-label">NO</div>
+        </div>
+      </span>
+    </div>
   <% end %>
 </div>
