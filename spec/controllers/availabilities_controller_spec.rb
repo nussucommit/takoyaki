@@ -13,7 +13,9 @@ RSpec.describe AvailabilitiesController, type: :controller do
     it { should respond_with :ok }
 
     it 'creates availability' do
-      TimeRange.all.to_a.all?{ |time_range| Availability.exists?(user: @user, time_range: time_range) }
+      TimeRange.all.to_a.all? do |time_range|
+        Availability.exists?(user: @user, time_range: time_range)
+      end
     end
   end
 
@@ -40,8 +42,12 @@ RSpec.describe AvailabilitiesController, type: :controller do
       @availability = Availability.take
       @availability.update(status: false)
       expect do
-        post :update_availabilities, params: { availability_ids: [@availability.id] }
-      end.to change { Availability.find(@availability.id).status }.from(false).to(true)
+        post :update_availabilities, params: {
+          availability_ids: [@availability.id]
+        }
+      end.to change {
+        Availability.find(@availability.id).status
+      }.from(false).to(true)
     end
 
     it 'updates availability status to false' do
@@ -49,7 +55,9 @@ RSpec.describe AvailabilitiesController, type: :controller do
       @availability.update(status: true)
       expect do
         post :update_availabilities, params: { availability_ids: [] }
-      end.to change { Availability.find(@availability.id).status }.from(true).to(false)
+      end.to change {
+        Availability.find(@availability.id).status
+      }.from(true).to(false)
     end
   end
 end
