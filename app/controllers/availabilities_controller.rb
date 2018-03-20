@@ -13,7 +13,7 @@ class AvailabilitiesController < ApplicationController
 
   def update_availabilities
     availability_ids = params[:availability_ids] || []
-    Availability.where(user_id: current_user.id).each do |availability|
+    Availability.where(user: current_user).each do |availability|
       available = availability_ids.include?(availability.id.to_s)
       availability.update(status: available) if availability.status != available
     end
@@ -25,7 +25,7 @@ class AvailabilitiesController < ApplicationController
   def load_availabilities
     Hash[Availability.where(user: current_user).joins(:time_range)
                      .order('day', 'time_ranges.start_time')
-                     .to_a.map do |availability|
+                     .map do |availability|
            [[availability.day, availability.time_range_id], availability]
          end
     ]
@@ -36,7 +36,7 @@ class AvailabilitiesController < ApplicationController
       @time_ranges.each do |time_range|
         next if @availabilities.key?([day, time_range.id])
         @availabilities[[day, time_range.id]] = Availability.create(
-          user_id: current_user.id, day: day,
+          user: current_user, day: day,
           time_range_id: time_range.id, status: false
         )
       end

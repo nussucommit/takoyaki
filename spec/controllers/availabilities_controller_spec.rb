@@ -13,7 +13,7 @@ RSpec.describe AvailabilitiesController, type: :controller do
     it { should respond_with :ok }
 
     it 'creates availability' do
-      TimeRange.all.to_a.all? do |time_range|
+      TimeRange.all.all? do |time_range|
         Availability.exists?(user: @user, time_range: time_range)
       end
     end
