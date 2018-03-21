@@ -57,8 +57,4 @@ module DutiesHelper
   end
 
   # rubocop:enable Metrics/LineLength, Metrics/AbcSize, Metrics/MethodLength
-
-  def calc_colspan(start_time, end_time)
-    ((end_time - start_time) / 0.5.hours).round
-  end
 end

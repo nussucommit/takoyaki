@@ -9,7 +9,6 @@
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
-# rubocop:enable Metrics/LineLength
 
 FactoryBot.define do
   factory :place do

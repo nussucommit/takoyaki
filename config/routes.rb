@@ -3,6 +3,12 @@
 Rails.application.routes.draw do
   root to: 'duties#index'
 
+  resources :availabilities, only: [:index] do
+    collection do
+      post '/', to: 'availabilities#update_availabilities'
+    end
+  end
+
   devise_for :users, controllers: { registrations: 'registrations' }
 
   resources :users
