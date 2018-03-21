@@ -1,5 +1,11 @@
-<div>
+<div class="container-fluid availabilities-container">
   <h1>Schedule Availability</h1>
+  <div class="instruction">
+    <div class="box-yes"></div>
+    <div class="instruction-label">YES</div>
+    <div class="box-no"></div>
+    <div class="instruction-label">NO</div>
+  </div>
   <%= form_tag(availabilities_path, method: "post") do %>
     <table class="table table-sm table-availabilities">
       <tr>
@@ -24,20 +30,8 @@
         </tr>
       <% end %>
     </table>
-    <div style="display: inline-block; width: 100%;">
-      <%= submit_tag("Update", id: 'update-button', data: { disable_with: false }, class: "btn btn-large btn-light disabled") %>
-      <%= submit_tag("Clear All", id: 'clear-all-button', data: { disable_with: false }, class: "btn btn-large btn-warning white-text")%>
-      <%= submit_tag("Cancel", id: 'cancel-button', data: { disable_with: false }, class: "btn btn-large btn-light disabled") %>
-      <span class="instruction">
-        <div style="display: inline-block;">
-          <div class="box-yes"></div>
-          <div class="instruction-label">YES</div>
-        </div>
-        <div style="display: inline-block;">
-          <div class="box-no"></div>
-          <div class="instruction-label">NO</div>
-        </div>
-      </span>
-    </div>
+    <%= submit_tag("Update", id: 'update-button', data: { disable_with: false }, class: "btn btn-large btn-light disabled") %>
+    <%= submit_tag("Clear All", id: 'clear-all-button', data: { disable_with: false }, class: "btn btn-large btn-warning white-text")%>
+    <%= submit_tag("Cancel", id: 'cancel-button', data: { disable_with: false }, class: "btn btn-large btn-light disabled") %>
   <% end %>
 </div>

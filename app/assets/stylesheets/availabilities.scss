@@ -4,6 +4,13 @@
 
 @import "colors";
 
+.availabilities-container {
+  overflow-x: auto;
+  width: 100%;
+  white-space: nowrap;
+  padding: 50px;
+}
+
 .dayname {
   font-weight: bold;
   vertical-align: middle;
@@ -48,35 +55,31 @@
 }
 
 .instruction {
-  display: inline-block;
-  float: right;
-  margin-right: 100px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  overflow: hidden;
 }
 
 .box-no {
-  display: inline-block;
   width: 20px;
   height: 20px;
   border: 1px solid black;
   background-color: $light-grey;
+  float: left;
 }
 
 .box-yes {
-  display: inline-block;
   width: 20px;
   height: 20px;
   border: 1px solid black;
   background-color: white;
+  float: left;
 }
 
 .instruction-label {
-  display: inline-block;
   margin-right: 20px;
   margin-left: 5px;
   position: relative;
-  top: -4px;
-}
-
-html {
-  min-width: 1024px;
+  top: -2px;
+  float: left;
 }
