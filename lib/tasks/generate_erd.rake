@@ -2,8 +2,7 @@
 
 def generate_erd
   if system('sh -c \'command -v dot\' > /dev/null')
-    system('erd --inheritance --filetype=dot --direct '\
-           '--attributes=foreign_keys,content')
+    system('erd --inheritance --filetype=dot --attributes=foreign_keys,content')
     system('dot -Tpng erd.dot > schema.png')
     File.delete('erd.dot')
   else
