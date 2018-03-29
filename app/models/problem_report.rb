@@ -28,7 +28,9 @@
 #
 
 class ProblemReport < ApplicationRecord
-  belongs_to :reporter_user, class_name: 'User', inverse_of: :problem_report
-  belongs_to :last_update_user, class_name: 'User', inverse_of: :problem_report
+  belongs_to :reporter_user, class_name: 'User',
+      inverse_of: :reported_problem_reports
+  belongs_to :last_update_user, class_name: 'User',
+      inverse_of: :last_updated_problem_reports
   belongs_to :place
 end

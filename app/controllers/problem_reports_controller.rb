@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
 class ProblemReportsController < ApplicationController
-  def index; end
+  def index 
+    @problemReports = ProblemReport.all
+  end
 
   def create; end
 
