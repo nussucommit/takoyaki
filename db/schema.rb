@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180329165129) do
+ActiveRecord::Schema.define(version: 20180329171711) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -52,13 +52,13 @@ ActiveRecord::Schema.define(version: 20180329165129) do
     t.bigint   "last_update_user_id", :index=>{:name=>"index_problem_reports_on_last_update_user_id"}
     t.datetime "created_at",          :null=>false
     t.datetime "updated_at",          :null=>false
-    t.string   "venue"
     t.string   "computer_number"
     t.text     "description"
     t.boolean  "is_critical"
     t.boolean  "is_fixed"
     t.boolean  "is_fixable"
     t.text     "remarks"
+    t.integer  "place_id"
   end
 
   create_table "roles", force: :cascade do |t|
@@ -118,6 +118,7 @@ ActiveRecord::Schema.define(version: 20180329165129) do
   add_foreign_key "availabilities", "users"
   add_foreign_key "duties", "timeslots"
   add_foreign_key "duties", "users"
+  add_foreign_key "problem_reports", "places"
   add_foreign_key "timeslots", "places"
   add_foreign_key "timeslots", "time_ranges"
   add_foreign_key "timeslots", "users", column: "default_user_id"
