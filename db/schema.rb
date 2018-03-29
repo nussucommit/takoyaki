@@ -91,7 +91,7 @@ ActiveRecord::Schema.define(version: 20180329153937) do
     t.string   "username",               :index=>{:name=>"index_users_on_username", :unique=>true}
     t.string   "matric_num"
     t.string   "contact_num"
-    t.string   "cell"
+    t.integer  "cell"
   end
 
   create_table "users_roles", id: false, force: :cascade do |t|
