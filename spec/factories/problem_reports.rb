@@ -9,11 +9,11 @@
 #  updated_at          :datetime         not null
 #  venue               :string
 #  computer_number     :string
-#  description         :string
+#  description         :text
 #  is_critical         :boolean
 #  is_fixed            :boolean
 #  is_fixable          :boolean
-#  remarks             :string
+#  remarks             :text
 #
 # Indexes
 #

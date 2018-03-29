@@ -20,4 +20,6 @@ Rails.application.routes.draw do
   resources :announcements, only: %i[index create destroy update]
 
   get 'home', to: 'home#index'
+  
+  resources :problem_reports
 end
