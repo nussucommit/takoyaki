@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-
 # == Schema Information
 #
 # Table name: problem_reports
@@ -16,6 +15,7 @@
 #  is_fixable          :boolean
 #  remarks             :text
 #  place_id            :integer
+#  is_blocked          :boolean
 #
 # Indexes
 #

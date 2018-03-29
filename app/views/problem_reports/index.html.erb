@@ -14,22 +14,23 @@
         <th> Remarks </th>
         <th> Last Updated By </th>
         <th> Last Updated At </th>
-    <tr>
+    </tr>
     
-    <% @problemReports.each |pb| do %>
+    <% @problemReports.each do |pb| %>
         <tr>
-            <th> <% pb.id %> </th>
-            <th> Reporter Name </th>
-            <th> Venue </th>
-            <th> PC Number </th>
-            <th> Critical? </th>
-            <th> Blocked? (AS8 Only) </th>
-            <th> Fixed? </th>
-            <th> Fixable? </th>
-            <th> Description </th>
-            <th> Remarks </th>
-            <th> Last Updated By </th>
-            <th> Last Updated At </th>
+            <td> <%= pb.id %> </td>
+            <td> <%= pb.reporter_user.username %> </td>
+            <td> <%= pb.place.name %> </td>
+            <td> <%= pb.computer_number %> </td>
+            <td> <%= pb.is_critical ? 'Yes' : 'No' %> </td>
+            <td> <%= pb.is_blocked ? 'Yes' : 'No' %> </td>
+            <td> <%= pb.is_fixed ? 'Yes' : 'No' %> </td>
+            <td> <%= pb.is_fixable ? 'Yes' : 'No' %> </td>
+            <td> <%= pb.description %> </td>
+            <td> <%= pb.remarks %> </td>
+            <td> <%= pb.last_update_user.username %> </td>
+            <td> <%= pb.updated_at.strftime("%d %b %Y %H:%M") %> </td>
         </tr>
+        
     <% end %>
 </table>
