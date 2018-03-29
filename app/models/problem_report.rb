@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: problem_reports
@@ -26,7 +28,7 @@
 #
 
 class ProblemReport < ApplicationRecord
-  belongs_to :reporter_user, :class_name => 'User'
-  belongs_to :last_update_user, :class_name => 'User'
+  belongs_to :reporter_user, class_name: 'User', :inverse_of => :problem_report
+  belongs_to :last_update_user, class_name: 'User', :inverse_of => :problem_report
   belongs_to :place
 end

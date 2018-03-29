@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: problem_reports
@@ -27,7 +29,7 @@
 
 FactoryBot.define do
   factory :problem_report do
-    reporter_user ""
-    last_update_user ""
+    reporter_user ''
+    last_update_user ''
   end
 end
