@@ -23,6 +23,7 @@
 #  username               :string
 #  matric_num             :string
 #  contact_num            :string
+#  cell                   :string
 #
 # Indexes
 #
