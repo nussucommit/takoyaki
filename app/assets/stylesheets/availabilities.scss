@@ -1,0 +1,85 @@
+// Place all the styles related to the availabilities controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+@import "colors";
+
+.availabilities-container {
+  overflow-x: auto;
+  width: 100%;
+  white-space: nowrap;
+  padding: 50px;
+}
+
+.dayname {
+  font-weight: bold;
+  vertical-align: middle;
+  text-align: center;
+  width: 4em;
+}
+
+.table-availabilities td {
+  touch-action: manipulation;
+  line-height: 40px;
+}
+
+.time-label {
+  display: block;
+  position: relative;
+  left: -25px;
+  font-weight: normal;
+}
+
+.availability-yes {
+  background-color: white;
+  border: 1px solid black;
+}
+
+.availability-no {
+  background-color: $light-grey;
+  border: 1px solid black;
+}
+
+.availability-yes-pending {
+  background-color: white;
+  border: 1px solid black;
+}
+
+.availability-no-pending {
+  background-color: $light-grey;
+  border: 1px solid black;
+}
+
+.white-text, .white-text:link, .white-text:visited, .white-text:hover, .white-text:active {
+  color: white;
+}
+
+.instruction {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  overflow: hidden;
+}
+
+.box-no {
+  width: 20px;
+  height: 20px;
+  border: 1px solid black;
+  background-color: $light-grey;
+  float: left;
+}
+
+.box-yes {
+  width: 20px;
+  height: 20px;
+  border: 1px solid black;
+  background-color: white;
+  float: left;
+}
+
+.instruction-label {
+  margin-right: 20px;
+  margin-left: 5px;
+  position: relative;
+  top: -2px;
+  float: left;
+}

@@ -3,14 +3,6 @@
 require 'rails_helper'
 
 RSpec.describe AnnouncementsController, type: :controller do
-  describe 'GET #index' do
-    it 'does it successfully' do
-      sign_in create(:user)
-      get :index
-      should respond_with :ok
-    end
-  end
-
   describe 'POST #create' do
     context 'valid attributes' do
       it 'creates a new announcement' do
@@ -23,7 +15,7 @@ RSpec.describe AnnouncementsController, type: :controller do
       it 'redirects to announcement_path' do
         sign_in create(:user)
         post :create, params: { announcement: attributes_for(:announcement) }
-        should redirect_to announcements_path
+        should redirect_to duties_path
       end
     end
 
@@ -64,7 +56,7 @@ RSpec.describe AnnouncementsController, type: :controller do
         put :update, params: { id: announcement.id, announcement:
           attributes_for(:announcement, subject: 'new subject', details: 'new
             details') }
-        should redirect_to announcements_path
+        should redirect_to duties_path
       end
     end
 
@@ -94,7 +86,7 @@ RSpec.describe AnnouncementsController, type: :controller do
       sign_in create(:user)
       announcement = create(:announcement)
       delete :destroy, params: { id: announcement.id }
-      should redirect_to announcements_path
+      should redirect_to duties_path
     end
   end
 end
