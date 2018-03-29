@@ -8,6 +8,6 @@ class ProblemReportsController < ApplicationController
     def update
     end
     
-    def destroy
+    def delete
     end
 end

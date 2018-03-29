@@ -28,5 +28,5 @@
 class ProblemReport < ApplicationRecord
   belongs_to :reporter_user, :class_name => 'User'
   belongs_to :last_update_user, :class_name => 'User'
-  has_one :place
+  belongs_to :place
 end
