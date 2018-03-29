@@ -3,7 +3,8 @@
 require 'rails_helper'
 
 RSpec.describe GenericMailer, type: :mailer do
-  DEFAULT_FROM = 'postmaster@sandbox8f696e611a6e4906a977c007f8971322.mailgun.org'
+  DEFAULT_FROM =
+    'postmaster@sandbox8f696e611a6e4906a977c007f8971322.mailgun.org'
   describe '#drop_duty' do
     let(:mail) do
       user = create(:user)
@@ -17,12 +18,13 @@ RSpec.describe GenericMailer, type: :mailer do
         "#{@duty.time_range.start_time.strftime('%H%M')}-"\
         "#{@duty.time_range.end_time.strftime('%H%M')} on"\
         "#{@duty.date.strftime('%a, %d %b %Y')} at"\
-        "#{@duty.place.name}")
+        "#{@duty.place.name}"
+      )
       expect(mail.to).to eq(User.pluck(:email))
       expect(mail.from).to eq([DEFAULT_FROM])
     end
     it 'renders the body' do
-      expect(mail.body.encoded).to match("grab")
+      expect(mail.body.encoded).to match('grab')
       expect(mail.body.encoded).to match(dropped_duties_url)
     end
   end
