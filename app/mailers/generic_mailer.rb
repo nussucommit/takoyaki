@@ -14,11 +14,25 @@ class GenericMailer < ApplicationMailer
                   "#{duty.place.name}")
   end
 
+  def problem_report(problem)
+    @problem = problem
+    mail(to: cell_users_with_name('Technical'),
+         subject: 'New computer problem')
+  end
+
   private
 
-  def all_users_with_name
-    User.pluck(:username, :email).map do |u|
+  def users_with_name(users)
+    users&.pluck(:username, :email)&.map do |u|
       %("#{u[0]}" <#{u[1]}>)
     end
+  end
+
+  def all_users_with_name
+    users_with_name(User)
+  end
+
+  def cell_users_with_name(cell)
+    users_with_name(User.find_by(cell: cell))
   end
 end

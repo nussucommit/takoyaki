@@ -1,7 +1,11 @@
-From: <%= @duty.user.username %>
-Date: <%= @duty.date.strftime('%a, %d %b %Y') %>
-Time: <%= @duty.time_range.start_time.strftime('%H%M') %>-<%= @duty.time_range.start_time.strftime('%H%M') %>
-Venue: <%= @duty.place.name %>
+New computer problem is reported:
+
+PC Number: <%= @problem.computer_number %>
+Venue: <%= @problem.place.name %>
+Description: <%= @problem.description %>
+Critical: <%= @problem.is_critical %>
+
+Please fix the problem as soon as possible!
 
 NUSSU commIT wishes you the best for your exams!
 
