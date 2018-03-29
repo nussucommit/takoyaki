@@ -9,4 +9,22 @@ class GenericMailer < ApplicationMailer
     Rails.logger.debug user.email
     mail(to: @user.email, subject: 'Test Email')
   end
+
+  def drop_duty(duty)
+    @duty = duty
+    mail(to: all_users_with_name,
+         subject: 'Duty notification: '\
+                  "#{duty.time_range.start_time.strftime('%H%M')}-"\
+                  "#{duty.time_range.end_time.strftime('%H%M')} on"\
+                  "#{duty.date.strftime('%a, %d %b %Y')} at"\
+                  "#{duty.place.name}")
+  end
+
+  private
+
+  def all_users_with_name
+    User.pluck(:username, :email).map do |u|
+      %("#{u[0]}" <#{u[1]}>)
+    end
+  end
 end
