@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   resources :users
   resources :duties do
     collection do
+      get 'dropped', to: 'duties#dropped'
       post 'generate', to: 'duties#generate_duties'
     end
   end

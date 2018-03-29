@@ -11,5 +11,9 @@ RSpec.describe DutiesController, type: :routing do
     it 'routes to #generate_duties' do
       expect(post: '/duties/generate').to route_to('duties#generate_duties')
     end
+
+    it 'routes to #dropped_duties' do
+      expect(get: '/duties/dropped').to route_to('duties#dropped')
+    end
   end
 end
