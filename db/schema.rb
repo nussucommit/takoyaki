@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180329164621) do
+ActiveRecord::Schema.define(version: 20180319073436) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,11 +24,13 @@ ActiveRecord::Schema.define(version: 20180329164621) do
 
   create_table "availabilities", force: :cascade do |t|
     t.bigint   "user_id",       :index=>{:name=>"index_availabilities_on_user_id"}
+    t.integer  "day",           :null=>false
     t.bigint   "time_range_id", :index=>{:name=>"index_availabilities_on_time_range_id"}
     t.datetime "created_at",    :null=>false
     t.datetime "updated_at",    :null=>false
     t.boolean  "status",        :null=>false
-    t.integer  "day"
+
+    t.index ["user_id", "time_range_id", "day"], :name=>"index_availabilities_on_user_id_and_time_range_id_and_day", :unique=>true
   end
 
   create_table "duties", force: :cascade do |t|
@@ -62,12 +64,12 @@ ActiveRecord::Schema.define(version: 20180329164621) do
 
   create_table "timeslots", force: :cascade do |t|
     t.boolean  "mc_only"
+    t.text     "day"
     t.bigint   "default_user_id", :index=>{:name=>"index_timeslots_on_default_user_id"}
     t.bigint   "time_range_id",   :index=>{:name=>"index_timeslots_on_time_range_id"}
     t.bigint   "place_id",        :index=>{:name=>"index_timeslots_on_place_id"}
     t.datetime "created_at",      :null=>false
     t.datetime "updated_at",      :null=>false
-    t.integer  "day"
   end
 
   create_table "users", force: :cascade do |t|
@@ -89,7 +91,6 @@ ActiveRecord::Schema.define(version: 20180329164621) do
     t.string   "username",               :index=>{:name=>"index_users_on_username", :unique=>true}
     t.string   "matric_num"
     t.string   "contact_num"
-    t.integer  "cell"
   end
 
   create_table "users_roles", id: false, force: :cascade do |t|

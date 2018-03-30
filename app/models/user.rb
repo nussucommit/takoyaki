@@ -23,7 +23,6 @@
 #  username               :string
 #  matric_num             :string
 #  contact_num            :string
-#  cell                   :integer
 #
 # Indexes
 #
@@ -41,6 +40,4 @@ class User < ApplicationRecord
   has_many :duties, dependent: :nullify
   has_many :timeslots, foreign_key: :default_user_id, inverse_of: :user,
                        dependent: :nullify
-  enum cell: ['Welfare', 'Training', 'Technical', 'Publicity', 'Presidential',
-              'Marketing', 'Center and Ops']
 end
