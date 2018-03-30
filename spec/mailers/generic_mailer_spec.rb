@@ -16,10 +16,10 @@ RSpec.describe GenericMailer, type: :mailer do
 
     it 'renders the header' do
       expect(mail.subject).to eq(
-        'Duty notification: '\
-        "#{@duty.time_range.start_time.strftime('%H%M')}-"\
-        "#{@duty.time_range.end_time.strftime('%H%M')} on"\
-        "#{@duty.date.strftime('%a, %d %b %Y')} at"\
+        'Duty notification: ' \
+        "#{@duty.time_range.start_time.strftime('%H%M')}-" \
+        "#{@duty.time_range.end_time.strftime('%H%M')} on" \
+        "#{@duty.date.strftime('%a, %d %b %Y')} at" \
         "#{@duty.place.name}"
       )
       expect(mail.to).to eq(User.pluck(:email))
