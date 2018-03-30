@@ -21,8 +21,8 @@ class GenericMailer < ApplicationMailer
   def generate_drop_duty_subject(duty)
     'Duty notification: ' \
     "#{duty.time_range.start_time.strftime('%H%M')}-" \
-    "#{duty.time_range.end_time.strftime('%H%M')} on" \
-    "#{duty.date.strftime('%a, %d %b %Y')} at" \
+    "#{duty.time_range.end_time.strftime('%H%M')} on " \
+    "#{duty.date.strftime('%a, %d %b %Y')} at " \
     "#{duty.place.name}"
   end
 
