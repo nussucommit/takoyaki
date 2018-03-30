@@ -2,7 +2,7 @@
 
 class ProblemReportsController < ApplicationController
   def index 
-    @problemReports = ProblemReport.all
+    @problem_reports = ProblemReport.all
   end
 
   def create; end

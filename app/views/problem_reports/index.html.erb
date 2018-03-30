@@ -1,5 +1,4 @@
 <h3> Problem Report Listing </h3>
-
 <table>
     <tr> 
         <th> Id </th>
@@ -16,7 +15,7 @@
         <th> Last Updated At </th>
     </tr>
     
-    <% @problemReports.each do |pb| %>
+    <% @problem_reports.each do |pb| %>
         <tr>
             <td> <%= pb.id %> </td>
             <td> <%= pb.reporter_user.username %> </td>
