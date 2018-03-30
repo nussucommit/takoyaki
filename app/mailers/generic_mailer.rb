@@ -6,33 +6,29 @@ class GenericMailer < ApplicationMailer
 
   def drop_duty(duty)
     @duty = duty
-    mail(to: all_users_with_name,
-         subject: 'Duty notification: '\
-                  "#{duty.time_range.start_time.strftime('%H%M')}-"\
-                  "#{duty.time_range.end_time.strftime('%H%M')} on"\
-                  "#{duty.date.strftime('%a, %d %b %Y')} at"\
-                  "#{duty.place.name}")
+    mail(to: users_with_name(User.all),
+         subject: generate_drop_duty_subject(duty))
   end
 
   def problem_report(problem)
     @problem = problem
-    mail(to: cell_users_with_name('Technical'),
+    mail(to: users_with_name(Role.find_by(name: :technical).users),
          subject: 'New computer problem')
   end
 
   private
 
+  def generate_drop_duty_subject(duty)
+    'Duty notification: '\
+    "#{duty.time_range.start_time.strftime('%H%M')}-"\
+    "#{duty.time_range.end_time.strftime('%H%M')} on"\
+    "#{duty.date.strftime('%a, %d %b %Y')} at"\
+    "#{duty.place.name}"
+  end
+
   def users_with_name(users)
     users&.pluck(:username, :email)&.map do |u|
       %("#{u[0]}" <#{u[1]}>)
     end
-  end
-
-  def all_users_with_name
-    users_with_name(User)
-  end
-
-  def cell_users_with_name(cell)
-    users_with_name(User.find_by(cell: cell))
   end
 end
