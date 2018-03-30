@@ -24,11 +24,13 @@ ActiveRecord::Schema.define(version: 20180329164621) do
 
   create_table "availabilities", force: :cascade do |t|
     t.bigint   "user_id",       :index=>{:name=>"index_availabilities_on_user_id"}
+    t.integer  "day",           :null=>false
     t.bigint   "time_range_id", :index=>{:name=>"index_availabilities_on_time_range_id"}
     t.datetime "created_at",    :null=>false
     t.datetime "updated_at",    :null=>false
     t.boolean  "status",        :null=>false
-    t.integer  "day"
+
+    t.index ["user_id", "time_range_id", "day"], :name=>"index_availabilities_on_user_id_and_time_range_id_and_day", :unique=>true
   end
 
   create_table "duties", force: :cascade do |t|
