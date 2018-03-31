@@ -18,8 +18,8 @@
     <% @problem_reports.each do |pb| %>
         <tr>
             <td> <%= pb.id %> </td>
-            <td> <%= pb.reporter_user.username %> </td>
-            <td> <%= pb.place.name %> </td>
+            <td> <%= User.find(pb.reporter_user_id).username %> </td>
+            <td> <%= Place.find(pb.place_id).name %> </td>
             <td> <%= pb.computer_number %> </td>
             <td> <%= pb.is_critical ? 'Yes' : 'No' %> </td>
             <td> <%= pb.is_blocked ? 'Yes' : 'No' %> </td>
@@ -27,9 +27,8 @@
             <td> <%= pb.is_fixable ? 'Yes' : 'No' %> </td>
             <td> <%= pb.description %> </td>
             <td> <%= pb.remarks %> </td>
-            <td> <%= pb.last_update_user.username %> </td>
+            <td> <%= User.find(pb.last_update_user_id).username %> </td>
             <td> <%= pb.updated_at.strftime("%d %b %Y %H:%M") %> </td>
         </tr>
-        
     <% end %>
 </table>

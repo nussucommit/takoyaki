@@ -1,5 +1,39 @@
-<h1> NEW </h1>
+<h3> NEW </h3>
 
-<%= form_tag(new_problem_report_path, method: "get") do %>
+<%= @test %>
+<%= form_tag(problem_reports_path, method: "post") do %>
+    <p>
+        <b> Name </b>
+        <%= current_user.username %>
+    </p>
     
+    <p>
+        <b> Venue </b>
+        <%= check_box_tag(:venue_AS8) %>
+        <%= label_tag(:venue_AS8, 'AS8') %>
+        
+        <%= check_box_tag(:venue_YIH) %>
+        <%= label_tag(:venue_YIH, 'YIH') %>
+    </p>
+    
+    <p>
+        <b> PC Number </b>
+        <%= text_field_tag(:computer_number) %>
+    </p>
+    
+    <p>
+        <b> Description </b>
+        <%= text_area_tag(:description, "", size: "100x10", placeholder: "test", style: "display: inline") %>
+    </p>
+    
+    <p>
+        <b> Critical </b>
+        <%= check_box_tag(:is_critical_yes) %>
+        <%= label_tag(:is_critical_yes, 'Yes') %>
+        
+        <%= check_box_tag(:is_critical_no) %>
+        <%= label_tag(:is_critical_no, 'No') %>
+    </p>
+    
+    <%= submit_tag("Submit")%>
 <% end %>
