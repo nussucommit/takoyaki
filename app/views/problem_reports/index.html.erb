@@ -25,11 +25,11 @@
         <th> Reporter Name </th>
         <th> Venue </th>
         <th> PC Number </th>
+        <th> Description </th>
         <th> Critical? </th>
         <th> Blocked? (AS8 Only) </th>
         <th> Fixed? </th>
         <th> Fixable? </th>
-        <th> Description </th>
         <th> Remarks </th>
         <th> Last Updated By </th>
         <th> Last Updated At </th>
@@ -41,6 +41,7 @@
             <td> <%= User.find(pb.reporter_user_id).username %> </td>
             <td> <%= Place.find(pb.place_id).name %> </td>
             <td> <%= pb.computer_number %> </td>
+            <td> <%= pb.description %> </td>
             <% ["Critical", "Blocked", "Fixed", "Fixable"].each do |a| %>
                 <td> <%= form_tag(problem_report_path(pb.id), method: "patch") do %>
                     <% name = "is_" + a.downcase %>
@@ -50,7 +51,6 @@
                 <% end %> </td>
             <% end %>
             
-            <td> <%= pb.description %> </td>
             <td> <%= form_tag(problem_report_path(pb.id), method: "patch") do %>
                 <%= pb.remarks %> <br> 
                 <%= text_area_tag(:remarks, "", size: "20x2") %>
