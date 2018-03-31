@@ -37,6 +37,6 @@ module AvailabilitiesHelper
       else
         user[:username]
       end
-    end.flatten.join(",")
+    end.flatten.join(',')
   end
 end
