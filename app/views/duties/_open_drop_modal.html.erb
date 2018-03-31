@@ -8,9 +8,11 @@
   <div class="modal-body">
     <%= form_tag(drop_duties_path, method: :post) do %>
       <% @drop_duty_list.each do |d| %>
-        <%= check_box_tag 'duty_id[]', d.id %>
+        <%= check_box_tag "duty_id[]", d.id %>
         <%= d.timeslot.time_range.start_time.strftime('%H:%M') + " - " + d.timeslot.time_range.end_time.strftime('%H:%M') %>
+        </br>
       <% end %>
+      <%= select_tag "user_id", options_from_collection_for_select(@users, "id", "username"), prompt: "Drop to all" %>
       </br>
       <%= submit_tag "Drop", class: "btn btn-primary"%>
     <% end %>

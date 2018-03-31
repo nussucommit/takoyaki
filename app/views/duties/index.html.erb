@@ -66,10 +66,11 @@
                         </td>
                       <% else %>
                         <td class="schedule-name" colspan="<%= duty[:colspan] %>">
-                          <%= button_to duty[:name], {:controller => "duties", :action => "open_drop_modal", :drop_duty_list => duty[:span_duty]}, {:method => :post, :remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window1'} %>
-                          <!-- <button data-toggle="modal" data-target="#exampleModal">
+                          <% if(current_user.username == duty[:name]) %>
+                            <%= button_to duty[:name], {:controller => "duties", :action => "open_drop_modal", :drop_duty_list => duty[:span_duty]}, {:method => :post, :remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window1'} %>
+                          <% else %>
                             <%= duty[:name] %>
-                          </button> -->
+                          <% end %>
                           <div id="modal-window1" class="modal hide fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                             <div class="modal-dialog" role="document">
                             </div>

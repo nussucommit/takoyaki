@@ -18,6 +18,7 @@ class DutiesController < ApplicationController
   end
 
   def open_drop_modal
+    @users = User.where.not(id: current_user.id)
     @drop_duty_list = params[:drop_duty_list].map do |id|
       Duty.find_by(id: id)
     end
@@ -29,14 +30,24 @@ class DutiesController < ApplicationController
   
   def grab
     grab_duty = Duty.find_by(id: params[:grab_duty])
-    grab_duty.update(user: current_user, free: false)
+    grab_duty.update(user: current_user, free: false, request_user_id: nil)
     grab_duty.save
     redirect_to duties_path
   end
   
   def drop
-    Duty.where(id: params[:duty_id]).update_all(free: true)
-    redirect_to duties_path
+    drop_array = params[:duty_id]
+    swap_user_id = params[:user_id].to_i
+    drop_array.each_with_index do |duty_id, index|
+      drop_duty_id = drop_array[index].to_i
+      drop_duty = Duty.find_by(id: drop_duty_id)
+      if swap_user_id == 0
+        drop_duty.update(free: true)
+      else 
+        drop_duty.update(request_user_id: swap_user_id)
+      end
+    end
+    redirect_to duties_path 
   end
 
 

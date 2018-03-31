@@ -48,8 +48,8 @@ module DutiesHelper
     span_duty = Array.new
     duties.each_with_index do |duty, index|
       time_range = duty.timeslot.time_range
-      if duties[index].free
-        result.push(name: duties[index - 1].user.username, colspan: colspan, span_duty: span_duty)
+      if duties[index].free || duties[index].request_user_id == current_user.id
+        result.push(name: duties[index - 1].user.username, colspan: colspan, span_duty: span_duty) if span_duty != Array.new
         colspan = 0
         span_duty = Array.new
         result.push(name: duty.user.username, colspan: calc_colspan(time_range.start_time, time_range.end_time), duty: duty, free: true)
