@@ -23,23 +23,17 @@ class AvailabilitiesController < ApplicationController
   def default_index
     @time_ranges = TimeRange.order(:start_time)
     @timeslots = Hash[Timeslot.joins(:time_range)
-      .map do |timeslot|
-        [[timeslot.day, timeslot.time_range_id], timeslot]
-      end
+                              .map do |timeslot|
+                        [[timeslot.day, timeslot.time_range_id], timeslot]
+                      end
     ]
   end
 
-  def default_edit
+  def default_edit; end
 
-  end
+  def default_update; end
 
-  def default_update
-
-  end
-
-  def all
-
-  end
+  def all; end
 
   private
 
