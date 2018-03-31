@@ -60,4 +60,15 @@ RSpec.describe AvailabilitiesController, type: :controller do
       }.from(true).to(false)
     end
   end
+
+  describe 'GET availabilities#all' do
+    before do
+      create_list(:time_range, 10)
+      user = create(:user)
+      user.add_role(:admin)
+      sign_in user, scope: :user
+      get :all
+    end
+    it { should respond_with :ok }
+  end
 end
