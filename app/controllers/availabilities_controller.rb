@@ -20,6 +20,27 @@ class AvailabilitiesController < ApplicationController
     redirect_to availabilities_path
   end
 
+  def default_index
+    @time_ranges = TimeRange.order(:start_time)
+    @timeslots = Hash[Timeslot.joins(:time_range)
+      .map do |timeslot|
+        [[timeslot.day, timeslot.time_range_id], timeslot]
+      end
+    ]
+  end
+
+  def default_edit
+
+  end
+
+  def default_update
+
+  end
+
+  def all
+
+  end
+
   private
 
   def load_availabilities
