@@ -6,6 +6,9 @@ Rails.application.routes.draw do
   resources :availabilities, only: [:index] do
     collection do
       post '/', to: 'availabilities#update_availabilities'
+      get '/default', to: 'availabilities#default'
+      post '/set_default', to: 'availabilities#set_default'
+      get '/all', to: 'availabilities#all'
     end
   end
 

@@ -12,4 +12,12 @@ RSpec.describe AvailabilitiesController, type: :routing do
       'availabilities#update_availabilities'
     )
   end
+
+  it 'routes to #default' do
+    expect(get: '/availabilities/default').to route_to('availabilities#default')
+  end
+
+  it 'routes to #set_default' do
+    expect(get: '/availabilities/all').to route_to('availabilities#all')
+  end
 end
