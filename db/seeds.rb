@@ -16,6 +16,20 @@ admin = User.create(username: 'admin', email: 'admin@example.com',
                     password: '123456')
 admin.add_role :admin
 
+# Add users of each cell
+Role::CELL.each do |c|
+  8.times do |i|
+    user = User.create(username: "#{c}#{i}", email: "#{c}#{i}@example.com",
+                       password: '123456')
+    user.add_role(c.to_sym)
+    if i.zero?
+      user.add_role(:manager)
+    else
+      user.add_role(:member)
+    end
+  end
+end
+
 User.create(username: 'test', email: 'test@example.com', password: '123456')
 
 Place.create(name: 'YIH')
