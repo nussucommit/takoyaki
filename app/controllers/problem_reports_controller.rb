@@ -40,6 +40,14 @@ class ProblemReportsController < ApplicationController
       @problem_report.remarks = params[:remarks]
     end
     
+    [:is_fixable, :is_fixed, :is_blocked, :is_critical].each do |a|
+      if params[a]
+        sa = a.to_s
+        val = !@problem_report.send(sa)
+        @problem_report.send("#{sa}=",val)
+      end
+    end
+    
     @problem_report.save!
     redirect_to problem_reports_path
   end

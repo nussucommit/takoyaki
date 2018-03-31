@@ -36,8 +36,12 @@
             <td> <%= Place.find(pb.place_id).name %> </td>
             <td> <%= pb.computer_number %> </td>
             <% ["Critical", "Blocked", "Fixed", "Fixable"].each do |a| %>
-                <% name = "is_" + a.downcase %>
-                <td> <%= pb.public_send(name) ? a : 'Not ' + a %> </td>
+                <td> <%= form_tag(problem_report_path(pb.id), method: "patch") do %>
+                    <% name = "is_" + a.downcase %>
+                    <% is_a = pb.public_send(name) %>
+                    <%= button_tag((is_a ? a : "Not " + a), name: name,
+                            type: 'submit', class: "btn btn-" + (is_a ? "success" : "danger"))%>
+                <% end %> </td>
             <% end %>
             
             <td> <%= pb.description %> </td>
