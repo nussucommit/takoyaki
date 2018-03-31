@@ -37,4 +37,9 @@ RSpec.describe ProblemReport, type: :model do
   it "saves a valid Problem Report" do
     expect(create(:problem_report)).to be_valid
   end
+  
+  it "does not save if there is no description/computer number" do
+    expect(build(:problem_report, description: "").save).to be false
+    expect(build(:problem_report, computer_number: "").save).to be false
+  end
 end
