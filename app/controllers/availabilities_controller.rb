@@ -34,9 +34,34 @@ class AvailabilitiesController < ApplicationController
 
   def default_update; end
 
-  def all; end
+  def all
+    @time_ranges = TimeRange.order(:start_time)
+    @availabilities = load_all_availabilities
+    @users = load_all_users
+    @start_time = start_time
+    @end_time = end_time
+  end
 
   private
+
+  def load_all_availabilities
+    result = {}
+    Availability.joins(:time_range)
+                .order(:day, 'time_ranges.start_time')
+                .each do |a|
+      result[[a.day, a.time_range_id]] ||= []
+      result[[a.day, a.time_range_id]].push(a.user_id) if a.status
+    end
+    result
+  end
+
+  def load_all_users
+    Hash[
+      User.all.map do |u|
+        [u.id, { username: u.username, mc?: u.has_role?(:manager) }]
+      end
+    ]
+  end
 
   def load_availabilities
     Hash[Availability.where(user: current_user).joins(:time_range)

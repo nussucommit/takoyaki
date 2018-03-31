@@ -1,0 +1,27 @@
+<div class="container-fluid availabilities-container">
+  <h1>Schedule Availability for all users</h1>
+    <table class="table table-sm table-availabilities">
+      <tr>
+        <th></th>
+        <% start_time = @start_time %>
+        <% end_time = @end_time %>
+        <% while start_time <= end_time do %>
+          <th colspan="2">
+            <span class="time-label">
+              <%= start_time.strftime("%H%M") %>
+            </span>
+          </th>
+          <% start_time += 1.hour %>
+        <% end %>
+      </tr>
+      <% (1..7).each do |index| %>
+        <% day = Availability.days.keys[index % 7] %>
+        <tr>
+          <td class="dayname"><%= day[0..2] %></td>
+          <% @time_ranges.each do |time_range| %>
+            <%= generate_cell_all(day, time_range) %>
+          <% end %>
+        </tr>
+      <% end %>
+    </table>
+</div>
