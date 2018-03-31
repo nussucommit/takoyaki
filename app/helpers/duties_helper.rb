@@ -49,7 +49,11 @@ module DutiesHelper
       time_range = duty.timeslot.time_range
       colspan += calc_colspan(time_range.start_time, time_range.end_time)
       unless duties[index]&.user&.email == duties[index + 1]&.user&.email
-        result.push(name: duty.user.username, colspan: colspan)
+        if duty.user==nil
+          result.push(name: "nil", colspan: colspan, idd: duty.id)
+        else
+          result.push(name: duty.user.username, colspan: colspan, idd: duty.id)
+        end
         colspan = 0
       end
     end

@@ -23,7 +23,7 @@
 #
 
 class Duty < ApplicationRecord
-  belongs_to :user
+  belongs_to :user, optional: true
   belongs_to :timeslot
   has_one :time_range, through: :timeslot
   # validates_uniqueness_of :date, scope = [:timeslot_id, :user_id]

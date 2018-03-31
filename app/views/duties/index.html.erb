@@ -59,10 +59,24 @@
                     <tr>
                     <% place.each do |duty| %>
                       <% if duty[:name].nil? %>
-                        <td class="schedule-name-empty" colspan="<%= duty[:colspan] %>">&nbsp;</td>
+                        <td class="schedule-name-empty" colspan="<%= duty[:colspan] %>">
+                          &nbsp;
+                          
+                        </td>
                       <% else %>
                         <td class="schedule-name" colspan="<%= duty[:colspan] %>">
-                          <div class="text-overflow-ellipsis"><%= duty[:name] %></div>
+                          <div class="text-overflow-ellipsis">
+                            <% if duty[:name]=="nil" %>
+                              <% @idd=duty[:idd] %>
+                              <%= link_to 'Grab', grab_duty_path(@idd), method: "post", data:{confirm: 'Are you sure to grab the duty?'} %> 
+                            <% else %>
+                              <%= duty[:name] %>
+                              <%if duty[:name]==current_user.username%>
+                                <% @idd=duty[:idd] %>
+                                <%= link_to 'Drop', drop_duty_path(@idd), method: "post", data:{confirm: 'Are you sure to drop the duty?'} %>
+                              <% end %>
+                            <% end %>
+                          </div>
                         </td>
                       <% end %>
                     <% end %>

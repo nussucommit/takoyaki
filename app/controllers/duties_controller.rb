@@ -16,10 +16,26 @@ class DutiesController < ApplicationController
     Duty.generate(start_date, end_date)
     redirect_to duties_path
   end
+  
+  def grab
+    @duty = Duty.find params[:id]
+    @duty.user=current_user
+    @duty.save
+    redirect_to duties_path
+  end
+  
+  def drop
+    @duty = Duty.find params[:id]
+    @duty.user = nil
+    @duty.save
+    redirect_to duties_path
+  end
+
 
   private
 
   def generate_header_iter
+
     time_range = TimeRange.order(:start_time)
     first_time = time_range.first.start_time
     last_time = time_range.last.start_time

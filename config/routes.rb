@@ -13,10 +13,16 @@ Rails.application.routes.draw do
 
   resources :users
   resources :duties do
+    member do
+      post 'grab', to: 'duties#grab'
+      post 'drop', to: 'duties#drop'
+    end
+
     collection do
       post 'generate', to: 'duties#generate_duties'
     end
   end
+
   resources :announcements, only: %i[index create destroy update]
 
   get 'home', to: 'home#index'
