@@ -1,3 +1,5 @@
+
+
 <div class="login">
   <p class="notice"><%= notice %></p>
   <p class="alert"><%= alert %></p>
@@ -37,6 +39,12 @@
       <p class="muted text-center col-sm-12 col-md-4 offset-md-4">Copyright &copy; 201x-201x NUSSU CommIT Technical Cell</p>
     </div>  
   </div>
+
+ 
+  <% content_for :page_attributes do %>
+  no-nav
+  <% end %>
+
 
 
 </div>

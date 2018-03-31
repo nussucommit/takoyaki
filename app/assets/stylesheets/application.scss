@@ -21,3 +21,5 @@
 @import 'duties';
 @import 'availabilities';
 @import 'announcements';
+
+body[no-nav] nav{display: none;}
