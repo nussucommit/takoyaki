@@ -35,10 +35,11 @@
             <td> <%= User.find(pb.reporter_user_id).username %> </td>
             <td> <%= Place.find(pb.place_id).name %> </td>
             <td> <%= pb.computer_number %> </td>
-            <td> <%= pb.is_critical ? 'Yes' : 'No' %> </td>
-            <td> <%= pb.is_blocked ? 'Yes' : 'No' %> </td>
-            <td> <%= pb.is_fixed ? 'Yes' : 'No' %> </td>
-            <td> <%= pb.is_fixable ? 'Yes' : 'No' %> </td>
+            <% ["Critical", "Blocked", "Fixed", "Fixable"].each do |a| %>
+                <% name = "is_" + a.downcase %>
+                <td> <%= pb.public_send(name) ? a : 'Not ' + a %> </td>
+            <% end %>
+            
             <td> <%= pb.description %> </td>
             <td> <%= form_tag(problem_report_path(pb.id), method: "patch") do %>
                 <%= pb.remarks %> <br> 
