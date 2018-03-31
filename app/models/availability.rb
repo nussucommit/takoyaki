@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# rubocop:disable Metrics/LineLength
 # == Schema Information
 #
 # Table name: availabilities
@@ -23,6 +24,7 @@
 #  fk_rails_...  (time_range_id => time_ranges.id)
 #  fk_rails_...  (user_id => users.id)
 #
+# rubocop:enable Metrics/LineLength
 
 class Availability < ApplicationRecord
   belongs_to :user
