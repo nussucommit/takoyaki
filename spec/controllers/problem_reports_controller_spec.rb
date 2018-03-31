@@ -50,30 +50,14 @@ RSpec.describe ProblemReportsController, type: :controller do
       @report = create(:problem_report)
     end
     
-    it "should redirect to problem_reports_path" do
-      patch :update, params: {id: @report.id, remarks: "I'm super Rich"}
-      should redirect_to problem_reports_path
-      
-      patch :update, params: {id: @report.id, is_fixable: "change"}
-      should redirect_to problem_reports_path
-      
-      patch :update, params: {id: @report.id, is_fixed: "change"}
-      should redirect_to problem_reports_path
-      
-      patch :update, params: {id: @report.id, is_blocked: "change"}
-      should redirect_to problem_reports_path
-      
-      patch :update, params: {id: @report.id, is_critical: "change"}
-      should redirect_to problem_reports_path
-    end
-    
-    it "should change the remarks" do
+    it "should change the remarks and redirect" do
       expect{
         patch :update, params: {id: @report.id, remarks: "I'm super duper Rich"}
       }.to change{ ProblemReport.find(@report.id).remarks }.to("I'm super duper Rich")
+      should redirect_to problem_reports_path
     end
     
-    it "should change the is_fixable" do
+    it "should change the is_fixable and redirect" do
       expect{
         patch :update, params: {id: @report.id, is_fixable: "change"}
       }.to change{ ProblemReport.find(@report.id).is_fixable }.to(true)
@@ -81,9 +65,10 @@ RSpec.describe ProblemReportsController, type: :controller do
       expect{
         patch :update, params: {id: @report.id, is_fixable: "change"}
       }.to change{ ProblemReport.find(@report.id).is_fixable }.to(false)
+      should redirect_to problem_reports_path
     end
     
-    it "should change the is_fixed" do
+    it "should change the is_fixed and redirect" do
       expect{
         patch :update, params: {id: @report.id, is_fixed: "change"}
       }.to change{ ProblemReport.find(@report.id).is_fixed }.to(true)
@@ -91,9 +76,10 @@ RSpec.describe ProblemReportsController, type: :controller do
       expect{
         patch :update, params: {id: @report.id, is_fixed: "change"}
       }.to change{ ProblemReport.find(@report.id).is_fixed }.to(false)
+      should redirect_to problem_reports_path
     end
     
-    it "should change the is_blocked" do
+    it "should change the is_blocked and redirect" do
       expect{
         patch :update, params: {id: @report.id, is_blocked: "change"}
       }.to change{ ProblemReport.find(@report.id).is_blocked }.to(true)
@@ -101,9 +87,10 @@ RSpec.describe ProblemReportsController, type: :controller do
       expect{
         patch :update, params: {id: @report.id, is_blocked: "change"}
       }.to change{ ProblemReport.find(@report.id).is_blocked }.to(false)
+      should redirect_to problem_reports_path
     end
     
-    it "should change the is_critical" do
+    it "should change the is_critical and redirect" do
       expect{
         patch :update, params: {id: @report.id, is_critical: "change"}
       }.to change{ ProblemReport.find(@report.id).is_critical }.to(true)
@@ -111,6 +98,7 @@ RSpec.describe ProblemReportsController, type: :controller do
       expect{
         patch :update, params: {id: @report.id, is_critical: "change"}
       }.to change{ ProblemReport.find(@report.id).is_critical }.to(false)
+      should redirect_to problem_reports_path
     end
   end
 end
