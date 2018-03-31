@@ -59,23 +59,20 @@
                     <tr>
                     <% place.each do |duty| %>
                       <% if duty[:name].nil? %>
+                        <td class="schedule-name-empty" colspan="<%= duty[:colspan] %>">&nbsp;</td>
+                      <% elsif duty[:free] %>
                         <td class="schedule-name-empty" colspan="<%= duty[:colspan] %>">
-                          &nbsp;
-                          
+                           <%= button_to "Grab !", {:controller => "duties", :action => "grab", :grab_duty => duty[:duty]}, {:method => :post, :remote => true} %>
                         </td>
                       <% else %>
                         <td class="schedule-name" colspan="<%= duty[:colspan] %>">
-                          <div class="text-overflow-ellipsis">
-                            <% if duty[:name]=="nil" %>
-                              <% @idd=duty[:idd] %>
-                              <%= link_to 'Grab', grab_duty_path(@idd), method: "post", data:{confirm: 'Are you sure to grab the duty?'} %> 
-                            <% else %>
-                              <%= duty[:name] %>
-                              <%if duty[:name]==current_user.username%>
-                                <% @idd=duty[:idd] %>
-                                <%= link_to 'Drop', drop_duty_path(@idd), method: "post", data:{confirm: 'Are you sure to drop the duty?'} %>
-                              <% end %>
-                            <% end %>
+                          <%= button_to duty[:name], {:controller => "duties", :action => "open_drop_modal", :drop_duty_list => duty[:span_duty]}, {:method => :post, :remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window1'} %>
+                          <!-- <button data-toggle="modal" data-target="#exampleModal">
+                            <%= duty[:name] %>
+                          </button> -->
+                          <div id="modal-window1" class="modal hide fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                            </div>
                           </div>
                         </td>
                       <% end %>

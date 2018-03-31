@@ -16,18 +16,26 @@ class DutiesController < ApplicationController
     Duty.generate(start_date, end_date)
     redirect_to duties_path
   end
+
+  def open_drop_modal
+    @drop_duty_list = params[:drop_duty_list].map do |id|
+      Duty.find_by(id: id)
+    end
+    respond_to do |format|
+      format.js
+      format.html
+    end
+  end
   
   def grab
-    @duty = Duty.find params[:id]
-    @duty.user=current_user
-    @duty.save
+    grab_duty = Duty.find_by(id: params[:grab_duty])
+    grab_duty.update(user: current_user, free: false)
+    grab_duty.save
     redirect_to duties_path
   end
   
   def drop
-    @duty = Duty.find params[:id]
-    @duty.user = nil
-    @duty.save
+    Duty.where(id: params[:duty_id]).update_all(free: true)
     redirect_to duties_path
   end
 

@@ -13,13 +13,11 @@ Rails.application.routes.draw do
 
   resources :users
   resources :duties do
-    member do
-      post 'grab', to: 'duties#grab'
-      post 'drop', to: 'duties#drop'
-    end
-
     collection do
       post 'generate', to: 'duties#generate_duties'
+      post 'open_drop_modal', to: 'duties#open_drop_modal', as: :open_drop_modal
+      post 'grab', to: 'duties#grab'
+      post 'drop', to: 'duties#drop'
     end
   end
 

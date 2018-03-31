@@ -45,16 +45,22 @@ module DutiesHelper
   def process_duty(duties)
     colspan = 0
     result = []
+    span_duty = Array.new
     duties.each_with_index do |duty, index|
       time_range = duty.timeslot.time_range
-      colspan += calc_colspan(time_range.start_time, time_range.end_time)
-      unless duties[index]&.user&.email == duties[index + 1]&.user&.email
-        if duty.user==nil
-          result.push(name: "nil", colspan: colspan, idd: duty.id)
-        else
-          result.push(name: duty.user.username, colspan: colspan, idd: duty.id)
-        end
+      if duties[index].free
+        result.push(name: duties[index - 1].user.username, colspan: colspan, span_duty: span_duty)
         colspan = 0
+        span_duty = Array.new
+        result.push(name: duty.user.username, colspan: calc_colspan(time_range.start_time, time_range.end_time), duty: duty, free: true)
+      else
+        colspan += calc_colspan(time_range.start_time, time_range.end_time)
+        span_duty.push(duty)
+        unless duties[index]&.user&.email == duties[index + 1]&.user&.email
+          result.push(name: duty.user.username, colspan: colspan, span_duty: span_duty)
+          colspan = 0
+          span_duty = Array.new
+        end
       end
     end
     result
