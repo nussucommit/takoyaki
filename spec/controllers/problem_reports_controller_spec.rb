@@ -54,16 +54,16 @@ RSpec.describe ProblemReportsController, type: :controller do
       patch :update, params: {id: @report.id, remarks: "I'm super Rich"}
       should redirect_to problem_reports_path
       
-      patch :update, params: {id: @report.id, is_fixable: "false"}
+      patch :update, params: {id: @report.id, is_fixable: "change"}
       should redirect_to problem_reports_path
       
-      patch :update, params: {id: @report.id, is_fixed: "true"}
+      patch :update, params: {id: @report.id, is_fixed: "change"}
       should redirect_to problem_reports_path
       
-      patch :update, params: {id: @report.id, is_blocked: "true"}
+      patch :update, params: {id: @report.id, is_blocked: "change"}
       should redirect_to problem_reports_path
       
-      patch :update, params: {id: @report.id, is_critical: "true"}
+      patch :update, params: {id: @report.id, is_critical: "change"}
       should redirect_to problem_reports_path
     end
     
@@ -75,41 +75,41 @@ RSpec.describe ProblemReportsController, type: :controller do
     
     it "should change the is_fixable" do
       expect{
-        patch :update, params: {id: @report.id, is_fixable: "true"}
+        patch :update, params: {id: @report.id, is_fixable: "change"}
       }.to change{ ProblemReport.find(@report.id).is_fixable }.to(true)
       
       expect{
-        patch :update, params: {id: @report.id, is_fixable: "false"}
+        patch :update, params: {id: @report.id, is_fixable: "change"}
       }.to change{ ProblemReport.find(@report.id).is_fixable }.to(false)
     end
     
     it "should change the is_fixed" do
       expect{
-        patch :update, params: {id: @report.id, is_fixed: "false"}
+        patch :update, params: {id: @report.id, is_fixed: "change"}
       }.to change{ ProblemReport.find(@report.id).is_fixed }.to(true)
       
       expect{
-        patch :update, params: {id: @report.id, is_fixed: "true"}
+        patch :update, params: {id: @report.id, is_fixed: "change"}
       }.to change{ ProblemReport.find(@report.id).is_fixed }.to(false)
     end
     
     it "should change the is_blocked" do
       expect{
-        patch :update, params: {id: @report.id, is_blocked: "false"}
+        patch :update, params: {id: @report.id, is_blocked: "change"}
       }.to change{ ProblemReport.find(@report.id).is_blocked }.to(true)
       
       expect{
-        patch :update, params: {id: @report.id, is_blocked: "true"}
+        patch :update, params: {id: @report.id, is_blocked: "change"}
       }.to change{ ProblemReport.find(@report.id).is_blocked }.to(false)
     end
     
     it "should change the is_critical" do
       expect{
-        patch :update, params: {id: @report.id, is_critical: "false"}
+        patch :update, params: {id: @report.id, is_critical: "change"}
       }.to change{ ProblemReport.find(@report.id).is_critical }.to(true)
       
       expect{
-        patch :update, params: {id: @report.id, is_critical: "true"}
+        patch :update, params: {id: @report.id, is_critical: "change"}
       }.to change{ ProblemReport.find(@report.id).is_critical }.to(false)
     end
   end
