@@ -17,6 +17,14 @@ RSpec.describe AvailabilitiesController, type: :controller do
         Availability.exists?(user: @user, time_range: time_range)
       end
     end
+
+    context 'with availabilities' do
+      before do
+        create(:availability)
+        get :index
+      end
+      it { should respond_with :ok }
+    end
   end
 
   describe 'POST availabilities#update_availabilities' do
@@ -67,8 +75,25 @@ RSpec.describe AvailabilitiesController, type: :controller do
       user = create(:user)
       user.add_role(:admin)
       sign_in user, scope: :user
-      get :all
     end
-    it { should respond_with :ok }
+    context 'no manager' do
+      before { get :all }
+      it { should respond_with :ok }
+    end
+    context 'with manager' do
+      before do
+        user = create(:user)
+        user.add_role(:manager)
+        get :all
+      end
+      it { should respond_with :ok }
+    end
+    context 'with availabilities' do
+      before do
+        create(:availability)
+        get :all
+      end
+      it { should respond_with :ok }
+    end
   end
 end
