@@ -17,44 +17,44 @@ class ProblemReportsController < ApplicationController
   end
   
   def create
-    @problem_report = ProblemReport.new
-    @problem_report.reporter_user_id = current_user.id
-    @problem_report.reporter_user = current_user
-    @problem_report.last_update_user_id = current_user.id
-    @problem_report.last_update_user = current_user
-    @problem_report.computer_number = params[:computer_number]
-    @problem_report.description = params[:description]
-    @problem_report.is_critical = params[:is_critical]
-    @problem_report.is_fixed = false
-    @problem_report.is_fixable = true
-    @problem_report.is_blocked = false
-    @problem_report.place = Place.find_by_name(params[:venue])
-    @problem_report.place_id = @problem_report.place.id
+    report = ProblemReport.new
+    report.reporter_user_id = current_user.id
+    report.reporter_user = current_user
+    report.last_update_user_id = current_user.id
+    report.last_update_user = current_user
+    report.computer_number = params[:computer_number]
+    report.description = params[:description]
+    report.is_critical = params[:is_critical]
+    report.is_fixed = false
+    report.is_fixable = true
+    report.is_blocked = false
+    report.place = Place.find_by_name(params[:venue])
+    report.place_id = report.place.id
     
-    if @problem_report.save!
+    if report.save
       flash[:notice] = "Success"
       redirect_to problem_reports_path
     else 
       flash[:notice] = "Fail"
-      render new_problem_report_path
+      redirect_to new_problem_report_path
     end
   end
   
   def update
-    @problem_report = ProblemReport.find(params[:id])
-    @problem_report.last_update_user_id = current_user.id
+    report = ProblemReport.find(params[:id])
+    report.last_update_user_id = current_user.id
     if params[:remarks]
-      @problem_report.remarks = params[:remarks]
+      report.remarks = params[:remarks]
     end
     
     ['is_fixable', 'is_fixed', 'is_blocked', 'is_critical'].each do |a|
       if params[a]
-        val = !@problem_report.send(a)
-        @problem_report.send("#{a}=",val)
+        val = !report.send(a)
+        report.send("#{a}=",val)
       end
     end
     
-    @problem_report.save!
+    report.save
     redirect_to problem_reports_path
   end
 end

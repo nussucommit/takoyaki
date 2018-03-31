@@ -1,6 +1,18 @@
 <h3> Create New Problem Report </h3>
 
 <%= button_to("Back To Problem Report List", problem_reports_path, method: "get", class: "btn btn-secondary") %>
+
+<% if flash[:notice] %>
+    <% if flash[:notice] == "Success" %>
+        <div class="alert alert-success">
+        <strong>Success!</strong> New Problem Report Created
+        </div>
+    <% else %>
+        <div class="alert alert-danger">
+        <strong>Fail To Make New Problem Report!</strong>
+        </div>
+    <% end %>
+<% end %>
 <%= form_tag(problem_reports_path, method: "post") do %>
     <p>
         <b> Name </b>

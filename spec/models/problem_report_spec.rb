@@ -30,5 +30,11 @@
 require 'rails_helper'
 
 RSpec.describe ProblemReport, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  it { should belong_to(:reporter_user) }
+  it { should belong_to(:last_update_user) }
+  it { should belong_to(:place) }
+  
+  it "saves a valid Problem Report" do
+    expect(create(:problem_report)).to be_valid
+  end
 end

@@ -29,7 +29,8 @@
 
 FactoryBot.define do
   factory :problem_report do
-    reporter_user ''
-    last_update_user ''
+    association :reporter_user, factory: :user
+    association :last_update_user, factory: :user
+    association :place, factory: :place
   end
 end
