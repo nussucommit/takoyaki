@@ -6,8 +6,9 @@ Rails.application.routes.draw do
   resources :availabilities, only: [:index] do
     collection do
       post '/', to: 'availabilities#update_availabilities'
-      get '/default', to: 'availabilities#default'
-      post '/set_default', to: 'availabilities#set_default'
+      get '/default', to: 'availabilities#default_index'
+      get '/default/places/:id', to: 'availabilities#default_edit'
+      post '/default/places/:id', to: 'availabilities#default_update'
       get '/all', to: 'availabilities#all'
     end
   end
@@ -15,6 +16,7 @@ Rails.application.routes.draw do
   devise_for :users, controllers: { registrations: 'registrations' }
 
   resources :users
+
   resources :duties do
     collection do
       post 'generate', to: 'duties#generate_duties'
