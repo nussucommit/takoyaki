@@ -1,12 +1,13 @@
-<div class="container-fluid availabilities-container">
+<div class="container-fluid">
   <h1>Schedule Availability for all users</h1>
-    <table class="table table-sm">
+  <div class="scrollable">
+    <table class="table table-sm table-availabilities-all">
       <tr>
-        <th></th>
+        <th class="time-label-cell-empty"></th>
         <% start_time = @start_time %>
         <% end_time = @end_time %>
-        <% while start_time <= end_time do %>
-          <th colspan="2">
+        <% while start_time < end_time do %>
+          <th colspan="2" class="time-label-cell">
             <span class="time-label">
               <%= start_time.strftime("%H%M") %>
             </span>
@@ -24,4 +25,5 @@
         </tr>
       <% end %>
     </table>
+  </div>
 </div>

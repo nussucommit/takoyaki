@@ -23,11 +23,22 @@
   line-height: 40px;
 }
 
+.table-availabilities-all {
+  table-layout: fixed;
+}
+
 .time-label {
   display: block;
   position: relative;
-  left: -25px;
   font-weight: normal;
+}
+
+.time-label-cell {
+  width: 120px;
+}
+
+.time-label-cell-empty {
+  width: 50px;
 }
 
 .availability-yes {
@@ -84,11 +95,19 @@
   float: left;
 }
 
-.availability-all-cell {
+.availabilities-all-cell {
   border: 1px solid #000 !important;
 }
 
 .availability-list {
-  padding-left: 1rem;
+  list-style-type: none;
+  padding-left: 0;
   margin-bottom: 0;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+li.text-overflow-ellipsis {
+  list-style-position: inside;
 }

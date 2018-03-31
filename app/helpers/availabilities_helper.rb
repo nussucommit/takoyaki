@@ -19,12 +19,15 @@ module AvailabilitiesHelper
   end
 
   def generate_cell_all(day, time_range)
-    td_attributes = { class: 'availability-all-cell',
+    td_attributes = { class: 'availabilities-all-cell',
                       colspan: calc_colspan(time_range.start_time,
                                             time_range.end_time) }
     content_tag(:td, td_attributes) do
-      content_tag(:ol, generate_all(@availabilities[[day, time_range.id]]),
-                  class: 'availability-list')
+      content_tag(:ol, class: 'availability-list') do
+        content_tag(:div) do
+          generate_all(@availabilities[[day, time_range.id]])
+        end
+      end
     end
   end
 
@@ -32,11 +35,10 @@ module AvailabilitiesHelper
     return '' if availability.empty?
     safe_join(availability.map do |uid|
       user = @users[uid]
-      content_tag(:li, if user[:mc?]
-                         content_tag(:b, user[:username])
-                       else
-                         user[:username]
-                       end)
+      content_tag(:li, title: user[:username],
+                       class: 'text-overflow-ellipsis') do
+        user[:mc?] ? content_tag(:b, user[:username]) : user[:username]
+      end
     end)
   end
 end
