@@ -28,8 +28,8 @@ class ProblemReportsController < ApplicationController
     @problem_report.is_fixed = false
     @problem_report.is_fixable = true
     @problem_report.is_blocked = false
-    @problem_report.place_id = Place.find_by_name(params[:venue_AS8] ? 'AS8' : 'YIH').id
-    @problem_report.place = Place.find_by_name(params[:venue_AS8] ? 'AS8' : 'YIH')
+    @problem_report.place = Place.find_by_name(params[:venue])
+    @problem_report.place_id = @problem_report.place.id
     
     if @problem_report.save!
       flash[:notice] = "Success"

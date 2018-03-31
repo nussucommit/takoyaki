@@ -9,11 +9,7 @@
     
     <p>
         <b> Venue </b>
-        <%= check_box_tag(:venue_AS8) %>
-        <%= label_tag(:venue_AS8, 'AS8') %>
-        
-        <%= check_box_tag(:venue_YIH) %>
-        <%= label_tag(:venue_YIH, 'YIH') %>
+        <%= select_tag(:venue, options_for_select(Place.all.map {|a| a.name})) %>
     </p>
     
     <p>
@@ -23,7 +19,8 @@
     
     <p>
         <b> Description </b>
-        <%= text_area_tag(:description, "", size: "100x10", placeholder: "test", style: "display: inline") %>
+        <% desc_place_holder = "Please try to describe the problem as descriptive as possible. If there is an error message, try to type the error message."%>
+        <%= text_area_tag(:description, "", size: "100x10", placeholder: desc_place_holder) %>
     </p>
     
     <p>
