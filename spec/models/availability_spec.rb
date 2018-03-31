@@ -1,17 +1,15 @@
 # frozen_string_literal: true
-
-# rubocop:disable Metrics/LineLength
 # == Schema Information
 #
 # Table name: availabilities
 #
 #  id            :integer          not null, primary key
 #  user_id       :integer
+#  day           :integer          not null
 #  time_range_id :integer
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
 #  status        :boolean          not null
-#  day           :integer
 #
 # Indexes
 #
@@ -24,7 +22,6 @@
 #  fk_rails_...  (time_range_id => time_ranges.id)
 #  fk_rails_...  (user_id => users.id)
 #
-# rubocop:enable Metrics/LineLength
 
 require 'rails_helper'
 
