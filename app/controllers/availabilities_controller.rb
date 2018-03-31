@@ -2,6 +2,7 @@
 
 class AvailabilitiesController < ApplicationController
   before_action :authenticate_user!
+  before_action :check_admin, except: %i[index update_availabilities]
 
   def index
     @time_ranges = TimeRange.order(:start_time)
@@ -64,5 +65,9 @@ class AvailabilitiesController < ApplicationController
 
   def end_time
     (@time_ranges.last.end_time - 1).beginning_of_hour + 1.hour
+  end
+
+  def check_admin
+    redirect_to availabilities_path unless current_user.has_role?(:admin)
   end
 end
