@@ -1,4 +1,18 @@
 <h3> Problem Report Listing </h3>
+
+<% if flash[:notice] %>
+    <% if flash[:notice] == "Success" %>
+        <div class="alert alert-success">
+        <strong>Success!</strong> New Problem Report Created
+        </div>
+    <% else %>
+        <div class="alert alert-danger">
+        <strong>Fail To Make New Problem Report!</strong>
+        </div>
+    <% end %>
+<% end %>
+
+<%= button_to("Create New Problem Report", new_problem_report_path, method: "get", class: "btn btn-secondary") %>
 <table>
     <tr> 
         <th> Id </th>
@@ -26,7 +40,11 @@
             <td> <%= pb.is_fixed ? 'Yes' : 'No' %> </td>
             <td> <%= pb.is_fixable ? 'Yes' : 'No' %> </td>
             <td> <%= pb.description %> </td>
-            <td> <%= pb.remarks %> </td>
+            <td> <%= form_tag(problem_report_path(pb.id), method: "patch") do %>
+                <%= pb.remarks %> <br> 
+                <%= text_area_tag(:remarks, "", size: "20x2") %>
+                <%= submit_tag('Change Remark') %>
+            <% end %> </td>
             <td> <%= User.find(pb.last_update_user_id).username %> </td>
             <td> <%= pb.updated_at.strftime("%d %b %Y %H:%M") %> </td>
         </tr>

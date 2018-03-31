@@ -1,6 +1,6 @@
-<h3> NEW </h3>
+<h3> Create New Problem Report </h3>
 
-<%= @test %>
+<%= button_to("Back To Problem Report List", new_problem_report_path, method: "get", class: "btn btn-secondary") %>
 <%= form_tag(problem_reports_path, method: "post") do %>
     <p>
         <b> Name </b>
@@ -27,12 +27,8 @@
     </p>
     
     <p>
-        <b> Critical </b>
-        <%= check_box_tag(:is_critical_yes) %>
-        <%= label_tag(:is_critical_yes, 'Yes') %>
-        
-        <%= check_box_tag(:is_critical_no) %>
-        <%= label_tag(:is_critical_no, 'No') %>
+        <%= check_box_tag(:is_critical) %>
+        <%= label_tag(:is_critical, 'Critical') %>
     </p>
     
     <%= submit_tag("Submit")%>
