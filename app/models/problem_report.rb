@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: problem_reports
@@ -30,8 +31,8 @@
 class ProblemReport < ApplicationRecord
   validates :computer_number, :place_id, :description, presence: true
   belongs_to :reporter_user, class_name: 'User',
-      inverse_of: :reported_problem_reports
+                             inverse_of: :reported_problem_reports
   belongs_to :last_update_user, class_name: 'User',
-      inverse_of: :last_updated_problem_reports
+                                inverse_of: :last_updated_problem_reports
   belongs_to :place
 end

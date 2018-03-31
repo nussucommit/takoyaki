@@ -42,7 +42,11 @@ class User < ApplicationRecord
                        dependent: :nullify
 
   has_many :reported_problem_reports, class_name: 'ProblemReport',
-      foreign_key: 'reporter_user_id', inverse_of: :reporter_user
+                                      foreign_key: 'reporter_user_id',
+                                      inverse_of: :reporter_user,
+                                      dependent: :nullify
   has_many :last_updated_problem_reports, class_name: 'ProblemReport',
-      foreign_key: 'last_update_user_id', inverse_of: :last_update_user
+                                          foreign_key: 'last_update_user_id',
+                                          inverse_of: :last_update_user,
+                                          dependent: :nullify
 end
