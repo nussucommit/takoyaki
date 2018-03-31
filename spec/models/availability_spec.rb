@@ -31,7 +31,7 @@ require 'rails_helper'
 RSpec.describe Availability, type: :model do
   it { should belong_to(:user) }
   it { should belong_to(:time_range) }
-  it { should define_enum_for(:day).with(Date::ABBR_DAYNAMES.map(&:to_sym)) }
+  it { should define_enum_for(:day).with(Date::DAYNAMES) }
 
   it 'saves given a valid Availability' do
     expect(create(:availability)).to be_valid
