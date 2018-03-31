@@ -1,4 +1,4 @@
-<h3> Problem Report Listing </h3>
+<h3> Problem Report List (<%= params[:filter] %>) </h3>
 
 <% if flash[:notice] %>
     <% if flash[:notice] == "Success" %>
@@ -12,7 +12,13 @@
     <% end %>
 <% end %>
 
-<%= button_to("Create New Problem Report", new_problem_report_path, method: "get", class: "btn btn-secondary") %>
+<ul class="filter-container">
+    <li><%= button_to("Show All Problems", problem_reports_path, method: "get", class: "btn btn-primary inline", name: "filter")%></li>
+    <li><%= button_to("Show Unfixed and Fixable Problems", problem_reports_path, method: "get", class: "btn btn-primary inline", name: "filter")%></li>
+    <li><%= button_to("Show Unfixed and Critical Problems", problem_reports_path, method: "get", class: "btn btn-primary inline", name: "filter")%></li>
+    <li><%= button_to("Submit New Report", new_problem_report_path, method: "get", class: "btn btn-info inline") %></li>
+</ul>
+
 <table>
     <tr> 
         <th> Id </th>

@@ -3,7 +3,14 @@
 class ProblemReportsController < ApplicationController
   def index 
     @problem_reports = ProblemReport.order(id: :desc)
-    @problem_reports.where!(is_fixed: false)
+    if !params[:filter]; params[:filter] = "Unfixed and Fixable"
+    else params[:filter] = params[:filter][5..-10] end
+    
+    if params[:filter] == "Unfixed and Critical"
+      @problem_reports.where!(is_critical: true, is_fixed: false)
+    elsif params[:filter] == "Unfixed and Fixable"
+      @problem_reports.where!(is_fixable: true, is_fixed: false)
+    end
   end
 
   def new
@@ -40,11 +47,10 @@ class ProblemReportsController < ApplicationController
       @problem_report.remarks = params[:remarks]
     end
     
-    [:is_fixable, :is_fixed, :is_blocked, :is_critical].each do |a|
+    ['is_fixable', 'is_fixed', 'is_blocked', 'is_critical'].each do |a|
       if params[a]
-        sa = a.to_s
-        val = !@problem_report.send(sa)
-        @problem_report.send("#{sa}=",val)
+        val = !@problem_report.send(a)
+        @problem_report.send("#{a}=",val)
       end
     end
     
