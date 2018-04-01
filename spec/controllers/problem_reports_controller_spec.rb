@@ -23,7 +23,7 @@ RSpec.describe ProblemReportsController, type: :controller do
                               description: "I'm too rich" }
       should redirect_to problem_reports_path
       ProblemReport.exists?(place: @venue, computer_number: 'A10',
-        description: "I'm too rich")
+                            description: "I'm too rich")
     end
 
     it 'should redirect to new_problem_report_path and not create new report' do
@@ -39,7 +39,6 @@ RSpec.describe ProblemReportsController, type: :controller do
                               description: '' }
       should redirect_to new_problem_report_path
     end
-    
   end
 
   describe 'GET problem_reports#new' do
