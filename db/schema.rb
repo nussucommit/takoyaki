@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180329194103) do
+ActiveRecord::Schema.define(version: 20180401050119) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -48,8 +48,6 @@ ActiveRecord::Schema.define(version: 20180329194103) do
   end
 
   create_table "problem_reports", force: :cascade do |t|
-    t.bigint   "reporter_user_id",    :index=>{:name=>"index_problem_reports_on_reporter_user_id"}
-    t.bigint   "last_update_user_id", :index=>{:name=>"index_problem_reports_on_last_update_user_id"}
     t.datetime "created_at",          :null=>false
     t.datetime "updated_at",          :null=>false
     t.string   "computer_number"
@@ -60,6 +58,8 @@ ActiveRecord::Schema.define(version: 20180329194103) do
     t.text     "remarks"
     t.integer  "place_id"
     t.boolean  "is_blocked"
+    t.integer  "reporter_user_id"
+    t.integer  "last_update_user_id"
   end
 
   create_table "roles", force: :cascade do |t|
@@ -120,6 +120,8 @@ ActiveRecord::Schema.define(version: 20180329194103) do
   add_foreign_key "duties", "timeslots"
   add_foreign_key "duties", "users"
   add_foreign_key "problem_reports", "places"
+  add_foreign_key "problem_reports", "users", column: "last_update_user_id"
+  add_foreign_key "problem_reports", "users", column: "reporter_user_id"
   add_foreign_key "timeslots", "places"
   add_foreign_key "timeslots", "time_ranges"
   add_foreign_key "timeslots", "users", column: "default_user_id"

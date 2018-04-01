@@ -1,12 +1,9 @@
 # frozen_string_literal: true
-
 # == Schema Information
 #
 # Table name: problem_reports
 #
 #  id                  :integer          not null, primary key
-#  reporter_user_id    :integer
-#  last_update_user_id :integer
 #  created_at          :datetime         not null
 #  updated_at          :datetime         not null
 #  computer_number     :string
@@ -17,15 +14,14 @@
 #  remarks             :text
 #  place_id            :integer
 #  is_blocked          :boolean
-#
-# Indexes
-#
-#  index_problem_reports_on_last_update_user_id  (last_update_user_id)
-#  index_problem_reports_on_reporter_user_id     (reporter_user_id)
+#  reporter_user_id    :integer
+#  last_update_user_id :integer
 #
 # Foreign Keys
 #
+#  fk_rails_...  (last_update_user_id => users.id)
 #  fk_rails_...  (place_id => places.id)
+#  fk_rails_...  (reporter_user_id => users.id)
 #
 
 require 'rails_helper'
