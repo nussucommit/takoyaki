@@ -3,12 +3,11 @@
 class ProblemReportsController < ApplicationController
   def index
     @problem_reports = ProblemReport.order(id: :desc)
-    filter_encode
-
-    if params[:filter] == 'Unfixed and Critical'
+    @filter = filter_encode
+    if @filter == 'Unfixed and Critical'
       @problem_reports = @problem_reports.where(is_critical: true,
                                                 is_fixed: false)
-    elsif params[:filter] == 'Unfixed and Fixable'
+    elsif @filter == 'Unfixed and Fixable'
       @problem_reports = @problem_reports.where(is_fixable: true,
                                                 is_fixed: false)
     end
@@ -46,11 +45,11 @@ class ProblemReportsController < ApplicationController
   private
 
   def filter_encode
-    params[:filter] = if !params[:filter]
-                        'Unfixed and Fixable'
-                      else
-                        params[:filter][5..-10]
-                      end
+    if !params[:filter]
+      'Unfixed and Fixable'
+    else
+      params[:filter][5..-10]
+    end
   end
 
   def create_new_report
