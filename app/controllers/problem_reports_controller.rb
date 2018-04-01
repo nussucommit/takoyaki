@@ -3,7 +3,7 @@
 class ProblemReportsController < ApplicationController
   def index
     @problem_reports = ProblemReport.order(id: :desc)
-    @filter = filter_encode
+    @filter = filter_message
     if @filter == 'Unfixed and Critical'
       @problem_reports = @problem_reports.where(is_critical: true,
                                                 is_fixed: false)
@@ -44,7 +44,7 @@ class ProblemReportsController < ApplicationController
 
   private
 
-  def filter_encode
+  def filter_message
     if !params[:filter]
       'Unfixed and Fixable'
     else
