@@ -24,31 +24,30 @@ class ProblemReportsController < ApplicationController
   end
 
   def update
-    update_remarks
-    %w[is_fixable is_fixed is_blocked is_critical].each do |a|
-      if params[a]
-        val = !@report.public_send(a)
-        @report.public_send("#{a}=", val)
-      end
-    end
-
-    @report.save
+    @report = ProblemReport.find(params[:id])
+    update_remarks if params[:remarks]
+    update_bool_attr
     redirect_to problem_reports_path
   end
 
+  private
+
   def update_remarks
-    @report = ProblemReport.find(params[:id])
-    @report.last_update_user_id = current_user.id
-    @report.remarks = params[:remarks] if params[:remarks]
+    @report.update(last_update_user_id: current_user.id,
+                   remarks: params[:remarks])
   end
 
-  private
+  def update_bool_attr
+    %w[is_fixable is_fixed is_blocked is_critical].each do |a|
+      @report.update(a => !@report[a]) if params[a]
+    end
+  end
 
   def filter_message
     if !params[:filter]
       'Unfixed and Fixable'
     else
-      params[:filter][5..-10]
+      params[:filter].split[1..-2].join(' ')
     end
   end
 
