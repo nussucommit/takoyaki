@@ -6,22 +6,21 @@ class ProblemReportsController < ApplicationController
     filter_encode
 
     if params[:filter] == 'Unfixed and Critical'
-      @problem_reports.where!(is_critical: true, is_fixed: false)
+      @problem_reports = @problem_reports.where(is_critical: true,
+                                                is_fixed: false)
     elsif params[:filter] == 'Unfixed and Fixable'
-      @problem_reports.where!(is_fixable: true, is_fixed: false)
+      @problem_reports = @problem_reports.where(is_fixable: true,
+                                                is_fixed: false)
     end
   end
 
   def new; end
 
   def create
-    create_new_report
-    if @report.save
-      flash[:notice] = 'Success'
-      redirect_to problem_reports_path
+    if create_new_report.save
+      redirect_to problem_reports_path, notice: 'Success'
     else
-      flash[:notice] = 'Fail'
-      redirect_to new_problem_report_path
+      redirect_to new_problem_report_path, notice: 'Fail'
     end
   end
 
@@ -55,19 +54,14 @@ class ProblemReportsController < ApplicationController
   end
 
   def create_new_report
-    @report = ProblemReport.new
-    @report.reporter_user_id = current_user.id
-    @report.last_update_user_id = current_user.id
-    @report.is_fixed = false
-    @report.is_fixable = true
-    @report.is_blocked = false
-    @report.place_id = Place.find_by(name: params[:venue]).id
-    assign_from_params
-  end
-
-  def assign_from_params
-    @report.computer_number = params[:computer_number]
-    @report.description = params[:description]
-    @report.is_critical = params[:is_critical]
+    ProblemReport.new(reporter_user_id: current_user.id,
+                      last_update_user_id: current_user.id,
+                      is_fixed: false,
+                      is_fixable: true,
+                      is_blocked: false,
+                      place_id: Place.find_by(name: params[:venue]).id,
+                      computer_number: params[:computer_number],
+                      description: params[:description],
+                      is_critical: params[:is_critical])
   end
 end
