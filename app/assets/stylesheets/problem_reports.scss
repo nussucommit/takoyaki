@@ -2,10 +2,24 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-ul.filter-container {
+ul.btn-container {
     padding-left: 0px;
     
     & > li {
         display: inline-block;
     }
+}
+
+.container-fluid {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+td.container {
+    padding-left :50px;
+}
+
+.td-container {
+    padding-right: 10px;
+    width: 30%;
 }
