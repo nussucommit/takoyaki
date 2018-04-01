@@ -5,7 +5,7 @@
         <div class="alert alert-success">
         <strong>Success!</strong> New Problem Report Created
         </div>
-    <% else %>
+    <% elsif flash[:notice] == "Fail" %>
         <div class="alert alert-danger">
         <strong>Fail To Make New Problem Report!</strong>
         </div>
