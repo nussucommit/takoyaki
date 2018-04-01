@@ -21,18 +21,18 @@
 
 <table>
     <tr> 
-        <th> Id </th>
-        <th> Reporter Name </th>
-        <th> Venue </th>
-        <th> PC Number </th>
-        <th> Description </th>
-        <th> Critical? </th>
-        <th> Blocked? (AS8 Only) </th>
-        <th> Fixed? </th>
-        <th> Fixable? </th>
-        <th> Remarks </th>
-        <th> Last Updated By </th>
-        <th> Last Updated At </th>
+        <th>Id</th>
+        <th>Reporter Name</th>
+        <th>Venue</th>
+        <th>PC Number</th>
+        <th>Description</th>
+        <th>Critical?</th>
+        <th>Blocked? (AS8 Only)</th>
+        <th>Fixed?</th>
+        <th>Fixable?</th>
+        <th>Remarks</th>
+        <th>Last Updated By</th>
+        <th>Last Updated At</th>
     </tr>
     
     <% @problem_reports.each do |pb| %>
@@ -50,7 +50,7 @@
                             type: 'submit', class: "btn btn-" + (is_a ? "success" : "danger"))%>
                 <% end %> </td>
             <% end %>
-            
+            <br>
             <td> <%= form_tag(problem_report_path(pb.id), method: "patch") do %>
                 <%= pb.remarks %> <br> 
                 <%= text_area_tag(:remarks, "", size: "20x2") %>
