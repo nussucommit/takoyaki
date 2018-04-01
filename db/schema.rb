@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180401050119) do
+ActiveRecord::Schema.define(version: 20180401095943) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -53,11 +53,11 @@ ActiveRecord::Schema.define(version: 20180401050119) do
     t.string   "computer_number"
     t.text     "description"
     t.boolean  "is_critical"
-    t.boolean  "is_fixed"
-    t.boolean  "is_fixable"
+    t.boolean  "is_fixed",            :default=>false
+    t.boolean  "is_fixable",          :default=>true
     t.text     "remarks"
     t.integer  "place_id"
-    t.boolean  "is_blocked"
+    t.boolean  "is_blocked",          :default=>false
     t.integer  "reporter_user_id"
     t.integer  "last_update_user_id"
   end

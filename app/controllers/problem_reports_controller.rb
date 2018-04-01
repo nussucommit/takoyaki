@@ -53,11 +53,8 @@ class ProblemReportsController < ApplicationController
   end
 
   def create_new_report
-    ProblemReport.new(reporter_user_id: current_user.id,
-                      last_update_user_id: current_user.id,
-                      is_fixed: false,
-                      is_fixable: true,
-                      is_blocked: false,
+    ProblemReport.new(reporter_user: current_user,
+                      last_update_user: current_user,
                       place_id: Place.find_by(name: params[:venue]).id,
                       computer_number: params[:computer_number],
                       description: params[:description],

@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-
 # == Schema Information
 #
 # Table name: problem_reports
@@ -10,11 +9,11 @@
 #  computer_number     :string
 #  description         :text
 #  is_critical         :boolean
-#  is_fixed            :boolean
-#  is_fixable          :boolean
+#  is_fixed            :boolean          default(FALSE)
+#  is_fixable          :boolean          default(TRUE)
 #  remarks             :text
 #  place_id            :integer
-#  is_blocked          :boolean
+#  is_blocked          :boolean          default(FALSE)
 #  reporter_user_id    :integer
 #  last_update_user_id :integer
 #
