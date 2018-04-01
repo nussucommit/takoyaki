@@ -21,5 +21,5 @@ Rails.application.routes.draw do
 
   get 'home', to: 'home#index'
 
-  resources :problem_reports
+  resources :problem_reports, only: %i[index create new update]
 end

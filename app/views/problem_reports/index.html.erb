@@ -50,10 +50,9 @@
                             type: 'submit', class: "btn btn-" + (is_a ? "success" : "danger"))%>
                 <% end %> </td>
             <% end %>
-            <br>
             <td> <%= form_tag(problem_report_path(pb.id), method: "patch") do %>
-                <%= pb.remarks %> <br> 
-                <%= text_area_tag(:remarks, "", size: "20x2") %>
+                <%= pb.remarks %> <br> </br>
+                <%= text_area_tag(:remarks, "", size: "20x2") %> <br> </br>
                 <%= submit_tag('Change Remark') %>
             <% end %> </td>
             <td> <%= User.find(pb.last_update_user_id).username %> </td>
