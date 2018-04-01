@@ -57,10 +57,10 @@ RSpec.describe ProblemReportsController, type: :controller do
   describe 'PATCH problem_reports#update' do
     before do
       sign_in create(:user)
-      @report = create(:problem_report)
     end
 
     it 'should change the remarks and redirect' do
+      @report = create(:problem_report)
       expect do
         patch :update, params: { id: @report.id,
                                  remarks: "I'm super duper Rich" }
@@ -70,17 +70,19 @@ RSpec.describe ProblemReportsController, type: :controller do
     end
 
     it 'should change the is_fixable and redirect' do
-      expect do
-        patch :update, params: { id: @report.id, is_fixable: 'change' }
-      end.to change { ProblemReport.find(@report.id).is_fixable }.to(true)
-
+      @report = create(:problem_report)
       expect do
         patch :update, params: { id: @report.id, is_fixable: 'change' }
       end.to change { ProblemReport.find(@report.id).is_fixable }.to(false)
+
+      expect do
+        patch :update, params: { id: @report.id, is_fixable: 'change' }
+      end.to change { ProblemReport.find(@report.id).is_fixable }.to(true)
       should redirect_to problem_reports_path
     end
 
     it 'should change the is_fixed and redirect' do
+      @report = create(:problem_report)
       expect do
         patch :update, params: { id: @report.id, is_fixed: 'change' }
       end.to change { ProblemReport.find(@report.id).is_fixed }.to(true)
@@ -92,6 +94,7 @@ RSpec.describe ProblemReportsController, type: :controller do
     end
 
     it 'should change the is_blocked and redirect' do
+      @report = create(:problem_report)
       expect do
         patch :update, params: { id: @report.id, is_blocked: 'change' }
       end.to change { ProblemReport.find(@report.id).is_blocked }.to(true)
@@ -103,6 +106,7 @@ RSpec.describe ProblemReportsController, type: :controller do
     end
 
     it 'should change the is_critical and redirect' do
+      @report = create(:problem_report)
       expect do
         patch :update, params: { id: @report.id, is_critical: 'change' }
       end.to change { ProblemReport.find(@report.id).is_critical }.to(true)
