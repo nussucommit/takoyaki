@@ -13,20 +13,19 @@ RSpec.describe AvailabilitiesController, type: :routing do
     )
   end
 
-  it 'routes to #default_index' do
-    expect(get: '/availabilities/default')
-      .to route_to('availabilities#default_index')
+  it 'routes to /places#index' do
+    expect(get: '/availabilities/places')
+      .to route_to('availabilities/places#index')
   end
 
-  it 'routes to #default_edit' do
-    expect(get: '/availabilities/default/places/1')
-      .to route_to(controller: 'availabilities', action: 'default_edit',
-                   id: '1')
+  it 'routes to /places#edit' do
+    expect(get: '/availabilities/places/1/edit')
+      .to route_to(controller: 'availabilities/places', action: 'edit', id: '1')
   end
 
-  it 'routes to #default_update' do
-    expect(post: '/availabilities/default/places/1')
-      .to route_to(controller: 'availabilities', action: 'default_update',
+  it 'routes to /places#update' do
+    expect(put: '/availabilities/places/1')
+      .to route_to(controller: 'availabilities/places', action: 'update',
                    id: '1')
   end
 
