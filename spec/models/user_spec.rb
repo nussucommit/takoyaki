@@ -23,6 +23,8 @@
 #  username               :string
 #  matric_num             :string
 #  contact_num            :string
+#  cell                   :integer          not null
+#  mc                     :boolean          default(FALSE), not null
 #
 # Indexes
 #
@@ -36,4 +38,6 @@ require 'rails_helper'
 RSpec.describe User, type: :model do
   it { should have_many(:duties) }
   it { should have_many(:timeslots).with_foreign_key(:default_user_id) }
+  it { should validate_presence_of(:cell) }
+  it { should define_enum_for(:cell).with(User::CELLS) }
 end

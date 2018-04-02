@@ -13,20 +13,14 @@
 
 # Admin User
 admin = User.create(username: 'admin', email: 'admin@example.com',
-                    password: '123456')
+                    password: '123456', cell: :presidential, mc: true)
 admin.add_role :admin
 
-# Add users of each cell
-Role::CELL.each do |c|
+User::CELLS.each do |c|
   8.times do |i|
     user = User.create(username: "#{c}#{i}", email: "#{c}#{i}@example.com",
-                       password: '123456')
-    user.add_role(c.to_sym)
-    if i.zero?
-      user.add_role(:manager)
-    else
-      user.add_role(:member)
-    end
+                       password: '123456', cell: c)
+    user.update(mc: true) if i.zero?
   end
 end
 
