@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'set'
+
 class AvailabilitiesController < ApplicationController
   before_action :authenticate_user!
   before_action :check_admin, except: %i[index update_availabilities]
@@ -20,19 +22,6 @@ class AvailabilitiesController < ApplicationController
     end
     redirect_to availabilities_path
   end
-
-  def default_index
-    @time_ranges = TimeRange.order(:start_time)
-    @timeslots = Hash[Timeslot.joins(:time_range)
-                              .map do |timeslot|
-                        [[timeslot.day, timeslot.time_range_id], timeslot]
-                      end
-    ]
-  end
-
-  def default_edit; end
-
-  def default_update; end
 
   def show_everyone
     @time_ranges = TimeRange.order(:start_time)
@@ -59,17 +48,17 @@ class AvailabilitiesController < ApplicationController
     mc = load_mcs
     Hash[
       User.all.map do |u|
-        [u.id, { username: u.username, mc?: !mc[u.id].nil? }]
+        [u.id, { username: u.username, mc?: mc.include?(u.id) }]
       end
     ]
   end
 
   def load_mcs
-    managers = Role.find_by(name: :manager)&.users&.map { |u| [u.id, true] }
+    managers = Role.find_by(name: :manager)&.users&.map(&:id)
     if managers.nil?
-      {}
+      Set[]
     else
-      Hash[managers]
+      Set.new(managers)
     end
   end
 
