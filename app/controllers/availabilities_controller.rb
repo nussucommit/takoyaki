@@ -34,7 +34,7 @@ class AvailabilitiesController < ApplicationController
 
   def default_update; end
 
-  def all
+  def show_everyone
     @time_ranges = TimeRange.order(:start_time)
     @availabilities = load_all_availabilities
     @users = load_all_users

@@ -9,7 +9,7 @@ Rails.application.routes.draw do
       get '/default', to: 'availabilities#default_index'
       get '/default/places/:id', to: 'availabilities#default_edit'
       post '/default/places/:id', to: 'availabilities#default_update'
-      get '/all', to: 'availabilities#all'
+      get '/show_everyone', to: 'availabilities#show_everyone'
     end
   end
 

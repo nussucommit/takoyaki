@@ -31,6 +31,7 @@ RSpec.describe AvailabilitiesController, type: :routing do
   end
 
   it 'routes to #all' do
-    expect(get: '/availabilities/all').to route_to('availabilities#all')
+    expect(get: '/availabilities/show_everyone')
+      .to route_to('availabilities#show_everyone')
   end
 end
