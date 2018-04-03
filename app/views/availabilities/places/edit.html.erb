@@ -1,0 +1,33 @@
+<div class="container-fluid">
+	<h1>Default users for <%= @place.name %></h1>
+	<%= form_tag(availabilities_place_path, method: "post") do %>
+    <table class="table table-sm table-availabilities">
+      <tr>
+        <th></th>
+        <% start_time = @start_time %>
+        <% end_time = @end_time %>
+        <% while start_time < end_time do %>
+          <th colspan="2">
+            <span class="time-label">
+              <%= start_time.strftime("%H%M") %>
+            </span>
+          </th>
+          <% start_time += 1.hour %>
+        <% end %>
+      </tr>
+      <% (1..7).each do |index| %>
+        <% day = Availability.days.keys[index % 7] %>
+        <tr>
+          <td class="dayname"><%= day[0..2] %></td>
+          <% @time_ranges.each do |time_range| %>
+          	<td colspan=<%= calc_colspan(time_range.start_time, time_range.end_time) %>>
+          		<% current = @timeslots[[index % 7, time_range.id]] %>
+          		<%= current ? User.find(current.default_user_id).username : "-" %>
+          	</td>
+          <% end %>
+        </tr>
+      <% end %>
+    </table>
+    <%= submit_tag("Update", id: 'update-button', data: { disable_with: false }, class: "btn btn-large btn-light disabled") %>
+   <% end %>
+</div>
