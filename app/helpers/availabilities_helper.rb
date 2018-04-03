@@ -48,7 +48,7 @@ module AvailabilitiesHelper
                 class: 'availabilities-all-cell') do          
       content_tag(:div, style: 'overflow: hidden; text-overflow: ellipsis;') do
         if current
-          select_tag("#{day_index}#{time_range.id}", options_from_collection_for_select(@users, "id", "username", current.default_user_id))
+          select_tag("#{day_index % 7}#{time_range.id}", options_from_collection_for_select(@users, "id", "username", selected: current.default_user_id))
         else "-"
         end
       end
