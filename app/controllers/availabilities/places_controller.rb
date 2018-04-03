@@ -18,7 +18,9 @@ module Availabilities
       @end_time = end_time
     end
 
-    def update; end
+    def update
+      redirect_to edit_availabilities_place_path(id: params[:id])
+    end
 
     private
 
