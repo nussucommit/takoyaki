@@ -111,3 +111,10 @@
 li.text-overflow-ellipsis {
   list-style-position: inside;
 }
+
+select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    text-overflow: '';
+    border: none;
+}
