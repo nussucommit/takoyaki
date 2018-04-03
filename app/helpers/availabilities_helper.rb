@@ -41,4 +41,17 @@ module AvailabilitiesHelper
       end
     end)
   end
+
+  def generate_cell_dropdown(day_index, time_range)
+    current = @timeslots[[day_index % 7, time_range.id]]
+    content_tag(:td, colspan: calc_colspan(time_range.start_time, time_range.end_time),
+                class: 'availabilities-all-cell') do          
+      content_tag(:div, style: 'overflow: hidden; text-overflow: ellipsis;') do
+        if current
+          select_tag("#{day_index}#{time_range.id}", options_from_collection_for_select(@users, "id", "username", current.default_user_id))
+        else "-"
+        end
+      end
+    end
+  end
 end

@@ -21,12 +21,7 @@
 	        <tr>
 	          <td class="dayname"><%= day[0..2] %></td>
 	          <% @time_ranges.each do |time_range| %>
-	          	<td colspan=<%= calc_colspan(time_range.start_time, time_range.end_time) %> class="availabilities-all-cell">
-	          		<% current = @timeslots[[index % 7, time_range.id]] %>
-	          		<div style="overflow: hidden; text-overflow: ellipsis;">
-		          		<%= current ? User.find(current.default_user_id).username : "-" %>
-		          	</div>
-	          	</td>
+	          	<%= generate_cell_dropdown(index, time_range) %>
 	          <% end %>
 	        </tr>
 	      <% end %>

@@ -7,6 +7,7 @@ module Availabilities
     end
 
     def edit
+      @users = User.all
       @place = Place.find(params[:id])
       @time_ranges = TimeRange.order(:start_time)
       @timeslots = Hash[Timeslot.joins(:time_range)
@@ -19,6 +20,7 @@ module Availabilities
     end
 
     def update
+      p params
       redirect_to edit_availabilities_place_path(id: params[:id])
     end
 
