@@ -20,14 +20,9 @@ module Availabilities
     end
 
     def update
-      p params
-      p Timeslot.where(place_id: params[:id]).count
       Timeslot.where(place_id: params[:id]).each do |timeslot|
         selected_user_id = params["#{Availability.days[timeslot.day]}#{timeslot.time_range_id}"]
-        p "Try #{timeslot.id} #{Availability.days[timeslot.day]}#{timeslot.time_range_id}"
         if timeslot.default_user_id.to_s != selected_user_id.to_s
-          p "yes #{timeslot.default_user_id} #{selected_user_id}"
-          p timeslot
           timeslot.update(default_user_id: selected_user_id)
         end
       end
