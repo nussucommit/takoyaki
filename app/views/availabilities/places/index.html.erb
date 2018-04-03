@@ -1,0 +1,8 @@
+<div class="container-fluid">
+	<h1>Places</h1>
+	<ol>
+		<% @places.each do |place| %>
+			<li><%= link_to place.name, edit_availabilities_place_path(id: place.id) %></li>
+		<% end %>
+	</ol>
+</div>
