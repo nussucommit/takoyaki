@@ -16,10 +16,12 @@ class ProblemReportsController < ApplicationController
   def new; end
 
   def create
-    if create_new_report.save
-      redirect_to problem_reports_path, notice: 'Success'
+    if new_report.save
+      redirect_to problem_reports_path,
+        notice: "New Problem Report Created"
     else
-      redirect_to new_problem_report_path, notice: 'Fail'
+      redirect_to new_problem_report_path,
+        alert: "Fail To Make New Problem Report!"
     end
   end
 
@@ -36,7 +38,7 @@ class ProblemReportsController < ApplicationController
     @report.update(last_update_user_id: current_user.id,
                    remarks: params[:remarks])
   end
-
+  
   def update_bool_attr
     %w[is_fixable is_fixed is_blocked is_critical].each do |a|
       @report.update(a => !@report[a]) if params[a]
@@ -51,10 +53,10 @@ class ProblemReportsController < ApplicationController
     end
   end
 
-  def create_new_report
+  def new_report
     ProblemReport.new(reporter_user: current_user,
                       last_update_user: current_user,
-                      place_id: Place.find_by(name: params[:venue]).id,
+                      place: Place.find_by(name: params[:venue]),
                       computer_number: params[:computer_number],
                       description: params[:description],
                       is_critical: params[:is_critical])

@@ -3,23 +3,23 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 ul.btn-container {
-    padding-left: 0px;
-    
-    & > li {
-        display: inline-block;
-    }
+  padding-left: 0px;
+  
+  & > li {
+    display: inline-block;
+  }
 }
 
 .container-fluid {
-    padding-top: 10px;
-    padding-bottom: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 
 td.container {
-    padding-left :50px;
+  padding-left :50px;
 }
 
 .td-container {
-    padding-right: 10px;
-    width: 30%;
+  padding-right: 10px;
+  width: 30%;
 }
