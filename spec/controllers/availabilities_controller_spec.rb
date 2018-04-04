@@ -76,16 +76,8 @@ RSpec.describe AvailabilitiesController, type: :controller do
       user.add_role(:admin)
       sign_in user, scope: :user
     end
-    context 'no manager' do
+    context 'without availabilities' do
       before { get :show_everyone }
-      it { should respond_with :ok }
-    end
-    context 'with manager' do
-      before do
-        user = create(:user)
-        user.add_role(:manager)
-        get :show_everyone
-      end
       it { should respond_with :ok }
     end
     context 'with availabilities' do

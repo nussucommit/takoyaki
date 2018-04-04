@@ -29,10 +29,7 @@ class Ability
     # https://github.com/CanCanCommunity/cancancan/wiki/Defining-Abilities
   end
 
-  def manager; end
-
   def admin
-    manager
     can :manage, :all
   end
 end

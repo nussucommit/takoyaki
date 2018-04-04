@@ -37,7 +37,7 @@ module AvailabilitiesHelper
       user = @users[uid]
       content_tag(:li, title: user[:username],
                        class: 'text-overflow-ellipsis') do
-        user[:mc?] ? content_tag(:strong, user[:username]) : user[:username]
+        user[:mc] ? content_tag(:strong, user[:username]) : user[:username]
       end
     end)
   end

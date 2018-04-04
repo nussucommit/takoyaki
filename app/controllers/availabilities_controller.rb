@@ -45,21 +45,11 @@ class AvailabilitiesController < ApplicationController
   end
 
   def load_all_users
-    mc = load_mcs
     Hash[
       User.all.map do |u|
-        [u.id, { username: u.username, mc?: mc.include?(u.id) }]
+        [u.id, { username: u.username, mc: u.mc }]
       end
     ]
-  end
-
-  def load_mcs
-    managers = Role.find_by(name: :manager)&.users&.map(&:id)
-    if managers.nil?
-      Set[]
-    else
-      Set.new(managers)
-    end
   end
 
   def load_availabilities
