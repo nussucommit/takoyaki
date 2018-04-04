@@ -23,6 +23,8 @@
 #  username               :string
 #  matric_num             :string
 #  contact_num            :string
+#  cell                   :integer          not null
+#  mc                     :boolean          default(FALSE), not null
 #
 # Indexes
 #
@@ -39,5 +41,6 @@ FactoryBot.define do
   factory :user do
     email
     password '123456'
+    cell User::CELLS.sample
   end
 end
