@@ -18,10 +18,10 @@ class ProblemReportsController < ApplicationController
   def create
     if new_report.save
       redirect_to problem_reports_path,
-        notice: "New Problem Report Created"
+                  notice: 'New Problem Report Created'
     else
       redirect_to new_problem_report_path,
-        alert: "Fail To Make New Problem Report!"
+                  alert: 'Fail To Make New Problem Report!'
     end
   end
 
@@ -38,7 +38,7 @@ class ProblemReportsController < ApplicationController
     @report.update(last_update_user_id: current_user.id,
                    remarks: params[:remarks])
   end
-  
+
   def update_bool_attr
     %w[is_fixable is_fixed is_blocked is_critical].each do |a|
       @report.update(a => !@report[a]) if params[a]
