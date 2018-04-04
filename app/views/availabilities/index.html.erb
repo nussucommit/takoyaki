@@ -21,9 +21,10 @@
           <% start_time += 1.hour %>
         <% end %>
       </tr>
-      <% Availability.days.each_key do |day| %>
+      <% (1..7).each do |index| %>
+        <% day = Availability.days.keys[index % 7] %>
         <tr>
-          <td class="dayname"><%= day %></td>
+          <td class="dayname"><%= day[0..2] %></td>
           <% @time_ranges.each do |time_range| %>
             <%= generate_cell(day, time_range) %>
           <% end %>
