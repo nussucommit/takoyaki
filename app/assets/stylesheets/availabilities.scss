@@ -112,15 +112,81 @@ li.text-overflow-ellipsis {
   list-style-position: inside;
 }
 
-select {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    text-overflow: '';
-    border: none;
-    background-color: white;
+.table-places {
+  border: 1px solid #dee2e6;
+  table-layout: fixed;
+  min-width: 900px;
+  max-width: 1080px;
+  touch-action: manipulation;
+}
+
+.table-places-row {
+  height: 40px;
+}
+
+td.time-header {
+  border: 0;
+  border-right: 1px solid #dee2e6;
+  font-size: 10px;
+  text-align: center;
+}
+
+.time-text {
+  display: block;
+  position: relative;
+  top: -12px;
 }
 
 .dropdown {
   overflow: hidden;
   text-overflow: ellipsis;
+  height: 100%;
+}
+
+.empty-heading {
+  width: 48px;
+  border-right: 1px solid #dee2e6;
+}
+
+.day-heading {
+  height: 80px;
+}
+
+.day-head {
+  border-right: 1px solid #dee2e6;
+}
+
+.body {
+  text-rendering: geometricPrecision;
+}
+
+.day-text {
+  margin-left: 12px;
+  font-weight: normal;
+  font-size: 28px;
+}
+
+td.dropdown-yes {
+  border-right: 1px solid #dee2e6;
+  vertical-align: middle;
+  text-align: center;
+  padding: 0;
+}
+
+td.dropdown-no {
+  border-right: 1px solid #dee2e6;
+  vertical-align: middle;
+  text-align: center;
+  padding: 0;
+}
+
+select {
+  text-align-last: center;
+  font-size: 14px;
+  width: 100%;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  text-overflow: '';
+  border: none;
+  background-color: white;
 }

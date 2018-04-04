@@ -10,6 +10,10 @@ module Availabilities
       @users = User.all
       @place = Place.find(params[:id])
       @time_ranges = TimeRange.order(:start_time)
+      @time_ranges_map = Hash[TimeRange.all.map do |time_range|
+          [time_range.start_time, time_range]
+        end
+      ]
       @timeslots = load_timeslots
       @start_time = start_time
       @end_time = end_time
