@@ -117,4 +117,10 @@ select {
     -moz-appearance: none;
     text-overflow: '';
     border: none;
+    background-color: white;
+}
+
+.dropdown {
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
