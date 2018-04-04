@@ -1,54 +1,54 @@
 <div class="container-fluid">
-    <h3> Create New Problem Report </h3>
+  <h3> Create New Problem Report </h3>
 </div>
 
 <ul class="btn-container">
-    <li> <%= button_to("Back To Problem Report List", problem_reports_path, method: "get", class: "btn btn-secondary") %> </li>
+  <li> <%= button_to("Back To Problem Report List", problem_reports_path, method: "get", class: "btn btn-secondary") %> </li>
 </ul>
 
 <% flash.each do |key, value| %>
-      <div class="<%= flash_class(key.to_sym) %>">
-            <strong> <%= value %> <strong>
-      </div>
+  <div class="<%= flash_class(key.to_sym) %>">
+    <strong> <%= value %> <strong>
+  </div>
 <% end %>
 
 <%= form_tag(problem_reports_path, method: "post") do %>
-    <div class="table-responsive-lg">
-        <table class="table-active">
-            <tr> 
-                <td class="container td-container"> <b>Name<b></td>
-                <td> <%= current_user.username %> </td>
-            </tr>
-            
-            <tr>
-                <td class="container td-container"> <b>Venue</b> </td>
-                <td> <%= select_tag(:venue, options_for_select(Place.all.map {|a| a.name})) %> </td>
-            </tr>
-            
-            <tr>
-                <td class="container td-container"> <b>PC Number</b></td>
-                <td> <%= text_field_tag(:computer_number) %></td>
-            </tr>
-            
-            <tr>
-            
-                <td class="container td-container"> <b>Description</b> </td>
-                <% desc_place_holder = "Please try to describe the problem as descriptive as possible. If there is an error message, try to type the error message."%>
-                <td>
-                    <%= text_area_tag(:description, "", size: "100x10", placeholder: desc_place_holder) %>
-                </td>
-            </tr>
-            
-            <tr>
-                <td class="container td-container"></td>
-                <td> 
-                    <%= check_box_tag(:is_critical) %> 
-                    <%= label_tag(:is_critical, 'Critical') %> 
-                </td>
-            </tr>
-            
-        </table>
-    </div>
-    
-    <%= submit_tag("Submit", class: "btn btn-dark")%>
+  <div class="table-responsive-lg">
+    <table class="table-active">
+      <tr> 
+        <td class="container td-container"> <b>Name<b></td>
+        <td> <%= current_user.username %> </td>
+      </tr>
+      
+      <tr>
+        <td class="container td-container"> <b>Venue</b> </td>
+        <td> <%= select_tag(:venue, options_for_select(Place.all.map {|a| a.name})) %> </td>
+      </tr>
+      
+      <tr>
+        <td class="container td-container"> <b>PC Number</b></td>
+        <td> <%= text_field_tag(:computer_number) %></td>
+      </tr>
+      
+      <tr>
+      
+        <td class="container td-container"> <b>Description</b> </td>
+        <% desc_place_holder = "Please try to describe the problem as descriptive as possible. If there is an error message, try to type the error message."%>
+        <td>
+          <%= text_area_tag(:description, "", size: "100x10", placeholder: desc_place_holder) %>
+        </td>
+      </tr>
+      
+      <tr>
+        <td class="container td-container"></td>
+        <td> 
+          <%= check_box_tag(:is_critical) %> 
+          <%= label_tag(:is_critical, 'Critical') %> 
+        </td>
+      </tr>
+      
+    </table>
+  </div>
+  
+  <%= submit_tag("Submit", class: "btn btn-dark")%>
 <% end %>
