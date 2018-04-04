@@ -34,7 +34,7 @@
 #
 
 class User < ApplicationRecord
-  CELLS = %i[marketing ops presidential publicity technical training welfare]
+  CELLS = %i[marketing presidential publicity technical training welfare]
           .freeze
 
   rolify
