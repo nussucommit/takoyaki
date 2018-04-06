@@ -12,21 +12,15 @@
  */
 
 @import 'bootstrap';
-
 @import 'colors';
-
 @import 'login';
-
 @import 'announcements';
-
 @import 'users';
-
 @import 'profile';
-
 @import 'duties';
-
 @import 'availabilities';
-
 @import 'announcements';
 
-body[no-nav] nav{display: none;}
+body[no-nav] nav {
+display: none;
+}
