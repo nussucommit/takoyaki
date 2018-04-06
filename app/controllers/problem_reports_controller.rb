@@ -44,10 +44,18 @@ class ProblemReportsController < ApplicationController
                    remarks: params[:remarks])
   end
 
+  def boolean_params
+    params.permit(:is_fixable, :is_fixed, :is_blocked, :is_critical)
+          .to_h
+          .map { |k, v| { k => @report[k] ^ v } }
+          .reduce({}, :merge)
+  end
+
   def update_bool_attr
-    %w[is_fixable is_fixed is_blocked is_critical].each do |a|
-      @report.update(a => !@report[a]) if params[a]
-    end
+    # %w[is_fixable is_fixed is_blocked is_critical].each do |a|
+    #   @report.update(a => !@report[a]) if params[a]
+    # end
+    @report.update(boolean_params)
   end
 
   def new_report
