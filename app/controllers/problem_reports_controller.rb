@@ -4,13 +4,19 @@ class ProblemReportsController < ApplicationController
   def index
     @problem_reports = ProblemReport.order(id: :desc)
     @filter = filter_message
-    if @filter == 'Unfixed and Critical'
+    
+    if params[:all_problems]
+      @filter = "All"
+    elsif params[:critical_problems]
+      @filter = "Unfixed and Critical"
       @problem_reports = @problem_reports.where(is_critical: true,
-                                                is_fixed: false)
-    elsif @filter == 'Unfixed and Fixable'
+        is_fixed: false)
+    else
+      @filter = "Unfixed and Fixable"
       @problem_reports = @problem_reports.where(is_fixable: true,
-                                                is_fixed: false)
+        is_fixed: false)
     end
+      
   end
 
   def new; end
@@ -45,20 +51,4 @@ class ProblemReportsController < ApplicationController
     end
   end
 
-  def filter_message
-    if !params[:filter]
-      'Unfixed and Fixable'
-    else
-      params[:filter].split[1..-2].join(' ')
-    end
-  end
-
-  def new_report
-    ProblemReport.new(reporter_user: current_user,
-                      last_update_user: current_user,
-                      place: Place.find_by(name: params[:venue]),
-                      computer_number: params[:computer_number],
-                      description: params[:description],
-                      is_critical: params[:is_critical])
-  end
 end
