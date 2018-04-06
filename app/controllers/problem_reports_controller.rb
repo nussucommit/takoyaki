@@ -3,20 +3,15 @@
 class ProblemReportsController < ApplicationController
   def index
     @problem_reports = ProblemReport.order(id: :desc)
-    @filter = filter_message
-    
     if params[:all_problems]
-      @filter = "All"
+      @filter = 'All'
     elsif params[:critical_problems]
-      @filter = "Unfixed and Critical"
-      @problem_reports = @problem_reports.where(is_critical: true,
-        is_fixed: false)
+      @filter = 'Unfixed and Critical'
+      @problem_reports = filter_by(is_critical: true, is_fixed: false)
     else
-      @filter = "Unfixed and Fixable"
-      @problem_reports = @problem_reports.where(is_fixable: true,
-        is_fixed: false)
+      @filter = 'Unfixed and Fixable'
+      @problem_reports = filter_by(is_fixable: true, is_fixed: false)
     end
-      
   end
 
   def new; end
@@ -40,6 +35,10 @@ class ProblemReportsController < ApplicationController
 
   private
 
+  def filter_by(condition)
+    @problem_reports.where(condition)
+  end
+
   def update_remarks
     @report.update(last_update_user_id: current_user.id,
                    remarks: params[:remarks])
@@ -51,4 +50,12 @@ class ProblemReportsController < ApplicationController
     end
   end
 
+  def new_report
+    ProblemReport.new(reporter_user: current_user,
+                      last_update_user: current_user,
+                      place: Place.find_by(name: params[:venue]),
+                      computer_number: params[:computer_number],
+                      description: params[:description],
+                      is_critical: params[:is_critical])
+  end
 end
