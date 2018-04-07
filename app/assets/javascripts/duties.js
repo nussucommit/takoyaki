@@ -39,7 +39,7 @@ function toggleSidebar() {
 
 function scrollToCurrentTime() {
   var date = new Date();
-  var coefficient = 1000 * 60 * 60;
+  var coeff = 1000 * 60 * 60;
   var rounded = new Date(Math.floor(date.getTime() / coeff) * coeff);
   var current_hour = rounded.getHours();
   var offset = current_hour - startTime;

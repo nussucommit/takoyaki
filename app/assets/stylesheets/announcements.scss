@@ -79,27 +79,27 @@
 .announcements-table {
   padding-left: 20px;
   padding-right: 20px;
-}
 
-table {
-  margin-top: 2%;
-  width: 100%;
-  border-collapse: collapse;
-  border: 0.5px solid #696969;
-  box-shadow: 0 0 10px 1px #808080;
-}
+  table {
+    margin-top: 2%;
+    width: 100%;
+    border-collapse: collapse;
+    border: 0.5px solid #696969;
+    box-shadow: 0 0 10px 1px #808080;
+  }
 
-th {
-  background-color: #feb600;
-  font-weight: bolder;
-  height: 50px;
-  box-shadow: 0 0.5px #808080;
-  padding-left: 10px;
-}
+  th {
+    background-color: #feb600;
+    font-weight: bolder;
+    height: 50px;
+    box-shadow: 0 0.5px #808080;
+    padding-left: 10px;
+  }
 
-td {
-  background-color: #fff8dc;
-  padding: 0px 10px 10px 10px;
+  td {
+    background-color: #fff8dc;
+    padding: 0px 10px 10px 10px;
+  }
 }
 
 .date {
