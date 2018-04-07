@@ -20,8 +20,7 @@
 # rubocop:enable Metrics/LineLength
 
 class Role < ApplicationRecord
-  ROLES = %i[admin ops member manager technical training marketing
-             publicity welfare].freeze
+  ROLES = [:admin].freeze
 
   has_and_belongs_to_many :users, join_table: :users_roles
 

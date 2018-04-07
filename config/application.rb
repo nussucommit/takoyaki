@@ -19,5 +19,7 @@ module Takoyaki
     # -- all .rb files in that directory are automatically loaded.
 
     config.time_zone = 'Singapore'
+
+    config.action_mailer.default_url_options = { host: ENV['HOST'] }
   end
 end
