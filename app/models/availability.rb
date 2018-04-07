@@ -29,5 +29,5 @@
 class Availability < ApplicationRecord
   belongs_to :user
   belongs_to :time_range
-  enum day: Date::ABBR_DAYNAMES.map(&:to_sym)
+  enum day: Date::DAYNAMES
 end
