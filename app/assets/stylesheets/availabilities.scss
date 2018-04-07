@@ -171,7 +171,6 @@ td.dropdown-yes {
   vertical-align: middle;
   text-align: center;
   padding: 0;
-  height: 0;
 }
 
 td.dropdown-no {
@@ -181,13 +180,12 @@ td.dropdown-no {
   padding: 0;
 }
 
-select {
+select.availability-select {
   padding: 0 0 0 20px;
   font-size: 14px;
   height: 100%;
   width: 100%;
-  -webkit-appearance: none;
-  -moz-appearance: none;
+  appearance: none;
   text-overflow: '';
   border: none;
   background-color: white;

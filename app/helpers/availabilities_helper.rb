@@ -68,7 +68,7 @@ module AvailabilitiesHelper
                options_from_collection_for_select(
                  current_users,
                  'id', 'username', selected: @current.default_user_id
-               ))
+               ), class: 'availability-select')
   end
 
   def change(day_id, timerange_id, users)
