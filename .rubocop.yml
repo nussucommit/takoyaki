@@ -17,9 +17,6 @@ AllCops:
 
 Layout/EmptyLinesAroundArguments:
   Enabled: false
-
-Metrics/MethodLength:
-  Max: 16 
   
 Metrics/BlockLength:
   Exclude:

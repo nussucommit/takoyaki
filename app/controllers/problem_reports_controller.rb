@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class ProblemReportsController < ApplicationController
+  # rubocop:disable Metrics/MethodLength
   def index
     @problem_reports = ProblemReport.order(id: :desc)
     if params[:all_problems]
@@ -17,6 +18,7 @@ class ProblemReportsController < ApplicationController
       )
     end
   end
+  # rubocop:enable Metrics/MethodLength
 
   def new; end
 
