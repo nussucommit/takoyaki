@@ -190,3 +190,36 @@ select.availability-select {
   border: none;
   background-color: white;
 }
+
+html, body {
+  height: 100%;
+  overflow: hidden;
+}
+
+::-webkit-scrollbar {
+  background: transparent;
+  height: 8px;
+  width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  border: none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  background: #ddd;
+  min-height: 40px;
+}
+
+.row-lines {
+  height: 80px;
+}
+
+.row-lines:after {
+  content: '';
+  border-bottom: #e0e0e0 1px solid;
+  position: absolute;
+  width: 100%;
+  margin-top: -1px;
+  z-index: 3;
+  pointer-events: none;
+}

@@ -2,6 +2,9 @@
 
 module Availabilities
   class PlacesController < ApplicationController
+    before_action :authenticate_user!
+    before_action :check_admin
+
     def index
       @places = Place.all
     end
@@ -64,5 +67,10 @@ module Availabilities
           [Availability.days[a.day], a.time_range_id]] << a.user_id
       end
     end
+    
+    def check_admin
+      redirect_to availabilities_path unless current_user.has_role?(:admin)
+    end
   end
+
 end
