@@ -52,17 +52,6 @@ module AvailabilitiesHelper
     end
   end
 
-  def generate_cell_dropdown_old(day_index, time_range)
-    @current = @timeslots[[day_index % 7, time_range.id]]
-    if @current
-      generate_dropdown(day_index, time_range)
-    else
-      content_tag(:td, colspan: calc_colspan(time_range.start_time,
-                                             time_range.end_time),
-                       class: 'availability-no') {}
-    end
-  end
-
   def generate_dropdown(day_index, time_range, rowspan)
     content_tag(:td, rowspan: rowspan,
                      class: 'dropdown-yes') do
@@ -72,22 +61,21 @@ module AvailabilitiesHelper
     end
   end
 
-  def generate_dropdown_old(day_index, time_range)
-    content_tag(:td, colspan:
-      calc_colspan(time_range.start_time, time_range.end_time),
-                     class: 'availability-yes') do
-      content_tag(:div, class: 'dropdown') do
-        generate_select(day_index, time_range)
-      end
-    end
-  end
-
-  def generate_select(day_index, time_range, rowspan)
+  def generate_select(day_index, time_range, _rowspan)
+    current_users = change(day_index, time_range.id,
+                           (@current.mc_only ? @users.select(&:mc) : @users))
     select_tag("#{day_index % 7}#{time_range.id}",
                options_from_collection_for_select(
-                 @current.mc_only ? @users.select(&:mc) : @users,
+                 current_users,
                  'id', 'username', selected: @current.default_user_id
-               ), style: "height: #{rowspan * 40}px;")
+               ))
+  end
+
+  def change(day_id, timerange_id, users)
+    users.map do |u|
+      OpenStruct.new(id: u.id, username: u.username +
+        (@availabilities[[day_id, timerange_id]].include?(u.id) ? ' ✓' : ''))
+    end
   end
 
   def generate_day_heading
