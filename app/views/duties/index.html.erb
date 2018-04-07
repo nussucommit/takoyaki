@@ -8,11 +8,11 @@
       </div>
 
       <div id="duty-table" class="col-md-9">
-        <h1>Duty Timetable for the Week</h1>
+        <h1 class="float-left">Duty Timetable for the Week</h1>
 
-        <button type="button" id="announcement-toggle-btn" class="btn btn-large btn-light">Announcements Toggle</button>
-        <%= link_to 'Previous Week', duties_path(start_date: @start_date - 7), class: 'btn btn-large btn-light' %>
-        <%= link_to 'Next Week', duties_path(start_date: @start_date + 7), class: 'btn btn-large btn-light' %>
+        <%= link_to 'Previous Week', duties_path(start_date: @start_date - 7), class: 'btn btn-large btn-light float-right' %>
+        <%= link_to 'Next Week', duties_path(start_date: @start_date + 7), class: 'btn btn-large btn-light float-right' %>
+        <button type="button" id="announcement-toggle-btn" class="btn btn-large btn-light float-right">Announcements Toggle</button>
 
         <div class="schedule-container">
           <div class="schedule-left">
