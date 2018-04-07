@@ -1,9 +1,6 @@
 # frozen_string_literal: true
-<<<<<<< HEAD
-=======
 
 # rubocop:disable Metrics/LineLength
->>>>>>> master
 # == Schema Information
 #
 # Table name: availabilities
