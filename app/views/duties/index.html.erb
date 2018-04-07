@@ -1,3 +1,6 @@
+<div id="duty-start-time" data-start-time=<%= TimeRange.order(:start_time).first.start_time.strftime('%H') %>></div>
+<div id="num-of-places" data-num-of-places=<%= Place.all.count %>></div>
+
 <div class="container-fluid">
   <div class="row">
       <div id="announcement-sidebar" class="col-md-3 sidebar-container">
@@ -24,7 +27,7 @@
               <thead>
                 <tr>
                   <td class="schedule-timings"><div class="schedule-time">&nbsp;</div></td>
-                  <td></td>
+                  <td class="schedule-timings"></td>
                 </tr>
               </thead>
               <tbody>
