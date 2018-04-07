@@ -1,0 +1,25 @@
+// Place all the styles related to the problem_reports controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+ul.btn-container {
+  padding-left: 0px;
+  
+  & > li {
+    display: inline-block;
+  }
+}
+
+.container-fluid {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+td.container {
+  padding-left :50px;
+}
+
+.td-container {
+  padding-right: 10px;
+  width: 30%;
+}
