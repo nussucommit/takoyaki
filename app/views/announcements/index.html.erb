@@ -1,7 +1,6 @@
 <div class="title"><h1>Announcements</h1></div>
 
-<div class="announcements-table">
-  
+<div class="announcements-table container">
   <% @announcements.each do |a| %>
     <table>
       <tr>
@@ -14,10 +13,9 @@
       </tr>
 
       <tr>
-        <td><%= a.details %></td>
+        <td class="details"><%= a.details %></td>
       </tr>
     
     </table>
   <% end %>
-
 </div>
