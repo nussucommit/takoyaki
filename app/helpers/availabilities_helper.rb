@@ -87,25 +87,29 @@ module AvailabilitiesHelper
                options_from_collection_for_select(
                  @current.mc_only ? @users.select(&:mc) : @users,
                  'id', 'username', selected: @current.default_user_id
-               ), style: "height: #{rowspan*40}px;")
+               ), style: "height: #{rowspan * 40}px;")
   end
 
   def generate_day_heading
     content_tag :thead do
       content_tag :tr, class: 'day-heading' do
-        content_tag(:th, "", class: 'empty-heading').to_s.html_safe.concat((1..7).collect { |index|
-          content_tag(:th, class: 'day-head') do
-            content_tag(:div, class: 'day-text') do
-              Availability.days.keys[index % 7][0..2]
-            end
-          end
-        }.join().html_safe)
+        concat content_tag(:th, '', class: 'empty-heading')
+        generate_heading_row
       end
+    end
+  end
+
+  def generate_heading_row
+    (1..7).map do |index|
+      concat(content_tag(:th, class: 'day-head') do
+        content_tag(:div, class: 'day-text') do
+          Availability.days.keys[index % 7][0..2]
+        end
+      end)
     end
   end
 
   def get_time_range(start_time)
     @time_ranges_map[start_time]
   end
-
 end
