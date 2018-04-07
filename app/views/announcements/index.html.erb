@@ -1,0 +1,19 @@
+<h1>Announcements</h1>
+
+<% @announcements.each do |a| %>
+  <table>
+    <tr>
+      <th>Subject</th>
+      <th>Details</th>
+      <th>Created On</th>
+      <th>Updated On</th>
+    </tr>
+
+    <tr>
+      <td><%= a.subject %></td>
+      <td><%= a.details %></td>
+      <td><%= format_time(a.created_at) %></td>
+      <td><%= format_time(a.updated_at) %></td>
+    </tr>
+  </table>
+<% end %>
