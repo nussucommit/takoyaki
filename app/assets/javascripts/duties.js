@@ -3,7 +3,7 @@ var scrollLeftPx = 150;
 var mediumScreenSize = 768;
 
 function setDutyTableButtons() {
-  if ( $(window).width() <= mediumScreenSize) {
+  if ($(window).width() <= mediumScreenSize) {
     $('.duty-table-button').removeClass('float-sm-right');
     $('.duty-table-title').removeClass('float-left');
   }
@@ -39,7 +39,7 @@ function toggleSidebar() {
 
 function scrollToCurrentTime() {
   var date = new Date();
-  var coeff = 1000 * 60 * 60;
+  var coefficient = 1000 * 60 * 60;
   var rounded = new Date(Math.floor(date.getTime() / coeff) * coeff);
   var current_hour = rounded.getHours();
   var offset = current_hour - startTime;
