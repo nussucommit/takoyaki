@@ -40,11 +40,11 @@ class ProblemReportsController < ApplicationController
   end
 
   private
-  
+
   def send_email(report)
     GenericMailer.problem_report(report).deliver_later
   end
-    
+
   def update_remarks
     @report.update(last_update_user_id: current_user.id,
                    remarks: params[:remarks])

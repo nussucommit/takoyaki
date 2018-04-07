@@ -22,3 +22,7 @@
 @import 'availabilities';
 @import 'announcements';
 @import 'problem_reports';
+
+body[no-nav] nav {
+  display: none;
+}
