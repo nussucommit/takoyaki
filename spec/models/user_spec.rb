@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-
 # == Schema Information
 #
 # Table name: users
@@ -23,6 +22,8 @@
 #  username               :string
 #  matric_num             :string
 #  contact_num            :string
+#  cell                   :integer          not null
+#  mc                     :boolean          default(FALSE), not null
 #
 # Indexes
 #

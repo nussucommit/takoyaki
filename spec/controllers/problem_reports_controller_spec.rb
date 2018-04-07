@@ -14,7 +14,9 @@ RSpec.describe ProblemReportsController, type: :controller do
 
   describe 'POST problem_reports#create' do
     before do
-      sign_in create(:user)
+      user = create(:user)
+      user.add_role(:technical)
+      sign_in user
       @venue = create(:place)
     end
 

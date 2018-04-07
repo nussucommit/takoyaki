@@ -36,12 +36,13 @@ RSpec.describe GenericMailer, type: :mailer do
    describe '#problem_report' do
      let(:mail) do
        user = create(:user)
+       user.add_role(:technical)
        @problem = create(:problem_report, reporter_user: user)
        GenericMailer.problem_report(@problem)
      end
      it 'renders the header' do
        expect(mail.subject).to eq('New computer problem')
-       expect(mail.to).to eq(User.find_by(cell: Technical).pluck(:email))
+       expect(mail.to).to eq(Role.find_by(name: :technical).users.pluck(:email))
        expect(mail.from).to eq([DEFAULT_FROM])
      end
      it 'renders the body' do
