@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180401095943) do
+ActiveRecord::Schema.define(version: 20180402054815) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -98,14 +98,13 @@ ActiveRecord::Schema.define(version: 20180401095943) do
     t.datetime "last_sign_in_at"
     t.inet     "current_sign_in_ip"
     t.inet     "last_sign_in_ip"
-    t.integer  "failed_attempts",        :default=>0, :null=>false
-    t.string   "unlock_token"
-    t.datetime "locked_at"
     t.datetime "created_at",             :null=>false
     t.datetime "updated_at",             :null=>false
     t.string   "username",               :index=>{:name=>"index_users_on_username", :unique=>true}
     t.string   "matric_num"
     t.string   "contact_num"
+    t.integer  "cell",                   :null=>false
+    t.boolean  "mc",                     :default=>false, :null=>false
   end
 
   create_table "users_roles", id: false, force: :cascade do |t|

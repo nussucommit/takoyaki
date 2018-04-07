@@ -15,14 +15,13 @@
 #  last_sign_in_at        :datetime
 #  current_sign_in_ip     :inet
 #  last_sign_in_ip        :inet
-#  failed_attempts        :integer          default(0), not null
-#  unlock_token           :string
-#  locked_at              :datetime
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
 #  username               :string
 #  matric_num             :string
 #  contact_num            :string
+#  cell                   :integer          not null
+#  mc                     :boolean          default(FALSE), not null
 #
 # Indexes
 #
@@ -36,4 +35,9 @@ require 'rails_helper'
 RSpec.describe User, type: :model do
   it { should have_many(:duties) }
   it { should have_many(:timeslots).with_foreign_key(:default_user_id) }
+  it { should validate_presence_of(:cell) }
+  it { should define_enum_for(:cell).with(User::CELLS) }
+  it 'has false as default value for mc' do
+    expect(create(:user).mc).to eq(false)
+  end
 end

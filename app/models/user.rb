@@ -15,14 +15,13 @@
 #  last_sign_in_at        :datetime
 #  current_sign_in_ip     :inet
 #  last_sign_in_ip        :inet
-#  failed_attempts        :integer          default(0), not null
-#  unlock_token           :string
-#  locked_at              :datetime
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
 #  username               :string
 #  matric_num             :string
 #  contact_num            :string
+#  cell                   :integer          not null
+#  mc                     :boolean          default(FALSE), not null
 #
 # Indexes
 #
@@ -32,6 +31,9 @@
 #
 
 class User < ApplicationRecord
+  CELLS = %i[marketing presidential publicity technical training welfare]
+          .freeze
+
   rolify
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
@@ -49,4 +51,7 @@ class User < ApplicationRecord
                                           foreign_key: 'last_update_user_id',
                                           inverse_of: :last_update_user,
                                           dependent: :nullify
+  validates :cell, presence: true
+
+  enum cell: CELLS
 end

@@ -21,4 +21,11 @@
 @import 'duties';
 @import 'availabilities';
 @import 'announcements';
+<<<<<<< HEAD
 @import 'problem_reports';
+=======
+
+body[no-nav] nav {
+  display: none;
+}
+>>>>>>> origin
