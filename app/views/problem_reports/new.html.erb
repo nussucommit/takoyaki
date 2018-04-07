@@ -6,12 +6,6 @@
   <li> <%= button_to("Back To Problem Report List", problem_reports_path, method: "get", class: "btn btn-secondary") %> </li>
 </ul>
 
-<% flash.each do |key, value| %>
-  <div class="<%= flash_class(key.to_sym) %>">
-    <strong> <%= value %> <strong>
-  </div>
-<% end %>
-
 <%= form_tag(problem_reports_path, method: "post") do %>
   <div class="table-responsive-lg">
     <table class="table-active">
