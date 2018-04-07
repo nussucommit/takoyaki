@@ -82,10 +82,12 @@ tr.odd {
 
 .duty-table-header {
   padding-top: 20px;
-}
 
-.duty-table-button {
-  font-size: smaller;
+  .duty-table-button {
+    box-shadow: 0px 2px 2px #888888;
+    font-size: smaller;
+    margin-left: 10px;
+  }
 }
 
 #announcement-sidebar {
