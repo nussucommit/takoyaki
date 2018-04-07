@@ -1,6 +1,7 @@
 var ONE_HOUR_TO_MILLISECONDS = 1000 * 60 * 60;
 var SCROLL_LEFT_PX = 150;
 var MEDIUM_SCREEN_SIZE = 768;
+var BACKGROUND_COLOR = "#f6e1af";
 
 function setDutyTableButtons() {
   if ($(window).width() <= MEDIUM_SCREEN_SIZE) {
@@ -16,18 +17,16 @@ function toggleSidebar() {
 
       $('#duty-table').addClass('col-md-12');
 
-      if ( $(window).width() <= MEDIUM_SCREEN_SIZE) {
+      if ($(window).width() <= MEDIUM_SCREEN_SIZE) {
         $('.duty-table-button').addClass('float-sm-right');
         $('.duty-table-title').addClass('float-left');
       }
     } else {
-      $('#announcement-sidebar').fadeIn({
-        duration: 200
-      }).addClass('open');
+      $('#announcement-sidebar').fadeIn('fast').addClass('open');
 
       $('#duty-table').addClass('col-md-9').removeClass('col-md-12');
 
-      if ( $(window).width() <= MEDIUM_SCREEN_SIZE) {
+      if ($(window).width() <= MEDIUM_SCREEN_SIZE) {
         $('.duty-table-button').removeClass('float-sm-right');
         $('.duty-table-title').removeClass('float-left');
       }
@@ -51,7 +50,7 @@ function colourScheduleTable(numOfPlaces) {
 
   for (offset = 0; offset < numOfPlaces; offset++) {
     $('.schedule-container tr:nth-child(' + nthChildInt + 'n -' + offset + ')').css({
-      "background-color": "#f6e1af"
+      "background-color": BACKGROUND_COLOR
     });
   }
 }
