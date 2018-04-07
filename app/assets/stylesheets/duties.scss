@@ -6,6 +6,7 @@
   width: 100%;
   text-align: right;
 }
+
 .scrollable {
   overflow: auto;
 }
@@ -14,6 +15,7 @@
   width: 100%;
   display: flex;
   flex-wrap: nowrap;
+  padding-top: 20px;
 }
 
 .schedule-time {
@@ -27,11 +29,14 @@ td.schedule-daynames {
   text-align: center;
 }
 
-
 td.schedule-timings {
   padding: 0;
   margin: 0;
   width: 150px;
+}
+
+tr.odd {
+  background-color: #FFFACD;
 }
 
 .no-padding {
@@ -70,10 +75,17 @@ td.schedule-timings {
 }
 
 #duty-table {
-  
   h1 {
     font-size: 2em;
   }
+}
+
+.duty-table-header {
+  padding-top: 20px;
+}
+
+.duty-table-button {
+  font-size: smaller;
 }
 
 #announcement-sidebar {

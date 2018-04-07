@@ -8,11 +8,14 @@
       </div>
 
       <div id="duty-table" class="col-md-9">
-        <h1 class="float-left">Duty Timetable for the Week</h1>
 
-        <%= link_to 'Previous Week', duties_path(start_date: @start_date - 7), class: 'btn btn-large btn-light float-right' %>
-        <%= link_to 'Next Week', duties_path(start_date: @start_date + 7), class: 'btn btn-large btn-light float-right' %>
-        <button type="button" id="announcement-toggle-btn" class="btn btn-large btn-light float-right">Announcements Toggle</button>
+        <div class="duty-table-header">  
+          <h1 class="duty-table-title float-left">Duty Timetable for the Week</h1>
+
+          <%= link_to 'Previous Week', duties_path(start_date: @start_date - 7), class: 'btn btn-large btn-light float-sm-right duty-table-button' %>
+          <%= link_to 'Next Week', duties_path(start_date: @start_date + 7), class: 'btn btn-large btn-light float-sm-right duty-table-button' %>
+          <button type="button" id="announcement-toggle-btn" class="btn btn-large btn-light float-sm-right duty-table-button">SideBar Toggle</button>
+        </div>
 
         <div class="schedule-container">
           <div class="schedule-left">
@@ -57,7 +60,7 @@
               <tbody>
                 <% process_duties(@start_date, @end_date).each do |day| %>
                   <% day.each do |place| %>
-                    <tr>
+                    <tr class="<%= cycle('odd', 'odd', 'even', 'even') -%>">
                     <% place.each do |duty| %>
                       <% if duty[:name].nil? %>
                         <td class="schedule-name-empty" colspan="<%= duty[:colspan] %>">&nbsp;</td>
