@@ -47,6 +47,21 @@ ActiveRecord::Schema.define(version: 20180402054815) do
     t.datetime "updated_at", :null=>false
   end
 
+  create_table "problem_reports", force: :cascade do |t|
+    t.datetime "created_at",          :null=>false
+    t.datetime "updated_at",          :null=>false
+    t.string   "computer_number"
+    t.text     "description"
+    t.boolean  "is_critical"
+    t.boolean  "is_fixed",            :default=>false
+    t.boolean  "is_fixable",          :default=>true
+    t.text     "remarks"
+    t.integer  "place_id"
+    t.boolean  "is_blocked",          :default=>false
+    t.integer  "reporter_user_id"
+    t.integer  "last_update_user_id"
+  end
+
   create_table "roles", force: :cascade do |t|
     t.string   "name",          :index=>{:name=>"index_roles_on_name_and_resource_type_and_resource_id", :with=>["resource_type", "resource_id"]}
     t.string   "resource_type", :index=>{:name=>"index_roles_on_resource_type_and_resource_id", :with=>["resource_id"]}
@@ -103,6 +118,9 @@ ActiveRecord::Schema.define(version: 20180402054815) do
   add_foreign_key "availabilities", "users"
   add_foreign_key "duties", "timeslots"
   add_foreign_key "duties", "users"
+  add_foreign_key "problem_reports", "places"
+  add_foreign_key "problem_reports", "users", column: "last_update_user_id"
+  add_foreign_key "problem_reports", "users", column: "reporter_user_id"
   add_foreign_key "timeslots", "places"
   add_foreign_key "timeslots", "time_ranges"
   add_foreign_key "timeslots", "users", column: "default_user_id"
