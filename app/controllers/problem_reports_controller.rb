@@ -7,10 +7,14 @@ class ProblemReportsController < ApplicationController
       @filter = 'All'
     elsif params[:critical_problems]
       @filter = 'Unfixed and Critical'
-      @problem_reports = filter_by(is_critical: true, is_fixed: false)
+      @problem_reports = @problem_reports.where(
+        is_critical: true, is_fixed: false
+      )
     else
       @filter = 'Unfixed and Fixable'
-      @problem_reports = filter_by(is_fixable: true, is_fixed: false)
+      @problem_reports = @problem_reports.where(
+        is_fixable: true, is_fixed: false
+      )
     end
   end
 
@@ -35,10 +39,6 @@ class ProblemReportsController < ApplicationController
 
   private
 
-  def filter_by(condition)
-    @problem_reports.where(condition)
-  end
-
   def update_remarks
     @report.update(last_update_user_id: current_user.id,
                    remarks: params[:remarks])
@@ -47,14 +47,11 @@ class ProblemReportsController < ApplicationController
   def boolean_params
     params.permit(:is_fixable, :is_fixed, :is_blocked, :is_critical)
           .to_h
-          .map { |k, v| { k => @report[k] ^ v } }
-          .reduce({}, :merge)
+          .map { |k, v| [k, v.nil? ? @report[k] : !@report[k]] }
+          .to_h
   end
 
   def update_bool_attr
-    # %w[is_fixable is_fixed is_blocked is_critical].each do |a|
-    #   @report.update(a => !@report[a]) if params[a]
-    # end
     @report.update(boolean_params)
   end
 
