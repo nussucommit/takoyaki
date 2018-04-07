@@ -33,19 +33,19 @@ RSpec.describe GenericMailer, type: :mailer do
   end
 
   # TODO: uncomment after problem-report is merged
-  #  describe '#problem_report' do
-  #    let(:mail) do
-  #      user = create(:user)
-  #      @problem = create(:problem, user: user)
-  #      GenericMailer.problem_report(@problem)
-  #    end
-  #    it 'renders the header' do
-  #      expect(mail.subject).to eq('New computer problem')
-  #      expect(mail.to).to eq(User.find_by(cell: Technical).pluck(:email))
-  #      expect(mail.from).to eq([DEFAULT_FROM])
-  #    end
-  #    it 'renders the body' do
-  #      expect(mail.body.encoded).to match('problem')
-  #    end
-  #  end
+   describe '#problem_report' do
+     let(:mail) do
+       user = create(:user)
+       @problem = create(:problem_report, reporter_user: user)
+       GenericMailer.problem_report(@problem)
+     end
+     it 'renders the header' do
+       expect(mail.subject).to eq('New computer problem')
+       expect(mail.to).to eq(User.find_by(cell: Technical).pluck(:email))
+       expect(mail.from).to eq([DEFAULT_FROM])
+     end
+     it 'renders the body' do
+       expect(mail.body.encoded).to match('problem')
+     end
+   end
 end

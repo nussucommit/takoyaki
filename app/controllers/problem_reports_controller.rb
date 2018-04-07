@@ -21,7 +21,9 @@ class ProblemReportsController < ApplicationController
   def new; end
 
   def create
-    if new_report.save
+    report = new_report
+    if report.save
+      send_email(report)
       redirect_to problem_reports_path,
                   notice: 'New Problem Report Created'
     else
@@ -38,7 +40,11 @@ class ProblemReportsController < ApplicationController
   end
 
   private
-
+  
+  def send_email(report)
+    GenericMailer.problem_report(report).deliver_later
+  end
+    
   def update_remarks
     @report.update(last_update_user_id: current_user.id,
                    remarks: params[:remarks])
