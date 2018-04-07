@@ -1,0 +1,37 @@
+<div class="user-profile">
+  <h1>User Profile</h1>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12 col-md-4 offset-md-4">
+        <table>
+          <tr>
+            <th class="name">Name</th>
+            <td class="name"><%= current_user.username %></td>
+          </tr>
+          <tr>
+            <th class="matric">Matric number</th>
+            <td class="matric"><%= current_user.matric_num %></td>
+          </tr>
+          <tr>
+            <th class="contact">Contact number</th>
+            <td class="contact"><%= current_user.contact_num %></td>
+          </tr>
+          <tr>
+            <th class="email">Email</th>
+            <td class="email"><%= current_user.email %></td>
+          </tr>
+          <tr>
+            <th class="cell">Cell</th>
+            <td class="cell"></td>
+          </tr>
+          <tr>
+            <th class="pos">Position</th>
+            <td class="pos"></td>
+          </tr>
+        </table>
+        <%= button_to "Edit Profile", edit_user_registration_path, method: "get" %>
+      </div>
+    </div>
+  </div>
+</div>
