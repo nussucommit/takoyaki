@@ -36,4 +36,4 @@ function load() {
   toggleSidebar();
 }
 
-$(document).ready(load);
+$(document).on('turbolinks:load', load);
