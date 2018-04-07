@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <p>New computer problem is reported:</p>
+
+    <table>
+      <tr>
+        <td>PC Number:</td>
+        <td><%#= @problem.computer_number %></td>
+      </tr>
+      <tr>
+        <td>Venue:</td>
+        <td><%#= @problem.place.name %></td>
+      </tr>
+      <tr>
+        <td>Description:</td>
+        <td><%#= @problem.description %></td>
+      </tr>
+      <tr>
+        <td>Critical:</td>
+        <td><%#= @problem.is_critical %></td>
+      </tr>
+    </table>
+    <p>
+      Please fix the problem as soon as possible!
+    </p>
+    <p>
+      Regards,<br />
+      NUSSU commIT
+    </p>
+    <p>
+      Important: This email is confidential and may be privileged. If you are not the intended recipient, please delete it and notify us immediately; you should not copy or use it for any purpose, nor disclose its contents to any other person. Thank you.
+    </p>
+  </body>
+</html>

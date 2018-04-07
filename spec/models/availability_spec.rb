@@ -1,4 +1,9 @@
 # frozen_string_literal: true
+<<<<<<< HEAD
+=======
+
+# rubocop:disable Metrics/LineLength
+>>>>>>> master
 # == Schema Information
 #
 # Table name: availabilities
@@ -22,12 +27,14 @@
 #  fk_rails_...  (time_range_id => time_ranges.id)
 #  fk_rails_...  (user_id => users.id)
 #
+# rubocop:enable Metrics/LineLength
 
 require 'rails_helper'
 
 RSpec.describe Availability, type: :model do
   it { should belong_to(:user) }
   it { should belong_to(:time_range) }
+  it { should define_enum_for(:day).with(Date::DAYNAMES) }
 
   it 'saves given a valid Availability' do
     expect(create(:availability)).to be_valid

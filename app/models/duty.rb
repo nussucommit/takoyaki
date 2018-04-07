@@ -26,6 +26,7 @@ class Duty < ApplicationRecord
   belongs_to :user
   belongs_to :timeslot
   has_one :time_range, through: :timeslot
+  has_one :place, through: :timeslot
   # validates_uniqueness_of :date, scope = [:timeslot_id, :user_id]
   scope :ordered_by_start_time,
         -> { joins(:time_range).order('time_ranges.start_time') }

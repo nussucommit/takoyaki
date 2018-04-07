@@ -27,6 +27,8 @@ require 'rails_helper'
 RSpec.describe Duty, type: :model do
   it { should belong_to(:user) }
   it { should belong_to(:timeslot) }
+  it { should have_one(:time_range).through(:timeslot) }
+  it { should have_one(:place).through(:timeslot) }
 
   it 'self.generate works properly' do
     create(:timeslot)

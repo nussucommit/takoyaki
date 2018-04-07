@@ -20,6 +20,8 @@
 #  username               :string
 #  matric_num             :string
 #  contact_num            :string
+#  cell                   :integer          not null
+#  mc                     :boolean          default(FALSE), not null
 #
 # Indexes
 #
@@ -29,6 +31,9 @@
 #
 
 class User < ApplicationRecord
+  CELLS = %i[marketing presidential publicity technical training welfare]
+          .freeze
+
   rolify
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
@@ -37,4 +42,7 @@ class User < ApplicationRecord
   has_many :duties, dependent: :nullify
   has_many :timeslots, foreign_key: :default_user_id, inverse_of: :user,
                        dependent: :nullify
+  validates :cell, presence: true
+
+  enum cell: CELLS
 end
