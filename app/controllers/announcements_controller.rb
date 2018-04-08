@@ -1,6 +1,10 @@
 # frozen_string_literal: true
 
 class AnnouncementsController < ApplicationController
+  def index
+    @announcements = Announcement.order(created_at: :desc)
+  end
+
   def create
     announcement = Announcement.new announcement_params
 
