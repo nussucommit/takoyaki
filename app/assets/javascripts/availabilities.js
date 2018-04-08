@@ -25,7 +25,6 @@ function getCheckbox(id) {
 }
 
 function load() {
-  alert("test");
   $('input[type=checkbox]').each(function(id) {
     updateCheckbox($(this).val(), false);
   });
