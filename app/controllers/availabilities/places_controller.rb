@@ -14,8 +14,7 @@ module Availabilities
       @place = Place.find(params[:id])
       load_availabilities
       @time_ranges = TimeRange.order(:start_time)
-      @time_ranges_map = load_timeranges_map
-      @timeslots = load_timeslots
+      load_timeslots
       @start_time = start_time
       @end_time = end_time
     end
@@ -38,12 +37,11 @@ module Availabilities
     end
 
     def load_timeslots
-      Hash[Timeslot.where(place_id: params[:id]).joins(:time_range)
-                   .map do |timeslot|
-             [[Availability.days[timeslot.day],
-               timeslot.time_range_id], timeslot]
-           end
-      ]
+      @timeslots = Hash.new { |h, k| h[k] = [] }
+      Timeslot.where(place_id: params[:id]).includes(:time_range)
+              .each do |timeslot|
+          @timeslots[Availability.days[timeslot.day]] << timeslot
+        end
     end
 
     def load_timeranges_map

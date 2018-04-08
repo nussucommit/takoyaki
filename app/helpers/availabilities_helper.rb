@@ -56,18 +56,19 @@ module AvailabilitiesHelper
     content_tag(:td, rowspan: rowspan,
                      class: 'dropdown-yes') do
       content_tag(:div, class: 'dropdown') do
-        generate_select(day_index, time_range, rowspan)
+        generate_select(day_index, time_range)
       end
     end
   end
 
-  def generate_select(day_index, time_range, _rowspan)
-    current_users = change(day_index, time_range.id,
-                           (@current.mc_only ? @users.select(&:mc) : @users))
-    select_tag("#{day_index % 7}#{time_range.id}",
+  def generate_select(timeslot)
+    day_index = Availability.days[timeslot.day]
+    time_range_id = timeslot.time_range_id
+    current_users = change(day_index, time_range_id, (timeslot.mc_only ? @users.select(&:mc) : @users))
+    select_tag("#{day_index % 7}#{time_range_id}",
                options_from_collection_for_select(
                  current_users,
-                 'id', 'username', selected: @current.default_user_id
+                 'id', 'username', selected: timeslot.default_user_id
                ), class: 'availability-select')
   end
 

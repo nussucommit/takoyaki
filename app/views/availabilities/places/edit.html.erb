@@ -2,9 +2,8 @@
   <div style="display: flex; flex: 1 1 auto;">
   	<%= form_tag(availabilities_place_path, method: "put", style: "flex: 1 1 auto; display: flex;") do %>
       <div style="display: flex; flex: 1 1 auto; border-top: 1px solid #e0e0e0;">
-        
         <div style="display: block; flex: 0 0 auto; width: 256px; border-right: 1px solid #e0e0e0; padding: 8px 0;">
-          <div style="display: flex; height: 94px; padding: 8px 0; justify-content: center; align-items: center; border-bottom: 1px solid #e0e0e0">
+          <div style="display: flex; height: 93px; padding: 8px 0; justify-content: center; align-items: center; border-bottom: 1px solid #e0e0e0">
             <h1 style="flex: none;"><%= @place.name %></h1>
           </div>
           <div style="display: flex; padding: 32px 0; justify-content: space-around;">
@@ -19,8 +18,8 @@
             </div>
             <div style="flex: 1 1 auto; display: flex;">
               <% (1..7).each do |index| %>
-                <div style="display: flex; align-items: flex-end; flex: 1 1 0%; border-right: 1px solid #e0e0e0;">
-                  <div style="margin-left: 10px; font-size: 32px; line-height: 64px;">
+                <div style="overflow: hidden; display: flex; align-items: flex-end; flex: 1 1 0%; border-right: 1px solid #e0e0e0;">
+                  <div style="margin-left: 10px; font-size: 32px; line-height: 64px; overflow: hidden;">
                     <%= Availability.days.keys[index % 7][0..2] %>
                   </div>
                 </div>
@@ -28,15 +27,11 @@
               <div style="overflow: scroll;"></div>
             </div>
           </div>
-          <div style="display: flex; flex: 1 1 10%; overflow-y: scroll; border-top: 1px solid #e0e0e0;    align-items: flex-start;">
-            <div style="flex: none; width: 48px; border-right: 1px solid #e0e0e0; height: 1920px;">
+          <div id="scroll-table" style="display: flex; flex: 1 1 10%; overflow-y: scroll; border-top: 1px solid #e0e0e0; align-items: flex-start;">
+            <div style="flex: none; width: 48px; border-right: 1px solid #e0e0e0; height: calc(24*80px);">
               <% (0..23).each do |x| %>
                 <div style="height: 80px; text-align: center;">
-                  <span style="position: relative; top: -12px; font-size: 10px;
-                  <% if x == 0 %>
-                    display: none;
-                  <% end %>
-                  ">
+                  <span style="position: relative; top: -12px; font-size: 10px;<% if x == 0 %>display: none;<% end %>">
                     <%= "#{x}:00" %>
                   </span>
                 </div>
@@ -45,13 +40,19 @@
             <div style="display: flex; flex: 1 1 auto; position: relative;">
               <div>
                 <% (0..23).each do |x| %>
-                  <div class="row-lines">
-                    
-                  </div>
+                  <div class="row-lines"></div>
                 <% end %>
               </div>
               <% (1..7).each do |day| %>
-                <div style="flex: 1 1 0%; border-right: 1px solid #e0e0e0;">
+                <div style="flex: 1 1 0%; border-right: 1px solid #e0e0e0; padding-right: 12px;">
+                  <div style="width: 100%; height: 100%; position: relative;">
+                    <% @timeslots[day % 7].each do |ts| %>
+                      <% tr = ts.time_range %>
+                      <div style="z-index: 3; position: absolute; border-radius: 2px; top: <%= (80.0 * tr.start_time.seconds_since_midnight/1.hour).round()%>px; height: <%= (tr.end_time - tr.start_time)/1.hour * 80 - 2 %>px; width: 100%; background-color: #4285F4;">
+                        <%= generate_select(ts) %>
+                      </div>
+                    <% end %>
+                  </div>
                 </div>
               <% end %>
             </div>
@@ -61,3 +62,10 @@
      <% end %>
    </div>
 </div>
+
+
+<script>
+  $(document).ready(function(){
+    document.getElementById("scroll-table").scrollTop = <%= [(80.0 * @start_time.seconds_since_midnight/1.hour).round - 40, 0].max %>;
+  });
+</script>

@@ -181,14 +181,16 @@ td.dropdown-no {
 }
 
 select.availability-select {
-  padding: 0 0 0 20px;
+  color: white;
+  padding: 0 0 0 16px;
   font-size: 14px;
   height: 100%;
   width: 100%;
   appearance: none;
   text-overflow: '';
   border: none;
-  background-color: white;
+  background-color: transparent;
+  font-weight: lighter;
 }
 
 html, body {
