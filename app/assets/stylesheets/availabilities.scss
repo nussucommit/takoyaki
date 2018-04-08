@@ -180,19 +180,6 @@ td.dropdown-no {
   padding: 0;
 }
 
-select.availability-select {
-  color: white;
-  padding: 0 0 0 16px;
-  font-size: 14px;
-  height: 100%;
-  width: 100%;
-  appearance: none;
-  text-overflow: '';
-  border: none;
-  background-color: transparent;
-  font-weight: lighter;
-}
-
 html, body {
   height: 100%;
   overflow: hidden;
@@ -212,6 +199,19 @@ html, body {
   min-height: 40px;
 }
 
+select.availability-select {
+  color: white;
+  padding: 0 0 0 10px;
+  font-size: 14px;
+  height: 100%;
+  width: 100%;
+  appearance: none;
+  text-overflow: '';
+  border: none;
+  background-color: transparent;
+  touch-action: manipulation;
+}
+
 .row-lines {
   height: 80px;
 }
@@ -224,4 +224,25 @@ html, body {
   margin-top: -1px;
   z-index: 3;
   pointer-events: none;
+}
+
+.timeslot {
+  z-index: 3;
+  position: absolute;
+  border-radius: 4px;
+  width: 100%;
+  background-color: #009688;
+}
+
+.timeslot-vertical {
+  position: absolute;
+  top: 0;
+  width: 4px;
+  height: 100%;
+  background-color: gray;
+  border-radius: 4px 0 0 4px;
+}
+
+.btn-nav {
+  margin: 16px;
 }

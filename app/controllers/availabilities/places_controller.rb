@@ -14,6 +14,7 @@ module Availabilities
       @place = Place.find(params[:id])
       load_availabilities
       load_timeslots
+      @disable_viewport = true
     end
 
     def update

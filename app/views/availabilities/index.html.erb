@@ -1,5 +1,8 @@
 <div class="container-fluid availabilities-container">
   <h1>Schedule Availability</h1>
+  <% if current_user.has_role?(:admin) %>
+    <%= link_to "Places", availabilities_places_path, class: "btn btn-large btn-light" %>
+  <% end %>
   <div class="instruction">
     <div class="box-yes"></div>
     <div class="instruction-label">YES</div>

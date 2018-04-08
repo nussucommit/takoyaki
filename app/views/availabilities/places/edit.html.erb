@@ -2,17 +2,18 @@
   <div style="display: flex; flex: 1 1 auto;">
   	<%= form_tag(availabilities_place_path, method: "put", style: "flex: 1 1 auto; display: flex;") do %>
       <div style="display: flex; flex: 1 1 auto; border-top: 1px solid #e0e0e0;">
-        <div style="display: block; flex: 0 0 auto; width: 256px; border-right: 1px solid #e0e0e0; padding: 8px 0;">
+        <div style="display: block; flex: 1 1 auto; width: 200px; border-right: 1px solid #e0e0e0; padding: 8px 0;">
           <div style="display: flex; height: 93px; padding: 8px 0; justify-content: center; align-items: center; border-bottom: 1px solid #e0e0e0">
             <h1 style="flex: none;"><%= @place.name %></h1>
           </div>
-          <div style="display: flex; padding: 32px 0; justify-content: space-around;">
-            <%= submit_tag("Update", id: 'update-button-places', data: { disable_with: false }, class: "btn btn-large btn-primary") %>
-            <%= submit_tag("Cancel", id: 'cancel-button', data: { disable_with: false }, class: "btn btn-large btn-danger") %>
+          <div style="display: flex; flex-direction: column; padding: 32px 40px; justify-content: space-around;">
+            <%= submit_tag("Update", id: 'update-button-places', data: { disable_with: false }, class: "btn btn-large btn-primary btn-nav") %>
+            <%= submit_tag("Cancel", id: 'cancel-button', data: { disable_with: false }, class: "btn btn-large btn-danger btn-nav") %>
+            <%= link_to "Back", availabilities_places_path, class: "btn btn-large btn-light btn-nav" %>
           </div>
         </div>
 
-        <div style="flex: 1 1 auto; display: flex; flex-direction: column;">
+        <div style="flex: 20 20 auto; display: flex; flex-direction: column;">
           <div style="display: flex; flex: none;">
             <div style="flex: 0 0 auto; height: 100px; width: 48px; border-right: 1px solid #e0e0e0;">
             </div>
@@ -32,7 +33,7 @@
               <% (0..23).each do |x| %>
                 <div style="height: 80px; text-align: center;">
                   <span style="position: relative; top: -12px; font-size: 10px;<% if x == 0 %>display: none;<% end %>">
-                    <%= "#{x}:00" %>
+                    <%= "%02d:00" % x %>
                   </span>
                 </div>
               <% end %>
@@ -48,7 +49,10 @@
                   <div style="width: 100%; height: 100%; position: relative;">
                     <% @timeslots[day % 7].each do |ts| %>
                       <% tr = ts.time_range %>
-                      <div style="z-index: 3; position: absolute; border-radius: 2px; top: <%= (80.0 * tr.start_time.seconds_since_midnight/1.hour).round()%>px; height: <%= (tr.end_time - tr.start_time)/1.hour * 80 - 2 %>px; width: 100%; background-color: #009688;">
+                      <div class="timeslot" style="
+                        top: <%= (80.0 * tr.start_time.seconds_since_midnight/1.hour).round()%>px;
+                        height: <%= (tr.end_time - tr.start_time)/1.hour * 80 - 2 %>px;">
+                        <div class="timeslot-vertical"></div>
                         <%= generate_select(ts) %>
                       </div>
                     <% end %>
