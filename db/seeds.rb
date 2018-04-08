@@ -13,8 +13,16 @@
 
 # Admin User
 admin = User.create(username: 'admin', email: 'admin@example.com',
-                    password: '123456')
+                    password: '123456', cell: :presidential, mc: true)
 admin.add_role :admin
+
+User::CELLS.each do |c|
+  8.times do |i|
+    user = User.create(username: "#{c}#{i}", email: "#{c}#{i}@example.com",
+                       password: '123456', cell: c)
+    user.update(mc: true) if i.zero?
+  end
+end
 
 User.create(username: 'test', email: 'test@example.com', password: '123456')
 

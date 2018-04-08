@@ -1,17 +1,24 @@
+<div id="duty-start-time" data-start-time=<%= TimeRange.order(:start_time).first.start_time.strftime('%H') %>></div>
+<div id="num-of-places" data-num-of-places=<%= Place.count %>></div>
+
 <div class="container-fluid">
   <div class="row">
-      <div class="col-md-3 sidebar-container">
+      <div id="announcement-sidebar" class="col-md-3 sidebar-container">
         <h1>Announcements</h1>
 
           <%= render :partial => 'announcements/index' %>
 
       </div>
 
-      <div class="col-md-9">
-        <h1>Duty Timetable for the Week</h1>
+      <div id="duty-table" class="col-md-9">
 
-        <%= link_to 'Previous Week', duties_path(start_date: @start_date - 7), class: 'btn btn-large btn-light' %>
-        <%= link_to 'Next Week', duties_path(start_date: @start_date + 7), class: 'btn btn-large btn-light' %>
+        <div class="duty-table-header">  
+          <h1 class="duty-table-title float-left">Duty Timetable for the Week</h1>
+
+          <%= link_to 'Previous Week', duties_path(start_date: @start_date - 7), class: 'btn btn-large btn-light float-sm-right duty-table-button' %>
+          <%= link_to 'Next Week', duties_path(start_date: @start_date + 7), class: 'btn btn-large btn-light float-sm-right duty-table-button' %>
+          <button type="button" id="announcement-toggle-btn" class="btn btn-large btn-light float-sm-right duty-table-button">SideBar Toggle</button>
+        </div>
 
         <div class="schedule-container">
           <div class="schedule-left">
@@ -20,7 +27,7 @@
               <thead>
                 <tr>
                   <td class="schedule-timings"><div class="schedule-time">&nbsp;</div></td>
-                  <td></td>
+                  <td class="schedule-timings"></td>
                 </tr>
               </thead>
               <tbody>
