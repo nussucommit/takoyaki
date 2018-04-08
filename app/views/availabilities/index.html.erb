@@ -1,3 +1,4 @@
+<% if false %>
 <div class="container-fluid availabilities-container">
   <h1>Schedule Availability</h1>
   <% if current_user.has_role?(:admin) %>
@@ -39,3 +40,94 @@
     <%= submit_tag("Cancel", id: 'cancel-button', data: { disable_with: false }, class: "btn btn-large btn-light disabled") %>
   <% end %>
 </div>
+<% end %>
+
+<% if true %>
+<div class="places-container">
+	<%= form_tag(availabilities_path, method: "post", class: "edit-places-form") do %>
+    <div class="edit-places-nav">
+      <div style="display: flex; height: 93px; padding: 8px 0; justify-content: center; align-items: center; border-bottom: 1px solid #e0e0e0">
+        <h1>Schedule <%="\n"%>Availability</h1>
+      </div>
+      <div style="display: flex; flex-direction: column; padding: 32px 40px; justify-content: space-around;">
+        <%= submit_tag("Update", id: 'update-button-places', data: { disable_with: false }, class: "btn btn-large btn-primary btn-nav") %>
+        <%= submit_tag("Clear All", id: 'clear-all-button', data: { disable_with: false }, class: "btn btn-large btn-warning white-text")%>
+        <%= submit_tag("Cancel", id: 'cancel-button', data: { disable_with: false }, class: "btn btn-large btn-danger btn-nav") %>
+      </div>
+    </div>
+<% if true #comment block%>
+    <div class="edit-places-table">
+      <div class="edit-places-heading">
+        <div class="edit-places-empty-heading">
+        </div>
+        <div class="heading-group">
+          <% (1..7).each do |index| %>
+            <div class="places-day-heading">
+              <div class="places-day-text">
+                <%= Availability.days.keys[index % 7][0..2] %>
+              </div>
+            </div>
+          <% end%>
+          <div style="overflow: scroll;"></div>
+        </div>
+      </div>
+      <div id="scroll-table">
+        <div class="time-heading">
+          <% (0..23).each do |x| %>
+            <div class="time-block">
+              <span class="time-text"<% if x == 0 %>, style="display: none;"<% end %>>
+                <%= "%02d:00" % x %>
+              </span>
+            </div>
+          <% end %>
+        </div>
+        <div class="table-cells">
+          <div>
+            <% (0..23).each do |x| %>
+              <div class="row-lines"></div>
+            <% end %>
+          </div>
+              
+          <% (1..7).each do |index| %>
+            <% day = Availability.days.keys[index % 7] %>
+            <div class="table-columns">
+              <div class="table-columns-padded">
+                <% @time_ranges.each do |tr| %>
+                  <div class="timeslot" style="
+                    top: <%= calc_offset(tr)%>px;
+                    height: <%= calc_slot_height(tr) %>px;">
+                    <div class="timeslot-vertical"></div>
+                    <%= generate_cell(day, tr) %>
+                  </div>
+                <% end %>
+                            <% if false # comment block 2%>
+                <% @timeslots[day % 7].each do |ts| %>
+                  <% tr = ts.time_range %>
+                  <div class="timeslot" style="
+                    top: <%= calc_offset(tr)%>px;
+                    height: <%= calc_slot_height(tr) %>px;">
+                    <div class="timeslot-vertical"></div>
+                    <%= generate_cell(day, time_range) %>
+                  </div>
+                <% end %>
+                            <% end #end comment%>
+              </div>
+            </div>
+          <% end %>
+              
+        </div>
+      </div>
+    </div>
+    <% end # comment end%>
+  <% end %>
+</div>
+
+
+
+<script>
+  $(document).ready(function(){
+    document.getElementById("scroll-table").scrollTop = <%= calc_scroll_2 %>;
+  });
+</script>
+<% end %>
+
