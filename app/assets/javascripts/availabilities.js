@@ -25,6 +25,7 @@ function getCheckbox(id) {
 }
 
 function load() {
+  alert("test");
   $('input[type=checkbox]').each(function(id) {
     updateCheckbox($(this).val(), false);
   });
@@ -56,4 +57,4 @@ function enableButton(buttonName, type) {
   button.disabled = false;
 }
 
-$(document).ready(load);
+$(document).on('turbolinks:load', load);
