@@ -14,57 +14,60 @@
               <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
             <% end %>
             <table>
-            <div class="field">
-            <tr>
-            <th><%= f.label :username %></th>
-            <td>  <%= f.text_field :username, autofocus: true, autocomplete: "off" %></td>
-            </tr>
-            </div>
+              <div class="field">
+                <tr>
+                  <th><%= f.label :username %></th>
+                  <td>  <%= f.text_field :username, autofocus: true, autocomplete: "off" %></td>
+                </tr>
+              </div>
 
-            <div class="field">
-            <tr>
-             <th> <%= f.label :matric_number %></th>
-             <td> <%= f.text_field :matric_num, autocomplete: "off" %></td>
-            </tr>
-            </div>
+              <div class="field">
+                <tr>
+                  <th> <%= f.label :matric_number %></th>
+                  <td> <%= f.text_field :matric_num, autocomplete: "off" %></td>
+                </tr>
+              </div>
 
-            <div class="field">
-              <tr>
-              <th><%= f.label :contact_number %></th>
-              <td><%= f.text_field :contact_num, autocomplete: "off" %></td>
-            </tr>
-            </div>
+              <div class="field">
+                <tr>
+                  <th><%= f.label :contact_number %></th>
+                  <td><%= f.text_field :contact_num, autocomplete: "off" %></td>
+                </tr>
+              </div>
 
-            <div class="field">
-             <tr>
-             <th> <%= f.label :email %></th>
-              <td><%= f.email_field :email, autocomplete: "off" %></td>
-            </tr>
-            <div class="field">
-              <tr>
-              <th><%= f.label :new_password %> <i>(6 characters minimum)</i></th>
-              <td><%= f.password_field :password, autocomplete: "off"%></td>
-              <!-- <% if @minimum_password_length %>
-                <br />
-                <em><%= @minimum_password_length %> characters minimum</em>
-              <% end %> -->
-              </tr>
-            </div>
+              <div class="field">
+                <tr>
+                  <th> <%= f.label :email %></th>
+                  <td><%= f.email_field :email, autocomplete: "off" %></td>
+                </tr>
+              </div>
 
-            <div class="field">
-              <tr>
-              <th><%= f.label :new_password_confirmation %></th>
-              <td><%= f.password_field :password_confirmation, autocomplete: "off" %></td>
-              </tr>
-            </div>
+              <div class="field">
+                <tr>
+                  <th><%= f.label :new_password %> <i>(6 characters minimum)</i></th>
+                  <td><%= f.password_field :password, autocomplete: "off"%></td>
+                  <!-- <% if @minimum_password_length %>
+                    <br />
+                    <em><%= @minimum_password_length %> characters minimum</em>
+                  <% end %> -->
+                </tr>
+              </div>
 
-            <div class="field">
-              <tr>
-              <th><%= f.label :current_password %> <i>(confirm your changes)</i></th>
-              <td><%= f.password_field :current_password, autocomplete: "off" %></td>
-              </tr>
-            </div>
+              <div class="field">
+                <tr>
+                  <th><%= f.label :new_password_confirmation %></th>
+                  <td><%= f.password_field :password_confirmation, autocomplete: "off" %></td>
+                </tr>
+              </div>
+
+              <div class="field">
+                <tr>
+                  <th><%= f.label :current_password %> <i>(confirm your changes)</i></th>
+                  <td><%= f.password_field :current_password, autocomplete: "off" %></td>
+                </tr>
+              </div>
             </table>
+
             <div class="actions">
               <%= f.submit "Update" %>
             </div>
