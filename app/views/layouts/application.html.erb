@@ -33,7 +33,7 @@
           </li>
 
           <li class="nav-item">
-            <%= link_to 'Schedule', root_path, class: 'nav-link' %>
+            <%= link_to 'Schedule', availabilities_path, class: 'nav-link' %>
           </li>
 
           <li class="nav-item">
@@ -55,7 +55,6 @@
 
             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
               <%= link_to 'Edit Profile', edit_user_registration_path, class: 'dropdown-item' %>
-              <%= link_to 'Schedule Availability', availabilities_path, class: 'dropdown-item' %>
               <%= link_to 'Logout', destroy_user_session_path, class: 'dropdown-item', method: :delete %>
             </div>
           </li>
