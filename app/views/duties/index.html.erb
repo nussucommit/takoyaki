@@ -62,12 +62,12 @@
                         <td class="schedule-name-empty" colspan="<%= duty[:colspan] %>">&nbsp;</td>
                       <% elsif duty[:free] %>
                         <td class="schedule-name-empty" colspan="<%= duty[:colspan] %>">
-                           <%= button_to "Grab !", {:controller => "duties", :action => "grab", :grab_duty => duty[:duty]}, {:method => :post, :remote => true} %>
+                           <%= button_to "Grab", {controller: "duties", action: "open_grab_modal", grab_duty_list: duty[:span_duty]}, {method: :post, remote: true, 'data-toggle': "modal", 'data-target': '#modal-window1'} %>
                         </td>
                       <% else %>
                         <td class="schedule-name" colspan="<%= duty[:colspan] %>">
                           <% if(current_user.username == duty[:name]) %>
-                            <%= button_to duty[:name], {:controller => "duties", :action => "open_drop_modal", :drop_duty_list => duty[:span_duty]}, {:method => :post, :remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window1'} %>
+                            <%= button_to duty[:name], {controller: "duties", action: "open_drop_modal", drop_duty_list: duty[:span_duty]}, {method: :post, remote: true, 'data-toggle': "modal", 'data-target': '#modal-window1'} %>
                           <% else %>
                             <%= duty[:name] %>
                           <% end %>
