@@ -7,7 +7,6 @@ class AvailabilitiesController < ApplicationController
   before_action :check_admin, except: %i[index update_availabilities]
 
   def index
-    print "index here"
     @time_ranges = TimeRange.order(:start_time)
     @availabilities = load_availabilities
     create_missing_availabilities
