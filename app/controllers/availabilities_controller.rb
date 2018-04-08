@@ -45,20 +45,17 @@ class AvailabilitiesController < ApplicationController
   end
 
   def load_all_users
-    Hash[
-      User.all.map do |u|
-        [u.id, { username: u.username, mc: u.mc }]
-      end
-    ]
+    User.all.map do |u|
+      [u.id, { username: u.username, mc: u.mc }]
+    end.to_h
   end
 
   def load_availabilities
-    Hash[Availability.where(user: current_user).joins(:time_range)
-                     .order('day', 'time_ranges.start_time')
-                     .map do |availability|
-           [[availability.day, availability.time_range_id], availability]
-         end
-    ]
+    Availability.where(user: current_user).joins(:time_range)
+                .order('day', 'time_ranges.start_time')
+                .map do |availability|
+      [[availability.day, availability.time_range_id], availability]
+    end.to_h
   end
 
   def create_missing_availabilities
