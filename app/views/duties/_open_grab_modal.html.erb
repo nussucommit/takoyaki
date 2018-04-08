@@ -12,6 +12,7 @@
         <%= d.timeslot.time_range.start_time.strftime('%H:%M') + " - " + d.timeslot.time_range.end_time.strftime('%H:%M') %>
         </br>
       <% end %>
+      </br>
       <%= submit_tag "Grab", class: "btn btn-primary"%>
     <% end %>
   </div>

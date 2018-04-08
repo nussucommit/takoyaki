@@ -39,7 +39,7 @@ class DutiesController < ApplicationController
   end
   
   def grab
-    grab_array = params[:duty_id]
+    grab_array = params[:duty_id] || Array.new
     grab_array.each_with_index do |duty_id, index|
       grab_duty_id = grab_array[index].to_i
       grab_duty = Duty.find(grab_duty_id)

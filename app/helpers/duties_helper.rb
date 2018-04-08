@@ -85,6 +85,7 @@ module DutiesHelper
       colspan = 0
       username = duties[start_index]&.user.username
       free = duties[start_index].free
+      request_user_id = duties[start_index]&.request_user_id
       while start_index < end_index do
         duty = duties[start_index]
         timerange = duty.timeslot.time_range
@@ -92,7 +93,7 @@ module DutiesHelper
         colspan += calc_colspan(timerange.start_time, timerange.end_time)
         start_index += 1
       end
-      result.push(name: username, colspan: colspan, span_duty: span_duty, free: free)
+      result.push(name: username, colspan: colspan, span_duty: span_duty, free: free, ruid: request_user_id)
       start_index = end_index
       end_index = index_array[next_index]
       next_index += 1

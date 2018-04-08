@@ -12,9 +12,11 @@
         <%= d.timeslot.time_range.start_time.strftime('%H:%M') + " - " + d.timeslot.time_range.end_time.strftime('%H:%M') %>
         </br>
       <% end %>
-      <%= select_tag "user_id", options_from_collection_for_select(@users, "id", "username"), prompt: "Drop to all" %>
       </br>
-      <%= submit_tag "Drop", class: "btn btn-primary"%>
+      Drop to <%= select_tag "user_id", options_from_collection_for_select(@users, "id", "username"), prompt: "all" %>
+      </br>
+      </br>
+      <%= submit_tag "Drop/Swap", class: "btn btn-primary"%>
     <% end %>
   </div>
 </div>
