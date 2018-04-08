@@ -48,7 +48,7 @@
                   <div style="width: 100%; height: 100%; position: relative;">
                     <% @timeslots[day % 7].each do |ts| %>
                       <% tr = ts.time_range %>
-                      <div style="z-index: 3; position: absolute; border-radius: 2px; top: <%= (80.0 * tr.start_time.seconds_since_midnight/1.hour).round()%>px; height: <%= (tr.end_time - tr.start_time)/1.hour * 80 - 2 %>px; width: 100%; background-color: #4285F4;">
+                      <div style="z-index: 3; position: absolute; border-radius: 2px; top: <%= (80.0 * tr.start_time.seconds_since_midnight/1.hour).round()%>px; height: <%= (tr.end_time - tr.start_time)/1.hour * 80 - 2 %>px; width: 100%; background-color: #009688;">
                         <%= generate_select(ts) %>
                       </div>
                     <% end %>
@@ -63,9 +63,8 @@
    </div>
 </div>
 
-
 <script>
   $(document).ready(function(){
-    document.getElementById("scroll-table").scrollTop = <%= [(80.0 * @start_time.seconds_since_midnight/1.hour).round - 40, 0].max %>;
+    document.getElementById("scroll-table").scrollTop = <%= [(80.0 * (@timeslots.map{ |d| d.second }.flat_map{ |x| x}.map{ |ts| ts.time_range.start_time.seconds_since_midnight }.min)/1.hour).round - 40, 0].max %>;
   });
 </script>

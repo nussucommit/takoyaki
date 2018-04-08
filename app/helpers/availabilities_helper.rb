@@ -42,25 +42,6 @@ module AvailabilitiesHelper
     end)
   end
 
-  def generate_cell_dropdown(day_index, time_range, rowspan)
-    @current = @timeslots[[day_index % 7, time_range.id]]
-    if @current
-      generate_dropdown(day_index, time_range, rowspan)
-    else
-      content_tag(:td, rowspan: rowspan,
-                       class: 'dropdown-no') {}
-    end
-  end
-
-  def generate_dropdown(day_index, time_range, rowspan)
-    content_tag(:td, rowspan: rowspan,
-                     class: 'dropdown-yes') do
-      content_tag(:div, class: 'dropdown') do
-        generate_select(day_index, time_range)
-      end
-    end
-  end
-
   def generate_select(timeslot)
     day_index = Availability.days[timeslot.day]
     time_range_id = timeslot.time_range_id
@@ -79,26 +60,4 @@ module AvailabilitiesHelper
     end
   end
 
-  def generate_day_heading
-    content_tag :thead do
-      content_tag :tr, class: 'day-heading' do
-        concat content_tag(:th, '', class: 'empty-heading')
-        generate_heading_row
-      end
-    end
-  end
-
-  def generate_heading_row
-    (1..7).map do |index|
-      concat(content_tag(:th, class: 'day-head') do
-        content_tag(:div, class: 'day-text') do
-          Availability.days.keys[index % 7][0..2]
-        end
-      end)
-    end
-  end
-
-  def get_time_range(start_time)
-    @time_ranges_map[start_time]
-  end
 end

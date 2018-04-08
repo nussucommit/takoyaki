@@ -13,10 +13,7 @@ module Availabilities
       @users = User.all
       @place = Place.find(params[:id])
       load_availabilities
-      @time_ranges = TimeRange.order(:start_time)
       load_timeslots
-      @start_time = start_time
-      @end_time = end_time
     end
 
     def update
@@ -28,12 +25,12 @@ module Availabilities
 
     private
 
-    def start_time
-      @time_ranges.first.start_time.beginning_of_hour
-    end
-
-    def end_time
-      (@time_ranges.last.end_time - 1).beginning_of_hour + 1.hour
+    def load_availabilities
+      @availabilities = Hash.new { |h, k| h[k] = Set[] }
+      Availability.where(status: true).each do |a|
+        @availabilities[
+          [Availability.days[a.day], a.time_range_id]] << a.user_id
+      end
     end
 
     def load_timeslots
@@ -44,13 +41,6 @@ module Availabilities
         end
     end
 
-    def load_timeranges_map
-      Hash[TimeRange.all.map do |time_range|
-             [time_range.start_time, time_range]
-           end
-      ]
-    end
-
     def update_timeslot(timeslot)
       selected_user_id = params["#{Availability.days[timeslot.day]}" \
                                 "#{timeslot.time_range_id}"]
@@ -58,14 +48,6 @@ module Availabilities
       timeslot.update(default_user_id: selected_user_id)
     end
 
-    def load_availabilities
-      @availabilities = Hash.new { |h, k| h[k] = Set[] }
-      Availability.where(status: true).each do |a|
-        @availabilities[
-          [Availability.days[a.day], a.time_range_id]] << a.user_id
-      end
-    end
-    
     def check_admin
       redirect_to availabilities_path unless current_user.has_role?(:admin)
     end
