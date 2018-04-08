@@ -185,6 +185,107 @@ html, body {
   overflow: hidden;
 }
 
+.places-container {
+  display: flex;
+  height: calc(100% - 71px);
+  flex-direction: column;
+}
+
+.edit-places-form {
+  display: flex;
+  flex: 1 1 auto;
+}
+
+.edit-places-nav {
+  display: block;
+  flex: 1 1 auto;
+  width: 200px;
+  border-right: 1px solid #e0e0e0;
+  padding: 8px 0;
+}
+
+.edit-places-table {
+  display: flex;
+  flex-direction: column;
+  flex: 20 20 auto;
+}
+
+.edit-places-heading {
+  display: flex;
+  flex: none;
+}
+
+#scroll-table {
+  display: flex;
+  flex: 1 1 10%;
+  overflow-y: scroll;
+  border-top: 1px solid #e0e0e0;
+  align-items: flex-start;
+}
+
+.edit-places-empty-heading {
+  flex: 0 0 auto;
+  height: 100px;
+  width: 48px;
+  border-right: 1px solid #e0e0e0;
+}
+
+.heading-group {
+  flex: 1 1 auto;
+  display: flex;
+}
+
+.places-day-heading {
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+  flex: 1 1 0%;
+  border-right: 1px solid #e0e0e0;
+}
+
+.places-day-text {
+  margin-left: 10px;
+  font-size: 32px;
+  line-height: 64px;
+  overflow: hidden;
+}
+
+.time-heading {
+  flex: none;
+  width: 48px;
+  border-right: 1px solid #e0e0e0;
+  height: calc(24*80px);
+}
+
+.time-block {
+  height: 80px;
+  text-align: center;
+}
+
+.table-cells {
+  display: flex;
+  flex: 1 1 auto;
+  position: relative;
+}
+
+.table-columns {
+  flex: 1 1 0%;
+  border-right: 1px solid #e0e0e0;
+  padding-right: 12px;
+}
+
+.table-columns-padded {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.time-text {
+  position: relative;
+  top: -12px;
+  font-size: 10px;
+}
+
 ::-webkit-scrollbar {
   background: transparent;
   height: 8px;

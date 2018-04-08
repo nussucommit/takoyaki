@@ -38,8 +38,8 @@ module Availabilities
       @timeslots = Hash.new { |h, k| h[k] = [] }
       Timeslot.where(place_id: params[:id]).includes(:time_range)
               .each do |timeslot|
-          @timeslots[Availability.days[timeslot.day]] << timeslot
-        end
+        @timeslots[Availability.days[timeslot.day]] << timeslot
+      end
     end
 
     def update_timeslot(timeslot)
@@ -53,5 +53,4 @@ module Availabilities
       redirect_to availabilities_path unless current_user.has_role?(:admin)
     end
   end
-
 end

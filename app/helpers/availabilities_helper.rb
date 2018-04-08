@@ -42,14 +42,15 @@ module AvailabilitiesHelper
     end)
   end
 
-  def generate_select(timeslot)
-    day_index = Availability.days[timeslot.day]
-    time_range_id = timeslot.time_range_id
-    current_users = change(day_index, time_range_id, (timeslot.mc_only ? @users.select(&:mc) : @users))
+  def generate_select(ts)
+    day_index = Availability.days[ts.day]
+    time_range_id = ts.time_range_id
+    current_users = change(day_index, time_range_id,
+                           (ts.mc_only ? @users.select(&:mc) : @users))
     select_tag("#{day_index % 7}#{time_range_id}",
                options_from_collection_for_select(
                  current_users,
-                 'id', 'username', selected: timeslot.default_user_id
+                 'id', 'username', selected: ts.default_user_id
                ), class: 'availability-select')
   end
 
@@ -60,4 +61,19 @@ module AvailabilitiesHelper
     end
   end
 
+  def calc_offset(tr)
+    (80.0 * tr.start_time.seconds_since_midnight / 1.hour).round
+  end
+
+  def calc_slot_height(tr)
+    (tr.end_time - tr.start_time) / 1.hour * 80 - 2
+  end
+
+  def calc_scroll
+    [(80.0 *
+      @timeslots.map(&:second)
+      .flat_map { |x| x }
+      .map { |ts| ts.time_range.start_time.seconds_since_midnight }
+      .min / 1.hour).round - 40, 0].max
+  end
 end
