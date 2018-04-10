@@ -4,19 +4,18 @@ module AvailabilitiesHelper
   def generate_cell(day, time_range)
     generate(@availabilities[[day, time_range.id]])
   end
-  
+
   def generate(availability)
     id = availability.id
     td_attributes = { align: 'center', class: 'checkbox_cell',
-                      onclick: "toggle(#{id})", id: "cell_#{id}",
-                      }
+                      onclick: "toggle(#{id})", id: "cell_#{id}" }
 
     content_tag :span, td_attributes, multiple: true do
       check_box_tag("availability_ids[#{id}]", id, availability.status,
-                    style: 'visibility: hidden;') +    
-      label_tag("availability_label[#{id}]",
-        availability.status ? "Available" : "Not Available",
-        id: "avl_#{id}")
+                    style: 'visibility: hidden;') +
+        label_tag("availability_label[#{id}]",
+                  availability.status ? 'Available' : 'Not Available',
+                  id: "avl_#{id}")
     end
   end
 
@@ -78,7 +77,7 @@ module AvailabilitiesHelper
       .map { |ts| ts.time_range.start_time.seconds_since_midnight }
       .min / 1.hour).round - 40, 0].max
   end
-  
+
   def calc_scroll_2
     [(80.0 *
       TimeRange.all
