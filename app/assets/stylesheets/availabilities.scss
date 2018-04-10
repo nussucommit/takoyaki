@@ -46,6 +46,7 @@
   position: absolute;
   border-radius: 4px;
   width: 100%;
+  touch-action: manipulation;
   transition: box-shadow 0.2s;
 }
 
