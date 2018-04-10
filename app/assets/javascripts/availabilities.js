@@ -1,6 +1,3 @@
-// Place all the behaviors and hooks related to the matching controller here.
-// All this logic will automatically be available in application.js.
-
 function toggle(id) {
   var cb = getCheckbox(id);
   cb.checked = !cb.checked;
@@ -10,16 +7,27 @@ function toggle(id) {
 function updateCheckbox(id, set) {
   var cb = getCheckbox(id);
   var td = document.getElementById("cell_" + id);
-  var lb = document.getElementById("avl_" + id);
+  var marker = document.getElementById("vertical_" + id);
   if (set) {
-    td.className = cb.checked ? 'availability-yes-pending' : 'availability-no-pending';
-    enableButton("update-button", "primary");
-    enableButton("cancel-button", "danger");
-    enableButton("clear-all-button", "warning white-text");
+    updateCellClassName(td, marker, cb.checked, "-pending")
+    enableButton("update-button");
+    enableButton("cancel-button");
+    enableButton("clear-all-button");
   } else {
-    td.className = cb.checked ? 'availability-yes' : 'availability-no';
+    updateCellClassName(td, marker, cb.checked, "")
   }
-  lb.innerHTML = cb.checked ? 'Available' : 'Not Available';
+}
+
+function updateCellClassName(cell, marker, checked, suffix) {
+  cell.classList.remove("availability-no");
+  cell.classList.remove("availability-no-pending");
+  cell.classList.remove("availability-yes");
+  cell.classList.remove("availability-yes-pending");
+  cell.classList.add("availability-" + (checked ? "yes" : "no") + suffix);
+
+  marker.classList.remove("vertical");
+  marker.classList.remove("vertical-pending");
+  marker.classList.add("vertical" + suffix);
 }
 
 function getCheckbox(id) {
@@ -48,13 +56,13 @@ function load() {
 
 function disableButton(buttonName) {
   var button = document.getElementById(buttonName);
-  button.className = "btn btn-large btn-light disabled";
+  button.classList.addClass = "disabled";
   button.disabled = true;
 }
 
-function enableButton(buttonName, type) {
+function enableButton(buttonName) {
   var button = document.getElementById(buttonName);
-  button.className = "btn btn-large btn-" + type;
+  button.classList.remove("disabled")
   button.disabled = false;
 }
 

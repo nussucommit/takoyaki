@@ -7,16 +7,8 @@ module AvailabilitiesHelper
 
   def generate(availability)
     id = availability.id
-    td_attributes = { align: 'center', class: 'checkbox_cell',
-                      onclick: "toggle(#{id})", id: "cell_#{id}" }
-
-    content_tag :span, td_attributes, multiple: true do
-      check_box_tag("availability_ids[#{id}]", id, availability.status,
-                    style: 'visibility: hidden;') +
-        label_tag("availability_label[#{id}]",
-                  availability.status ? 'Available' : 'Not Available',
-                  id: "avl_#{id}")
-    end
+    check_box_tag("availability_ids[#{id}]", id, availability.status,
+                  style: 'visibility: hidden;')
   end
 
   def generate_cell_all(day, time_range)

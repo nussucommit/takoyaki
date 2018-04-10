@@ -41,24 +41,35 @@
   width: 50px;
 }
 
+.availability {
+  z-index: 3;
+  position: absolute;
+  border-radius: 4px;
+  width: 100%;
+}
+
 .availability-yes {
-  background-color: white;
-  border: 1px solid black;
+  background-color: #009688;
 }
 
 .availability-no {
-  background-color: $light-grey;
-  border: 1px solid black;
+  background-color: #D50000;
 }
 
 .availability-yes-pending {
-  background-color: white;
-  border: 1px solid black;
+  background-color: #009688;
 }
 
 .availability-no-pending {
-  background-color: $light-grey;
-  border: 1px solid black;
+  background-color: #D50000;
+}
+
+.vertical {
+  background-color: gray;
+}
+
+.vertical-pending {
+  background-color: rgb(244, 81, 30);
 }
 
 .white-text, .white-text:link, .white-text:visited, .white-text:hover, .white-text:active {
@@ -276,7 +287,6 @@ select.availability-select {
   top: 0;
   width: 4px;
   height: 100%;
-  background-color: gray;
   border-radius: 4px 0 0 4px;
 }
 
