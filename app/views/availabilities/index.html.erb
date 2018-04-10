@@ -59,7 +59,7 @@
                     top: <%= calc_offset(tr)%>px;
                     height: <%= calc_slot_height(tr) %>px;"
                     onclick="<%="toggle(#{availability.id})"%>">
-                    <div class="timeslot-vertical" id="<%= "vertical_#{availability.id}" %>"></div>
+                    <div class="availability-vertical" id="<%= "vertical_#{availability.id}" %>"></div>
                     <%= generate_cell(day, tr) %>
                   </div>
                 <% end %>

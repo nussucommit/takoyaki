@@ -70,6 +70,14 @@
   background-color: #D50000;
 }
 
+.availability-vertical {
+  position: absolute;
+  top: 0;
+  width: 4px;
+  height: 100%;
+  border-radius: 4px 0 0 4px;
+}
+
 .vertical {
   background-color: gray;
 }
@@ -286,6 +294,12 @@ select.availability-select {
   border-radius: 4px;
   width: 100%;
   background-color: #009688;
+  transition: box-shadow 0.2s;
+}
+
+.timeslot:hover {
+  z-index: 1002!important;
+  box-shadow: 0 6px 10px 0 rgba(0,0,0,0.14), 0 1px 18px 0 rgba(0,0,0,0.12), 0 3px 5px -1px rgba(0,0,0,0.2);
 }
 
 .timeslot-vertical {
@@ -294,6 +308,7 @@ select.availability-select {
   width: 4px;
   height: 100%;
   border-radius: 4px 0 0 4px;
+  background-color: gray;
 }
 
 .btn-nav {
