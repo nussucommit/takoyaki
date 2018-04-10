@@ -45,7 +45,7 @@ module Availabilities
     def update_timeslot(timeslot)
       selected_user_id = params["#{Availability.days[timeslot.day]}" \
                                 "#{timeslot.time_range_id}"]
-      return if timeslot.default_user_id.to_s == selected_user_id.to_s
+      return if timeslot.default_user_id == selected_user_id
       timeslot.update(default_user_id: selected_user_id)
     end
 
