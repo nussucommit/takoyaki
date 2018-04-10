@@ -10,7 +10,8 @@ class AvailabilitiesController < ApplicationController
     @time_ranges = TimeRange.order(:start_time)
     @availabilities = load_availabilities
     create_missing_availabilities
-    @disable_viewport = true
+    @start_time = start_time
+    @end_time = end_time
   end
 
   def update_availabilities
@@ -68,7 +69,15 @@ class AvailabilitiesController < ApplicationController
       end
     end
   end
-  
+
+  def start_time
+    @time_ranges.first.start_time.beginning_of_hour
+  end
+
+  def end_time
+    (@time_ranges.last.end_time - 1).beginning_of_hour + 1.hour
+  end
+
   def check_admin
     redirect_to availabilities_path unless current_user.has_role?(:admin)
   end
