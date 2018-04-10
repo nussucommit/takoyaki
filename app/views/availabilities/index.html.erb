@@ -5,6 +5,10 @@
         <h1>Schedule <%="\n"%>Availability</h1>
       </div>
       <div style="display: flex; flex-direction: column; padding: 32px 40px; justify-content: space-around;">
+        <% if current_user.has_role?(:admin) %>
+          <%= link_to "Places", availabilities_places_path, class: "btn btn-large btn-light" %>
+        <% end %>
+        <br>
         <%= submit_tag("Update", id: 'update-button', data: { disable_with: false }, class: "btn btn-large btn-light disabled") %>
         <%= submit_tag("Clear All", id: 'clear-all-button', data: { disable_with: false }, class: "btn btn-large btn-warning white-text")%>
         <%= submit_tag("Cancel", id: 'cancel-button', data: { disable_with: false }, class: "btn btn-large btn-light disabled") %>
