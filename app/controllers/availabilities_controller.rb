@@ -10,8 +10,7 @@ class AvailabilitiesController < ApplicationController
     @time_ranges = TimeRange.order(:start_time)
     @availabilities = load_availabilities
     create_missing_availabilities
-    @start_time = start_time
-    @end_time = end_time
+    @disable_viewport = true
   end
 
   def update_availabilities
