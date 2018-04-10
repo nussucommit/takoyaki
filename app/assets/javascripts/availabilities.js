@@ -10,6 +10,7 @@ function toggle(id) {
 function updateCheckbox(id, set) {
   var cb = getCheckbox(id);
   var td = document.getElementById("cell_" + id);
+  var lb = document.getElementById("avl_" + id);
   if (set) {
     td.className = cb.checked ? 'availability-yes-pending' : 'availability-no-pending';
     enableButton("update-button", "primary");
@@ -18,6 +19,7 @@ function updateCheckbox(id, set) {
   } else {
     td.className = cb.checked ? 'availability-yes' : 'availability-no';
   }
+  lb.innerHTML = cb.checked ? 'Available' : 'Not Available';
 }
 
 function getCheckbox(id) {

@@ -1,48 +1,3 @@
-<% if false %>
-<div class="container-fluid availabilities-container">
-  <h1>Schedule Availability</h1>
-  <% if current_user.has_role?(:admin) %>
-    <%= link_to "Places", availabilities_places_path, class: "btn btn-large btn-light" %>
-  <% end %>
-  <div class="instruction">
-    <div class="box-yes"></div>
-    <div class="instruction-label">YES</div>
-    <div class="box-no"></div>
-    <div class="instruction-label">NO</div>
-  </div>
-  <%= form_tag(availabilities_path, method: "post") do %>
-    <table class="table table-sm table-availabilities">
-      <tr>
-        <th></th>
-        <% start_time = @start_time %>
-        <% end_time = @end_time %>
-        <% while start_time < end_time do %>
-          <th colspan="2">
-            <span class="time-label">
-              <%= start_time.strftime("%H%M") %>
-            </span>
-          </th>
-          <% start_time += 1.hour %>
-        <% end %>
-      </tr>
-      <% (1..7).each do |index| %>
-        <% day = Availability.days.keys[index % 7] %>
-        <tr>
-          <td class="dayname"><%= day[0..2] %></td>
-          <% @time_ranges.each do |time_range| %>
-            <%= generate_cell(day, time_range) %>
-          <% end %>
-        </tr>
-      <% end %>
-    </table>
-    <%= submit_tag("Update", id: 'update-button', data: { disable_with: false }, class: "btn btn-large btn-light disabled") %>
-    <%= submit_tag("Clear All", id: 'clear-all-button', data: { disable_with: false }, class: "btn btn-large btn-warning white-text")%>
-    <%= submit_tag("Cancel", id: 'cancel-button', data: { disable_with: false }, class: "btn btn-large btn-light disabled") %>
-  <% end %>
-</div>
-<% end %>
-
-<% if true %>
 <div class="places-container">
 	<%= form_tag(availabilities_path, method: "post", class: "edit-places-form") do %>
     <div class="edit-places-nav">
@@ -50,12 +5,12 @@
         <h1>Schedule <%="\n"%>Availability</h1>
       </div>
       <div style="display: flex; flex-direction: column; padding: 32px 40px; justify-content: space-around;">
-        <%= submit_tag("Update", id: 'update-button-places', data: { disable_with: false }, class: "btn btn-large btn-primary btn-nav") %>
+        <%= submit_tag("Update", id: 'update-button', data: { disable_with: false }, class: "btn btn-large btn-light disabled") %>
         <%= submit_tag("Clear All", id: 'clear-all-button', data: { disable_with: false }, class: "btn btn-large btn-warning white-text")%>
-        <%= submit_tag("Cancel", id: 'cancel-button', data: { disable_with: false }, class: "btn btn-large btn-danger btn-nav") %>
+        <%= submit_tag("Cancel", id: 'cancel-button', data: { disable_with: false }, class: "btn btn-large btn-light disabled") %>
       </div>
     </div>
-<% if true #comment block%>
+    
     <div class="edit-places-table">
       <div class="edit-places-heading">
         <div class="edit-places-empty-heading">
@@ -100,17 +55,6 @@
                     <%= generate_cell(day, tr) %>
                   </div>
                 <% end %>
-                            <% if false # comment block 2%>
-                <% @timeslots[day % 7].each do |ts| %>
-                  <% tr = ts.time_range %>
-                  <div class="timeslot" style="
-                    top: <%= calc_offset(tr)%>px;
-                    height: <%= calc_slot_height(tr) %>px;">
-                    <div class="timeslot-vertical"></div>
-                    <%= generate_cell(day, time_range) %>
-                  </div>
-                <% end %>
-                            <% end #end comment%>
               </div>
             </div>
           <% end %>
@@ -118,16 +62,12 @@
         </div>
       </div>
     </div>
-    <% end # comment end%>
   <% end %>
 </div>
-
-
 
 <script>
   $(document).ready(function(){
     document.getElementById("scroll-table").scrollTop = <%= calc_scroll_2 %>;
   });
 </script>
-<% end %>
 

@@ -2,31 +2,21 @@
 
 module AvailabilitiesHelper
   def generate_cell(day, time_range)
-    generate_2(@availabilities[[day, time_range.id]],
-             calc_colspan(time_range.start_time, time_range.end_time))
-  end
-
-  def generate(availability, col_span)
-    id = availability.id
-    td_attributes = { align: 'center', class: 'checkbox_cell',
-                      onclick: "toggle(#{id})", id: "cell_#{id}",
-                      colspan: col_span }
-
-    content_tag :td, td_attributes do
-      check_box_tag "availability_ids[#{id}]", id, availability.status,
-                    style: 'visibility: hidden; display: none:'
-    end
+    generate(@availabilities[[day, time_range.id]])
   end
   
-  def generate_2(availability, col_span)
+  def generate(availability)
     id = availability.id
     td_attributes = { align: 'center', class: 'checkbox_cell',
                       onclick: "toggle(#{id})", id: "cell_#{id}",
                       }
 
-    content_tag :span, td_attributes do
-      check_box_tag "availability_ids[#{id}]", id, availability.status,
-                    style: 'visibility: hidden; display: none:'
+    content_tag :span, td_attributes, multiple: true do
+      check_box_tag("availability_ids[#{id}]", id, availability.status,
+                    style: 'visibility: hidden;') +    
+      label_tag("availability_label[#{id}]",
+        availability.status ? "Available" : "Not Available",
+        id: "avl_#{id}")
     end
   end
 
