@@ -56,8 +56,10 @@ class DutiesController < ApplicationController
       drop_duty = Duty.find(drop_duty_id)
       if swap_user_id == 0
         drop_duty.update(free: true)
+        GenericMailer.drop_duty(drop_duty, 0)
       else 
         drop_duty.update(request_user_id: swap_user_id)
+        GenericMailer.drop_duty(drop_duty, swap_user_id)
       end
     end
     redirect_to duties_path 
