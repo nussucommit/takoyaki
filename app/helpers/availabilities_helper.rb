@@ -25,7 +25,7 @@ module AvailabilitiesHelper
   end
 
   def generate_all(availability)
-    return '' if availability.empty?
+    return '' if availability.blank?
     safe_join(availability.map do |uid|
       user = @users[uid]
       content_tag(:li, title: user[:username],
