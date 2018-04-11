@@ -155,6 +155,7 @@ html, body {
 
 .edit-places-form {
   display: flex;
+  height: 100%;
   flex: 1 1 auto;
 }
 
@@ -170,6 +171,7 @@ html, body {
   display: flex;
   flex-direction: column;
   flex: 20 20 auto;
+  height: 100%;
 }
 
 .edit-places-heading {
