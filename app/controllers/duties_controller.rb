@@ -19,9 +19,7 @@ class DutiesController < ApplicationController
 
   def open_drop_modal
     @users = User.where.not(id: current_user.id)
-    @drop_duty_list = params[:drop_duty_list].map do |id|
-      Duty.find(id)
-    end
+    @drop_duty_list = Duty.find(params[:drop_duty_list])
     respond_to do |format|
       format.js
       format.html
@@ -29,9 +27,7 @@ class DutiesController < ApplicationController
   end
 
   def open_grab_modal
-    @grab_duty_list = params[:grab_duty_list].map do |id|
-      Duty.find(id)
-    end
+    @grab_duty_list = Duty.find(params[:grab_duty_list])
     respond_to do |format|
       format.js
       format.html
@@ -39,9 +35,9 @@ class DutiesController < ApplicationController
   end
   
   def grab
-    grab_array = params[:duty_id] || Array.new
-    grab_array.each_with_index do |duty_id, index|
-      grab_duty_id = grab_array[index].to_i
+    grab_array = params[:duty_id] || []
+    grab_array.each do |duty_id|
+      grab_duty_id = duty_id.to_i
       grab_duty = Duty.find(grab_duty_id)
       grab_duty.update(user: current_user, free: false, request_user_id: nil)
     end
@@ -51,8 +47,8 @@ class DutiesController < ApplicationController
   def drop
     drop_array = params[:duty_id]
     swap_user_id = params[:user_id].to_i
-    drop_array.each_with_index do |duty_id, index|
-      drop_duty_id = drop_array[index].to_i
+    drop_array.each do |duty_id|
+      drop_duty_id = duty_id.to_i
       drop_duty = Duty.find(drop_duty_id)
       if swap_user_id == 0
         drop_duty.update(free: true)
