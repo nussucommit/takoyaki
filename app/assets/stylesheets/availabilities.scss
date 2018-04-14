@@ -148,23 +148,17 @@ html, body {
 }
 
 .places-container {
-  display: flex;
   height: calc(100% - 71px);
-  flex-direction: column;
 }
 
 .edit-places-form {
-  display: flex;
+  width: 100%;
   height: 100%;
-  flex: 1 1 auto;
 }
 
 .edit-places-nav {
-  display: block;
-  flex: 1 1 auto;
-  width: 200px;
+  height: 100%;
   border-right: 1px solid #e0e0e0;
-  padding: 8px 0;
 }
 
 .edit-places-table {
