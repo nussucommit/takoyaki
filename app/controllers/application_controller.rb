@@ -13,4 +13,11 @@ class ApplicationController < ActionController::Base
     devise_parameter_sanitizer.permit :sign_up, keys: added_attrs
     devise_parameter_sanitizer.permit :account_update, keys: added_attrs
   end
+
+  def generate_header_iter
+    time_range = TimeRange.order(:start_time)
+    first_time = time_range.first.start_time
+    last_time = time_range.last.start_time
+    first_time.to_i.step(last_time.to_i, 1.hour)
+  end
 end

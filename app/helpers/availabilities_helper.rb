@@ -11,28 +11,12 @@ module AvailabilitiesHelper
                   style: 'visibility: hidden;')
   end
 
-  def generate_cell_all(day, time_range)
-    td_attributes = { class: 'availabilities-all-cell',
-                      colspan: calc_colspan(time_range.start_time,
-                                            time_range.end_time) }
-    content_tag(:td, td_attributes) do
-      content_tag(:ol, class: 'availability-list') do
-        content_tag(:div) do
-          generate_all(@availabilities[[day, time_range.id]])
-        end
-      end
+  def stylise_user(user)
+    if user[:mc]
+      content_tag(:strong, user[:username])
+    else
+      user[:username]
     end
-  end
-
-  def generate_all(availability)
-    return '' if availability.blank?
-    safe_join(availability.map do |uid|
-      user = @users[uid]
-      content_tag(:li, title: user[:username],
-                       class: 'text-overflow-ellipsis') do
-        user[:mc] ? content_tag(:strong, user[:username]) : user[:username]
-      end
-    end)
   end
 
   def generate_select(ts)

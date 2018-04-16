@@ -25,6 +25,9 @@
 
 .table-availabilities-all {
   table-layout: fixed;
+  td {
+    height: 2rem;
+  }
 }
 
 .time-label {
