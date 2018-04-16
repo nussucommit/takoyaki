@@ -34,26 +34,6 @@ function getCheckbox(id) {
   return document.querySelectorAll("input[type='checkbox'][value='" + id + "']")[0];
 }
 
-function load() {
-  $('input[type=checkbox]').each(function(id) {
-    updateCheckbox($(this).val(), false);
-  });
-  $('#clear-all-button').click(function(e) {
-    e.preventDefault();
-    $('input[type=checkbox]').each(function(id) {
-      $(this).prop('checked', false);
-      updateCheckbox($(this).val(), true);
-    });
-    disableButton("clear-all-button");
-  });
-  $('#cancel-button').click(function(e) {
-    e.preventDefault();
-    location = location;
-  });
-  disableButton("update-button");
-  disableButton("cancel-button");
-}
-
 function disableButton(buttonName) {
   var button = document.getElementById(buttonName);
   button.classList.addClass = "disabled";
@@ -65,5 +45,3 @@ function enableButton(buttonName) {
   button.classList.remove("disabled")
   button.disabled = false;
 }
-
-$(document).on('turbolinks:load', load);

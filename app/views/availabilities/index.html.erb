@@ -74,6 +74,23 @@
 <script>
   $(document).on('turbolinks:load', function(){
     document.getElementById("scroll-table").scrollTop = <%= calc_scroll_2 %>;
+    $('input[type=checkbox]').each(function(id) {
+      updateCheckbox($(this).val(), false);
+    });
+    $('#clear-all-button').click(function(e) {
+      e.preventDefault();
+      $('input[type=checkbox]').each(function(id) {
+        $(this).prop('checked', false);
+        updateCheckbox($(this).val(), true);
+      });
+      disableButton("clear-all-button");
+    });
+    $('#cancel-button').click(function(e) {
+      e.preventDefault();
+      location = location;
+    });
+    disableButton("update-button");
+    disableButton("cancel-button");
   });
 </script>
 
