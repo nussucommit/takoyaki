@@ -13,7 +13,7 @@ module AvailabilitiesHelper
 
   def stylise_user(user)
     if user[:mc]
-      content_tag(:strong, user[:username])
+      content_tag(:span, user[:username], class: 'mc')
     else
       user[:username]
     end
