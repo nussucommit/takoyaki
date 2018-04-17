@@ -27,10 +27,8 @@
             </td>
           <% end %>
         </tr>
-        <% if rowspan > 1 %>
-          <% (rowspan - 1).times do %>
-            <tr></tr>
-          <% end %>
+        <% (rowspan - 1).times do %>
+          <tr></tr>
         <% end %>
       <% end %>
       </tbody>
