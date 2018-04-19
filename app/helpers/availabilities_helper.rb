@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 module AvailabilitiesHelper
+  CELL_HEIGHT = 80 # height of the table cells in pixels
+
   def generate_cell(day, time_range)
     generate(@availabilities[[day, time_range.id]])
   end
@@ -39,25 +41,24 @@ module AvailabilitiesHelper
   end
 
   def calc_offset(tr)
-    (80.0 * tr.start_time.seconds_since_midnight / 1.hour).round
+    (CELL_HEIGHT * tr.start_time.seconds_since_midnight / 1.hour).round
   end
 
   def calc_slot_height(tr)
-    (tr.end_time - tr.start_time) / 1.hour * 80 - 2
+    (tr.end_time - tr.start_time) / 1.hour * CELL_HEIGHT - 2
   end
 
-  def calc_scroll
-    [(80.0 *
-      @timeslots.map(&:second)
-      .flat_map { |x| x }
+  def calc_scroll_availabilities_places
+    [(CELL_HEIGHT *
+      @timeslots.flat_map(&:second)
       .map { |ts| ts.time_range.start_time.seconds_since_midnight }
-      .min / 1.hour).round - 40, 0].max
+      .min / 1.hour).round - CELL_HEIGHT / 2, 0].max
   end
 
-  def calc_scroll_2
-    [(80.0 *
+  def calc_scroll_availabilities
+    [(CELL_HEIGHT *
       TimeRange.all
       .map { |tr| tr.start_time.seconds_since_midnight }
-      .min / 1.hour).round - 40, 0].max
+      .min / 1.hour).round - CELL_HEIGHT / 2, 0].max
   end
 end

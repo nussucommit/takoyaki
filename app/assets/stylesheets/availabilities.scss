@@ -4,6 +4,13 @@
 
 @import "colors";
 
+.availabilities-places-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: calc(100% - 71px);
+}
+
 .availabilities-container {
   overflow-x: auto;
   width: 100%;
@@ -163,7 +170,7 @@ html, body {
 
 .edit-places-nav {
   height: 100%;
-  border-right: 1px solid #e0e0e0;
+  border-right: 1px solid $light-grey;
 }
 
 .edit-places-table {
