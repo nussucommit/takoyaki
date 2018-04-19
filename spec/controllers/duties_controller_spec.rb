@@ -29,7 +29,6 @@ RSpec.describe DutiesController, type: :controller do
   describe 'POST duties#grab' do
     before do
       sign_in create(:user)
-
     end
 
     it 'grab a duty' do
@@ -45,7 +44,6 @@ RSpec.describe DutiesController, type: :controller do
   describe 'POST duties#drop' do
     before do
       sign_in create(:user)
-
     end
 
     it 'drop a duty' do

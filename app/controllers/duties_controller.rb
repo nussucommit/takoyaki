@@ -43,7 +43,7 @@ class DutiesController < ApplicationController
     end
     redirect_to duties_path
   end
-  
+
   def drop
     swap_user_id = params[:user_id].to_i
     params[:duty_id].each do |duty_id|
