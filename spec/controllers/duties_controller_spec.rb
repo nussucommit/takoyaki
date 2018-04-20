@@ -34,8 +34,8 @@ RSpec.describe DutiesController, type: :controller do
     it 'grab a duty' do
       @duty = create(:duty)
       expect do
-        patch :update, params: { duty_id: @duty.id }
-      end.to change { Duty.find(@duty.id).user }.to(current_user)
+        patch :grab, params: { duty_id: [@duty.id] }
+      end.to change { Duty.find(@duty.id).user }.to(subject.current_user)
 
       should redirect_to duties_path
     end
@@ -50,7 +50,7 @@ RSpec.describe DutiesController, type: :controller do
       @duty = create(:duty)
       @duty.update(free: false)
       expect do
-        patch :update, params: { duty_id: @duty.id, user_id: 0 }
+        patch :drop, params: { duty_id: [@duty.id], user_id: 0 }
       end.to change { Duty.find(@duty.id).free }.to(true)
       should redirect_to duties_path
     end

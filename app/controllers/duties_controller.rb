@@ -35,19 +35,18 @@ class DutiesController < ApplicationController
   end
 
   def grab
-    grab_array = params[:duty_id] || []
-    grab_array.each do |duty_id|
-      grab_duty_id = duty_id.to_i
-      grab_duty = Duty.find(grab_duty_id)
+    params[:duty_id]&.each do |duty_id|
+      grab_duty = Duty.find(duty_id)
       grab_duty.update(user: current_user, free: false, request_user_id: nil)
     end
+
     redirect_to duties_path
   end
 
   def drop
     swap_user_id = params[:user_id].to_i
     params[:duty_id].each do |duty_id|
-      drop_duty = Duty.find(duty_id.to_i)
+      drop_duty = Duty.find(duty_id)
       if swap_user_id.zero?
         drop_duty.update(free: true)
         GenericMailer.drop_duty(drop_duty, User.all)

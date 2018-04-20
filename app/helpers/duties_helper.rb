@@ -42,63 +42,41 @@ module DutiesHelper
     result
   end
 
-  def process_duty(duties)
+  def get_index_array(duties)
     index_array = []
     span_free = duties[0].free
-    span_user_id = duties[0]&.user.id
+    span_user_id = duties[0]&.user&.id
     span_request_user_id = duties[0]&.request_user_id
     index_array.push(0)
-    index = 1
-    while index < duties.length do
+    (1..(duties.length - 1)).each do |index|
       current_duty = duties[index]
-      if span_free != current_duty.free
-        index_array.push(index)
-        span_free = current_duty.free
-        span_user_id = current_duty&.user.id
-        span_request_user_id = current_duty&.request_user_id
-      else
-        if !span_free && !current_duty.free
-          if !span_request_user_id.nil? && span_request_user_id != current_duty&.request_user_id
-            index_array.push(index)
-            span_free = current_duty.free
-            span_user_id = current_duty&.user.id
-            span_request_user_id = current_duty&.request_user_id
-          else
-            if span_user_id != current_duty&.user.id
-              index_array.push(index)
-              span_free = current_duty.free
-              span_user_id = current_duty&.user.id
-              span_request_user_id = current_duty&.request_user_id
-            end
-          end
-        end
-      end
-      index += 1
+      next unless span_free != current_duty.free || (!span_free && !current_duty.free && ((!span_request_user_id.nil? && span_request_user_id != current_duty&.request_user_id) || span_user_id != current_duty&.user&.id))
+      index_array.push(index)
+      span_free = current_duty.free
+      span_user_id = current_duty&.user&.id
+      span_request_user_id = current_duty&.request_user_id
     end
     index_array.push(duties.length)
+  end
+
+  def get_result(duties, index_array)
     result = []
-    start_index = index_array[0]
-    end_index = index_array[1]
-    next_index = 2
-    while next_index <= index_array.length do
-      span_duty = []
-      colspan = 0
-      username = duties[start_index]&.user.username
-      free = duties[start_index].free
-      request_user_id = duties[start_index]&.request_user_id
-      while start_index < end_index do
-        duty = duties[start_index]
-        timerange = duty.timeslot.time_range
-        span_duty.push(duty)
-        colspan += calc_colspan(timerange.start_time, timerange.end_time)
-        start_index += 1
-      end
-      result.push(name: username, colspan: colspan, span_duty: span_duty, free: free, ruid: request_user_id)
+    start_index, end_index = *index_array
+    (2..index_array.length).each do |next_index|
+      span_duty = duties[start_index, end_index - start_index]
+      colspan = span_duty.map do |duty|
+        calc_colspan(duty.timeslot.time_range.start_time, duty.timeslot.time_range.end_time)
+      end.sum
+      result.push(name: duties[start_index]&.user&.username, colspan: colspan, span_duty: span_duty,
+                  free: duties[start_index].free, ruid: duties[start_index]&.request_user_id)
       start_index = end_index
       end_index = index_array[next_index]
-      next_index += 1
     end
     result
+  end
+
+  def process_duty(duties)
+    get_result(duties, get_index_array(duties))
   end
 
   # rubocop:enable Metrics/LineLength, Metrics/AbcSize, Metrics/MethodLength

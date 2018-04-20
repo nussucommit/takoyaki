@@ -11,7 +11,7 @@ RSpec.describe GenericMailer, type: :mailer do
       user = create(:user)
       timeslot = create(:timeslot)
       @duty = create(:duty, user: user, timeslot: timeslot)
-      GenericMailer.drop_duty(@duty)
+      GenericMailer.drop_duty(@duty, User.all)
     end
 
     it 'renders the header' do

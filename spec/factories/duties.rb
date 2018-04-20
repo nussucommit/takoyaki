@@ -27,7 +27,7 @@
 FactoryBot.define do
   factory :duty do
     user nil
-    timeslot nil
+    timeslot
     date '2018-01-31'
   end
 end
