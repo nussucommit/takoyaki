@@ -43,13 +43,16 @@ module DutiesHelper
   end
 
   def check_condition(span_free, span_user_id, span_request_user_id, current_duty)
-    span_free != current_duty.free || (!span_free && !current_duty.free && ((!span_request_user_id.nil? && span_request_user_id != current_duty&.request_user_id) || span_user_id != current_duty&.user&.id))
+    span_free != current_duty.free || 
+    (!span_free && !current_duty.free && 
+      ((!span_request_user_id.nil? && span_request_user_id != current_duty&.request_user_id) || 
+        span_user_id != current_duty&.user&.id))
   end
 
   def get_index_array(duties)
     index_array = [0]
-    span_free = duties[0].free
-    span_user_id = duties[0]&.user&.id
+    span_free = duties.first.free
+    span_user_id = duties.first&.user_id
     span_request_user_id = duties[0]&.request_user_id
     (1..(duties.length - 1)).each do |index|
       current_duty = duties[index]
@@ -71,7 +74,8 @@ module DutiesHelper
         calc_colspan(duty.timeslot.time_range.start_time, duty.timeslot.time_range.end_time)
       end.sum
       result.push(name: duties[start_index]&.user&.username, colspan: colspan, span_duty: span_duty,
-                  free: duties[start_index].free, ruid: duties[start_index]&.request_user_id)
+                  free: duties[start_index].free, 
+                  request_user_id: duties[start_index]&.request_user_id)
       start_index = end_index
       end_index = index_array[next_index]
     end

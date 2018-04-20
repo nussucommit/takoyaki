@@ -44,13 +44,14 @@ class DutiesController < ApplicationController
   end
 
   def drop
-    swap_user_id = params[:user_id].to_i
     params[:duty_id].each do |duty_id|
       drop_duty = Duty.find(duty_id)
-      swap_user(swap_user_id, drop_duty)
+      swap_user(params[:user_id].to_i, drop_duty)
     end
     redirect_to duties_path
   end
+
+  private
 
   def swap_user(swap_user_id, drop_duty)
     if swap_user_id.zero?
@@ -61,8 +62,6 @@ class DutiesController < ApplicationController
       GenericMailer.drop_duty(drop_duty, User.find(swap_user_id))
     end
   end
-
-  private
 
   def generate_header_iter
     time_range = TimeRange.order(:start_time)
