@@ -47,15 +47,19 @@ class DutiesController < ApplicationController
     swap_user_id = params[:user_id].to_i
     params[:duty_id].each do |duty_id|
       drop_duty = Duty.find(duty_id)
-      if swap_user_id.zero?
-        drop_duty.update(free: true)
-        GenericMailer.drop_duty(drop_duty, User.all)
-      else
-        drop_duty.update(request_user_id: swap_user_id)
-        GenericMailer.drop_duty(drop_duty, User.find(swap_user_id))
-      end
+      swap_user(swap_user_id, drop_duty)
     end
     redirect_to duties_path
+  end
+
+  def swap_user(swap_user_id, drop_duty)
+    if swap_user_id.zero?
+      drop_duty.update(free: true)
+      GenericMailer.drop_duty(drop_duty, User.all)
+    else
+      drop_duty.update(request_user_id: swap_user_id)
+      GenericMailer.drop_duty(drop_duty, User.find(swap_user_id))
+    end
   end
 
   private

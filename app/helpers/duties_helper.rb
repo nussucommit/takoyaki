@@ -42,15 +42,18 @@ module DutiesHelper
     result
   end
 
+  def check_condition(span_free, span_user_id, span_request_user_id, current_duty)
+    span_free != current_duty.free || (!span_free && !current_duty.free && ((!span_request_user_id.nil? && span_request_user_id != current_duty&.request_user_id) || span_user_id != current_duty&.user&.id))
+  end
+
   def get_index_array(duties)
-    index_array = []
+    index_array = [0]
     span_free = duties[0].free
     span_user_id = duties[0]&.user&.id
     span_request_user_id = duties[0]&.request_user_id
-    index_array.push(0)
     (1..(duties.length - 1)).each do |index|
       current_duty = duties[index]
-      next unless span_free != current_duty.free || (!span_free && !current_duty.free && ((!span_request_user_id.nil? && span_request_user_id != current_duty&.request_user_id) || span_user_id != current_duty&.user&.id))
+      next unless check_condition(span_free, span_user_id, span_request_user_id, current_duty)
       index_array.push(index)
       span_free = current_duty.free
       span_user_id = current_duty&.user&.id
