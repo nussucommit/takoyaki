@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class RegistrationsController < Devise::RegistrationsController
-  before_action :require_no_authentication
+  skip_before_action :require_no_authentication
 
   def create
     build_resource(sign_up_params)
