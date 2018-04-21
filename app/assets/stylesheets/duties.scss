@@ -2,6 +2,25 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+.container-fluid .duty-container {
+  padding-top: 0px;
+}
+
+h1 {
+  width: 100%;
+  margin-top: 0;
+  padding-top: 3.5%;
+  padding-left: 5%;
+  padding-bottom: 2%;
+  color: $yellow;
+  background-color: #000;
+  box-shadow: 0px 1px 10px $grey,
+              inset 1px -3px 3px -1px $grey;
+  text-shadow: 0 -0.5px 0 $light-yellow,
+               0 0.5px 0 $light-yellow;
+  font-family: Verdana, sans-serif;
+}
+
 .next-week {
   width: 100%;
   text-align: right;
@@ -71,10 +90,8 @@ td.schedule-timings {
   text-overflow: ellipsis;
 }
 
-#duty-table {
-  h1 {
-    font-size: 2em;
-  }
+.duty-header {
+  padding: 0px;
 }
 
 .duty-table-header {
