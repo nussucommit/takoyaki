@@ -1,9 +1,9 @@
 <div id="duty-start-time" data-start-time=<%= TimeRange.order(:start_time).first.start_time.strftime('%H') %>></div>
 <div id="num-of-places" data-num-of-places=<%= Place.count %>></div>
 
-<div class="container-fluid>
+<div class="container-fluid no-padding-top">
   <div class="row">
-    <div class="col-md-12 duty-header">  
+    <div class="col-md-12 no-padding">  
       <h1>Duty Timetable for the Week</h1>
     </div>
   </div>

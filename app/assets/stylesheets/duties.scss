@@ -2,7 +2,7 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-.container-fluid .duty-container {
+.container-fluid.no-padding-top {
   padding-top: 0px;
 }
 
@@ -88,10 +88,6 @@ td.schedule-timings {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-}
-
-.duty-header {
-  padding: 0px;
 }
 
 .duty-table-header {
