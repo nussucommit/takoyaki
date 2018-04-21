@@ -61,12 +61,12 @@
         </ul>
       </div>
     </nav>
-  
+    
     <% flash.each do |key, value| %>
       <div class="<%= flash_class(key.to_sym) %>">
-        <strong> <%= value %> <strong>
+        <strong> <%= value %> </strong>
       </div>
-    <% end %>  
+    <% end %>
     <%= yield %>
   </body>
 </html>
