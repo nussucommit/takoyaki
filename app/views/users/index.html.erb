@@ -1,6 +1,6 @@
 <div class="list">
   <h1>Members List</h1>
-  <% if current_user.has_role?(:admin) %>
+  <% if can?(:manage, User) %>
     <%= link_to 'Add user', new_user_registration_path %>
   <% end %>
 
@@ -16,7 +16,7 @@
             <th class="cell">Cell</th>
             <th class="pos">Position</th>
 
-            <% if current_user.has_role?(:admin) %>
+            <% if can?(:manage, User) %>
               <!-- <th>Edit Profile</th> -->
               <th class="role">Allocate Role</th>
               <th class="del">Delete</th>
@@ -31,7 +31,7 @@
               <td class="email"><%= p.email %></td>
               <td class="cell"></td>
               <td class="pos"></td>
-              <% if current_user.has_role?(:admin) %>
+              <% if can?(:manage, User) %>
               <!--
                 <td><%= link_to 'Show', edit_user_registration_path(p) %></td>
               -->

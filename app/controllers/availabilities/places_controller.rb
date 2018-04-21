@@ -2,8 +2,8 @@
 
 module Availabilities
   class PlacesController < ApplicationController
+    load_and_authorize_resource
     before_action :authenticate_user!
-    before_action :check_admin
 
     def index
       @places = Place.all
@@ -47,10 +47,6 @@ module Availabilities
                                 "#{timeslot.time_range_id}"]
       return if timeslot.default_user_id == selected_user_id
       timeslot.update(default_user_id: selected_user_id)
-    end
-
-    def check_admin
-      redirect_to availabilities_path unless current_user.has_role?(:admin)
     end
   end
 end

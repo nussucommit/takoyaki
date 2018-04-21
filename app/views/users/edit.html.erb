@@ -1,4 +1,4 @@
-<% if current_user.has_role?(:admin)%>
+<% if can?(:manage, User) %>
   <h1>Edit password or Allocate roles</h1>
 <%else%>
   <h1>Edit your password</h1>
@@ -18,7 +18,7 @@
     <p><%= f.label :password_confirmation %></p>
     <%= f.password_field :password_confirmation %>
   </div>
-  <% if current_user.has_role?(:admin)%>
+  <% if can?(:manage, User) %>
     <fieldset>
       <legend>User Roles</legend>
       <% Role::ROLES.each do |role| %>
