@@ -8,7 +8,7 @@ RSpec.describe AvailabilitiesController, type: :routing do
   end
 
   it 'routes to #update_availabilities' do
-    expect(post: '/availabilities').to route_to(
+    expect(put: '/availabilities').to route_to(
       'availabilities#update_availabilities'
     )
   end

@@ -5,7 +5,7 @@ Rails.application.routes.draw do
 
   resources :availabilities, only: [:index] do
     collection do
-      post '/', to: 'availabilities#update_availabilities'
+      put '/', to: 'availabilities#update_availabilities'
       get '/show_everyone', to: 'availabilities#show_everyone'
     end
   end
