@@ -16,20 +16,10 @@ function toggleSidebar() {
       $('#announcement-sidebar').hide().removeClass('open');
 
       $('#duty-table').addClass('col-md-12');
-
-      if ($(window).width() <= MEDIUM_SCREEN_SIZE) {
-        $('.duty-table-button').addClass('float-sm-right');
-        $('.duty-table-title').addClass('float-left');
-      }
     } else {
       $('#announcement-sidebar').fadeIn('fast').addClass('open');
 
       $('#duty-table').addClass('col-md-9').removeClass('col-md-12');
-
-      if ($(window).width() <= MEDIUM_SCREEN_SIZE) {
-        $('.duty-table-button').removeClass('float-sm-right');
-        $('.duty-table-title').removeClass('float-left');
-      }
     }
   });
 }

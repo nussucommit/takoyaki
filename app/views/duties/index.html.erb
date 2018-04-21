@@ -9,85 +9,84 @@
   </div>
 
   <div class="row">
-      <div id="announcement-sidebar" class="col-md-3 sidebar-container">
-        <h1>Announcements</h1>
+    <div id="announcement-sidebar" class="col-md-3 sidebar-container">
+      <h1>Announcements</h1>
+        <%= render :partial => 'announcements/index' %>
+    </div>
 
-          <%= render :partial => 'announcements/index' %>
-
+    <div id="duty-table" class="col-md-9">
+      <div class="col-md-12 duty-table-header">  
+        <%= link_to 'Previous Week', duties_path(start_date: @start_date - 7), class: 'btn btn-large btn-light duty-table-button' %>
+        <%= link_to 'Next Week', duties_path(start_date: @start_date + 7), class: 'btn btn-large btn-light duty-table-button' %>
+        <button type="button" id="announcement-toggle-btn" class="btn btn-large btn-light duty-table-button">SideBar Toggle</button>
       </div>
 
-      <div id="duty-table" class="col-md-9">
-        <div class="col-md-12 duty-table-header">  
-          <%= link_to 'Previous Week', duties_path(start_date: @start_date - 7), class: 'btn btn-large btn-light float-sm-right duty-table-button' %>
-          <%= link_to 'Next Week', duties_path(start_date: @start_date + 7), class: 'btn btn-large btn-light float-sm-right duty-table-button' %>
-          <button type="button" id="announcement-toggle-btn" class="btn btn-large btn-light float-sm-right duty-table-button">SideBar Toggle</button>
-        </div>
-        <div class="schedule-container">
-          <div class="schedule-left">
-            <table class="table table-sm">
-              <!-- Empty row to accommodate the timing -->
-              <thead>
-                <tr>
-                  <td class="schedule-timings"><div class="schedule-time">&nbsp;</div></td>
-                  <td class="schedule-timings"></td>
-                </tr>
-              </thead>
-              <tbody>
-                <% (@start_date..@end_date).each do |day| %>
-                  <% first = true %>
-                  <% @places.each do |place| %>
-                    <tr>
-                      <% if first %>
-                        <td class="schedule-daynames" rowspan="<%= @places.length %>">
-                          <%= day.strftime("%a, %d/%m/%y") %>
-                        </td>
-                        <% first = false %>
-                      <% end %>
-                      <td><%= place.name %></td>
-                    </tr>
-                  <% end %>
-                <% end %>
-              </tbody>
-
-            </table>
-          </div>
-          <div class="schedule-right scrollable">
-            <table class="table table-sm duty-table">
-              <thead>
-                <tr>
-                  <% @header_iter.each do |t| %>
-                  <td class="schedule-timings" colspan="2">
-                    <div class="schedule-time"><%= Time.at(t).localtime.strftime('%H%M') %></div>
-                  </td>
-                  <% end %>
-                </tr>
-              </thead>
-              <tbody>
-                <% process_duties(@start_date, @end_date).each do |day| %>
-                  <% day.each do |place| %>
-                    <tr>
-                    <% place.each do |duty| %>
-                      <% if duty[:name].nil? %>
-                        <td class="schedule-name-empty" colspan="<%= duty[:colspan] %>">&nbsp;</td>
-                      <% else %>
-                        <td class="schedule-name" colspan="<%= duty[:colspan] %>">
-                          <div class="text-overflow-ellipsis"><%= duty[:name] %></div>
-                        </td>
-                      <% end %>
+      <div class="schedule-container">
+        <div class="schedule-left">
+          <table class="table table-sm">
+            <!-- Empty row to accommodate the timing -->
+            <thead>
+              <tr>
+                <td class="schedule-timings"><div class="schedule-time">&nbsp;</div></td>
+                <td class="schedule-timings"></td>
+              </tr>
+            </thead>
+            <tbody>
+              <% (@start_date..@end_date).each do |day| %>
+                <% first = true %>
+                <% @places.each do |place| %>
+                  <tr>
+                    <% if first %>
+                      <td class="schedule-daynames" rowspan="<%= @places.length %>">
+                        <%= day.strftime("%a, %d/%m/%y") %>
+                      </td>
+                      <% first = false %>
                     <% end %>
-                    </tr>
-                  <% end %>
+                    <td><%= place.name %></td>
+                  </tr>
                 <% end %>
-              </tbody>
-            </table>
-          </div>
-        </div>
+              <% end %>
+            </tbody>
 
-        <%= form_tag(generate_duties_path, method: "post") do %>
-          <%= label_tag(:num_weeks, "Generate for how many weeks?") %>
-          <%= text_field_tag(:num_weeks) %>
-          <%= submit_tag("Generate") %>
-        <% end %>
+          </table>
+        </div>
+        <div class="schedule-right scrollable">
+          <table class="table table-sm duty-table">
+            <thead>
+              <tr>
+                <% @header_iter.each do |t| %>
+                <td class="schedule-timings" colspan="2">
+                  <div class="schedule-time"><%= Time.at(t).localtime.strftime('%H%M') %></div>
+                </td>
+                <% end %>
+              </tr>
+            </thead>
+            <tbody>
+              <% process_duties(@start_date, @end_date).each do |day| %>
+                <% day.each do |place| %>
+                  <tr>
+                  <% place.each do |duty| %>
+                    <% if duty[:name].nil? %>
+                      <td class="schedule-name-empty" colspan="<%= duty[:colspan] %>">&nbsp;</td>
+                    <% else %>
+                      <td class="schedule-name" colspan="<%= duty[:colspan] %>">
+                        <div class="text-overflow-ellipsis"><%= duty[:name] %></div>
+                      </td>
+                    <% end %>
+                  <% end %>
+                  </tr>
+                <% end %>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
       </div>
+
+      <%= form_tag(generate_duties_path, method: "post") do %>
+        <%= label_tag(:num_weeks, "Generate for how many weeks?") %>
+        <%= text_field_tag(:num_weeks) %>
+        <%= submit_tag("Generate") %>
+      <% end %>
+    </div>
   </div>
 </div>
