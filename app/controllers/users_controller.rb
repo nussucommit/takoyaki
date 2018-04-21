@@ -2,7 +2,7 @@
 
 class UsersController < ApplicationController
   before_action :authenticate_user!
-  before_action :check_admin, except: [:index]
+  before_action :check_admin, except: [:index, :show, :edit]
 
   def index
     # check_admin
