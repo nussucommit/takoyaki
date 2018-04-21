@@ -38,6 +38,10 @@
     box-shadow: 0 0 10px 1px $grey;
   }
 
+  .scrollable {
+    overflow: auto;
+  } 
+
   .name, .matric, .contact, .cell, .pos, .role, .del {
     width: 15%;
     text-align: center;
@@ -52,6 +56,16 @@
     font-size: 12px;
     padding-left: 5px;
     padding-right: 5px;
+  }
+
+  @media (max-width: 720px) {
+    .name, .matric, .contact, .cell, .pos, .role, .del, .email {
+      font-size: 12px;
+    }
+
+    .role, .del {
+      font-size: 8px;
+    }
   }
 
   th {
