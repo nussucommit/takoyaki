@@ -12,6 +12,7 @@ env:
   - COMMAND="rake traceroute FAIL_ON_ERROR=1"
 
 matrix:
+  fast_finish: true
   allow_failures:
     - env: COMMAND="brakeman"
     - env: COMMAND="scss-lint app/assets/stylesheets"
