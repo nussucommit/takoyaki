@@ -2,12 +2,14 @@
 
 class UsersController < ApplicationController
   before_action :authenticate_user!
-  before_action :check_admin, except: [:index]
+  before_action :check_admin, except: %i[index show edit]
 
   def index
     # check_admin
     @users = User.all
   end
+
+  def show; end
 
   def edit
     @user = User.find params[:id]

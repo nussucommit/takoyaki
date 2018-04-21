@@ -41,38 +41,13 @@
                   <td><%= f.email_field :email, autocomplete: "off" %></td>
                 </tr>
               </div>
-
-              <div class="field">
-                <tr>
-                  <th><%= f.label :new_password %> <i>(6 characters minimum)</i></th>
-                  <td><%= f.password_field :password, autocomplete: "off"%></td>
-                  <!-- <% if @minimum_password_length %>
-                    <br />
-                    <em><%= @minimum_password_length %> characters minimum</em>
-                  <% end %> -->
-                </tr>
-              </div>
-
-              <div class="field">
-                <tr>
-                  <th><%= f.label :new_password_confirmation %></th>
-                  <td><%= f.password_field :password_confirmation, autocomplete: "off" %></td>
-                </tr>
-              </div>
-
-              <div class="field">
-                <tr>
-                  <th><%= f.label :current_password %> <i>(confirm your changes)</i></th>
-                  <td><%= f.password_field :current_password, autocomplete: "off" %></td>
-                </tr>
-              </div>
+              
             </table>
 
             <div class="actions">
               <%= f.submit "Update" %>
             </div>
           <% end %>
-          <%= link_to "Back", :back %>
         </div>
       </div>
     </div>
