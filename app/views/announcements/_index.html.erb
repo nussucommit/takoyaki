@@ -9,15 +9,14 @@
           <%= link_to ' Read more', "#", 'data-target' => "#show_modal_#{a.id}", 'data-toggle' => 'modal' %>
         <% end %>    
       </div>
-      <div class="buttons">
-        <%= link_to 'Edit', "#", 'data-target' => "#edit_modal_#{a.id}", 'data-toggle' => 'modal' %>
-        <%= link_to 'Delete', a, method: :delete, data: { confirm: 'Are you sure?' } %>
-      </div>
+      
+        <%= link_to 'Edit', "#", 'data-target' => "#edit_modal_#{a.id}", 'data-toggle' => 'modal', class: "button"%>
+        <%= link_to 'Delete', a, method: :delete, data: { confirm: 'Are you sure?' }, class: "button"  %>
+      
     </div>
   <% end %>
-
-  <p><%= link_to 'Submit New Announcement', '#', 'data-target' => "#new_modal", 'data-toggle' => 'modal' %></p>
-  <p><%= link_to 'Show All Announcements', announcements_path %></p>
+    <%= link_to 'Submit New', '#', 'data-target' => "#new_modal", 'data-toggle' => 'modal', class: "button" %>
+    <%= link_to 'Show All', announcements_path, class: "button"%>
 </div>
 
 <!-- Show Modal -->

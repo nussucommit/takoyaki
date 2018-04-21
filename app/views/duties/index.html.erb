@@ -4,7 +4,7 @@
 <div class="container-fluid">
   <div class="row">
       <div id="announcement-sidebar" class="col-md-3 sidebar-container">
-        <h1>Announcements</h1>
+        <h2>Announcements</h2>
 
           <%= render :partial => 'announcements/index' %>
 
@@ -13,7 +13,7 @@
       <div id="duty-table" class="col-md-9">
 
         <div class="duty-table-header">  
-          <h1 class="duty-table-title float-left">Duty Timetable for the Week</h1>
+          <h2 class="duty-table-title float-left">Duty Timetable for the Week</h2>
 
           <%= link_to 'Previous Week', duties_path(start_date: @start_date - 7), class: 'btn btn-large btn-light float-sm-right duty-table-button' %>
           <%= link_to 'Next Week', duties_path(start_date: @start_date + 7), class: 'btn btn-large btn-light float-sm-right duty-table-button' %>
