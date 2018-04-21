@@ -5,7 +5,7 @@ class UsersController < ApplicationController
   # before_action :check_admin, except: [:index]
 
   def index
-    check_admin
+    #check_admin
     @users = User.all
   end
 
