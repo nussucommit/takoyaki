@@ -61,4 +61,13 @@ module AvailabilitiesHelper
       .map { |tr| tr.start_time.seconds_since_midnight }
       .min / 1.hour).round - CELL_HEIGHT / 2, 0].max
   end
+
+  def choose_form_path(path)
+    case path
+    when 'availabilities/places'
+      availabilities_place_path
+    when 'availabilities'
+      availabilities_path
+    end
+  end
 end
