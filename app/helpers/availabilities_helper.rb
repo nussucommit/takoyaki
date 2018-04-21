@@ -30,7 +30,7 @@ module AvailabilitiesHelper
                options_from_collection_for_select(
                  current_users,
                  'id', 'username', selected: ts.default_user_id
-               ), class: 'availability-select')
+               ), class: 'availability-select', onclick: 'enableButtons()')
   end
 
   def change(day_id, timerange_id, users)

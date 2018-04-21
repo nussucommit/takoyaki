@@ -4,17 +4,21 @@ function toggle(id) {
   updateCheckbox(id, true);
 }
 
+function enableButtons() {
+  enableButton("update-button");
+  enableButton("cancel-button");
+  enableButton("clear-all-button");
+}
+
 function updateCheckbox(id, set) {
   var cb = getCheckbox(id);
   var td = document.getElementById("cell_" + id);
   var marker = document.getElementById("vertical_" + id);
   if (set) {
-    updateCellClassName(td, marker, cb.checked, "-pending")
-    enableButton("update-button");
-    enableButton("cancel-button");
-    enableButton("clear-all-button");
+    updateCellClassName(td, marker, cb.checked, "-pending");
+    enableButtons();
   } else {
-    updateCellClassName(td, marker, cb.checked, "")
+    updateCellClassName(td, marker, cb.checked, "");
   }
 }
 
@@ -42,6 +46,32 @@ function disableButton(buttonName) {
 
 function enableButton(buttonName) {
   var button = document.getElementById(buttonName);
+  if (!button) return;
   button.classList.remove("disabled")
   button.disabled = false;
 }
+
+$(document).on('turbolinks:load', function() {
+  let scrollTable = document.getElementById("scroll-table");
+  let scrollTop = document.getElementById("scroll-top");
+  if (scrollTable && scrollTop) {
+    scrollTable.scrollTop = scrollTop.dataset.scrolltop;
+  }
+  $('input[type=checkbox]').each(function(id) {
+    updateCheckbox($(this).val(), false);
+  });
+  $('#clear-all-button').click(function(e) {
+    e.preventDefault();
+    $('input[type=checkbox]').each(function(id) {
+      $(this).prop('checked', false);
+      updateCheckbox($(this).val(), true);
+    });
+    disableButton("clear-all-button");
+  });
+  $('#cancel-button').click(function(e) {
+    e.preventDefault();
+    location = location;
+  });
+  disableButton("update-button");
+  disableButton("cancel-button");
+});
