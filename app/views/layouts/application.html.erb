@@ -53,6 +53,7 @@
 
             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
               <%= link_to 'Edit Profile', edit_user_registration_path, class: 'dropdown-item' %>
+              <%= link_to 'Change Password', edit_user_path(current_user), class: 'dropdown-item' %>
               <%= link_to 'Logout', destroy_user_session_path, class: 'dropdown-item', method: :delete %>
             </div>
           </li>
