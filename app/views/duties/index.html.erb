@@ -8,7 +8,7 @@
     </div>
   </div>
 
-  <div class="row">
+  <div class="row body-container">
     <div id="announcement-sidebar" class="col-md-3 sidebar-container">
       <h1>Announcements</h1>
         <%= render :partial => 'announcements/index' %>
@@ -16,9 +16,9 @@
 
     <div id="duty-table" class="col-md-9">
       <div class="col-md-12 duty-table-header">  
+        <button type="button" id="announcement-toggle-btn" class="btn btn-large btn-light duty-table-button">SideBar Toggle</button>
         <%= link_to 'Previous Week', duties_path(start_date: @start_date - 7), class: 'btn btn-large btn-light duty-table-button' %>
         <%= link_to 'Next Week', duties_path(start_date: @start_date + 7), class: 'btn btn-large btn-light duty-table-button' %>
-        <button type="button" id="announcement-toggle-btn" class="btn btn-large btn-light duty-table-button">SideBar Toggle</button>
       </div>
 
       <div class="schedule-container">
