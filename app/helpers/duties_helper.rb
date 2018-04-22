@@ -42,25 +42,30 @@ module DutiesHelper
     result
   end
 
-  def check_condition(span_free, span_user_id, span_request_user_id, current_duty)
-    span_free != current_duty.free ||
-      (!span_free && !current_duty.free &&
-        ((!span_request_user_id.nil? && span_request_user_id != current_duty&.request_user_id) ||
-          span_user_id != current_duty&.user&.id))
+  def process_duty(duties)
+    get_result(duties, get_index_array(duties))
+  end
+
+  def format_duties(duty_list)
+    duty_list.map do |d|
+      { id: d.id, timing: d.timeslot.time_range.start_time.strftime('%H:%M') +
+        ' - ' + d.timeslot.time_range.end_time.strftime('%H:%M') }
+    end
+  end
+
+  def check_condition(prev_duty, current_duty)
+    prev_duty&.free != current_duty&.free ||
+      (!prev_duty&.free && !current_duty&.free &&
+        ((!prev_duty.request_user_id.nil? &&
+          prev_duty&.request_user_id != current_duty&.request_user_id) ||
+        prev_duty&.user_id != current_duty&.user_id))
   end
 
   def get_index_array(duties)
     index_array = [0]
-    span_free = duties.first.free
-    span_user_id = duties.first&.user_id
-    span_request_user_id = duties[0]&.request_user_id
-    (1..(duties.length - 1)).each do |index|
-      current_duty = duties[index]
-      next unless check_condition(span_free, span_user_id, span_request_user_id, current_duty)
-      index_array.push(index)
-      span_free = current_duty.free
-      span_user_id = current_duty&.user&.id
-      span_request_user_id = current_duty&.request_user_id
+    duties.length.times.each_cons(2).select do |prev, current|
+      next unless check_condition(duties[prev], duties[current])
+      index_array.push(current)
     end
     index_array.push(duties.length)
   end
@@ -80,10 +85,6 @@ module DutiesHelper
       end_index = index_array[next_index]
     end
     result
-  end
-
-  def process_duty(duties)
-    get_result(duties, get_index_array(duties))
   end
 
   # rubocop:enable Metrics/LineLength, Metrics/AbcSize, Metrics/MethodLength

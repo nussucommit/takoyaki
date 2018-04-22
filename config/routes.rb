@@ -15,8 +15,8 @@ Rails.application.routes.draw do
   resources :duties do
     collection do
       post 'generate', to: 'duties#generate_duties'
-      post 'open_drop_modal', to: 'duties#open_drop_modal', as: :open_drop_modal
-      post 'open_grab_modal', to: 'duties#open_grab_modal', as: :open_grab_modal
+      post 'open_drop_modal', to: 'duties#open_drop_modal'
+      post 'open_grab_modal', to: 'duties#open_grab_modal'
       post 'grab', to: 'duties#grab'
       post 'drop', to: 'duties#drop'
     end

@@ -1,15 +1,15 @@
 <div class="modal-content">                             
   <div class="modal-header">
-    <h5 class="modal-title" id="exampleModalLabel">Grab</h5>
+    <h5 class="modal-title" id="grab-modal">Grab</h5>
     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
   <div class="modal-body">
     <%= form_tag(grab_duties_path, method: :post) do %>
-      <% @grab_duty_list.each do |d| %>
-        <%= check_box_tag "duty_id[]", d.id %>
-        <%= d.timeslot.time_range.start_time.strftime('%H:%M') + " - " + d.timeslot.time_range.end_time.strftime('%H:%M') %>
+      <% format_duties(@grab_duty_list).each do |d| %>
+        <%= check_box_tag "duty_id[]", d[:id] %>
+        <%= d[:timing] %>
         </br>
       <% end %>
       </br>
