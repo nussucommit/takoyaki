@@ -35,12 +35,11 @@ RSpec.describe DutiesController, type: :controller do
       @duty = create(:duty)
       expect do
         patch :grab, params: { duty_id: [@duty.id] }
-      end.to change { Duty.find(@duty.id).user }.to(subject.current_user)
-        .and change { Duty.find(@duty.id).free }.to(false)
+      end.to change { Duty.find(@duty.id).user }.to(subject.current_user).and
+      change { Duty.find(@duty.id).free }.to(false)
       expect(Duty.find(@duty.id).request_user_id).to be(nil)
       should redirect_to duties_path
     end
-
   end
 
   describe 'POST duties#drop' do
@@ -60,10 +59,9 @@ RSpec.describe DutiesController, type: :controller do
       @duty = create(:duty)
       @user = create(:user)
       expect do
-        patch :drop, params: { duty_id: [@duty.id], user_id: @user.id}
+        patch :drop, params: { duty_id: [@duty.id], user_id: @user.id }
       end.to change { Duty.find(@duty.id).request_user_id }.to(@user.id)
       should redirect_to duties_path
     end
-
   end
 end
