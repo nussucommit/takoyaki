@@ -64,6 +64,7 @@
     
     <% flash.each do |key, value| %>
       <div class="<%= flash_class(key.to_sym) %>">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
         <strong> <%= value %> </strong>
       </div>
     <% end %>
