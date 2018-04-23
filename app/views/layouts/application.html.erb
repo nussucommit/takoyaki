@@ -56,14 +56,15 @@
             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
               <%= link_to 'View Profile', user_path(:id => 1), class: 'dropdown-item' %>
               <%= link_to 'Edit Profile', edit_user_registration_path, class: 'dropdown-item' %>
-              <%= link_to 'Change Password', edit_user_path(:id => 1), class: 'dropdown-item' %>
+              <% if current_user %>
+                <%= link_to 'Change Password', edit_user_path(current_user), class: 'dropdown-item' %>
+              <% end %>
               <%= link_to 'Logout', destroy_user_session_path, class: 'dropdown-item', method: :delete %>
             </div>
           </li>
         </ul>
       </div>
     </nav>
-    
     <% flash.each do |key, value| %>
       <div class="<%= flash_class(key.to_sym) %>">
         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>

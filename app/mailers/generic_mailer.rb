@@ -4,10 +4,9 @@ class GenericMailer < ApplicationMailer
   default from: %("Mailgun Sandbox" \
     <postmaster@sandbox8f696e611a6e4906a977c007f8971322.mailgun.org>)
 
-  def drop_duty(duty)
+  def drop_duty(duty, user)
     @duty = duty
-    mail(to: users_with_name(User.all),
-         subject: generate_drop_duty_subject(duty))
+    mail(to: users_with_name(user), subject: generate_drop_duty_subject(duty))
   end
 
   def problem_report(problem)

@@ -17,7 +17,51 @@ class DutiesController < ApplicationController
     redirect_to duties_path
   end
 
+  def open_drop_modal
+    @users = User.where.not(id: current_user.id)
+    @drop_duty_list = Duty.find(params[:drop_duty_list])
+    respond_to do |format|
+      format.js
+      format.html
+    end
+  end
+
+  def open_grab_modal
+    @grab_duty_list = Duty.find(params[:grab_duty_list])
+    respond_to do |format|
+      format.js
+      format.html
+    end
+  end
+
+  def grab
+    params[:duty_id]&.each do |duty_id|
+      grab_duty = Duty.find(duty_id)
+      grab_duty.update(user: current_user, free: false, request_user_id: nil)
+    end
+
+    redirect_to duties_path
+  end
+
+  def drop
+    params[:duty_id].each do |duty_id|
+      drop_duty = Duty.find(duty_id)
+      swap_user(params[:user_id].to_i, drop_duty)
+    end
+    redirect_to duties_path
+  end
+
   private
+
+  def swap_user(swap_user_id, drop_duty)
+    if swap_user_id.zero?
+      drop_duty.update(free: true)
+      GenericMailer.drop_duty(drop_duty, User.all)
+    else
+      drop_duty.update(request_user_id: swap_user_id)
+      GenericMailer.drop_duty(drop_duty, User.find(swap_user_id))
+    end
+  end
 
   def generate_header_iter
     time_range = TimeRange.order(:start_time)
