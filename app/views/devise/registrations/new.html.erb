@@ -40,15 +40,15 @@
 
                 <div class="field">
                   <tr>
-                    <th>Cell</th>
-                    <td><%= select_tag(:cell, options_for_select(["Marketing", "Presidential", "Publicity", "Technical", "Training", "Welfare"]), {:class => 'form-control'}) %>
+                    <th><%= f.label :cell %></th>
+                    <td><%= f.select(:cell, options_for_select(User::CELLS.map { |u| [c.capitalize, c] }), {:class => 'form-control'}) %>
                   </tr>
                 </div>
 
                 <div class="field">
                   <tr>
-                    <th>MC</th>
-                    <td><%= select_tag(:mc, options_for_select(["true", "false"]), {:class => 'form-control'}) %>
+                    <th><%= f.label :mc %></th>
+                    <td><%= f.select(:mc, options_for_select(["true", "false"]), {:class => 'form-control'}) %>
                   </tr>
                 </div>
 
