@@ -78,7 +78,7 @@ module DutiesHelper
       colspan = span_duty.map do |duty|
         calc_colspan(duty.timeslot.time_range.start_time, duty.timeslot.time_range.end_time)
       end.sum
-      result.push(name: duties[start_index]&.user&.username, colspan: colspan, span_duty: span_duty,
+      result.push(user: duties[start_index]&.user, colspan: colspan, span_duty: span_duty,
                   free: duties[start_index].free,
                   request_user_id: duties[start_index]&.request_user_id)
       start_index = end_index

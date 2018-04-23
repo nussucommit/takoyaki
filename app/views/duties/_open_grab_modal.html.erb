@@ -8,12 +8,14 @@
   <div class="modal-body">
     <%= form_tag(grab_duties_path, method: :post) do %>
       <% format_duties(@grab_duty_list).each do |d| %>
-        <%= check_box_tag "duty_id[]", d[:id] %>
-        <%= d[:timing] %>
-        </br>
+        <p>
+          <%= check_box_tag "duty_id[]", d[:id] %>
+          <%= label_tag 'duty_id[]', d[:timing] %>
+        </p>
       <% end %>
-      </br>
-      <%= submit_tag "Grab", class: "btn btn-primary"%>
+      <p>
+        <%= submit_tag "Grab", class: "btn btn-primary"%>
+      </p>
     <% end %>
   </div>
 </div>
