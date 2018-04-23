@@ -17,15 +17,12 @@ class UsersController < ApplicationController
 
   def update
     @user = User.find params[:id]
-    if current_user.has_role?(:admin)
-      Role::ROLES.each do |r|
-        role_adder(@user, r)
-      end
+    if @user.update user_params 
+      sign_in :user, @user, bypass: true
+      redirect_to users_path, notice: 'Password Successfully Updated'
+    else
+      redirect_to users_path, alert: 'Fail to Update Password'
     end
-    @user.update(user_params)
-    # Sign in the user by passing validation in case their password changed
-    # bypass_sign_in(@user)
-    redirect_to users_path
   end
 
   def destroy

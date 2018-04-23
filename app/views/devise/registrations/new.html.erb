@@ -13,7 +13,7 @@
                 <div class="field">
                   <tr>
                     <th><%= f.label :username %></th>
-                    <td><%= f.text_field :username, autofocus: true%></td>
+                    <td><%= f.text_field :username, autofocus: true, :required => true %></td>
                   </tr>
                 </div>
 
@@ -27,14 +27,14 @@
                 <div class="field">
                   <tr>
                     <th><%= f.label :contact_num %></th>
-                    <td><%= f.text_field :contact_num %></td>
+                    <td><%= f.text_field :contact_num, :type => "number" %></td>
                   </tr>
                 </div>
 
                 <div class="field">
                   <tr>
                     <th><%= f.label :email %></th>
-                    <td><%= f.email_field :email%></td>
+                    <td><%= f.email_field :email, :required => true, :type => "email" %></td>
                   </tr>
                 </div>
 
@@ -60,14 +60,14 @@
                       <em>(<%= @minimum_password_length %> characters minimum)</em>
                       <% end %>
                     </th>
-                    <td><%= f.password_field :password, autocomplete: "off" %></td>
+                    <td><%= f.password_field :password, autocomplete: "off", :placeholder => "6 characters minimum", :required => true %></td>
                   </tr>
                 </div>
 
                 <div class="field">
                   <tr>
                     <th><%= f.label :password_confirmation %></th>
-                    <td><%= f.password_field :password_confirmation, autocomplete: "off" %></td>
+                    <td><%= f.password_field :password_confirmation, autocomplete: "off", :placeholder => "6 characters minimum", :required => true %></td>
                   </tr>
                 </div>
               </table>
