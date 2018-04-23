@@ -18,6 +18,15 @@
   margin-right: 10px;
 }
 
+@media (max-width: 768px) {
+  .problem-report-btn {
+    padding: 0.375rem 0.50rem;
+    box-shadow: 0px 2px 2px #888888;
+    font-size: 11px;
+    margin-right: 0px;
+  }
+}
+
 .problem-report-table {
   margin-top: 2%;
   width: 100%;
@@ -56,6 +65,12 @@ ul.btn-container {
   
   & > li {
     display: inline-block;
+  }
+
+  @media (max-width: 425px) {
+    & > li {
+      margin-bottom: 5px;
+    }
   }
 }
 
