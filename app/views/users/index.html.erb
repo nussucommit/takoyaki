@@ -1,12 +1,13 @@
 <div class="list">
   <h1>Members List</h1>
-  <% if current_user.has_role?(:admin) %>
-    <%= link_to 'Add user', new_user_registration_path %>
-  <% end %>
 
   <div class="container">
     <div class="row">
       <div class="col-sm-12 col-md-12 scrollable">
+        <% if current_user.has_role?(:admin) %>
+          <%= button_to("Add User", new_user_registration_path, method: "get", class: "btn btn-info users-btn") %>
+        <% end %>
+
         <table>
           <tr>
             <th class="name">Name</th>
