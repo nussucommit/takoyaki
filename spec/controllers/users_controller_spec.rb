@@ -4,61 +4,47 @@ require 'rails_helper'
 
 RSpec.describe UsersController, type: :controller do
   describe 'GET #index' do
-    context 'unauthenticated' do
-      it do
-        get :index
-        should redirect_to new_user_session_path
-      end
+    it 'redirects when unauthenticated' do
+      get :index
+      should redirect_to new_user_session_path
     end
-    context 'authenticated' do
-      it do
-        sign_in create(:user)
-        get :index
-        should respond_with :ok
-      end
+    it 'renders when authenticated' do
+      sign_in create(:user)
+      get :index
+      should respond_with :ok
     end
   end
   describe 'GET #edit' do
-    context 'unauthenticated' do
-      it do
-        get :edit, params: { id: create(:user).id }
-        should redirect_to(new_user_session_path)
-      end
+    it 'redirects when unauthenticated' do
+      get :edit, params: { id: create(:user).id }
+      should redirect_to(new_user_session_path)
     end
-    context 'normal user' do
-      it do
-        user = create(:user)
-        sign_in user
-        expect do
-          get :edit, params: { id: user.id }
-        end.to raise_error(CanCan::AccessDenied)
-      end
-    end
-    context 'admin' do
-      it do
-        user = create(:user)
-        user.add_role(:admin)
-        sign_in user
+    it 'denies access to normal user' do
+      user = create(:user)
+      sign_in user
+      expect do
         get :edit, params: { id: user.id }
-        should respond_with :ok
-      end
+      end.to raise_error(CanCan::AccessDenied)
+    end
+    it 'renders for admin' do
+      user = create(:user)
+      user.add_role(:admin)
+      sign_in user
+      get :edit, params: { id: user.id }
+      should respond_with :ok
     end
   end
   describe 'PUT #update' do
-    context 'unauthenticated' do
-      it do
-        put :update, params: { id: create(:user).id }
-        should redirect_to(new_user_session_path)
-      end
+    it 'redirects when unauthenticated' do
+      put :update, params: { id: create(:user).id }
+      should redirect_to(new_user_session_path)
     end
-    context 'normal user' do
-      it do
-        user = create(:user)
-        sign_in user
-        expect do
-          put :update, params: { id: user.id }
-        end.to raise_error(CanCan::AccessDenied)
-      end
+    it 'denies access to normal user' do
+      user = create(:user)
+      sign_in user
+      expect do
+        put :update, params: { id: user.id }
+      end.to raise_error(CanCan::AccessDenied)
     end
     context 'admin' do
       before do
@@ -89,7 +75,11 @@ RSpec.describe UsersController, type: :controller do
     end
   end
   describe 'DELETE #destroy' do
-    it do
+    it 'redirects when unauthenticated' do
+      delete :destroy, params: { id: create(:user).id }
+      should redirect_to new_user_session_path
+    end
+    it 'works when authenticated' do
       user = create(:user)
       user.add_role(:admin)
       sign_in user

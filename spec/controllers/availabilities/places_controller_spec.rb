@@ -4,29 +4,23 @@ require 'rails_helper'
 
 RSpec.describe Availabilities::PlacesController, type: :controller do
   describe 'GET #index' do
-    context 'unauthenticated' do
-      it do
-        expect do
-          get :index
-        end.to raise_error(CanCan::AccessDenied)
-      end
-    end
-    context 'normal user' do
-      it do
-        sign_in create(:user)
-        expect do
-          get :index
-        end.to raise_error(CanCan::AccessDenied)
-      end
-    end
-    context 'admin' do
-      it do
-        user = create(:user)
-        user.add_role(:admin)
-        sign_in user
+    it 'denies access when unauthenticated' do
+      expect do
         get :index
-        should respond_with :ok
-      end
+      end.to raise_error(CanCan::AccessDenied)
+    end
+    it 'denies access to normal user' do
+      sign_in create(:user)
+      expect do
+        get :index
+      end.to raise_error(CanCan::AccessDenied)
+    end
+    it 'renders for admin' do
+      user = create(:user)
+      user.add_role(:admin)
+      sign_in user
+      get :index
+      should respond_with :ok
     end
   end
   describe 'GET #edit' do
