@@ -60,6 +60,28 @@
   }
 }
 
+.new-problem-report-table {
+  padding: 10px;
+  background-color: #f6e1af;
+  margin-bottom: 10px;
+
+  table {
+    width: 100%;
+  }
+
+  .name, .venue, .pc-number, .description {
+    text-align: center;
+  }
+
+  .new-problem-report-form {
+    background-color: #fff8dc;
+  }
+
+  .submit-btn {
+    text-align: center;
+  }
+}
+
 ul.btn-container {
   padding-left: 0px;
   
@@ -79,11 +101,7 @@ ul.btn-container {
   padding-bottom: 10px;
 }
 
-td.container {
-  padding-left :50px;
-}
-
 .td-container {
   padding-right: 10px;
-  width: 30%;
+  width: 20%;
 }
