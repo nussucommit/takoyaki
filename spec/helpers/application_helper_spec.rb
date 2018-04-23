@@ -10,4 +10,13 @@ RSpec.describe ApplicationHelper, type: :helper do
         .to eq(4)
     end
   end
+  describe '#flash_class' do
+    it do
+      expect(flash_class(:notice))
+        .to eq('alert alert-success alert-dismissible')
+    end
+    it do
+      expect(flash_class(:alert)).to eq('alert alert-danger alert-dismissible')
+    end
+  end
 end
