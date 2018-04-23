@@ -69,7 +69,8 @@ RSpec.describe UsersController, type: :controller do
       it 'add role' do
         user = create(:user)
         expect do
-          put :update, params: { id: user.id, user: { password: '' }, Role::ROLES.last => 1 }
+          put :update, params: { id: user.id, user: { password: '' },
+                                 Role::ROLES.last => 1 }
         end.to change {
           User.find(user.id).has_role?(Role::ROLES.last)
         }.from(false).to(true)
@@ -79,7 +80,7 @@ RSpec.describe UsersController, type: :controller do
         user = create(:user)
         user.add_role(:admin)
         expect do
-          put :update, params: {id: user.id, user: { password: '' }, admin: 0 }
+          put :update, params: { id: user.id, user: { password: '' }, admin: 0 }
         end.to change {
           User.find(user.id).has_role?(:admin)
         }.from(true).to(false)
@@ -93,9 +94,9 @@ RSpec.describe UsersController, type: :controller do
       user.add_role(:admin)
       sign_in user
       user = create(:user)
-      expect {
+      expect do
         delete :destroy, params: { id: user.id }
-      }.to change { User.count }.by(-1)
+      end.to change { User.count }.by(-1)
       should redirect_to users_path
     end
   end
