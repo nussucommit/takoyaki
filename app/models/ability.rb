@@ -11,9 +11,7 @@ class Ability
     can :manage, Availability
     cannot :place, Availability
     cannot :show_everyone, Availability
-    cannot :manage, Timeslot
     can :index, User
-    cannot :show_user_console, User
 
     @user.roles.each { |role| __send__(role.name.downcase) }
     #
