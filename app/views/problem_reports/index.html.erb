@@ -2,53 +2,55 @@
   <h1> Problem Report List (<%= @filter %>) </h1>
 </div>
 
-<ul class="btn-container">
-  <li><%= button_to "Show All Problems", problem_reports_path, :method => "get", class: "btn btn-primary inline", params: {all_problems: true} %></li>
-  <li><%= button_to "Show Unfixed and Fixable Problems", problem_reports_path, :method => "get", class: "btn btn-primary inline", params: {fixable_problems: true} %></li>
-  <li><%= button_to "Show Unfixed and Critical Problems", problem_reports_path, :method => "get", class: "btn btn-primary inline", params: {critical_problems: true} %></li>
-  <li><%= button_to("Submit New Report", new_problem_report_path, method: "get", class: "btn btn-info inline") %></li>
-</ul>
+<div class="col-md-12 col-sm-12">
+  <ul class="btn-container">
+    <li><%= button_to "Show All Problems", problem_reports_path, :method => "get", class: "btn btn-large btn-light problem-report-btn inline", params: {all_problems: true} %></li>
+    <li><%= button_to "Show Unfixed and Fixable Problems", problem_reports_path, :method => "get", class: "btn btn-large btn-light problem-report-btn inline", params: {fixable_problems: true} %></li>
+    <li><%= button_to "Show Unfixed and Critical Problems", problem_reports_path, :method => "get", class: "btn btn-large btn-light problem-report-btn inline", params: {critical_problems: true} %></li>
+    <li><%= button_to("Submit New Report", new_problem_report_path, method: "get", class: "btn btn-info problem-report-btn inline") %></li>
+  </ul>
 
-<div class="table-responsive-md">
-  <table class="table">
-  <tr> 
-    <th scope="col">Id</th>
-    <th scope="col">Reporter Name</th>
-    <th scope="col">Venue</th>
-    <th scope="col">PC Number</th>
-    <th scope="col">Description</th>
-    <th scope="col">Critical?</th>
-    <th scope="col">Blocked? (AS8 Only)</th>
-    <th scope="col">Fixed?</th>
-    <th scope="col">Fixable?</th>
-    <th scope="col">Remarks</th>
-    <th scope="col">Last Updated By</th>
-    <th scope="col">Last Updated At</th>
-  </tr>
-  
-  <% @problem_reports.each do |pb| %>
+  <div class="table-responsive">
+    <table class="table problem-report-table">
     <tr>
-    <td> <%= pb.id %> </td>
-    <td> <%= User.find(pb.reporter_user_id).username %> </td>
-    <td> <%= Place.find(pb.place_id).name %> </td>
-    <td> <%= pb.computer_number %> </td>
-    <td> <%= pb.description %> </td>
-    <% ["Critical", "Blocked", "Fixed", "Fixable"].each do |a| %>
-      <td> <%= form_tag(problem_report_path(pb.id), method: "patch") do %>
-      <% name = "is_" + a.downcase %>
-      <% is_a = pb[name] %>
-      <%= button_tag((is_a ? a : "Not " + a), name: name,
-        type: 'submit', class: "btn btn-" + (is_a ? "success" : "danger"))%>
-      <% end %> </td>
-    <% end %>
-    <td> <%= form_tag(problem_report_path(pb.id), method: "patch") do %>
-      <%= pb.remarks %> <br> </br>
-      <%= text_area_tag(:remarks, "", size: "20x2") %> <br> </br>
-      <%= submit_tag('Change Remark') %>
-    <% end %> </td>
-    <td> <%= User.find(pb.last_update_user_id).username %> </td>
-    <td> <%= pb.updated_at.strftime("%d %b %Y %H:%M") %> </td>
+      <th scope="col">Id</th>
+      <th scope="col">Reporter Name</th>
+      <th scope="col">Venue</th>
+      <th scope="col">PC Number</th>
+      <th scope="col">Description</th>
+      <th scope="col">Critical?</th>
+      <th scope="col">Blocked? (AS8 Only)</th>
+      <th scope="col">Fixed?</th>
+      <th scope="col">Fixable?</th>
+      <th scope="col">Remarks</th>
+      <th scope="col" class="last-updated-by">Last Updated By</th>
+      <th scope="col" class="last-updated-at">Last Updated At</th>
     </tr>
-  <% end %>
-  </table>
+    
+    <% @problem_reports.each do |pb| %>
+      <tr>
+      <td> <%= pb.id %> </td>
+      <td> <%= User.find(pb.reporter_user_id).username %> </td>
+      <td> <%= Place.find(pb.place_id).name %> </td>
+      <td> <%= pb.computer_number %> </td>
+      <td> <%= pb.description %> </td>
+      <% ["Critical", "Blocked", "Fixed", "Fixable"].each do |a| %>
+        <td> <%= form_tag(problem_report_path(pb.id), method: "patch") do %>
+        <% name = "is_" + a.downcase %>
+        <% is_a = pb[name] %>
+        <%= button_tag((is_a ? a : "Not " + a), name: name,
+          type: 'submit', class: "btn problem-report-btn btn-" + (is_a ? "success" : "danger"))%>
+        <% end %> </td>
+      <% end %>
+      <td> <%= form_tag(problem_report_path(pb.id), method: "patch") do %>
+        <%= pb.remarks %> <br> </br>
+        <%= text_area_tag(:remarks, "", size: "20x2", class: "form-control") %> <br>
+        <%= submit_tag('Change Remark', :class=>'btn btn-large btn-light problem-report-btn') %>
+      <% end %> </td>
+      <td class="last-updated-by"> <%= User.find(pb.last_update_user_id).username %> </td>
+      <td class="last-updated-at"> <%= pb.updated_at.strftime("%d %b %Y %H:%M") %> </td>
+      </tr>
+    <% end %>
+    </table>
+  </div>
 </div>
