@@ -69,19 +69,19 @@
 }
 
 .availability-yes {
-  background-color: #009688;
+  background-color: $dark-cyan;
 }
 
 .availability-no {
-  background-color: #D50000;
+  background-color: $free-speech-red;
 }
 
 .availability-yes-pending {
-  background-color: #009688;
+  background-color: $dark-cyan;
 }
 
 .availability-no-pending {
-  background-color: #D50000;
+  background-color: $free-speech-red;
 }
 
 .availability-vertical {
@@ -269,7 +269,7 @@ html, body {
   border: none;
   -webkit-box-shadow: none;
   box-shadow: none;
-  background: #ddd;
+  background: $gainsboro;
   min-height: 40px;
 }
 
@@ -305,12 +305,12 @@ select.availability-select {
   position: absolute;
   border-radius: 4px;
   width: 100%;
-  background-color: #009688;
+  background-color: $dark-cyan;
   transition: box-shadow 0.2s;
 }
 
 .timeslot:hover {
-  z-index: 1002!important;
+  z-index: 1002 !important;
   box-shadow: 0 6px 10px 0 rgba(0,0,0,0.14), 0 1px 18px 0 rgba(0,0,0,0.12), 0 3px 5px -1px rgba(0,0,0,0.2);
 }
 
