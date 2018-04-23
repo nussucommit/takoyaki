@@ -1,0 +1,17 @@
+<% (1..7).each do |index| %>
+  <% day = Availability.days.keys[index % 7] %>
+  <div class="table-columns">
+    <div class="table-columns-padded">
+      <% @time_ranges.each do |tr| %>
+        <% availability = @availabilities[[day, tr.id]] %>
+        <div class="availability" id="<%= "cell_#{availability.id}" %>" style="
+        top: <%= calc_offset(tr)%>px;
+        height: <%= calc_slot_height(tr) %>px;"
+        onclick="<%="toggle(#{availability.id})"%>">
+          <div class="availability-vertical" id="<%= "vertical_#{availability.id}" %>"></div>
+          <%= generate_cell(day, tr) %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+<% end %>

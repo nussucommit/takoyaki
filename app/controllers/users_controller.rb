@@ -1,11 +1,9 @@
 # frozen_string_literal: true
 
 class UsersController < ApplicationController
-  before_action :authenticate_user!
-  before_action :check_admin, except: %i[index show edit]
+  load_and_authorize_resource
 
   def index
-    # check_admin
     @users = User.all
   end
 
@@ -17,7 +15,7 @@ class UsersController < ApplicationController
 
   def update
     @user = User.find params[:id]
-    if current_user.has_role?(:admin)
+    if can?(:manage, User)
       Role::ROLES.each do |r|
         role_adder(@user, r)
       end
@@ -29,8 +27,8 @@ class UsersController < ApplicationController
   end
 
   def destroy
-    @user = User.find params[:id]
-    @user.destroy
+    user = User.find params[:id]
+    user.destroy
     redirect_to users_path
   end
 
@@ -38,10 +36,6 @@ class UsersController < ApplicationController
 
   def user_params
     params.require(:user).permit(:password, :password_confirmation)
-  end
-
-  def check_admin
-    redirect_to root_path unless current_user.has_role?(:admin)
   end
 
   def role_adder(user, role)

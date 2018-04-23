@@ -2,7 +2,7 @@
 <% if user_signed_in? %>
   <%= current_user.username %>
 <% end %>
-<% if current_user.has_role?(:admin)%>
+<% if can?(:show_user_console, User) %>
    <%= link_to 'User Admin Console', users_path %>
 <% end %>
 <%= link_to 'Change profile', edit_user_registration_path %>

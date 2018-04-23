@@ -5,13 +5,19 @@ Rails.application.routes.draw do
 
   resources :availabilities, only: [:index] do
     collection do
-      post '/', to: 'availabilities#update_availabilities'
+      put '/', to: 'availabilities#update_availabilities'
+      get '/show_everyone', to: 'availabilities#show_everyone'
     end
+  end
+
+  namespace :availabilities do
+    resources :places, only: %i[index edit update]
   end
 
   devise_for :users, controllers: { registrations: 'registrations' }
 
   resources :users
+
   resources :duties do
     collection do
       post 'generate', to: 'duties#generate_duties'

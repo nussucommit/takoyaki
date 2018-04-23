@@ -17,7 +17,6 @@
                   <td><%= f.password_field :password, autocomplete: "off" %></td>
                 </tr>
               </div>
-            
               <div class="field">
                 <tr>
                   <th><%= f.label :new_password_confirmation %></th>
@@ -32,7 +31,7 @@
                 </tr>
               </div>
 
-            <% if current_user.has_role?(:admin)%>
+            <% if can?(:manage, User)%>
               <fieldset>
                 <legend>User Roles</legend>
                 <% Role::ROLES.each do |role| %>

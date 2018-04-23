@@ -1,14 +1,16 @@
 # frozen_string_literal: true
 
+require 'set'
+
 class AvailabilitiesController < ApplicationController
+  load_and_authorize_resource
   before_action :authenticate_user!
 
   def index
     @time_ranges = TimeRange.order(:start_time)
     @availabilities = load_availabilities
     create_missing_availabilities
-    @start_time = start_time
-    @end_time = end_time
+    @disable_viewport = true
   end
 
   def update_availabilities
@@ -20,15 +22,37 @@ class AvailabilitiesController < ApplicationController
     redirect_to availabilities_path
   end
 
+  def show_everyone
+    @time_ranges = TimeRange.order(:start_time)
+    @availabilities = load_all_availabilities
+    @users = load_all_users
+  end
+
   private
 
+  def load_all_availabilities
+    result = {}
+    Availability.joins(:time_range)
+                .order(:day, 'time_ranges.start_time')
+                .each do |a|
+      result[[a.day, a.time_range_id]] ||= []
+      result[[a.day, a.time_range_id]].push(a.user_id) if a.status
+    end
+    result
+  end
+
+  def load_all_users
+    User.all.map do |u|
+      [u.id, { username: u.username, mc: u.mc }]
+    end.to_h
+  end
+
   def load_availabilities
-    Hash[Availability.where(user: current_user).joins(:time_range)
-                     .order('day', 'time_ranges.start_time')
-                     .map do |availability|
-           [[availability.day, availability.time_range_id], availability]
-         end
-    ]
+    Availability.where(user: current_user).joins(:time_range)
+                .order('day', 'time_ranges.start_time')
+                .map do |availability|
+      [[availability.day, availability.time_range_id], availability]
+    end.to_h
   end
 
   def create_missing_availabilities
@@ -41,13 +65,5 @@ class AvailabilitiesController < ApplicationController
         )
       end
     end
-  end
-
-  def start_time
-    @time_ranges.first.start_time.beginning_of_hour
-  end
-
-  def end_time
-    (@time_ranges.last.end_time - 1).beginning_of_hour + 1.hour
   end
 end
