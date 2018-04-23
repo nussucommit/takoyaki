@@ -54,12 +54,7 @@
 
                 <div class="field">
                   <tr>
-                    <th>
-                      <%= f.label :password %>
-                      <% if @minimum_password_length %>
-                      <em>(<%= @minimum_password_length %> characters minimum)</em>
-                      <% end %>
-                    </th>
+                    <th><%= f.label :password %></th>
                     <td><%= f.password_field :password, autocomplete: "off", :placeholder => "6 characters minimum", :required => true %></td>
                   </tr>
                 </div>
