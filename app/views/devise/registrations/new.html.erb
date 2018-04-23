@@ -41,7 +41,7 @@
                 <div class="field">
                   <tr>
                     <th>Cell</th>
-                    <td><%= select_tag(:cell, options_for_select(["Marketing", "Presidential", "Publicity", "Technical", "Training", "Welfare"]), {:class => 'form-control'}) %>
+                    <td><%= select_tag(:cell, options_for_select(["marketing", "presidential", "publicity", "technical", "training", "welfare"]), {:class => 'form-control'}) %>
                   </tr>
                 </div>
 
@@ -54,12 +54,7 @@
 
                 <div class="field">
                   <tr>
-                    <th>
-                      <%= f.label :password %>
-                      <% if @minimum_password_length %>
-                      <em>(<%= @minimum_password_length %> characters minimum)</em>
-                      <% end %>
-                    </th>
+                    <th><%= f.label :password %></th>
                     <td><%= f.password_field :password, autocomplete: "off", :placeholder => "6 characters minimum", :required => true %></td>
                   </tr>
                 </div>
