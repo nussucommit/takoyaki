@@ -1,7 +1,7 @@
 <div id="duty-start-time" data-start-time=<%= TimeRange.order(:start_time).first.start_time.strftime('%H') %>></div>
 <div id="num-of-places" data-num-of-places=<%= Place.count %>></div>
 
-<div class="container-fluid">
+<div class="container-fluid no-padding-top">
   <div class="row">
     <div id="announcement-sidebar" class="col-md-3 sidebar-container">
       <h1>Announcements</h1>
@@ -17,7 +17,7 @@
         <%= link_to 'Next Week', duties_path(start_date: @start_date + 7), class: 'btn btn-large btn-light float-sm-right duty-table-button' %>
         <button type="button" id="announcement-toggle-btn" class="btn btn-large btn-light float-sm-right duty-table-button">SideBar Toggle</button>
       </div>
-
+      
       <div class="schedule-container">
         <div class="schedule-left">
           <table class="table table-sm">
@@ -90,12 +90,13 @@
           </table>
         </div>
       </div>
+
       <% if current_user.has_role?(:admin) %>
-      <%= form_tag(generate_duties_path, method: "post") do %>
-        <%= label_tag(:num_weeks, "Generate for how many weeks?") %>
-        <%= text_field_tag(:num_weeks) %>
-        <%= submit_tag("Generate") %>
-      <% end %>
+        <%= form_tag(generate_duties_path, method: "post") do %>
+          <%= label_tag(:num_weeks, "Generate for how many weeks?") %>
+          <%= text_field_tag(:num_weeks) %>
+          <%= submit_tag("Generate") %>
+        <% end %>
       <% end %>
     </div>
   </div>

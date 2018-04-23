@@ -43,7 +43,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
   has_many :duties, dependent: :nullify
-  has_many :timeslots, foreign_key: :default_user_id, inverse_of: :user,
+  has_many :timeslots, foreign_key: :default_user_id, inverse_of: :default_user,
                        dependent: :nullify
 
   has_many :reported_problem_reports, class_name: 'ProblemReport',

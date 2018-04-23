@@ -11,13 +11,18 @@
  * It is generally better to create a new file per style scope.
  */
 
+html, body {
+  height: 100%;
+}
+
 @import 'bootstrap';
 
 @import 'colors';
 @import 'login';
 @import 'announcements';
 @import 'users';
-@import 'profile';
+@import 'user_profile';
+@import 'edit';
 @import 'duties';
 @import 'availabilities';
 @import 'announcements';
@@ -26,3 +31,5 @@
 body[no-nav] nav {
   display: none;
 }
+
+$navbarHeight: 71px; // Obtained from tallest element in navbar+padding+border

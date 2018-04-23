@@ -4,7 +4,9 @@
     <title>Takoyaki</title>
     <%= csrf_meta_tags %>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <% unless @disable_viewport %>
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+    <% end %>
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
@@ -31,7 +33,7 @@
           </li>
 
           <li class="nav-item">
-            <%= link_to 'Schedule', root_path, class: 'nav-link' %>
+            <%= link_to 'Schedule', availabilities_path, class: 'nav-link' %>
           </li>
 
           <li class="nav-item">
@@ -52,6 +54,7 @@
             </a>
 
             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <%= link_to 'View Profile', user_path(:id => 1), class: 'dropdown-item' %>
               <%= link_to 'Edit Profile', edit_user_registration_path, class: 'dropdown-item' %>
               <% if current_user %>
                 <%= link_to 'Change Password', edit_user_path(current_user), class: 'dropdown-item' %>
@@ -62,10 +65,10 @@
         </ul>
       </div>
     </nav>
-
     <% flash.each do |key, value| %>
       <div class="<%= flash_class(key.to_sym) %>">
-        <strong> <%= value %> <strong>
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <strong> <%= value %> </strong>
       </div>
     <% end %>
     <%= yield %>
