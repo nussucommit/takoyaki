@@ -6,21 +6,6 @@
   width: 100%;
   height: 100%;
 
-  h1 {
-    width: 100%;
-    margin-top: 0;
-    padding-top: 3.5%;
-    padding-left: 5%;
-    padding-bottom: 2%;
-    color: $yellow;
-    background-color: #000;
-    box-shadow: 0px 1px 10px $grey,
-                inset 1px -3px 3px -1px $grey;
-    text-shadow: 0 -0.5px 0 $light-yellow,
-                 0 0.5px 0 $light-yellow;
-    font-family: Verdana, sans-serif;
-  }
-
   a {
     padding-left: 5%;
   }
@@ -32,11 +17,16 @@
 
   table {
     margin-top: 2%;
+    margin-bottom: 5%;
     width: 100%;
     border-collapse: collapse;
     border: 0.5px solid $dim-grey;
     box-shadow: 0 0 10px 1px $grey;
   }
+
+  .scrollable {
+    overflow: auto;
+  } 
 
   .name, .matric, .contact, .cell, .pos, .role, .del {
     width: 15%;
@@ -54,6 +44,16 @@
     padding-right: 5px;
   }
 
+  @media (max-width: 720px) {
+    .name, .matric, .contact, .cell, .pos, .role, .del, .email {
+      font-size: 12px;
+    }
+
+    .role, .del {
+      font-size: 8px;
+    }
+  }
+
   th {
     background-color: $yellow;
     font-weight: bolder;
@@ -62,7 +62,7 @@
   }
 
   td {
-    height: 30px;
+    height: 40px;
   }
 
   tr:nth-child(even) {

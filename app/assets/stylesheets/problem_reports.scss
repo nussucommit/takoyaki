@@ -2,6 +2,12 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+.container-fluid.no-padding {
+  padding-top: 0;
+  padding-right: 0;
+  padding-left: 0;
+}
+
 ul.btn-container {
   padding-left: 0px;
   
