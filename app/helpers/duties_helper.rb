@@ -43,15 +43,46 @@ module DutiesHelper
   end
 
   def process_duty(duties)
-    colspan = 0
+    get_result(duties, get_index_array(duties))
+  end
+
+  def format_duties(duty_list)
+    duty_list.map do |d|
+      { id: d.id, timing: d.timeslot.time_range.start_time.strftime('%H:%M') +
+        ' - ' + d.timeslot.time_range.end_time.strftime('%H:%M') }
+    end
+  end
+
+  def check_condition(prev_duty, current_duty)
+    prev_duty&.free != current_duty&.free ||
+      (!prev_duty&.free && !current_duty&.free &&
+        ((!prev_duty.request_user_id.nil? &&
+          prev_duty&.request_user_id != current_duty&.request_user_id) ||
+        prev_duty&.user_id != current_duty&.user_id))
+  end
+
+  def get_index_array(duties)
+    index_array = [0]
+    duties.length.times.each_cons(2).select do |prev, current|
+      next unless check_condition(duties[prev], duties[current])
+      index_array.push(current)
+    end
+    index_array.push(duties.length)
+  end
+
+  def get_result(duties, index_array)
     result = []
-    duties.each_with_index do |duty, index|
-      time_range = duty.timeslot.time_range
-      colspan += calc_colspan(time_range.start_time, time_range.end_time)
-      unless duties[index]&.user&.email == duties[index + 1]&.user&.email
-        result.push(name: duty.user.username, colspan: colspan)
-        colspan = 0
-      end
+    start_index, end_index = *index_array
+    (2..index_array.length).each do |next_index|
+      span_duty = duties[start_index, end_index - start_index]
+      colspan = span_duty.map do |duty|
+        calc_colspan(duty.timeslot.time_range.start_time, duty.timeslot.time_range.end_time)
+      end.sum
+      result.push(user: duties[start_index]&.user, colspan: colspan, span_duty: span_duty,
+                  free: duties[start_index].free,
+                  request_user_id: duties[start_index]&.request_user_id)
+      start_index = end_index
+      end_index = index_array[next_index]
     end
     result
   end

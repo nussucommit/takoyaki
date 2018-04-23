@@ -1,0 +1,13 @@
+<div class="edit-places-heading">
+  <div class="edit-places-empty-heading"></div>
+  <div class="heading-group">
+    <% (1..7).each do |index| %>
+      <div class="places-day-heading">
+        <div class="places-day-text">
+          <%= Availability.days.keys[index % 7][0..2] %>
+        </div>
+      </div>
+    <% end%>
+    <div style="overflow: scroll;"></div>
+  </div>
+</div>

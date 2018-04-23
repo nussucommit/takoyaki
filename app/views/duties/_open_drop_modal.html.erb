@@ -1,0 +1,24 @@
+<div class="modal-content">
+  <div class="modal-header">
+    <h5 class="modal-title" id="drop-modal">Drop</h5>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <%= form_tag(drop_duties_path, method: :post) do %>
+      <% format_duties(@drop_duty_list).each do |d| %>
+        <p>
+        <%= check_box_tag 'duty_id[]', d[:id] %>
+        <%= label_tag 'duty_id[]', d[:timing] %>
+        </p>
+      <% end %>
+      <p>
+        Drop to <%= select_tag "user_id", options_from_collection_for_select(@users, "id", "username"), prompt: "all" %>
+      </p>
+      <p>
+        <%= submit_tag "Drop/Swap", class: "btn btn-primary" %>
+      </p>
+    <% end %>
+  </div>
+</div>

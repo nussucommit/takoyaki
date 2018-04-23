@@ -15,7 +15,7 @@
                 </tr>
               </div>
 
-              <% if current_user.has_role?(:admin)%>
+              <% if can?(:manage, User) %>
                 <div class="field">
                   <tr>
                     <th>Set Admin</th>

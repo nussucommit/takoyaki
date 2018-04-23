@@ -34,11 +34,13 @@ ActiveRecord::Schema.define(version: 20180402054815) do
   end
 
   create_table "duties", force: :cascade do |t|
-    t.bigint   "user_id",     :index=>{:name=>"index_duties_on_user_id"}
-    t.bigint   "timeslot_id", :index=>{:name=>"index_duties_on_timeslot_id"}
+    t.bigint   "user_id",         :index=>{:name=>"index_duties_on_user_id"}
+    t.bigint   "timeslot_id",     :index=>{:name=>"index_duties_on_timeslot_id"}
     t.date     "date"
-    t.datetime "created_at",  :null=>false
-    t.datetime "updated_at",  :null=>false
+    t.datetime "created_at",      :null=>false
+    t.datetime "updated_at",      :null=>false
+    t.integer  "request_user_id"
+    t.boolean  "free"
   end
 
   create_table "places", force: :cascade do |t|

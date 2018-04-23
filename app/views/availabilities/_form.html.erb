@@ -1,0 +1,24 @@
+<div class="container-fluid places-container">
+  <%= form_tag(choose_form_path(path), method: "put", class: "edit-places-form row") do %>
+    <div class="col-md-3 edit-places-nav">
+      <%= render path + "/navbar" %>
+    </div>
+
+    <div class="col-md-9" style="height: 100%; padding: 0!important;">
+      <div class="edit-places-table">
+        <%= render "availabilities/form_table_header" %>
+        <div id="scroll-table">
+          <%= render "availabilities/form_table_time_side" %>
+          <div class="table-cells">
+            <div>
+              <% (0..23).each do |x| %>
+                <div class="row-lines"></div>
+              <% end %>
+            </div>
+            <%= render path + "/cells", timeslots: defined?(timeslots) ? timeslots : nil %>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

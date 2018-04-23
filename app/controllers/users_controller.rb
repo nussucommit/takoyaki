@@ -1,11 +1,9 @@
 # frozen_string_literal: true
 
 class UsersController < ApplicationController
-  before_action :authenticate_user!
-  before_action :check_admin, except: %i[index show edit]
+  load_and_authorize_resource
 
   def index
-    # check_admin
     @users = User.order(cell: :asc)
   end
 
@@ -18,6 +16,10 @@ class UsersController < ApplicationController
   def update
     @user = User.find params[:id]
     if @user.update user_params
+      Role::ROLES.each do |r|
+        role_adder(@user, r)
+      end
+
       sign_in :user, @user, bypass: true
       redirect_to users_path, notice: 'Password Successfully Updated'
     else
@@ -39,9 +41,9 @@ class UsersController < ApplicationController
   end
 
   def destroy
-    @user = User.find params[:id]
+    user = User.find params[:id]
 
-    redirect_to users_path if @user.destroy
+    redirect_to users_path if user.destroy
   end
 
   private
@@ -52,10 +54,6 @@ class UsersController < ApplicationController
 
   def role_params
     params.permit(:cell, :mc)
-  end
-
-  def check_admin
-    redirect_to root_path unless current_user.has_role?(:admin)
   end
 
   def role_adder(user, role)

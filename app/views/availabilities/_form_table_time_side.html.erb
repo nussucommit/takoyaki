@@ -1,0 +1,9 @@
+<div class="time-heading">
+  <% (0..23).each do |x| %>
+  <div class="time-block">
+    <span class="time-text"<% if x == 0 %>, style="display: none;"<% end %>>
+      <%= "%02d:00" % x %>
+    </span>
+  </div>
+  <% end %>
+</div>

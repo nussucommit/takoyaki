@@ -1,0 +1,15 @@
+<% (1..7).each do |day| %>
+  <div class="table-columns">
+    <div class="table-columns-padded">
+      <% timeslots[day % 7].each do |ts| %>
+        <% tr = ts.time_range %>
+        <div class="timeslot" style="
+          top: <%= calc_offset(tr)%>px;
+          height: <%= calc_slot_height(tr) %>px;">
+        <div class="timeslot-vertical"></div>
+        <%= generate_select(ts) %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+<% end %>

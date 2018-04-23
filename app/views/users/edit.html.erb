@@ -1,0 +1,41 @@
+<div class="edit-profile">
+  <h1>Edit Password</h1>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12 col-md-6 offset-md-3">
+        <div class="box">
+          <%= form_with(model: @user) do |f| %>
+            <table>
+              <div class="field">
+                <tr>
+                  <th><%= f.label :new_password %> <i>(6 characters minimum)</i></th>
+                  <td><%= f.password_field :password, autocomplete: "off" %></td>
+                </tr>
+              </div>
+              <div class="field">
+                <tr>
+                  <th><%= f.label :new_password_confirmation %></th>
+                  <td><%= f.password_field :password_confirmation %></td>
+                </tr>
+              </div>
+
+              <div class="field">
+                <tr>
+                  <th><%= f.label :current_password %></th>
+                  <td><%= f.password_field :current_password, autocomplete: "off", :required => true %></td>
+                </tr>
+              </div>
+
+            </table>
+
+            <div class="actions">
+              <%= f.submit "Save"%>
+            </div>
+
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

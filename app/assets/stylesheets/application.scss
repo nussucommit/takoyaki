@@ -33,3 +33,5 @@ html, body {
 body[no-nav] nav {
   display: none;
 }
+
+$navbarHeight: 71px; // Obtained from tallest element in navbar+padding+border
