@@ -6,7 +6,7 @@ class UsersController < ApplicationController
 
   def index
     # check_admin
-    @users = User.all
+    @users = User.order(cell: :asc)
   end
 
   def show; end

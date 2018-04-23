@@ -30,8 +30,8 @@
               <td class="matric"><%= p.matric_num %></td>
               <td class="contact"><%= p.contact_num %></td>
               <td class="email"><%= p.email %></td>
-              <td class="cell"></td>
-              <td class="pos"></td>
+              <td class="cell"><%= p.cell %></td>
+              <td class="pos"><%= p.mc ? "MC" : "Member" %></td>
               <% if current_user.has_role?(:admin) %>
               <!--
                 <td><%= link_to 'Show', edit_user_registration_path(p) %></td>

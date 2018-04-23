@@ -19,15 +19,15 @@
 
                 <div class="field">
                   <tr>
-                    <th><%= f.label :matric_number %></th>
-                    <td><%= f.text_field :matric_num%></td>
+                    <th><%= f.label :matric_num %></th>
+                    <td><%= f.text_field :matric_num %></td>
                   </tr>
                 </div>
 
                 <div class="field">
                   <tr>
-                    <th><%= f.label :contact_number %></th>
-                    <td><%= f.text_field :contact_num%></td>
+                    <th><%= f.label :contact_num %></th>
+                    <td><%= f.text_field :contact_num %></td>
                   </tr>
                 </div>
 
@@ -35,6 +35,20 @@
                   <tr>
                     <th><%= f.label :email %></th>
                     <td><%= f.email_field :email%></td>
+                  </tr>
+                </div>
+
+                <div class="field">
+                  <tr>
+                    <th>Cell</th>
+                    <td><%= select_tag(:cell, options_for_select(["Marketing", "Presidential", "Publicity", "Technical", "Training", "Welfare"]), {:class => 'form-control'}) %>
+                  </tr>
+                </div>
+
+                <div class="field">
+                  <tr>
+                    <th>MC</th>
+                    <td><%= select_tag(:mc, options_for_select(["true", "false"]), {:class => 'form-control'}) %>
                   </tr>
                 </div>
 
