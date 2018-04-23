@@ -36,7 +36,7 @@
               <!--
                 <td><%= link_to 'Show', edit_user_registration_path(p) %></td>
               -->
-                <td class="role"><%= link_to 'Allocate role', edit_user_path(p) %></td>
+                <td class="role"><%= link_to 'Allocate role', allocate_role_user_path(p), :controller => "users", :action => "update_role", :method => "get" %></td>
                 <td class="del"><%= link_to 'Delete', user_path(p), method: :delete, data:{confirm: 'Are you sure?'} %></td>
               <% end %>
             </tr>

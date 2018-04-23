@@ -25,6 +25,19 @@ class UsersController < ApplicationController
     end
   end
 
+  def allocate_role
+    @user = User.find params[:id]
+  end
+
+  def update_role
+    @user = User.find params[:id]
+    if @user.update role_params
+      redirect_to users_path, notice: 'Role Updated Succesfully'
+    else
+      redirect_to users_path, alert: 'Fail to Update Role'
+    end
+  end
+
   def destroy
     @user = User.find params[:id]
     @user.destroy
@@ -35,6 +48,10 @@ class UsersController < ApplicationController
 
   def user_params
     params.require(:user).permit(:password, :password_confirmation)
+  end
+
+  def role_params
+    params.permit(:cell, :mc)
   end
 
   def check_admin

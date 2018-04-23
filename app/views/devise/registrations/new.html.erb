@@ -41,7 +41,7 @@
                 <div class="field">
                   <tr>
                     <th><%= f.label :cell %></th>
-                    <td><%= f.select(:cell, options_for_select(User::CELLS.map { |u| [c.capitalize, c] }), {:class => 'form-control'}) %>
+                    <td><%= f.select(:cell, options_for_select(User::CELLS.map { |c| [c.capitalize, c] }), {:class => 'form-control'}) %>
                   </tr>
                 </div>
 

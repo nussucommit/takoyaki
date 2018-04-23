@@ -1,0 +1,77 @@
+.allocate-role {
+  width: 100%;
+
+  .container {
+    margin-top: 5%;
+    text-align: center;
+  }
+
+  .field {
+    text-align: left;
+  }
+
+  tr {
+    height: 40px;
+    text-align: left;
+  }
+
+  th, td {
+    width: 100%;
+  }
+
+  th {
+    font-weight: normal;
+  }
+
+  input {
+    color: $grey;
+    width: 250px;
+    margin-bottom: 20px;
+    padding-left: 3%;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: 2px solid $yellow;
+  }
+
+  input:focus {
+    outline: none;
+  }
+
+  .actions input:hover {
+    background-color: $light-yellow;
+  }
+
+  .actions input {
+    width: 50%;
+    margin-top: 5%;
+    margin-bottom: 0;
+    text-align: center;
+    color: #000;
+    border: 2px solid $yellow;
+    border-radius: 50px;
+    height: 50px;
+    background-color: $yellow;
+    box-shadow: inset 1px 1px 3px -1px $light-yellow;
+    text-shadow: 0 -0.8px 0 rgba(0, 0, 0, 1),
+                 0 1px 0 rgba(255, 255, 255, 0.2);
+  }
+
+  a {
+    color: $grey;
+    font-size: 12px;
+  }
+
+  a:hover {
+    color: $yellow;
+  }
+
+  .box {
+    overflow: auto;
+  }
+
+  .check-box {
+    padding: 0;
+    width: 80px;
+  }
+}

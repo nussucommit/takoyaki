@@ -1,0 +1,42 @@
+<h1>Allocate Role</h1>
+
+<div class="allocate-role">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 offset-md-3">
+        <div class="box">
+            
+          <%= form_for @user, :url => { :controller => "users", :action => "update_role" } do |u| %>
+            <table>
+              <div class="field">
+                <tr>
+                  <th><%= u.label :cell %></th>
+                  <td><%= u.select(:cell, options_for_select(User::CELLS.map { |c| [c.capitalize, c] }, @user.cell), {:class => 'form-control'}) %>
+                </tr>
+              </div>
+
+              <% if current_user.has_role?(:admin)%>
+                <div class="field">
+                  <tr>
+                    <th>Set Admin</th>
+                    <td>
+                      <% Role::ROLES.each do |role| %>
+                          <%= hidden_field_tag(role, 0) %>
+                          <%= check_box_tag(role, 1, @user.has_role?(role), :class => "check-box") %>
+                      <% end %>
+                    </td>
+                </tr>
+                </div>
+              <% end %>
+
+            </table>
+
+            <div class="actions">
+              <%= u.submit "Allocate Role" %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
