@@ -17,7 +17,7 @@ class UsersController < ApplicationController
 
   def update
     @user = User.find params[:id]
-    if @user.update user_params 
+    if @user.update user_params
       sign_in :user, @user, bypass: true
       redirect_to users_path, notice: 'Password Successfully Updated'
     else
