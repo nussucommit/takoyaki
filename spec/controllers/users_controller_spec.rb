@@ -20,6 +20,20 @@ RSpec.describe UsersController, type: :controller do
       get :edit, params: { id: create(:user).id }
       should redirect_to(new_user_session_path)
     end
+    it 'denies access when normal user access another users page' do
+      user = create(:user)
+      sign_in user
+      expect do
+        get :edit, params: { id: create(:user).id }
+      end.to raise_error(CanCan::AccessDenied)
+    end
+    it 'provides access to admin' do
+      user = create(:user)
+      user.add_role(:admin)
+      sign_in user
+      get :edit, params: { id: create(:user).id }
+      should respond_with :ok
+    end
   end
 
   describe 'PUT #update' do
@@ -27,33 +41,65 @@ RSpec.describe UsersController, type: :controller do
       put :update, params: { id: create(:user).id }
       should redirect_to(new_user_session_path)
     end
-    it 'updates password' do
-      user = create(:user, password: '123456')
-      sign_in user
-      expect do
-        put :update, params: { id: user.id, user: { password: '1234567',
-                                                    confirmation_password:
-                                                    '1234567',
-                                                    current_password:
-                                                    '123456' } }
-      end.to change {
-        User.find(user.id).valid_password?('1234567')
-      }.from(false).to(true)
-      should redirect_to(users_path)
+    context 'normal user' do
+      it 'updates password' do
+        user = create(:user, password: '123456')
+        sign_in user
+        expect do
+          put :update, params: { id: user.id, user: { password: '1234567',
+                                                      confirmation_password:
+                                                      '1234567',
+                                                      current_password:
+                                                      '123456' } }
+        end.to change {
+          User.find(user.id).valid_password?('1234567')
+        }.from(false).to(true)
+        should redirect_to(users_path)
+      end
+      it 'password not updated if current password wrong' do
+        user = create(:user, password: '123456')
+        sign_in user
+        expect do
+          put :update, params: { id: user.id, user: { password: '1234567',
+                                                      confirmation_password:
+                                                      '1234567',
+                                                      current_password:
+                                                      '12345678' } }
+        end.to_not change {
+          User.find(user.id).valid_password?('123456')
+        }.from(true)
+        should redirect_to(users_path)
+      end
+      it 'denies access when access another users page' do
+        user = create(:user)
+        new_user = create(:user, password: '123456')
+        sign_in user
+        expect do
+          get :update, params: { id: new_user.id, user: { password: '1234567',
+                                                          confirmation_password:
+                                                          '1234567',
+                                                          current_password:
+                                                          '123456' } }
+        end.to raise_error(CanCan::AccessDenied)
+      end
     end
-    it 'password not updated if current password wrong' do
-      user = create(:user, password: '123456')
-      sign_in user
-      expect do
-        put :update, params: { id: user.id, user: { password: '1234567',
-                                                    confirmation_password:
-                                                    '1234567',
-                                                    current_password:
-                                                    '12345678' } }
-      end.to_not change {
-        User.find(user.id).valid_password?('123456')
-      }.from(true)
-      should redirect_to(users_path)
+    context 'admin' do
+      it 'updates password' do
+        admin = create(:user)
+        admin.add_role(:admin)
+        user = create(:user, password: '123456')
+        sign_in admin
+        expect do
+          put :update, params: { id: user.id, user: { password: '1234567',
+                                                      confirmation_password:
+                                                      '1234567',
+                                                      current_password:
+                                                      '123456' } }
+        end.to change {
+          User.find(user.id).valid_password?('1234567')
+        }.from(false).to(true)
+        should redirect_to(users_path)
+      end
     end
   end
 
