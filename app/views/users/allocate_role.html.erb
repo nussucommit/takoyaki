@@ -15,6 +15,13 @@
                 </tr>
               </div>
 
+              <div class="field">
+                <tr>
+                  <th><%= u.label :mc %></th>
+                  <td><%= u.select(:mc, options_for_select(["true", "false"], @user.mc), {:class => 'form-control'}) %>
+                </tr>
+              </div>
+
               <% if can?(:manage, User) %>
                 <div class="field">
                   <tr>
@@ -22,7 +29,8 @@
                     <td>
                       <% Role::ROLES.each do |role| %>
                           <%= hidden_field_tag(role, 0) %>
-                          <%= check_box_tag(role, 1, @user.has_role?(role), :class => "check-box") %>
+                          <%= check_box_tag(role, 1, @user.has_role?(role), {:class => "check-box"}) %>
+
                       <% end %>
                     </td>
                 </tr>
