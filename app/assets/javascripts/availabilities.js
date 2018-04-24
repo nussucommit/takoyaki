@@ -52,8 +52,8 @@ function enableButton(buttonName) {
 }
 
 $(document).on('turbolinks:load', function() {
-  let scrollTable = document.getElementById("scroll-table");
-  let scrollTop = document.getElementById("scroll-top");
+  var scrollTable = document.getElementById("scroll-table");
+  var scrollTop = document.getElementById("scroll-top");
   if (scrollTable && scrollTop) {
     scrollTable.scrollTop = scrollTop.dataset.scrolltop;
   }
