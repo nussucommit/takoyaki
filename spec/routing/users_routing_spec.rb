@@ -10,7 +10,7 @@ RSpec.describe UsersController, type: :routing do
 
     it 'routes to #allocate_role' do
       expect(get: '/users//1/allocate_role')
-      	.to route_to('users#allocate_role', id: '1')
+        .to route_to('users#allocate_role', id: '1')
     end
   end
 end
