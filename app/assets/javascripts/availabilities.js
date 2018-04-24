@@ -40,6 +40,11 @@ function getCheckbox(id) {
 
 function disableButton(buttonName) {
   var button = document.getElementById(buttonName);
+
+  if (button === null) {
+    return ;
+  }
+
   button.classList.addClass = "disabled";
   button.disabled = true;
 }
