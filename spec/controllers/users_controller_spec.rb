@@ -30,10 +30,27 @@ RSpec.describe UsersController, type: :controller do
     it 'updates password' do
       user = create(:user, password: '123456')
       sign_in user
-      put :update, params: { id: user.id, user: { password: '1234567',
+      expect do  
+        put :update, params: { id: user.id, user: { password: '1234567',
                                                   confirmation_password:
                                                   '1234567',
                                                   current_password: '123456' } }
+      end.to change {
+        User.find(user.id).valid_password?("1234567")
+      }.from(false).to(true) 
+      should redirect_to(users_path)
+    end
+    it 'password not updated if current password wrong' do
+      user = create(:user, password: '123456')
+      sign_in user
+      expect do  
+        put :update, params: { id: user.id, user: { password: '1234567',
+                                                  confirmation_password:
+                                                  '1234567',
+                                                  current_password: '12345678' } }
+      end.to_not change {
+        User.find(user.id).valid_password?("123456")
+      }.from(true)
       should redirect_to(users_path)
     end
   end
