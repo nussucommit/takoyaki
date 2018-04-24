@@ -4,12 +4,14 @@
 #
 # Table name: duties
 #
-#  id          :integer          not null, primary key
-#  user_id     :integer
-#  timeslot_id :integer
-#  date        :date
-#  created_at  :datetime         not null
-#  updated_at  :datetime         not null
+#  id              :integer          not null, primary key
+#  user_id         :integer
+#  timeslot_id     :integer
+#  date            :date
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#  request_user_id :integer
+#  free            :boolean
 #
 # Indexes
 #
@@ -25,7 +27,7 @@
 FactoryBot.define do
   factory :duty do
     user nil
-    timeslot nil
+    timeslot
     date '2018-01-31'
   end
 end

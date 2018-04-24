@@ -1,0 +1,37 @@
+<div class="container-fluid">
+  <h1>Schedule Availability for all users</h1>
+  <div class="scrollable">
+    <table class="table table-sm table-bordered table-availabilities-all">
+      <thead>
+      <tr>
+        <th class="availability-header-empty-cell"></th>
+        <% (1..7).each do |index| %>
+          <th><%= Availability.days.keys[index % 7][0..2] %></th>
+        <% end %>
+      </tr>
+      </thead>
+      <tbody>
+      <% @time_ranges.each do |time_range| %>
+        <tr>
+          <% rowspan = ((time_range.end_time - time_range.start_time) / 0.5.hours).round %>
+          <% if time_range.start_time.to_i.modulo(3600).zero? %>
+            <td rowspan="2"><%= time_range.start_time.strftime("%H%M") %></td>
+          <% end %>
+          <% (1..7).each do |index| %>
+            <td rowspan="<%= rowspan %>">
+              <ol class="availability-list">
+              <% @availabilities[[Availability.days.keys[index % 7], time_range.id]].each do |u| %>
+                <li><%= stylise_user(@users[u]) %></li>
+              <% end %>
+              </ol>
+            </td>
+          <% end %>
+        </tr>
+        <% (rowspan - 1).times do %>
+          <tr></tr>
+        <% end %>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

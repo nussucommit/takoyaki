@@ -1,91 +1,103 @@
 <div id="duty-start-time" data-start-time=<%= TimeRange.order(:start_time).first.start_time.strftime('%H') %>></div>
 <div id="num-of-places" data-num-of-places=<%= Place.count %>></div>
 
-<div class="container-fluid">
+<div class="container-fluid no-padding-top">
   <div class="row">
+
       <div id="announcement-sidebar" class="col-md-3 sidebar-container">
         <h2>Announcements</h2>
 
-          <%= render :partial => 'announcements/index' %>
-
+      <%= render partial: 'announcements/index' %>
       </div>
 
-      <div id="duty-table" class="col-md-9">
-
-        <div class="duty-table-header">  
-          <h2 class="duty-table-title float-left">Duty Timetable for the Week</h2>
-
-          <%= link_to 'Previous Week', duties_path(start_date: @start_date - 7), class: 'btn btn-large btn-light float-sm-right duty-table-button' %>
-          <%= link_to 'Next Week', duties_path(start_date: @start_date + 7), class: 'btn btn-large btn-light float-sm-right duty-table-button' %>
-          <button type="button" id="announcement-toggle-btn" class="btn btn-large btn-light float-sm-right duty-table-button">SideBar Toggle</button>
-        </div>
-
-        <div class="schedule-container">
-          <div class="schedule-left">
-            <table class="table table-sm">
-              <!-- Empty row to accommodate the timing -->
-              <thead>
-                <tr>
-                  <td class="schedule-timings"><div class="schedule-time">&nbsp;</div></td>
-                  <td class="schedule-timings"></td>
-                </tr>
-              </thead>
-              <tbody>
-                <% (@start_date..@end_date).each do |day| %>
-                  <% first = true %>
-                  <% @places.each do |place| %>
-                    <tr>
-                      <% if first %>
-                        <td class="schedule-daynames" rowspan="<%= @places.length %>">
-                          <%= day.strftime("%a, %d/%m/%y") %>
-                        </td>
-                        <% first = false %>
-                      <% end %>
-                      <td><%= place.name %></td>
-                    </tr>
-                  <% end %>
+    <div id="duty-table" class="col-md-9">
+      <div class="duty-table-header">  
+        <h2 class="duty-table-title float-left">Duty Timetable for the Week</h2>
+        <%= link_to 'Previous Week', duties_path(start_date: @start_date - 7), class: 'btn btn-large btn-light float-sm-right duty-table-button' %>
+        <%= link_to 'Next Week', duties_path(start_date: @start_date + 7), class: 'btn btn-large btn-light float-sm-right duty-table-button' %>
+        <button type="button" id="announcement-toggle-btn" class="btn btn-large btn-light float-sm-right duty-table-button">SideBar Toggle</button>
+      </div>
+      
+      <div class="schedule-container">
+        <div class="schedule-left">
+          <table class="table table-sm">
+            <!-- Empty row to accommodate the timing -->
+            <thead>
+              <tr>
+                <td class="schedule-timings"><div class="schedule-time">&nbsp;</div></td>
+                <td class="schedule-timings"></td>
+              </tr>
+            </thead>
+            <tbody>
+              <% (@start_date..@end_date).each do |day| %>
+                <% first = true %>
+                <% @places.each do |place| %>
+                  <tr>
+                    <% if first %>
+                      <td class="schedule-daynames" rowspan="<%= @places.length %>">
+                        <%= day.strftime("%a, %d/%m/%y") %>
+                      </td>
+                      <% first = false %>
+                    <% end %>
+                    <td><%= place.name %></td>
+                  </tr>
                 <% end %>
-              </tbody>
+              <% end %>
+            </tbody>
 
-            </table>
-          </div>
-          <div class="schedule-right scrollable">
-            <table class="table table-sm duty-table">
-              <thead>
-                <tr>
-                  <% @header_iter.each do |t| %>
-                  <td class="schedule-timings" colspan="2">
-                    <div class="schedule-time"><%= Time.at(t).localtime.strftime('%H%M') %></div>
-                  </td>
-                  <% end %>
-                </tr>
-              </thead>
-              <tbody>
-                <% process_duties(@start_date, @end_date).each do |day| %>
-                  <% day.each do |place| %>
-                    <tr>
+          </table>
+        </div>
+        <div class="schedule-right scrollable">
+          <table class="table table-sm duty-table">
+            <thead>
+              <tr>
+                <% @header_iter.each do |t| %>
+                <td class="schedule-timings" colspan="2">
+                  <div class="schedule-time"><%= Time.at(t).localtime.strftime('%H%M') %></div>
+                </td>
+                <% end %>
+              </tr>
+            </thead>
+            <tbody>
+              <% process_duties(@start_date, @end_date).each do |day| %>
+                <% day.each do |place| %>
+                  <tr>
                     <% place.each do |duty| %>
-                      <% if duty[:name].nil? %>
+                      <% if duty[:user].nil? %>
                         <td class="schedule-name-empty" colspan="<%= duty[:colspan] %>">&nbsp;</td>
+                      <% elsif duty[:free] || current_user.id == duty[:request_user_id] %>
+                        <td class="schedule-name-empty text-center" colspan="<%= duty[:colspan] %>">
+                           <%= button_to "Grab", { controller: 'duties', action: 'open_grab_modal', grab_duty_list: duty[:span_duty] }, { method: :post, remote: true, class: 'btn btn-link', style: "line-height: 0;", 'data-toggle': "modal", 'data-target': '#grab-drop-modal' } %>
+                        </td>
                       <% else %>
-                        <td class="schedule-name" colspan="<%= duty[:colspan] %>">
-                          <div class="text-overflow-ellipsis"><%= duty[:name] %></div>
+                        <td class="schedule-name text-overflow-ellipsis" colspan="<%= duty[:colspan] %>">
+                          <% if current_user == duty[:user] %>
+                            <%= button_to duty[:user].username, { controller: 'duties', action: 'open_drop_modal', drop_duty_list: duty[:span_duty] }, { method: :post, remote: true, class: 'btn btn-link', style: "line-height: 0;", 'data-toggle': "modal", 'data-target': '#grab-drop-modal' } %>
+                          <% else %>
+                            <%= duty[:user].username %>
+                          <% end %>
+                          <div id="grab-drop-modal" class="modal hide fade" role="dialog" aria-labelledby="grabDropModal" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                            </div>
+                          </div>
                         </td>
                       <% end %>
                     <% end %>
-                    </tr>
-                  <% end %>
+                  </tr>
                 <% end %>
-              </tbody>
-            </table>
-          </div>
+              <% end %>
+            </tbody>
+          </table>
         </div>
+      </div>
 
+      <% if current_user.has_role?(:admin) %>
         <%= form_tag(generate_duties_path, method: "post") do %>
           <%= label_tag(:num_weeks, "Generate for how many weeks?") %>
           <%= text_field_tag(:num_weeks) %>
           <%= submit_tag("Generate") %>
         <% end %>
-      </div>
+      <% end %>
+    </div>
   </div>
 </div>
