@@ -12,6 +12,8 @@ class Ability
     cannot :place, Availability
     cannot :show_everyone, Availability
     can :index, User
+    can :edit, User, id: user.id
+    can :update, User, id: user.id
 
     @user.roles.each { |role| __send__(role.name.downcase) }
     #

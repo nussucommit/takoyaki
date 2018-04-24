@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class UsersController < ApplicationController
-  load_and_authorize_resource except: %i[edit update]
+  load_and_authorize_resource
 
   def index
     @users = User.order(cell: :asc)
@@ -15,11 +15,12 @@ class UsersController < ApplicationController
 
   def update
     @user = User.find params[:id]
-
-    if current_user.id.equal? params[:id].to_i
-      update_password(@user)
+    
+    if @user.update_with_password user_params
+      bypass_sign_in @user
+      redirect_to users_path, notice: 'Password Successfully Updated'
     else
-      redirect_to users_path, alert: 'Not Authorised'
+      redirect_to users_path, alert: 'Fail to Update Password'
     end
   end
 
@@ -50,13 +51,8 @@ class UsersController < ApplicationController
                                  :current_password)
   end
 
-  def update_password(user)
-    if user.update_with_password user_params
-      bypass_sign_in user
-      redirect_to users_path, notice: 'Password Successfully Updated'
-    else
-      redirect_to users_path, alert: 'Fail to Update Password'
-    end
+  def role_params
+    params.require(:user).permit(:cell, :mc)
   end
 
   def add_roles(user)
@@ -69,10 +65,6 @@ class UsersController < ApplicationController
     else
       redirect_to users_path, alert: 'Fail to Update Role'
     end
-  end
-
-  def role_params
-    params.require(:user).permit(:cell, :mc)
   end
 
   def role_adder(user, role)
