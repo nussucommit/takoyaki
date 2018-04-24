@@ -12,8 +12,11 @@ class Ability
     cannot :place, Availability
     cannot :show_everyone, Availability
     can :index, User
-    can :edit, User, id: user.id
-    can :update, User, id: user.id
+
+    if user.present?
+      can :edit, User, id: user.id
+      can :update, User, id: user.id
+    end
 
     @user.roles.each { |role| __send__(role.name.downcase) }
     #
