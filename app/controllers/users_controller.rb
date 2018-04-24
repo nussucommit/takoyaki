@@ -16,13 +16,8 @@ class UsersController < ApplicationController
   def update
     @user = User.find params[:id]
 
-    if current_user.id === params[:id].to_i
-      if @user.update_with_password user_params
-        bypass_sign_in @user
-        redirect_to users_path, notice: 'Password Successfully Updated'
-      else
-        redirect_to users_path, alert: 'Fail to Update Password'
-      end
+    if current_user.id.equal? params[:id].to_i
+      update_password(@user)
     else
       redirect_to users_path, alert: 'Not Authorised'
     end
@@ -36,15 +31,9 @@ class UsersController < ApplicationController
     @user = User.find params[:id]
 
     if can?(:manage, User)
-      if @user.update role_params
-        Role::ROLES.each do |r|
-          role_adder(@user, r)
-        end
-
-        redirect_to users_path, notice: 'Role Updated Succesfully'
-      else
-        redirect_to users_path, alert: 'Fail to Update Role'
-      end
+      add_roles(@user)
+    else
+      redirect_to users_path, alert: 'Not Authorised'
     end
   end
 
@@ -57,7 +46,29 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:password, :password_confirmation, :current_password)
+    params.require(:user).permit(:password, :password_confirmation,
+                                 :current_password)
+  end
+
+  def update_password(user)
+    if user.update_with_password user_params
+      bypass_sign_in user
+      redirect_to users_path, notice: 'Password Successfully Updated'
+    else
+      redirect_to users_path, alert: 'Fail to Update Password'
+    end
+  end
+
+  def add_roles(user)
+    if user.update role_params
+      Role::ROLES.each do |r|
+        role_adder(user, r)
+      end
+
+      redirect_to users_path, notice: 'Role Updated Succesfully'
+    else
+      redirect_to users_path, alert: 'Fail to Update Role'
+    end
   end
 
   def role_params
