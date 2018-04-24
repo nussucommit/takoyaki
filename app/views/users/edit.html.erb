@@ -3,27 +3,28 @@
 
   <div class="container">
     <div class="row">
-      <div class="col-sm-12 col-md-6 offset-md-3">
+      <div class="col-md-6 offset-md-3">
         <div class="box">
           <%= form_with(model: @user) do |f| %>
             <table>
               <div class="field">
                 <tr>
-                  <th><%= f.label :new_password %> <i>(6 characters minimum)</i></th>
-                  <td><%= f.password_field :password, autocomplete: "off" %></td>
+                  <th><%= f.label :new_password %></th>
+                  <td><%= f.password_field :password, :placeholder => "6 characters minimum", autocomplete: "off", :required => true, :minlength => "6" %></td>
                 </tr>
               </div>
+
               <div class="field">
                 <tr>
                   <th><%= f.label :new_password_confirmation %></th>
-                  <td><%= f.password_field :password_confirmation %></td>
+                  <td><%= f.password_field :password_confirmation, :placeholder => "6 characters minimum", autocomplete: "off", :required => true, :minlength => "6" %></td>
                 </tr>
               </div>
 
               <div class="field">
                 <tr>
                   <th><%= f.label :current_password %></th>
-                  <td><%= f.password_field :current_password, autocomplete: "off", :required => true %></td>
+                  <td><%= f.password_field :current_password, :placeholder => "6 characters minimum", autocomplete: "off", :required => true, :minlength => "6" %></td>
                 </tr>
               </div>
 
