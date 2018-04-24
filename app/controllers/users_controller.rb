@@ -15,12 +15,8 @@ class UsersController < ApplicationController
 
   def update
     @user = User.find params[:id]
-    if @user.update user_params
-      Role::ROLES.each do |r|
-        role_adder(@user, r)
-      end
-
-      sign_in :user, @user, bypass: true
+    if @user.update_with_password user_params
+      bypass_sign_in @user
       redirect_to users_path, notice: 'Password Successfully Updated'
     else
       redirect_to users_path, alert: 'Fail to Update Password'
@@ -28,15 +24,24 @@ class UsersController < ApplicationController
   end
 
   def allocate_role
-    @user = User.find params[:id]
+    if can?(:manage, User)
+      @user = User.find params[:id]
+    end
   end
 
   def update_role
     @user = User.find params[:id]
-    if @user.update role_params
-      redirect_to users_path, notice: 'Role Updated Succesfully'
-    else
-      redirect_to users_path, alert: 'Fail to Update Role'
+    
+    if can?(:manage, User)
+      if @user.update role_params
+        Role::ROLES.each do |r|
+         role_adder(@user, r)
+        end
+
+        redirect_to users_path, notice: 'Role Updated Succesfully'
+      else
+        redirect_to users_path, alert: 'Fail to Update Role'
+      end
     end
   end
 
@@ -49,18 +54,18 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:password, :password_confirmation)
+    params.require(:user).permit(:password, :password_confirmation, :current_password)
   end
 
   def role_params
-    params.permit(:cell, :mc)
+    params.require(:user).permit(:cell, :mc)
   end
 
   def role_adder(user, role)
-    if params[role] == '1'
-      user.add_role(role)
-    elsif params[role] == '0'
-      user.remove_role(role)
-    end
-  end
+   if params[role] == '1'
+     user.add_role(role)
+   elsif params[role] == '0'
+     user.remove_role(role)
+   end
+ end
 end
