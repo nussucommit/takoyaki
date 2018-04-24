@@ -42,7 +42,7 @@ function disableButton(buttonName) {
   var button = document.getElementById(buttonName);
 
   if (button === null) {
-    return ;
+    return;
   }
 
   button.classList.addClass = "disabled";
