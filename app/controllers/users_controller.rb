@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class UsersController < ApplicationController
-  load_and_authorize_resource :except => [:edit, :update]
+  load_and_authorize_resource except: %i[edit update]
 
   def index
     @users = User.order(cell: :asc)

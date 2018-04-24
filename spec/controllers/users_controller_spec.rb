@@ -28,9 +28,12 @@ RSpec.describe UsersController, type: :controller do
       should redirect_to(new_user_session_path)
     end
     it 'updates password' do
-      user = create(:user, password: "123456")
+      user = create(:user, password: '123456')
       sign_in user
-        put :update, params: { id: user.id, user: { password: "1234567", confirmation_password: "1234567", current_password: "123456" } }
+      put :update, params: { id: user.id, user: { password: '1234567',
+                                                  confirmation_password:
+                                                  '1234567',
+                                                  current_password: '123456' } }
       should redirect_to(users_path)
     end
   end
@@ -56,8 +59,9 @@ RSpec.describe UsersController, type: :controller do
       it 'add role' do
         user = create(:user)
         expect do
-          put :update_role, params: { id: user.id, user: { cell: "technical", mc: "false" },
-                                 Role::ROLES.last => 1 }
+          put :update_role, params: { id: user.id, user: { cell: 'technical',
+                                                           mc: 'false' },
+                                      Role::ROLES.last => 1 }
         end.to change {
           User.find(user.id).has_role?(Role::ROLES.last)
         }.from(false).to(true)
@@ -67,30 +71,33 @@ RSpec.describe UsersController, type: :controller do
         user = create(:user)
         user.add_role(:admin)
         expect do
-          put :update_role, params: { id: user.id, user: { cell: "technical", mc: "false" },
-            admin: 0 }
+          put :update_role, params: { id: user.id, user: { cell: 'technical',
+                                                           mc: 'false' },
+                                      admin: 0 }
         end.to change {
           User.find(user.id).has_role?(:admin)
         }.from(true).to(false)
         should redirect_to(users_path)
       end
       it 'change cell' do
-        user = create(:user, cell: "marketing")
+        user = create(:user, cell: 'marketing')
         user.add_role(:admin)
         expect do
-          put :update_role, params: { id: user.id, user: { cell: "technical", mc: "false" },
-            admin: 0 }
+          put :update_role, params: { id: user.id, user: { cell: 'technical',
+                                                           mc: 'false' },
+                                      admin: 0 }
         end.to change {
           User.find(user.id).cell
-        }.from("marketing").to("technical")
+        }.from('marketing').to('technical')
         should redirect_to(users_path)
       end
       it 'change mc' do
         user = create(:user, mc: false)
         user.add_role(:admin)
         expect do
-          put :update_role, params: { id: user.id, user: { cell: "technical", mc: "true" },
-            admin: 0 }
+          put :update_role, params: { id: user.id, user: { cell: 'technical',
+                                                           mc: 'true' },
+                                      admin: 0 }
         end.to change {
           User.find(user.id).mc
         }.from(false).to(true)
