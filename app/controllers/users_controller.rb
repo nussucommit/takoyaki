@@ -15,6 +15,7 @@ class UsersController < ApplicationController
 
   def update
     @user = User.find params[:id]
+    current_user_id = current_user.id
 
     if @user.update_with_password user_params
       bypass_sign_in @user
