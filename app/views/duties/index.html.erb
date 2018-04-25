@@ -62,7 +62,7 @@
               <tr>
                 <% @header_iter.each do |t| %>
                 <td class="schedule-timings" colspan="2">
-                  <div class="schedule-time"><%= Time.at(t).localtime.strftime('%H%M') %></div>
+                  <div class="schedule-time"><%= Time.zone.at(t).strftime('%H%M') %></div>
                 </td>
                 <% end %>
               </tr>

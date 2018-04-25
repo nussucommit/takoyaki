@@ -29,11 +29,13 @@ User.create(username: 'test', email: 'test@example.com', password: '123456')
 Place.create(name: 'YIH')
 Place.create(name: 'AS8')
 
-('08:00'.to_time.to_i..'09:30'.to_time.to_i).step(30.minutes).each do |time|
+('08:00'.in_time_zone.to_i..'09:30'.in_time_zone.to_i)
+  .step(30.minutes).each do |time|
   start = Time.zone.at(time)
   TimeRange.create(start_time: start, end_time: start + 30.minutes)
 end
-('10:00'.to_time.to_i..'20:00'.to_time.to_i).step(1.hour.to_i).each do |time|
+('10:00'.in_time_zone.to_i..'20:00'.in_time_zone.to_i)
+  .step(1.hour).each do |time|
   start = Time.zone.at(time)
   TimeRange.create(start_time: start, end_time: start + 1.hour)
 end
