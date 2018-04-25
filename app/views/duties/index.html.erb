@@ -3,19 +3,22 @@
 
 <div class="container-fluid no-padding-top">
   <div class="row">
+    <div class="col-md-12 no-padding">  
+      <h1>Duty Timetable for the Week</h1>
+    </div>
+  </div>
+
+  <div class="row body-container">
     <div id="announcement-sidebar" class="col-md-3 sidebar-container">
       <h1>Announcements</h1>
-      <%= render partial: 'announcements/index' %>
+        <%= render partial: 'announcements/index' %>
     </div>
 
     <div id="duty-table" class="col-md-9">
-
-      <div class="duty-table-header">  
-        <h1 class="duty-table-title float-left">Duty Timetable for the Week</h1>
-
-        <%= link_to 'Previous Week', duties_path(start_date: @start_date - 7), class: 'btn btn-large btn-light float-sm-right duty-table-button' %>
-        <%= link_to 'Next Week', duties_path(start_date: @start_date + 7), class: 'btn btn-large btn-light float-sm-right duty-table-button' %>
-        <button type="button" id="announcement-toggle-btn" class="btn btn-large btn-light float-sm-right duty-table-button">SideBar Toggle</button>
+      <div class="col-md-12 duty-table-header">  
+        <button type="button" id="announcement-toggle-btn" class="btn btn-large btn-light duty-table-button">SideBar Toggle</button>
+        <%= link_to 'Previous Week', duties_path(start_date: @start_date - 7), class: 'btn btn-large btn-light duty-table-button' %>
+        <%= link_to 'Next Week', duties_path(start_date: @start_date + 7), class: 'btn btn-large btn-light duty-table-button' %>
       </div>
       
       <div class="schedule-container">

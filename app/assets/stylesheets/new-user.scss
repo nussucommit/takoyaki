@@ -1,12 +1,12 @@
-.edit-profile {
+.new-user {
   width: 100%;
 
-  div.container {
+  .container {
     margin-top: 5%;
     text-align: center;
   }
 
-  div.field {
+  .field {
     text-align: left;
   }
 
@@ -66,4 +66,7 @@
     color: $yellow;
   }
 
+  .box {
+    overflow: auto;
+  }
 }

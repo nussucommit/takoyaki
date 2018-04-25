@@ -1,12 +1,13 @@
 <div class="list">
   <h1>Members List</h1>
-  <% if can?(:manage, User) %>
-    <%= link_to 'Add user', new_user_registration_path %>
-  <% end %>
 
   <div class="container">
     <div class="row">
-      <div class="col-sm-12 col-md-12 scrollable">
+      <div class="col-md-12 scrollable">
+        <% if can?(:create, User) %>
+          <%= button_to("Add User", new_user_registration_path, method: "get", class: "btn btn-info users-btn") %>
+        <% end %>
+
         <table>
           <tr>
             <th class="name">Name</th>
@@ -16,9 +17,10 @@
             <th class="cell">Cell</th>
             <th class="pos">Position</th>
 
-            <% if can?(:manage, User) %>
+            <% if can?(:show_full, User) %>
               <!-- <th>Edit Profile</th> -->
               <th class="role">Allocate Role</th>
+              <th class="change-pw">Change Password</th>
               <th class="del">Delete</th>
             <% end %>
 
@@ -29,14 +31,12 @@
               <td class="matric"><%= p.matric_num %></td>
               <td class="contact"><%= p.contact_num %></td>
               <td class="email"><%= p.email %></td>
-              <td class="cell"></td>
-              <td class="pos"></td>
-              <% if can?(:manage, User) %>
-              <!--
-                <td><%= link_to 'Show', edit_user_registration_path(p) %></td>
-              -->
-                <td class="role"><%= link_to 'Allocate role', edit_user_path(p) %></td>
-                <td class="del"><%= link_to 'Delete', user_path(p), method: :delete, data:{confirm: 'Are you sure?'} %></td>
+              <td class="cell"><%= p.cell %></td>
+              <td class="pos"><%= p.mc ? "MC" : "Member" %></td>
+              <% if can?(:show_full, User) %>
+                <td class="role"><%= link_to 'Allocate roles', allocate_roles_user_path(p) %></td>
+                <td class="change-pw"><%= link_to 'Change password', edit_user_path(p) %></td>
+                <td class="del"><%= link_to 'Delete', user_path(p), method: :delete, data: { confirm: 'Are you sure?' } %></td>
               <% end %>
             </tr>
           <% end %>
