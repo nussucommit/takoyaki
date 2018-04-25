@@ -4,38 +4,49 @@ class UsersController < ApplicationController
   load_and_authorize_resource
 
   def index
-    @users = User.all
+    @users = User.order(username: :asc)
   end
 
   def show; end
 
-  def edit
-    @user = User.find params[:id]
-  end
+  def edit; end
 
   def update
-    @user = User.find params[:id]
-    if can?(:manage, User)
+    if @user.update_with_password user_params
+      bypass_sign_in @user
+      redirect_to users_path, notice: 'Password successfully changed!'
+    else
+      redirect_to users_path, alert: 'Password updating failed!'
+    end
+  end
+
+  def allocate_roles; end
+
+  def update_roles
+    if @user.update role_params
       Role::ROLES.each do |r|
         role_adder(@user, r)
       end
+
+      redirect_to users_path, notice: 'Roles successfully updated!'
+    else
+      redirect_to users_path, alert: 'Updating roles failed!'
     end
-    @user.update(user_params)
-    # Sign in the user by passing validation in case their password changed
-    # bypass_sign_in(@user)
-    redirect_to users_path
   end
 
   def destroy
-    user = User.find params[:id]
-    user.destroy
-    redirect_to users_path
+    redirect_to users_path if @user.destroy
   end
 
   private
 
   def user_params
-    params.require(:user).permit(:password, :password_confirmation)
+    params.require(:user).permit(:password, :password_confirmation,
+                                 :current_password)
+  end
+
+  def role_params
+    params.require(:user).permit(:cell, :mc)
   end
 
   def role_adder(user, role)

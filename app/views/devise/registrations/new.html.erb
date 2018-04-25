@@ -1,50 +1,78 @@
-<h2>Sign up</h2>
-
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-  <%= devise_error_messages! %>
-  <div class="field">
-    <%= f.label :username %><br />
-    <%= f.text_field :username, autofocus: true%>
-  </div>
-  <div class="field">
-    <%= f.label :matric_num %><br />
-    <%= f.text_field :matric_num%>
-  </div>
-
-  <div class="field">
-    <%= f.label :contact_number %><br />
-    <%= f.text_field :contact_num%>
-  </div>
-
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email%>
-  </div>
-
-  <div class="field">
-    <%= f.label :password %>
-    <% if @minimum_password_length %>
-    <em>(<%= @minimum_password_length %> characters minimum)</em>
-    <% end %><br />
-    <%= f.password_field :password, autocomplete: "off" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "off" %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit "Sign up" %>
-  </div>
-<% end %>
-<!--
-<% for role in Role.all %>
-<div>
-  <%= check_box_tag "user[role_ids][]", role.id, @user.roles.include?(role) %>
-  <%=h role.name %>
+<div class="container-fluid no-padding">
+  <h1> Add User </h1>
 </div>
-<% end %>
-<%= hidden_field_tag "user[role_ids][]", "" %>
--->
-<%= render "devise/shared/links" %>
+
+<div class="new-user">
+  <div class="container">
+      <div class="row">
+        <div class="col-md-6 offset-md-3">
+          <div class="box">
+            <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+              <%= devise_error_messages! %>
+              <table>
+                <div class="field">
+                  <tr>
+                    <th><%= f.label :username %></th>
+                    <td><%= f.text_field :username, autofocus: true, :required => true %></td>
+                  </tr>
+                </div>
+
+                <div class="field">
+                  <tr>
+                    <th><%= f.label :matric_num %></th>
+                    <td><%= f.text_field :matric_num %></td>
+                  </tr>
+                </div>
+
+                <div class="field">
+                  <tr>
+                    <th><%= f.label :contact_num %></th>
+                    <td><%= f.text_field :contact_num, :type => "number" %></td>
+                  </tr>
+                </div>
+
+                <div class="field">
+                  <tr>
+                    <th><%= f.label :email %></th>
+                    <td><%= f.email_field :email, :required => true, :type => "email" %></td>
+                  </tr>
+                </div>
+
+                <div class="field">
+                  <tr>
+                    <th><%= f.label :cell %></th>
+                    <td><%= f.select(:cell, options_for_select(User::CELLS.map { |c| [c.capitalize, c] }), {:class => 'form-control'}) %>
+                  </tr>
+                </div>
+
+                <div class="field">
+                  <tr>
+                    <th><%= f.label :mc %></th>
+                    <td><%= f.select(:mc, options_for_select(["true", "false"]), {:class => 'form-control'}) %>
+                  </tr>
+                </div>
+
+                <div class="field">
+                  <tr>
+                    <th><%= f.label :password %></th>
+                    <td><%= f.password_field :password, autocomplete: "off", :placeholder => "6 characters minimum", :required => true %></td>
+                  </tr>
+                </div>
+
+                <div class="field">
+                  <tr>
+                    <th><%= f.label :password_confirmation %></th>
+                    <td><%= f.password_field :password_confirmation, autocomplete: "off", :placeholder => "6 characters minimum", :required => true %></td>
+                  </tr>
+                </div>
+              </table>
+
+              <div class="actions">
+                <%= f.submit "Add User" %>
+              </div>
+            <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

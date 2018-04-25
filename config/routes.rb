@@ -16,7 +16,13 @@ Rails.application.routes.draw do
 
   devise_for :users, controllers: { registrations: 'registrations' }
 
-  resources :users
+  resources :users do
+    member do
+      get 'allocate_roles', to: 'users#allocate_roles', as: 'allocate_roles'
+      patch 'allocate_roles', to: 'users#update_roles'
+      put 'allocate_roles', to: 'users#update_roles'
+    end
+  end
 
   resources :duties do
     collection do

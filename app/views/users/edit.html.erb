@@ -1,48 +1,32 @@
 <div class="edit-profile">
-  <% if current_user.has_role?(:admin)%>
-    <h1>Edit password or Allocate roles</h1>
-  <%else%>
-    <h1>Edit your password</h1>
-  <% end %>
+  <h1>Edit Password</h1>
 
   <div class="container">
     <div class="row">
-      <div class="col-sm-12 col-md-6 offset-md-3">
+      <div class="col-md-6 offset-md-3">
         <div class="box">
           <%= form_with(model: @user) do |f| %>
             <table>
               <div class="field">
                 <tr>
-                  <th><%= f.label :new_password %> <i>(6 characters minimum)</i></th>
-                  <td><%= f.password_field :password, autocomplete: "off" %></td>
+                  <th><%= f.label :new_password %></th>
+                  <td><%= f.password_field :password, :placeholder => "6 characters minimum", autocomplete: "off", :required => true, :minlength => "6" %></td>
                 </tr>
               </div>
+
               <div class="field">
                 <tr>
                   <th><%= f.label :new_password_confirmation %></th>
-                  <td><%= f.password_field :password_confirmation %></td>
+                  <td><%= f.password_field :password_confirmation, :placeholder => "6 characters minimum", autocomplete: "off", :required => true, :minlength => "6" %></td>
                 </tr>
               </div>
 
               <div class="field">
                 <tr>
                   <th><%= f.label :current_password %></th>
-                  <td><%= f.password_field :current_password, autocomplete: "off", :required => true %></td>
+                  <td><%= f.password_field :current_password, :placeholder => "6 characters minimum", autocomplete: "off", :required => true, :minlength => "6" %></td>
                 </tr>
               </div>
-
-            <% if can?(:manage, User)%>
-              <fieldset>
-                <legend>User Roles</legend>
-                <% Role::ROLES.each do |role| %>
-                  <%= f.label(role) do %>
-                    <%= role %>
-                    <%= hidden_field_tag(role, 0) %>
-                    <%= check_box_tag(role, 1, @user.has_role?(role)) %>
-                  <% end %>
-                <% end %>
-              </fieldset>
-            <% end %>
 
             </table>
 

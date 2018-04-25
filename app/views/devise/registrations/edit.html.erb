@@ -17,7 +17,7 @@
               <div class="field">
                 <tr>
                   <th><%= f.label :username %></th>
-                  <td>  <%= f.text_field :username, autofocus: true, autocomplete: "off" %></td>
+                  <td>  <%= f.text_field :username, autofocus: true, :readonly => true %></td>
                 </tr>
               </div>
 
@@ -31,14 +31,14 @@
               <div class="field">
                 <tr>
                   <th><%= f.label :contact_number %></th>
-                  <td><%= f.text_field :contact_num, autocomplete: "off" %></td>
+                  <td><%= f.text_field :contact_num, autocomplete: "off", :type => "number" %></td>
                 </tr>
               </div>
 
               <div class="field">
                 <tr>
                   <th> <%= f.label :email %></th>
-                  <td><%= f.email_field :email, autocomplete: "off" %></td>
+                  <td><%= f.email_field :email, autocomplete: "off", :type => "email", :required => true %></td>
                 </tr>
               </div>
               

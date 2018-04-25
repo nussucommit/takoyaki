@@ -17,12 +17,17 @@ AllCops:
 
 Layout/EmptyLinesAroundArguments:
   Enabled: false
-  
+
+Metrics/AbcSize:
+  Exclude:
+    - 'app/models/ability.rb'
+
 Metrics/BlockLength:
   Exclude:
     - 'spec/**/*'
     - 'app/models/concerns/*'
     - 'app/controllers/concerns/*'
+    - 'config/routes.rb'
 
 Metrics/ClassLength:
   Exclude:
