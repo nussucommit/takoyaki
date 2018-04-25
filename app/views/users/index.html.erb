@@ -4,7 +4,7 @@
   <div class="container">
     <div class="row">
       <div class="col-md-12 scrollable">
-        <% if can?(:manage, User) %>
+        <% if can?(:create, User) %>
           <%= button_to("Add User", new_user_registration_path, method: "get", class: "btn btn-info users-btn") %>
         <% end %>
 
@@ -17,7 +17,7 @@
             <th class="cell">Cell</th>
             <th class="pos">Position</th>
 
-            <% if can?(:manage, User) %>
+            <% if can?(:show_full, User) %>
               <!-- <th>Edit Profile</th> -->
               <th class="role">Allocate Role</th>
               <th class="change-pw">Change Password</th>
@@ -33,10 +33,10 @@
               <td class="email"><%= p.email %></td>
               <td class="cell"><%= p.cell %></td>
               <td class="pos"><%= p.mc ? "MC" : "Member" %></td>
-              <% if can?(:manage, User) %>
-                <td class="role"><%= link_to 'Allocate role', allocate_role_user_path(p) %></td>
+              <% if can?(:show_full, User) %>
+                <td class="role"><%= link_to 'Allocate roles', allocate_roles_user_path(p) %></td>
                 <td class="change-pw"><%= link_to 'Change password', edit_user_path(p) %></td>
-                <td class="del"><%= link_to 'Delete', user_path(p), method: :delete, data:{confirm: 'Are you sure?'} %></td>
+                <td class="del"><%= link_to 'Delete', user_path(p), method: :delete, data: { confirm: 'Are you sure?' } %></td>
               <% end %>
             </tr>
           <% end %>

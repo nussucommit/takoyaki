@@ -4,44 +4,38 @@ class UsersController < ApplicationController
   load_and_authorize_resource
 
   def index
-    @users = User.order(cell: :asc)
+    @users = User.order(username: :asc)
   end
 
   def show; end
 
-  def edit
-    @user = User.find params[:id]
-  end
+  def edit; end
 
   def update
-    @user = User.find params[:id]
-
     if @user.update_with_password user_params
       bypass_sign_in @user
-      redirect_to users_path, notice: 'Password Successfully Updated'
+      redirect_to users_path, notice: 'Password successfully changed!'
     else
-      redirect_to users_path, alert: 'Fail to Update Password'
+      redirect_to users_path, alert: 'Password updating failed!'
     end
   end
 
-  def allocate_role
-    @user = User.find params[:id] if can?(:manage, User)
-  end
+  def allocate_roles; end
 
-  def update_role
-    @user = User.find params[:id]
+  def update_roles
+    if user.update role_params
+      Role::ROLES.each do |r|
+        role_adder(user, r)
+      end
 
-    if can?(:manage, User)
-      add_roles(@user)
+      redirect_to users_path, notice: 'Roles successfully updated!'
     else
-      redirect_to users_path, alert: 'Not Authorised'
+      redirect_to users_path, alert: 'Updating roles failed!'
     end
   end
 
   def destroy
-    user = User.find params[:id]
-
-    redirect_to users_path if user.destroy
+    redirect_to users_path if @user.destroy
   end
 
   private
@@ -53,18 +47,6 @@ class UsersController < ApplicationController
 
   def role_params
     params.require(:user).permit(:cell, :mc)
-  end
-
-  def add_roles(user)
-    if user.update role_params
-      Role::ROLES.each do |r|
-        role_adder(user, r)
-      end
-
-      redirect_to users_path, notice: 'Role Updated Succesfully'
-    else
-      redirect_to users_path, alert: 'Fail to Update Role'
-    end
   end
 
   def role_adder(user, role)

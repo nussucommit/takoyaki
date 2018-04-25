@@ -18,9 +18,9 @@ Rails.application.routes.draw do
 
   resources :users do
     member do
-      get 'allocate_role', to: 'users#allocate_role', as: 'allocate_role'
-      patch 'allocate_role', to: 'users#update_role'
-      put 'allocate_role', to: 'users#update_role'
+      get 'allocate_roles', to: 'users#allocate_roles', as: 'allocate_roles'
+      patch 'allocate_roles', to: 'users#update_roles'
+      put 'allocate_roles', to: 'users#update_roles'
     end
   end
 
