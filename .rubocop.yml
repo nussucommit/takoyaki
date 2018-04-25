@@ -17,8 +17,8 @@ AllCops:
 
 Layout/EmptyLinesAroundArguments:
   Enabled: false
-  
-Metric/AbcSize:
+
+Metrics/AbcSize:
   Exclude:
     - 'app/models/ability.rb'
 

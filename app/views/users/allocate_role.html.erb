@@ -22,20 +22,18 @@
                 </tr>
               </div>
 
-              <% if can?(:set_roles, User) %>
-                <div class="field">
-                  <tr>
-                    <th>Set Admin</th>
-                    <td>
-                      <% Role::ROLES.each do |role| %>
-                          <%= hidden_field_tag(role, 0) %>
-                          <%= check_box_tag(role, 1, @user.has_role?(role), {:class => "check-box"}) %>
+              <div class="field">
+                <tr>
+                  <th>Set Admin</th>
+                  <td>
+                    <% Role::ROLES.each do |role| %>
+                        <%= hidden_field_tag(role, 0) %>
+                        <%= check_box_tag(role, 1, @user.has_role?(role), {:class => "check-box"}) %>
 
-                      <% end %>
-                    </td>
-                </tr>
-                </div>
-              <% end %>
+                    <% end %>
+                  </td>
+              </tr>
+              </div>
 
             </table>
 

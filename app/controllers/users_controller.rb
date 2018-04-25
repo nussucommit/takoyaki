@@ -23,9 +23,9 @@ class UsersController < ApplicationController
   def allocate_roles; end
 
   def update_roles
-    if user.update role_params
+    if @user.update role_params
       Role::ROLES.each do |r|
-        role_adder(user, r)
+        role_adder(@user, r)
       end
 
       redirect_to users_path, notice: 'Roles successfully updated!'

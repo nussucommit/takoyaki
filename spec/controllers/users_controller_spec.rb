@@ -103,16 +103,17 @@ RSpec.describe UsersController, type: :controller do
     end
   end
 
-  describe 'PUT #update_role' do
+  describe 'PUT #update_roles' do
     it 'redirects when unauthenticated' do
-      put :update_role, params: { id: create(:user).id }
+      put :update_roles, params: { id: create(:user).id }
       should redirect_to(new_user_session_path)
     end
     it 'denies access to normal user' do
       user = create(:user)
       sign_in user
       expect do
-        put :update_role, params: { id: user.id }
+        put :update_roles, params: { id: user.id, user: { cell: 'technical',
+                                                          mc: 'false' } }
       end.to raise_error(CanCan::AccessDenied)
     end
     context 'admin' do
@@ -121,48 +122,48 @@ RSpec.describe UsersController, type: :controller do
         user.add_role(:admin)
         sign_in user
       end
-      it 'add role' do
+      it 'adds role' do
         user = create(:user)
         expect do
-          put :update_role, params: { id: user.id, user: { cell: 'technical',
-                                                           mc: 'false' },
-                                      Role::ROLES.last => 1 }
+          put :update_roles, params: { id: user.id, user: { cell: 'technical',
+                                                            mc: 'false' },
+                                       Role::ROLES.last => 1 }
         end.to change {
           User.find(user.id).has_role?(Role::ROLES.last)
         }.from(false).to(true)
         should redirect_to(users_path)
       end
-      it 'remove role' do
+      it 'removes role' do
         user = create(:user)
         user.add_role(:admin)
         expect do
-          put :update_role, params: { id: user.id, user: { cell: 'technical',
-                                                           mc: 'false' },
-                                      admin: 0 }
+          put :update_roles, params: { id: user.id, user: { cell: 'technical',
+                                                            mc: 'false' },
+                                       admin: 0 }
         end.to change {
           User.find(user.id).has_role?(:admin)
         }.from(true).to(false)
         should redirect_to(users_path)
       end
-      it 'change cell' do
+      it 'changes cell' do
         user = create(:user, cell: 'marketing')
         user.add_role(:admin)
         expect do
-          put :update_role, params: { id: user.id, user: { cell: 'technical',
-                                                           mc: 'false' },
-                                      admin: 0 }
+          put :update_roles, params: { id: user.id, user: { cell: 'technical',
+                                                            mc: 'false' },
+                                       admin: 0 }
         end.to change {
           User.find(user.id).cell
         }.from('marketing').to('technical')
         should redirect_to(users_path)
       end
-      it 'change mc' do
+      it 'changes mc' do
         user = create(:user, mc: false)
         user.add_role(:admin)
         expect do
-          put :update_role, params: { id: user.id, user: { cell: 'technical',
-                                                           mc: 'true' },
-                                      admin: 0 }
+          put :update_roles, params: { id: user.id, user: { cell: 'technical',
+                                                            mc: 'true' },
+                                       admin: 0 }
         end.to change {
           User.find(user.id).mc
         }.from(false).to(true)
