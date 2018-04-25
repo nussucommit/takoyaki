@@ -19,6 +19,9 @@
         <button type="button" id="announcement-toggle-btn" class="btn btn-large btn-light duty-table-button">SideBar Toggle</button>
         <%= link_to 'Previous Week', duties_path(start_date: @start_date - 7), class: 'btn btn-large btn-light duty-table-button' %>
         <%= link_to 'Next Week', duties_path(start_date: @start_date + 7), class: 'btn btn-large btn-light duty-table-button' %>
+        <% if can?(:edit, Duty) %>
+          <%= link_to 'Change Current Duties', duties_places_path, class: "btn btn-large btn-light duty-table-button" %>
+        <% end %>
         <% if can?(:update_default_duties, Duty) %>
           <%= link_to 'Update Default Duties', availabilities_places_path, class: "btn btn-large btn-light duty-table-button" %>
         <% end %>
