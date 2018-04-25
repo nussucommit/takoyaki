@@ -5,7 +5,7 @@
     <div class="row">
       <div class="col-md-6 offset-md-3">
         <div class="box">
-            
+
           <%= form_for @user, :url => { :controller => "users", :action => "update_role" } do |u| %>
             <table>
               <div class="field">
@@ -27,8 +27,8 @@
                   <th>Set Admin</th>
                   <td>
                     <% Role::ROLES.each do |role| %>
-                        <%= hidden_field_tag(role, 0) %>
-                        <%= check_box_tag(role, 1, @user.has_role?(role), {:class => "check-box"}) %>
+                      <%= hidden_field_tag(role, 0) %>
+                      <%= check_box_tag(role, 1, @user.has_role?(role), {:class => "check-box"}) %>
 
                     <% end %>
                   </td>

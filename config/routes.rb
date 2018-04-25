@@ -10,6 +10,10 @@ Rails.application.routes.draw do
     end
   end
 
+  namespace :duties do
+    resources :places, only: %i[index edit update]
+  end
+
   namespace :availabilities do
     resources :places, only: %i[index edit update]
   end

@@ -88,4 +88,12 @@ module DutiesHelper
   end
 
   # rubocop:enable Metrics/LineLength, Metrics/AbcSize, Metrics/MethodLength
+
+  def generate_select_duties(duty)
+    select_tag("duty[#{duty.id}]",
+               options_from_collection_for_select(
+                 @users,
+                 'id', 'username', selected: duty.user_id
+               ), class: 'availability-select', onclick: 'enableButtons()')
+  end
 end

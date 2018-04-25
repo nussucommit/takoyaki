@@ -1,11 +1,6 @@
 <div style="display: flex; height: 101px; padding: 8px 8px; justify-content: center; align-items: center; border-bottom: 1px solid #e0e0e0;">
   <h2 style="font-weight: normal; text-align: center;">Schedule Availability</h2>
 </div>
-<div style="display: flex; flex-direction: column; padding: 32px 40px; justify-content: space-around; border-bottom: 1px solid #e0e0e0;">
-  <% if can?(:place, Availability) %>
-    <%= link_to "Places", availabilities_places_path, class: "btn btn-large btn-light btn-nav" %>
-  <% end %>
-</div>
 <div style="display: flex; flex-direction: column; padding: 32px 40px; justify-content: space-around;">
   <%= submit_tag("Update", id: 'update-button', data: { disable_with: false }, class: "btn btn-large btn-primary disabled btn-nav") %>
   <%= submit_tag("Clear All", id: 'clear-all-button', data: { disable_with: false }, class: "btn btn-large btn-warning white-text btn-nav")%>

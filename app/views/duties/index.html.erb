@@ -3,7 +3,7 @@
 
 <div class="container-fluid no-padding-top">
   <div class="row">
-    <div class="col-md-12 no-padding">  
+    <div class="col-md-12 no-padding">
       <h1>Duty Timetable for the Week</h1>
     </div>
   </div>
@@ -15,12 +15,18 @@
     </div>
 
     <div id="duty-table" class="col-md-9">
-      <div class="col-md-12 duty-table-header">  
+      <div class="col-md-12 duty-table-header">
         <button type="button" id="announcement-toggle-btn" class="btn btn-large btn-light duty-table-button">SideBar Toggle</button>
         <%= link_to 'Previous Week', duties_path(start_date: @start_date - 7), class: 'btn btn-large btn-light duty-table-button' %>
         <%= link_to 'Next Week', duties_path(start_date: @start_date + 7), class: 'btn btn-large btn-light duty-table-button' %>
+        <% if can?(:edit, Duty) %>
+          <%= link_to 'Change Current Duties', duties_places_path, class: "btn btn-large btn-light duty-table-button" %>
+        <% end %>
+        <% if can?(:update_default_duties, Duty) %>
+          <%= link_to 'Update Default Duties', availabilities_places_path, class: "btn btn-large btn-light duty-table-button" %>
+        <% end %>
       </div>
-      
+
       <div class="schedule-container">
         <div class="schedule-left">
           <table class="table table-sm">
@@ -94,7 +100,7 @@
         </div>
       </div>
 
-      <% if current_user.has_role?(:admin) %>
+      <% if can?(:generate_duties, Duty) %>
         <%= form_tag(generate_duties_path, method: "post") do %>
           <%= label_tag(:num_weeks, "Generate for how many weeks?") %>
           <%= text_field_tag(:num_weeks) %>
