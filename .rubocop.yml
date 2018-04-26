@@ -19,6 +19,7 @@ Layout/EmptyLinesAroundArguments:
   Enabled: false
 
 Metrics/AbcSize:
+  Max: 18
   Exclude:
     - 'app/models/ability.rb'
 

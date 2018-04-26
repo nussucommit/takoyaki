@@ -11,7 +11,7 @@
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #  request_user_id :integer
-#  free            :boolean
+#  free            :boolean          default(FALSE), not null
 #
 # Indexes
 #

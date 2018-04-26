@@ -35,23 +35,41 @@ class DutiesController < ApplicationController
   end
 
   def grab
-    params[:duty_id]&.each do |duty_id|
-      grab_duty = Duty.find(duty_id)
-      grab_duty.update(user: current_user, free: false, request_user_id: nil)
-    end
+    if free_duties?(params[:duty_id])
+      Duty.find(params[:duty_id]).each do |duty|
+        duty.update(user: current_user, free: false, request_user_id: nil)
+      end
 
-    redirect_to duties_path
+      redirect_to duties_path, notice: 'Duty successfully grabbed!'
+    else
+      redirect_to duties_path, alert: 'Error in grabbing duty! ' \
+        'Please try again.'
+    end
   end
 
   def drop
-    params[:duty_id].each do |duty_id|
-      drop_duty = Duty.find(duty_id)
-      swap_user(params[:user_id].to_i, drop_duty)
+    if owned_duties?(params[:duty_id], current_user)
+      Duty.find(params[:duty_id]).each do |duty|
+        swap_user(params[:user_id].to_i, duty)
+      end
+
+      redirect_to duties_path, notice: 'Duty successfully dropped!'
+    else
+      redirect_to duties_path, alert: 'Error in dropping duty! ' \
+        'Please try again.'
     end
-    redirect_to duties_path
   end
 
   private
+
+  def owned_duties?(duty_ids, supposed_user)
+    duty_ids.present? &&
+      duty_ids.all? { |d| Duty.find(d).user == supposed_user }
+  end
+
+  def free_duties?(duty_ids)
+    duty_ids.present? && duty_ids.all? { |d| Duty.find(d).free }
+  end
 
   def swap_user(swap_user_id, drop_duty)
     if swap_user_id.zero?
