@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
 class GenericMailer < ApplicationMailer
-  default from: %("Mailgun Sandbox" \
-    <postmaster@sandbox8f696e611a6e4906a977c007f8971322.mailgun.org>)
+  default from: %("NUSSU commIT" <duty@#{ENV['MAILGUN_DOMAIN']}>)
 
-  def drop_duty(duty, user)
+  def drop_duty(duty, user_ids)
     @duty = duty
-    mail(to: users_with_name(user), subject: generate_drop_duty_subject(duty))
+    mail(to: users_with_name(user_ids),
+         subject: generate_drop_duty_subject(duty))
   end
 
   def problem_report(problem)
@@ -25,8 +25,8 @@ class GenericMailer < ApplicationMailer
     "#{duty.place.name}"
   end
 
-  def users_with_name(users)
-    users&.pluck(:username, :email)&.map do |u|
+  def users_with_name(user_ids)
+    User.find(user_ids)&.pluck(:username, :email)&.map do |u|
       %("#{u[0]}" <#{u[1]}>)
     end
   end
