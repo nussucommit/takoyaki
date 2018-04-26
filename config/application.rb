@@ -20,6 +20,6 @@ module Takoyaki
 
     config.time_zone = 'Singapore'
 
-    config.action_mailer.default_url_options = { host: ENV['HOST'] }
+    config.action_mailer.default_url_options = { host: ENV['MAILER_HOST'] }
   end
 end
