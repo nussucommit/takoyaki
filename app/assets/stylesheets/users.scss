@@ -26,7 +26,7 @@
 
   .scrollable {
     overflow: auto;
-  } 
+  }
 
   .name, .matric, .contact, .cell, .pos, .role, .change-pw, .del {
     width: 15%;
@@ -72,7 +72,7 @@
   tr:nth-child(odd) {
     background-color: $dark-cream;
   }
- 
+
   @media (max-device-width: 400px) {
     div.container {
       height: 100%;

@@ -7,7 +7,7 @@
         <%= truncate(a.details, length: AnnouncementsHelper::DETAILS_LENGTH) %>
         <% if a.details.mb_chars.length > AnnouncementsHelper::DETAILS_LENGTH %>
           <%= link_to ' Read more', "#", 'data-target' => "#show_modal_#{a.id}", 'data-toggle' => 'modal' %>
-        <% end %>    
+        <% end %>
       </div>
       <div class="buttons">
         <%= link_to 'Edit', "#", 'data-target' => "#edit_modal_#{a.id}", 'data-toggle' => 'modal' %>

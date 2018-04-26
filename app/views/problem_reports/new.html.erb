@@ -10,35 +10,35 @@
   <%= form_tag(problem_reports_path, method: "post") do %>
     <div class="table-responsive-lg new-problem-report-table">
       <table>
-        <tr> 
+        <tr>
           <td class="container td-container name"><b>Name<b></td>
           <td><%= current_user.username %></td>
         </tr>
-        
+
         <tr>
           <td class="container td-container venue"><b>Venue</b></td>
           <td><%= select_tag(:venue, options_for_select(Place.all.map {|a| a.name}), {:class => 'form-control new-problem-report-form'}) %></td>
         </tr>
-        
+
         <tr>
           <td class="container td-container pc-number"><b>PC Number</b></td>
           <td><%= text_field_tag(:computer_number, "", class: "form-control new-problem-report-form") %></td>
         </tr>
-        
+
         <tr>
-        
+
           <td class="container td-container description"><b>Description</b></td>
           <% desc_place_holder = "Please try to describe the problem as descriptive as possible. If there is an error message, try to type the error message."%>
           <td>
             <%= text_area_tag(:description, "", size: "100x10", placeholder: desc_place_holder, class: "form-control new-problem-report-form") %>
           </td>
         </tr>
-        
+
         <tr>
           <td class="container td-container"></td>
-          <td> 
-            <%= check_box_tag(:is_critical) %> 
-            <%= label_tag(:is_critical, 'Critical') %> 
+          <td>
+            <%= check_box_tag(:is_critical) %>
+            <%= label_tag(:is_critical, 'Critical') %>
           </td>
         </tr>
 

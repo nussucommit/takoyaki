@@ -10,7 +10,7 @@
       </div>
 
       <%= form_for @new_announcement, :html => { class: "announcement-form" } do |a| %>
-        <div class="modal-body">   
+        <div class="modal-body">
           <%= a.label :subject, class: 'font-group' %>
           <%= a.text_field :subject, class: 'font-group form-control', required: true %><br>
           <%= a.label :details, class: 'font-group' %>
@@ -19,9 +19,9 @@
 
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary close-button" data-dismiss="modal">Close</button>
-          <%= a.submit "Create", class: 'btn btn-primary' %>  
+          <%= a.submit "Create", class: 'btn btn-primary' %>
         </div>
-        
+
       <% end %>
     </div>
   </div>
