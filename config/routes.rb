@@ -20,7 +20,7 @@ Rails.application.routes.draw do
 
   devise_for :users, controllers: { registrations: 'registrations' }
 
-  resources :users do
+  resources :users, except: %i[create new] do
     member do
       get 'allocate_roles', to: 'users#allocate_roles', as: 'allocate_roles'
       patch 'allocate_roles', to: 'users#update_roles'
@@ -28,7 +28,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :duties do
+  resources :duties, only: [:index] do
     collection do
       post 'generate', to: 'duties#generate_duties'
       post 'open_drop_modal', to: 'duties#open_drop_modal'
