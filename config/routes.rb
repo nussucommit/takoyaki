@@ -41,4 +41,7 @@ Rails.application.routes.draw do
   resources :announcements, only: %i[index create destroy update]
 
   resources :problem_reports, only: %i[index create new update]
+
+  get 'guide', to: 'static_pages#guide'
+  get 'grab_duty', to: 'static_pages#grab_duty'
 end
