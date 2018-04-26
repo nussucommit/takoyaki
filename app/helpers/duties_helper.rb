@@ -92,7 +92,7 @@ module DutiesHelper
   def generate_select_duties(duty)
     select_tag("duty[#{duty.id}]",
                options_from_collection_for_select(
-                 @users,
+                 [OpenStruct.new(id: nil, username: '')] + @users,
                  'id', 'username', selected: duty.user_id
                ), class: 'availability-select', onclick: 'enableButtons()')
   end

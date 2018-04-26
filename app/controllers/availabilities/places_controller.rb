@@ -5,13 +5,10 @@ module Availabilities
     load_and_authorize_resource
     before_action :authenticate_user!
 
-    def index
-      @places = Place.all
-    end
+    def index; end
 
     def edit
-      @users = User.all
-      @place = Place.find(params[:id])
+      @users = User.order(:id)
       load_availabilities
       load_timeslots
       @disable_viewport = true

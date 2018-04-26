@@ -28,7 +28,7 @@ module AvailabilitiesHelper
                            (ts.mc_only ? @users.select(&:mc) : @users))
     select_tag("#{day_index % 7}#{time_range_id}",
                options_from_collection_for_select(
-                 current_users,
+                 [OpenStruct.new(id: nil, username: '')] + current_users,
                  'id', 'username', selected: ts.default_user_id
                ), class: 'availability-select', onclick: 'enableButtons()')
   end

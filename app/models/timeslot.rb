@@ -28,7 +28,8 @@
 
 class Timeslot < ApplicationRecord
   has_many :duties, dependent: :destroy
-  belongs_to :default_user, class_name: 'User', inverse_of: :timeslots
+  belongs_to :default_user, class_name: 'User', inverse_of: :timeslots,
+                            optional: true
   belongs_to :place
   belongs_to :time_range
   enum day: Date::DAYNAMES

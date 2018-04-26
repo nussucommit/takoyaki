@@ -11,7 +11,7 @@ module Duties
       @start_date = (params[:start_date] || Time.zone.today.beginning_of_week)
                     .to_date
       @end_date = @start_date.to_date + 6.days
-      @users = User.all
+      @users = User.order(:username)
       load_availabilities
       load_timeslots
       @disable_viewport = true
