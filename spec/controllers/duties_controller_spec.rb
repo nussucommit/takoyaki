@@ -34,7 +34,7 @@ RSpec.describe DutiesController, type: :controller do
     it 'grab a duty' do
       duty = create(:duty, free: true)
       expect do
-        patch :grab, params: { duty_id: [duty.id] }
+        patch :grab, params: { duty_id: { duty.id => duty.id } }
         duty.reload
       end.to change { duty.user }.to(subject.current_user)
       expect(duty.free).to be(false)
@@ -44,7 +44,7 @@ RSpec.describe DutiesController, type: :controller do
     end
 
     it 'does nothing when no duties are grabbed' do
-      patch :grab, params: { duty_id: [] }
+      patch :grab, params: { duty_id: {} }
       should redirect_to duties_path
       expect(flash[:alert]).to be('Error in grabbing duty! Please try again.')
     end
@@ -57,7 +57,7 @@ RSpec.describe DutiesController, type: :controller do
 
     it 'does nothing when nonfree are grabbed' do
       duty = create(:duty, free: false)
-      patch :grab, params: { duty_id: [duty.id] }
+      patch :grab, params: { duty_id: { duty.id => duty.id } }
 
       should redirect_to duties_path
       expect(flash[:alert]).to be('Error in grabbing duty! Please try again.')
@@ -73,7 +73,7 @@ RSpec.describe DutiesController, type: :controller do
     it 'drop a duty to all' do
       duty = create(:duty, user: @user)
       expect do
-        patch :drop, params: { duty_id: [duty.id], user_id: 0 }
+        patch :drop, params: { duty_id: { duty.id => duty.id }, user_id: 0 }
         duty.reload
       end.to change { duty.free }.to(true)
       should redirect_to duties_path
@@ -84,14 +84,15 @@ RSpec.describe DutiesController, type: :controller do
       duty = create(:duty, user: @user)
       user = create(:user)
       expect do
-        patch :drop, params: { duty_id: [duty.id], user_id: user.id }
+        patch :drop, params: { duty_id: { duty.id => duty.id },
+                               user_id: user.id }
         duty.reload
       end.to change { duty.request_user_id }.to(user.id)
       should redirect_to duties_path
     end
 
     it 'does nothing when no duties are dropped' do
-      patch :drop, params: { duty_id: [] }
+      patch :drop, params: { duty_id: {} }
       should redirect_to duties_path
       expect(flash[:alert]).to be('Error in dropping duty! Please try again.')
     end
@@ -104,7 +105,7 @@ RSpec.describe DutiesController, type: :controller do
 
     it 'does nothing when nil duty owners are dropped' do
       duty = create(:duty, user: nil)
-      patch :drop, params: { duty_id: [duty.id] }
+      patch :drop, params: { duty_id: { duty.id => duty.id } }
 
       should redirect_to duties_path
       expect(flash[:alert]).to be('Error in dropping duty! Please try again.')
@@ -112,7 +113,7 @@ RSpec.describe DutiesController, type: :controller do
 
     it 'does nothing when duty not owned by the user are dropped' do
       duty = create(:duty, user: create(:user))
-      patch :drop, params: { duty_id: [duty.id] }
+      patch :drop, params: { duty_id: { duty.id => duty.id } }
 
       should redirect_to duties_path
       expect(flash[:alert]).to be('Error in dropping duty! Please try again.')

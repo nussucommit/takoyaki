@@ -36,7 +36,9 @@ class DutiesController < ApplicationController
 
   def grab
     if free_duties?(params[:duty_id])
-      Duty.find(params[:duty_id]).each do |duty|
+      duty_ids = params[:duty_id].keys
+
+      Duty.find(duty_ids).each do |duty|
         duty.update(user: current_user, free: false, request_user_id: nil)
       end
 
@@ -49,7 +51,9 @@ class DutiesController < ApplicationController
 
   def drop
     if owned_duties?(params[:duty_id], current_user)
-      Duty.find(params[:duty_id]).each do |duty|
+      duty_ids = params[:duty_id].keys
+
+      Duty.find(duty_ids).each do |duty|
         swap_user(params[:user_id].to_i, duty)
       end
 
@@ -62,13 +66,14 @@ class DutiesController < ApplicationController
 
   private
 
-  def owned_duties?(duty_ids, supposed_user)
-    duty_ids.present? &&
-      duty_ids.all? { |d| Duty.find(d).user == supposed_user }
+  def owned_duties?(duty_id_params, supposed_user)
+    duty_id_params.present? &&
+      duty_id_params.keys.all? { |d| Duty.find(d).user == supposed_user }
   end
 
-  def free_duties?(duty_ids)
-    duty_ids.present? && duty_ids.all? { |d| Duty.find(d).free }
+  def free_duties?(duty_id_params)
+    duty_id_params.present? &&
+      duty_id_params.keys.all? { |d| Duty.find(d).free }
   end
 
   def swap_user(swap_user_id, drop_duty)

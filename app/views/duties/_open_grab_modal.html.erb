@@ -9,8 +9,8 @@
     <%= form_tag(grab_duties_path, method: :post) do %>
       <% format_duties(@grab_duty_list).each do |d| %>
         <p>
-          <%= check_box_tag "duty_id[]", d[:id] %>
-          <%= label_tag 'duty_id[]', d[:timing] %>
+          <%= check_box_tag "duty_id[#{d[:id]}]", d[:id] %>
+          <%= label_tag "duty_id[#{d[:id]}]", d[:timing] %>
         </p>
       <% end %>
       <p>
