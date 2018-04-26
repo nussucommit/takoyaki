@@ -3,8 +3,6 @@
 require 'rails_helper'
 
 RSpec.describe GenericMailer, type: :mailer do
-  DEFAULT_FROM = "duty@#{ENV['MAILGUN_DOMAIN']}"
-
   describe '#drop_duty' do
     let(:mail) do
       user = create(:user)
@@ -22,7 +20,8 @@ RSpec.describe GenericMailer, type: :mailer do
         "#{@duty.place.name}"
       )
       expect(mail.to).to eq(User.pluck(:email))
-      expect(mail.from).to eq([DEFAULT_FROM])
+      expect(mail.from.length).to eq(1)
+      expect(mail.from.first).to match('duty@')
     end
 
     it 'renders the body' do
@@ -38,8 +37,9 @@ RSpec.describe GenericMailer, type: :mailer do
     end
     it 'renders the header' do
       expect(mail.subject).to eq('New computer problem')
-      expect(mail.to).to eq([@user.email])
-      expect(mail.from).to eq([DEFAULT_FROM])
+      expect(mail.to).to eq(User.where(cell: 'technical').pluck(:email))
+      expect(mail.from.length).to eq(1)
+      expect(mail.from.first).to match('duty@')
     end
     it 'renders the body' do
       expect(mail.body.encoded).to match('problem')
