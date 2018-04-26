@@ -82,7 +82,7 @@ class DutiesController < ApplicationController
       GenericMailer.drop_duty(drop_duty, User.pluck(:id)).deliver_later
     else
       drop_duty.update(request_user_id: swap_user_id)
-      GenericMailer.drop_duty(drop_duty, User.find(swap_user_id).pluck(:id))
+      GenericMailer.drop_duty(drop_duty, swap_user_id)
                    .deliver_later
     end
   end

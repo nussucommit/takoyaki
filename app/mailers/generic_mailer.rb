@@ -11,14 +11,14 @@ class GenericMailer < ApplicationMailer
 
   def problem_report(problem)
     @problem = problem
-    mail(to: users_with_name(Role.find_by(name: :technical).users),
+    mail(to: users_with_name(User.where(cell: 'technical').pluck(:id)),
          subject: 'New computer problem')
   end
 
   private
 
   def generate_drop_duty_subject(duty)
-    'Duty notification: ' \
+    'DUTY DUTY DUTY ' \
     "#{duty.time_range.start_time.strftime('%H%M')}-" \
     "#{duty.time_range.end_time.strftime('%H%M')} on " \
     "#{duty.date.strftime('%a, %d %b %Y')} at " \
