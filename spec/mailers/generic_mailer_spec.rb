@@ -20,8 +20,6 @@ RSpec.describe GenericMailer, type: :mailer do
         "#{@duty.place.name}"
       )
       expect(mail.to).to eq(User.pluck(:email))
-      expect(mail.from.length).to eq(1)
-      expect(mail.from.first).to match('duty@')
     end
 
     it 'renders the body' do
@@ -38,8 +36,6 @@ RSpec.describe GenericMailer, type: :mailer do
     it 'renders the header' do
       expect(mail.subject).to eq('New computer problem')
       expect(mail.to).to eq(User.where(cell: 'technical').pluck(:email))
-      expect(mail.from.length).to eq(1)
-      expect(mail.from.first).to match('duty@')
     end
     it 'renders the body' do
       expect(mail.body.encoded).to match('problem')
