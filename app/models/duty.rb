@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-
 # == Schema Information
 #
 # Table name: duties
@@ -15,8 +14,9 @@
 #
 # Indexes
 #
-#  index_duties_on_timeslot_id  (timeslot_id)
-#  index_duties_on_user_id      (user_id)
+#  index_duties_on_timeslot_id                       (timeslot_id)
+#  index_duties_on_user_id                           (user_id)
+#  index_duties_on_user_id_and_timeslot_id_and_date  (user_id,timeslot_id,date) UNIQUE
 #
 # Foreign Keys
 #
