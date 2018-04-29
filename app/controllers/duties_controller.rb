@@ -11,10 +11,12 @@ class DutiesController < ApplicationController
   end
 
   def generate_duties
-    start_date = Time.zone.today.beginning_of_week
+    start_date = (params[:start_date] || Time.zone.today.beginning_of_week)
+                 .to_date
     end_date = start_date + (params[:num_weeks].to_i * 7 - 1).days
     Duty.generate(start_date, end_date)
-    redirect_to duties_path
+    redirect_to duties_path(start_date: start_date),
+                notice: 'Duties successfully generated!'
   end
 
   def open_drop_modal

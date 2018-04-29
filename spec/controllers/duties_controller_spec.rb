@@ -19,11 +19,38 @@ RSpec.describe DutiesController, type: :controller do
     before do
       sign_in create(:user)
       create_list(:time_range, 10)
-      create(:timeslot)
-      post :generate_duties, params: { num_weeks: 1 }
+      @timeslot = create(:timeslot, day: 'Tuesday')
     end
 
-    it { should redirect_to duties_path }
+    it 'should generate duties without start time given' do
+      post :generate_duties, params: { num_weeks: 2 }
+      first_date = Time.zone.today.beginning_of_week + 1.day
+
+      expect(Duty.count).to be(2)
+      expect(Duty.where(timeslot: @timeslot).count).to be(2)
+      expect(Duty.order(:date).first.date).to eq(first_date)
+      expect(Duty.order(:date).second.date).to eq(first_date + 1.week)
+
+      should redirect_to duties_path(
+        start_date: Time.zone.today.beginning_of_week
+      )
+      expect(flash[:notice]).to be('Duties successfully generated!')
+    end
+
+    it 'should generate duties with start time given' do
+      start_date = Time.zone.today.beginning_of_week + 1.week
+      first_date = start_date + 1.day
+
+      post :generate_duties, params: { num_weeks: 2, start_date: start_date }
+
+      expect(Duty.count).to be(2)
+      expect(Duty.where(timeslot: @timeslot).count).to be(2)
+      expect(Duty.order(:date).first.date).to eq(first_date)
+      expect(Duty.order(:date).second.date).to eq(first_date + 1.week)
+
+      should redirect_to duties_path(start_date: start_date)
+      expect(flash[:notice]).to be('Duties successfully generated!')
+    end
   end
 
   describe 'POST duties#grab' do

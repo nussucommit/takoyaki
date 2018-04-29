@@ -119,7 +119,8 @@
         <%= form_tag(generate_duties_path, method: "post") do %>
           <%= label_tag(:num_weeks, "Generate for how many weeks?") %>
           <%= text_field_tag(:num_weeks) %>
-          <%= submit_tag("Generate") %>
+          <%= hidden_field_tag(:start_date, @start_date) %>
+          <%= submit_tag("Generate (from #{@start_date.strftime('%d/%m/%y')})") %>
         <% end %>
       <% end %>
     </div>
