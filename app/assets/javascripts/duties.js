@@ -47,7 +47,7 @@ function colourScheduleTable(numOfPlaces) {
 
 function setDutyTableWidth(averageColspan) {
   if (averageColspan !== undefined) {
-    $('.schedule-timings').css({ width: 150 - 10 * averageColspan });
+    $('.schedule-timings').css({ width: 150 - 5 * averageColspan });
   }
 }
 
