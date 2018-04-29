@@ -79,17 +79,23 @@
                            <%= button_to "Grab", { controller: 'duties', action: 'open_grab_modal', grab_duty_list: duty[:span_duty] }, { method: :post, remote: true, class: 'btn btn-link', style: "line-height: 0;", 'data-toggle': "modal", 'data-target': '#grab-drop-modal' } %>
                         </td>
                       <% else %>
-                        <td class="schedule-name text-overflow-ellipsis" colspan="<%= duty[:colspan] %>">
-                          <% if current_user == duty[:user] %>
+                        <% if current_user == duty[:user] %>
+                          <td class="schedule-name text-overflow-ellipsis my-duty-cell" colspan="<%= duty[:colspan] %>">
                             <%= button_to duty[:user].username, { controller: 'duties', action: 'open_drop_modal', drop_duty_list: duty[:span_duty] }, { method: :post, remote: true, class: 'btn btn-link', style: "line-height: 0;", 'data-toggle': "modal", 'data-target': '#grab-drop-modal' } %>
-                          <% else %>
-                            <%= duty[:user].username %>
-                          <% end %>
-                          <div id="grab-drop-modal" class="modal hide fade" role="dialog" aria-labelledby="grabDropModal" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
+                            <div id="grab-drop-modal" class="modal hide fade" role="dialog" aria-labelledby="grabDropModal" aria-hidden="true">
+                              <div class="modal-dialog" role="document">
+                              </div>
                             </div>
-                          </div>
-                        </td>
+                          </td>
+                        <% else %>
+                          <td class="schedule-name text-overflow-ellipsis" colspan="<%= duty[:colspan] %>">
+                            <%= duty[:user].username %>
+                            <div id="grab-drop-modal" class="modal hide fade" role="dialog" aria-labelledby="grabDropModal" aria-hidden="true">
+                              <div class="modal-dialog" role="document">
+                              </div>
+                            </div>
+                          </td>
+                        <% end %>
                       <% end %>
                     <% end %>
                   </tr>
