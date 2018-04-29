@@ -81,7 +81,7 @@
 
                       <% if duty[:user].nil? %>
                         <td class="schedule-name-empty" colspan="<%= duty[:colspan] %>">&nbsp;</td>
-                      <% elsif duty[:free] || current_user == duty[:request_user] %>
+                      <% elsif duty[:free] || current_user.id == duty[:request_user_id] %>
                         <td class="schedule-name-empty text-center" colspan="<%= duty[:colspan] %>">
                            <%= button_to "Grab", { controller: 'duties', action: 'open_grab_modal', grab_duty_list: duty[:span_duty] }, { method: :post, remote: true, class: 'btn btn-link', style: "line-height: 0;", 'data-toggle': "modal", 'data-target': '#grab-drop-modal' } %>
                         </td>
