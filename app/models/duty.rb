@@ -26,6 +26,8 @@
 
 class Duty < ApplicationRecord
   belongs_to :user, optional: true
+  belongs_to :request_user, class_name: 'User', optional: true,
+                            inverse_of: :duties
   belongs_to :timeslot
   has_one :time_range, through: :timeslot
   has_one :place, through: :timeslot

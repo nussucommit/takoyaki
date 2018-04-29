@@ -56,8 +56,8 @@ module DutiesHelper
   def check_condition(prev_duty, current_duty)
     prev_duty&.free != current_duty&.free ||
       (!prev_duty&.free && !current_duty&.free &&
-        ((!prev_duty.request_user_id.nil? &&
-          prev_duty&.request_user_id != current_duty&.request_user_id) ||
+        ((!prev_duty.request_user.nil? &&
+          prev_duty&.request_user != current_duty&.request_user) ||
         prev_duty&.user_id != current_duty&.user_id))
   end
 

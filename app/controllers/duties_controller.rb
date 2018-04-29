@@ -35,11 +35,11 @@ class DutiesController < ApplicationController
   end
 
   def grab
-    if free_duties?(params[:duty_id])
+    if grabable?(params[:duty_id])
       duty_ids = params[:duty_id].keys
 
       Duty.find(duty_ids).each do |duty|
-        duty.update(user: current_user, free: false, request_user_id: nil)
+        duty.update(user: current_user, free: false, request_user: nil)
       end
 
       redirect_to duties_path, notice: 'Duty successfully grabbed!'
@@ -71,9 +71,10 @@ class DutiesController < ApplicationController
       duty_id_params.keys.all? { |d| Duty.find(d).user == supposed_user }
   end
 
-  def free_duties?(duty_id_params)
-    duty_id_params.present? &&
-      duty_id_params.keys.all? { |d| Duty.find(d).free }
+  def grabable?(duty_id_params)
+    duty_id_params.present? && duty_id_params.keys.all? do |d|
+      Duty.find(d).free || Duty.find(d).request_user == current_user
+    end
   end
 
   def swap_user(swap_user_id, drop_duty)

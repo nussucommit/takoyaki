@@ -43,8 +43,28 @@ RSpec.describe DutiesController, type: :controller do
       expect(flash[:notice]).to be('Duty successfully grabbed!')
     end
 
+    it 'grabs duty given to me' do
+      duty = create(:duty, free: false,
+                           request_user_id: subject.current_user.id)
+      expect do
+        patch :grab, params: { duty_id: { duty.id => duty.id } }
+        duty.reload
+      end.to change { duty.user }.to(subject.current_user)
+      expect(duty.free).to be(false)
+      expect(duty.request_user_id).to be(nil)
+      should redirect_to duties_path
+      expect(flash[:notice]).to be('Duty successfully grabbed!')
+    end
+
     it 'does nothing when no duties are grabbed' do
       patch :grab, params: { duty_id: {} }
+      should redirect_to duties_path
+      expect(flash[:alert]).to be('Error in grabbing duty! Please try again.')
+    end
+
+    it 'does nothing when the duty is not for me' do
+      duty = create(:duty, free: false, request_user_id: create(:user))
+      patch :grab, params: { duty_id: { duty.id => duty.id } }
       should redirect_to duties_path
       expect(flash[:alert]).to be('Error in grabbing duty! Please try again.')
     end
