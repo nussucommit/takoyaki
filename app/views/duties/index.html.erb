@@ -68,10 +68,17 @@
               </tr>
             </thead>
             <tbody>
+              <% sum_colspan = 0 %>
+              <% duties_count = 0 %>
               <% process_duties(@start_date, @end_date).each do |day| %>
                 <% day.each do |place| %>
                   <tr>
                     <% place.each do |duty| %>
+                      <% unless duty[:user].nil? %>
+                        <% sum_colspan += duty[:colspan] %>
+                        <% duties_count += 1 %>
+                      <% end %>
+
                       <% if duty[:user].nil? %>
                         <td class="schedule-name-empty" colspan="<%= duty[:colspan] %>">&nbsp;</td>
                       <% elsif duty[:free] || current_user == duty[:request_user] %>
@@ -105,6 +112,8 @@
           </table>
         </div>
       </div>
+
+      <div id="average-colspan" data-average-colspan="<%= duties_count.zero? ? 0 : sum_colspan.to_f / duties_count %>"></div>
 
       <% if can?(:generate_duties, Duty) %>
         <%= form_tag(generate_duties_path, method: "post") do %>

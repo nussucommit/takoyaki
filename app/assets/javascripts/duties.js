@@ -45,14 +45,22 @@ function colourScheduleTable(numOfPlaces) {
   }
 }
 
+function setDutyTableWidth(averageColspan) {
+  if (averageColspan !== undefined) {
+    $('.schedule-timings').css({ width: 150 - 10 * averageColspan });
+  }
+}
+
 function load() {
   var START_TIME = $('#duty-start-time').data('start-time');
   var NUM_OF_PLACES = $('#num-of-places').data('num-of-places');
+  var AVERAGE_COLSPAN = $('#average-colspan').data('average-colspan');
 
   scrollToCurrentTime(START_TIME);
   toggleSidebar();
   setDutyTableButtons();
   colourScheduleTable(NUM_OF_PLACES);
+  setDutyTableWidth(AVERAGE_COLSPAN);
 }
 
 $(document).on('turbolinks:load', load);
