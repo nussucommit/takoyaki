@@ -58,10 +58,10 @@ RSpec.describe DutiesController, type: :controller do
     it 'regrabs duty dropped to someone' do
       duty = create(:duty, user: subject.current_user,
                            request_user: create(:user))
-      expect do
-        patch :grab, params: { duty_id: { duty.id => duty.id } }
-        duty.reload
-      end.to change { duty.user }.to(subject.current_user)
+
+      patch :grab, params: { duty_id: { duty.id => duty.id } }
+      duty.reload
+
       expect(duty.free).to be(false)
       expect(duty.request_user_id).to be(nil)
       should redirect_to duties_path

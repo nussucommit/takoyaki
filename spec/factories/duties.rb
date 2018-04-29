@@ -1,4 +1,6 @@
 # frozen_string_literal: true
+
+# rubocop:disable Metrics/LineLength
 # == Schema Information
 #
 # Table name: duties
@@ -23,6 +25,7 @@
 #  fk_rails_...  (timeslot_id => timeslots.id)
 #  fk_rails_...  (user_id => users.id)
 #
+# rubocop:enable Metrics/LineLength
 
 FactoryBot.define do
   factory :duty do
