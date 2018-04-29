@@ -44,8 +44,20 @@ RSpec.describe DutiesController, type: :controller do
     end
 
     it 'grabs duty given to me' do
-      duty = create(:duty, free: false,
-                           request_user_id: subject.current_user.id)
+      duty = create(:duty, free: false, request_user: subject.current_user)
+      expect do
+        patch :grab, params: { duty_id: { duty.id => duty.id } }
+        duty.reload
+      end.to change { duty.user }.to(subject.current_user)
+      expect(duty.free).to be(false)
+      expect(duty.request_user_id).to be(nil)
+      should redirect_to duties_path
+      expect(flash[:notice]).to be('Duty successfully grabbed!')
+    end
+
+    it 'regrabs duty dropped to someone' do
+      duty = create(:duty, user: subject.current_user,
+                           request_user: create(:user))
       expect do
         patch :grab, params: { duty_id: { duty.id => duty.id } }
         duty.reload

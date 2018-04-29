@@ -73,7 +73,10 @@ class DutiesController < ApplicationController
 
   def grabable?(duty_id_params)
     duty_id_params.present? && duty_id_params.keys.all? do |d|
-      Duty.find(d).free || Duty.find(d).request_user == current_user
+      duty = Duty.find(d)
+      duty.free ||
+        duty.request_user == current_user ||
+        (duty.request_user.present? && duty.user == current_user)
     end
   end
 
