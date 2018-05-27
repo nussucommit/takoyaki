@@ -76,7 +76,7 @@ GEM
       simplecov (>= 0.7)
       term-ansicolor
       thor
-    crass (1.0.3)
+    crass (1.0.4)
     devise (4.4.0)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
@@ -179,8 +179,8 @@ GEM
       activesupport (>= 3.2)
       choice (~> 0.2.0)
       ruby-graphviz (~> 1.2)
-    rails-html-sanitizer (1.0.3)
-      loofah (~> 2.0)
+    rails-html-sanitizer (1.0.4)
+      loofah (~> 2.2, >= 2.2.2)
     rails_real_favicon (0.0.7)
       json (>= 1.7, < 3)
       rails (>= 3.1)
@@ -367,4 +367,4 @@ RUBY VERSION
    ruby 2.5.0p0
 
 BUNDLED WITH
-   1.16.1
+   1.16.2
