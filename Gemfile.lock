@@ -1,4 +1,4 @@
-IT
+GIT
   remote: https://github.com/thoughtbot/shoulda-matchers.git
   revision: 4b160bd19ecca7f97d7ac22dccd5fde9b0da5a9f
   branch: rails-5
@@ -25,13 +25,13 @@ GEM
       rack (~> 2.0)
       rack-test (>= 0.6.3)
       rails-dom-testing (~> 2.0)
-      rails-html-sanitizer (~> 1.0, >= 1.0.4)
+      rails-html-sanitizer (~> 1.0, >= 1.0.2)
     actionview (5.1.4)
       activesupport (= 5.1.4)
       builder (~> 3.1)
       erubi (~> 1.4)
       rails-dom-testing (~> 2.0)
-      rails-html-sanitizer (~> 1.0, >= 1.0.4)
+      rails-html-sanitizer (~> 1.0, >= 1.0.3)
     activejob (5.1.4)
       activesupport (= 5.1.4)
       globalid (>= 0.3.6)
@@ -179,7 +179,7 @@ GEM
       activesupport (>= 3.2)
       choice (~> 0.2.0)
       ruby-graphviz (~> 1.2)
-    rails-html-sanitizer (1.0.4)
+    rails-html-sanitizer (1.0.3)
       loofah (~> 2.0)
     rails_real_favicon (0.0.7)
       json (>= 1.7, < 3)
