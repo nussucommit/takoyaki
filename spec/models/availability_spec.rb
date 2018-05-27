@@ -2,6 +2,7 @@
 
 # rubocop:disable Metrics/LineLength
 
+# == Schema Information
 #
 # Table name: availabilities
 #
