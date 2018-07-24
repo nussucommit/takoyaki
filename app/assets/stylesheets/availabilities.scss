@@ -2,38 +2,40 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-@import "colors";
+@import "constants";
 
 .availabilities-places-container {
-  display: flex;
   align-items: center;
+  display: flex;
+  height: calc(100% - #{$navbar-height});
   justify-content: center;
-  height: calc(100% - $navbarHeight);
 }
 
 .availabilities-container {
   overflow-x: auto;
-  width: 100%;
-  white-space: nowrap;
   padding: 50px;
+  white-space: nowrap;
+  width: 100%;
 }
 
 .dayname {
   font-weight: bold;
-  vertical-align: middle;
   text-align: center;
+  vertical-align: middle;
   width: 4em;
 }
 
 .table-availabilities td {
-  touch-action: manipulation;
   line-height: 40px;
+  touch-action: manipulation;
 }
 
 .table-availabilities-all {
   table-layout: fixed;
+
   td {
     height: 2rem;
+
     .mc {
       font-weight: bold;
     }
@@ -42,8 +44,8 @@
 
 .time-label {
   display: block;
-  position: relative;
   font-weight: normal;
+  position: relative;
 }
 
 .time-label-cell {
@@ -55,17 +57,17 @@
 }
 
 .availability {
-  z-index: 3;
-  position: absolute;
   border-radius: 4px;
-  width: 100%;
+  position: absolute;
   touch-action: manipulation;
-  transition: box-shadow 0.2s;
+  transition: box-shadow .2s;
+  width: 100%;
+  z-index: 3;
 }
 
 .availability:hover {
+  box-shadow: 0 6px 10px 0 $transparent-black-1, 0 1px 18px 0 $transparent-black-2, 0 3px 5px -1px $transparent-black-3;
   z-index: 1002 !important;
-  box-shadow: 0 6px 10px 0 rgba(0,0,0,0.14), 0 1px 18px 0 rgba(0,0,0,0.12), 0 3px 5px -1px rgba(0,0,0,0.2);
 }
 
 .availability-yes {
@@ -85,69 +87,73 @@
 }
 
 .availability-vertical {
+  border-radius: 4px 0 0 4px;
+  height: 100%;
   position: absolute;
   top: 0;
   width: 4px;
-  height: 100%;
-  border-radius: 4px 0 0 4px;
 }
 
 .vertical {
-  background-color: gray;
+  background-color: $grey;
 }
 
 .vertical-pending {
-  background-color: rgb(244, 81, 30);
+  background-color: $orange;
 }
 
-.white-text, .white-text:link, .white-text:visited, .white-text:hover, .white-text:active {
-  color: white;
+.white-text,
+.white-text:link,
+.white-text:visited,
+.white-text:hover,
+.white-text:active {
+  color: $white;
 }
 
 .instruction {
-  margin-top: 20px;
   margin-bottom: 20px;
+  margin-top: 20px;
   overflow: hidden;
 }
 
 .box-no {
-  width: 20px;
-  height: 20px;
-  border: 1px solid black;
   background-color: $light-grey;
+  border: 1px solid $black;
   float: left;
+  height: 20px;
+  width: 20px;
 }
 
 .box-yes {
-  width: 20px;
-  height: 20px;
-  border: 1px solid black;
-  background-color: white;
+  background-color: $white;
+  border: 1px solid $black;
   float: left;
+  height: 20px;
+  width: 20px;
 }
 
 .instruction-label {
-  margin-right: 20px;
+  float: left;
   margin-left: 5px;
+  margin-right: 20px;
   position: relative;
   top: -2px;
-  float: left;
 }
 
 .availabilities-all-cell {
-  border: 1px solid #000 !important;
+  border: 1px solid $black !important;
 }
 
 .availability-list {
   list-style-type: none;
-  padding-left: 0;
   margin-bottom: 0;
-  text-overflow: ellipsis;
   overflow: hidden;
+  padding-left: 0;
+  text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-li.text-overflow-ellipsis {
+.text-overflow-ellipsis {
   list-style-position: inside;
 }
 
@@ -155,31 +161,32 @@ li.text-overflow-ellipsis {
   text-rendering: geometricPrecision;
 }
 
-html, body {
+html,
+body {
   height: 100%;
 }
 
 .places-container {
-  height: calc(100% - $navbarHeight);
+  height: calc(100% - #{$navbar-height});
   padding: 0 !important;
 }
 
 .edit-places-form {
-  width: 100%;
   height: 100%;
   margin: 0 !important;
+  width: 100%;
 }
 
 .edit-places-nav {
-  height: 100%;
   border-right: 1px solid $border-grey;
+  height: 100%;
   padding: 0 !important;
 }
 
 .edit-places-table {
   display: flex;
-  flex-direction: column;
   flex: 20 20 auto;
+  flex-direction: column;
   height: 100%;
 }
 
@@ -189,45 +196,45 @@ html, body {
 }
 
 #scroll-table {
+  align-items: flex-start;
+  border-top: 1px solid $border-grey;
   display: flex;
   flex: 1 1 10%;
   overflow-y: scroll;
-  border-top: 1px solid $border-grey;
-  align-items: flex-start;
 }
 
 .edit-places-empty-heading {
+  border-right: 1px solid $border-grey;
   flex: 0 0 auto;
   height: 100px;
   width: 48px;
-  border-right: 1px solid $border-grey;
 }
 
 .heading-group {
-  flex: 1 1 auto;
   display: flex;
+  flex: 1 1 auto;
 }
 
 .places-day-heading {
-  overflow: hidden;
-  display: flex;
   align-items: flex-end;
-  flex: 1 1 0%;
   border-right: 1px solid $border-grey;
+  display: flex;
+  flex: 1 1 0%;
+  overflow: hidden;
 }
 
 .places-day-text {
-  margin-left: 10px;
   font-size: 32px;
   line-height: 64px;
+  margin-left: 10px;
   overflow: hidden;
 }
 
 .time-heading {
-  flex: none;
-  width: 48px;
   border-right: 1px solid $border-grey;
+  flex: none;
   height: calc(24 * 80px);
+  width: 48px;
 }
 
 .time-block {
@@ -242,85 +249,84 @@ html, body {
 }
 
 .table-columns {
-  flex: 1 1 0%;
   border-right: 1px solid $border-grey;
+  flex: 1 1 0%;
   padding-right: 12px;
 }
 
 .table-columns-padded {
-  width: 100%;
   height: 100%;
   position: relative;
+  width: 100%;
 }
 
 .time-text {
+  font-size: 10px;
   position: relative;
   top: -12px;
-  font-size: 10px;
 }
 
-::scrollbar {
+:scrollbar {
   background: transparent;
   height: 8px;
   width: 8px;
 }
 
-::scrollbar-thumb {
-  border: none;
-  box-shadow: none;
-  box-shadow: none;
+:scrollbar-thumb {
   background: $gainsboro;
+  border: 0;
+  box-shadow: none;
   min-height: 40px;
 }
 
-select.availability-select {
-  color: white;
-  padding: 0 0 0 10px;
+.availability-select {
+  appearance: none;
+  background-color: transparent;
+  border: 0;
+  color: $white;
   font-size: 14px;
   height: 100%;
-  width: 100%;
-  appearance: none;
+  padding: 0 0 0 10px;
   text-overflow: '';
-  border: none;
-  background-color: transparent;
   touch-action: manipulation;
+  width: 100%;
 }
 
 .row-lines {
   height: 80px;
 }
 
-.row-lines:after {
-  content: '';
+.row-lines::after {
   border-bottom: $border-grey 1px solid;
+  content: '';
+  margin-top: -1px;
+  pointer-events: none;
   position: absolute;
   width: 100%;
-  margin-top: -1px;
   z-index: 3;
-  pointer-events: none;
 }
 
 .timeslot {
-  z-index: 3;
-  position: absolute;
-  border-radius: 4px;
-  width: 100%;
   background-color: $dark-cyan;
-  transition: box-shadow 0.2s;
+  border-radius: 4px;
+  position: absolute;
+  transition: box-shadow .2s;
+  width: 100%;
+  z-index: 3;
 }
 
 .timeslot:hover {
+  box-shadow: 0 6px 10px 0 $transparent-black-1, 0 1px 18px 0 $transparent-black-2, 0 3px 5px -1px $transparent-black-3;
   z-index: 1002 !important;
-  box-shadow: 0 6px 10px 0 rgba(0,0,0,0.14), 0 1px 18px 0 rgba(0,0,0,0.12), 0 3px 5px -1px rgba(0,0,0,0.2);
 }
 
 .timeslot-vertical {
+  background-color: $grey;
+  border-radius: 4px 0 0 4px;
+  height: 100%;
   position: absolute;
   top: 0;
   width: 4px;
-  height: 100%;
-  border-radius: 4px 0 0 4px;
-  background-color: gray;
 }
 
 .btn-nav {

@@ -1,60 +1,62 @@
-div.alert.alert-danger {
+.alert.alert-danger {
   margin-bottom: 0;
 }
 
 .login {
-  height: 100%;
-  width: 100%;
-  position: absolute;
   background: image-url('welcome.jpg');
-  background-size: cover;
-  background-repeat: no-repeat;
   background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100%;
+  position: absolute;
+  width: 100%;
 
   .alert {
-    color: #fff;
+    color: $white;
     font-weight: bold;
-    text-shadow: 0px 0px 10px #000;
+    text-shadow: 0 0 10px $black;
   }
 
-  div.container {
-    transform: translate(-50%, -50%);
+  .container {
+    left: 50%;
     position: absolute;
     top: 50%;
-    left: 50%;
+    transform: translate(-50%, -50%);
   }
 
   img {
     width: 90%;
   }
 
-  div.field {
-    margin-top: 20px;
+  .field {
     margin-bottom: 10px;
+    margin-top: 20px;
   }
 
-  input#user_username, input#user_email, input#user_password {
-    background-color: rgba(0, 0, 0, 0);
-    border-top: none;
-    border-left: none;
-    border-right: none;
+  #user_username,
+  #user_email,
+  #user_password {
+    background-color: $transparent-black-0;
     border-bottom: 2px solid $yellow;
+    border-left: 0;
+    border-right: 0;
+    border-top: 0;
     box-shadow: 0 8px 10px -7px $grey;
-    color: #000;
+    color: $black;
+    display: block;
     font-size: 16px;
     height: 40px;
-    width: 100%;
-    padding-left: 5%;
-    display: block;
     margin-left: auto;
     margin-right: auto;
+    padding-left: 5%;
+    width: 100%;
   }
 
   input:focus {
     outline: none;
   }
 
-  input#user_remember_me {
+  #user_remember_me {
     vertical-align: middle;
     margin-top: 0;
   }
