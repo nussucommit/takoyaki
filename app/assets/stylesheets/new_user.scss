@@ -15,7 +15,8 @@
     text-align: left;
   }
 
-  th, td {
+  th,
+  td {
     width: 100%;
   }
 
@@ -24,14 +25,14 @@
   }
 
   input {
+    border-bottom: 2px solid $yellow;
+    border-left: 0;
+    border-right: 0;
+    border-top: 0;
     color: $grey;
-    width: 250px;
     margin-bottom: 20px;
     padding-left: 3%;
-    border-top: none;
-    border-left: none;
-    border-right: none;
-    border-bottom: 2px solid $yellow;
+    width: 250px;
   }
 
   input:focus {
@@ -43,18 +44,18 @@
   }
 
   .actions input {
-    width: 50%;
-    margin-top: 5%;
-    margin-bottom: 0;
-    text-align: center;
-    color: #000;
+    background-color: $yellow;
     border: 2px solid $yellow;
     border-radius: 50px;
-    height: 50px;
-    background-color: $yellow;
     box-shadow: inset 1px 1px 3px -1px $light-yellow;
-    text-shadow: 0 -0.8px 0 rgba(0, 0, 0, 1),
-                 0 1px 0 rgba(255, 255, 255, 0.2);
+    color: $black;
+    height: 50px;
+    margin-bottom: 0;
+    margin-top: 5%;
+    text-align: center;
+    text-shadow: 0 -.8px 0 $black,
+                 0 1px 0 $transparent-white;
+    width: 50%;
   }
 
   a {

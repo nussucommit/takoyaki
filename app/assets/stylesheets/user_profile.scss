@@ -1,7 +1,7 @@
 .user-profile {
   width: 100%;
 
-  div.container {
+  .container {
     margin-top: 5%;
     text-align: center;
   }
@@ -11,7 +11,8 @@
     text-align: left;
   }
 
-  th, td {
+  th,
+  td {
     width: 100%;
   }
 
@@ -24,21 +25,21 @@
   }
 
   input:hover {
-    outline: none;
     background-color: $light-yellow;
+    outline: none;
   }
 
   input {
-    width: 50%;
-    margin-top: 5%;
-    text-align: center;
-    color: #000;
+    background-color: $yellow;
     border: 2px solid $yellow;
     border-radius: 50px;
-    height: 50px;
-    background-color: $yellow;
     box-shadow: inset 1px 1px 3px -1px $light-yellow;
-    text-shadow: 0 -0.8px 0 rgba(0, 0, 0, 1),
-                 0 1px 0 rgba(255, 255, 255, 0.2);
+    color: $black;
+    height: 50px;
+    margin-top: 5%;
+    text-align: center;
+    text-shadow: 0 -.8px 0 $black,
+                 0 1px 0 $transparent-white;
+    width: 50%;
   }
 }

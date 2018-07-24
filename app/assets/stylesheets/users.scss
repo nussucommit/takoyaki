@@ -3,8 +3,8 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 .list {
-  width: 100%;
   height: 100%;
+  width: 100%;
 
   a {
     padding-left: 5%;
@@ -16,49 +16,67 @@
   }
 
   table {
-    margin-top: 2%;
-    margin-bottom: 5%;
-    width: 100%;
+    border: .5px solid $dim-grey;
     border-collapse: collapse;
-    border: 0.5px solid $dim-grey;
     box-shadow: 0 0 10px 1px $grey;
+    margin-bottom: 5%;
+    margin-top: 2%;
+    width: 100%;
   }
 
   .scrollable {
     overflow: auto;
   }
 
-  .name, .matric, .contact, .cell, .pos, .role, .change-pw, .del {
-    width: 15%;
+  .name,
+  .matric,
+  .contact,
+  .cell,
+  .pos,
+  .role,
+  .change-pw,
+  .del {
     text-align: center;
+    width: 15%;
   }
 
   .email {
-    width: 25%;
     text-align: center;
+    width: 25%;
   }
 
-  .role, .change-pw, .del {
+  .role,
+  .change-pw,
+  .del {
     font-size: 12px;
     padding-left: 5px;
     padding-right: 5px;
   }
 
   @media (max-width: 720px) {
-    .name, .matric, .contact, .cell, .pos, .role, .del, .email {
+    .name,
+    .matric,
+    .contact,
+    .cell,
+    .pos,
+    .role,
+    .del,
+    .email {
       font-size: 12px;
     }
 
-    .role, .change-pw, .del {
+    .role,
+    .change-pw,
+    .del {
       font-size: 8px;
     }
   }
 
   th {
     background-color: $yellow;
+    box-shadow: 0 .5px $grey;
     font-weight: bolder;
     height: 50px;
-    box-shadow: 0 0.5px $grey;
   }
 
   td {
@@ -74,7 +92,7 @@
   }
 
   @media (max-device-width: 400px) {
-    div.container {
+    .container {
       height: 100%;
     }
 
@@ -84,7 +102,7 @@
   }
 
   .users-btn {
-    box-shadow: 0px 2px 2px #888888;
+    box-shadow: 0 2px 2px $grey;
     font-size: 13px;
     margin-top: 5px;
   }

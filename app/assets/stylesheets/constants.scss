@@ -16,11 +16,13 @@ $orange: #f4511e;
 
 $white: #fff;
 $black: #000;
+$transparent-white-0: rgba(255, 255, 255, 0);
 $transparent-white: rgba(255, 255, 255, .2);
 
 $transparent-black-0: rgba(0, 0, 0, 0);
 $transparent-black-1: rgba(0, 0, 0, .14);
 $transparent-black-2: rgba(0, 0, 0, .12);
 $transparent-black-3: rgba(0, 0, 0, .2);
+$transparent-black-4: rgba(0, 0, 0, .5);
 
 $navbar-height: 71px; // Obtained from tallest element in navbar+padding+border
