@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180429135605) do
+ActiveRecord::Schema.define(version: 20180724065130) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -36,13 +36,11 @@ ActiveRecord::Schema.define(version: 20180429135605) do
   create_table "duties", force: :cascade do |t|
     t.bigint   "user_id",         :index=>{:name=>"index_duties_on_user_id"}
     t.bigint   "timeslot_id",     :index=>{:name=>"index_duties_on_timeslot_id"}
-    t.date     "date"
+    t.date     "date",            :index=>{:name=>"index_duties_on_date_and_timeslot_id", :with=>["timeslot_id"], :unique=>true}
     t.datetime "created_at",      :null=>false
     t.datetime "updated_at",      :null=>false
     t.integer  "request_user_id"
     t.boolean  "free",            :default=>false, :null=>false
-
-    t.index ["user_id", "timeslot_id", "date"], :name=>"index_duties_on_user_id_and_timeslot_id_and_date", :unique=>true
   end
 
   create_table "places", force: :cascade do |t|

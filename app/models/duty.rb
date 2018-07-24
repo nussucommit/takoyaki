@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-# rubocop:disable Metrics/LineLength
 # == Schema Information
 #
 # Table name: duties
@@ -16,16 +15,15 @@
 #
 # Indexes
 #
-#  index_duties_on_timeslot_id                       (timeslot_id)
-#  index_duties_on_user_id                           (user_id)
-#  index_duties_on_user_id_and_timeslot_id_and_date  (user_id,timeslot_id,date) UNIQUE
+#  index_duties_on_date_and_timeslot_id  (date,timeslot_id) UNIQUE
+#  index_duties_on_timeslot_id           (timeslot_id)
+#  index_duties_on_user_id               (user_id)
 #
 # Foreign Keys
 #
 #  fk_rails_...  (timeslot_id => timeslots.id)
 #  fk_rails_...  (user_id => users.id)
 #
-# rubocop:enable Metrics/LineLength
 
 class Duty < ApplicationRecord
   belongs_to :user, optional: true
@@ -34,7 +32,7 @@ class Duty < ApplicationRecord
   belongs_to :timeslot
   has_one :time_range, through: :timeslot
   has_one :place, through: :timeslot
-  # validates_uniqueness_of :date, scope = [:timeslot_id, :user_id]
+  validates :date, uniqueness: { scope: :timeslot_id }
   scope :ordered_by_start_time,
         -> { joins(:time_range).order('time_ranges.start_time') }
 

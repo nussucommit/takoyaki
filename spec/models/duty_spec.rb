@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-# rubocop:disable Metrics/LineLength
 # == Schema Information
 #
 # Table name: duties
@@ -16,16 +15,15 @@
 #
 # Indexes
 #
-#  index_duties_on_timeslot_id                       (timeslot_id)
-#  index_duties_on_user_id                           (user_id)
-#  index_duties_on_user_id_and_timeslot_id_and_date  (user_id,timeslot_id,date) UNIQUE
+#  index_duties_on_date_and_timeslot_id  (date,timeslot_id) UNIQUE
+#  index_duties_on_timeslot_id           (timeslot_id)
+#  index_duties_on_user_id               (user_id)
 #
 # Foreign Keys
 #
 #  fk_rails_...  (timeslot_id => timeslots.id)
 #  fk_rails_...  (user_id => users.id)
 #
-# rubocop:enable Metrics/LineLength
 
 require 'rails_helper'
 
@@ -35,6 +33,7 @@ RSpec.describe Duty, type: :model do
   it { should belong_to(:timeslot) }
   it { should have_one(:time_range).through(:timeslot) }
   it { should have_one(:place).through(:timeslot) }
+  it { should validate_uniqueness_of(:date).scoped_to(:timeslot_id) }
 
   it 'self.generate works properly' do
     create(:timeslot)
