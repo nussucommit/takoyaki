@@ -5,22 +5,17 @@ bundler_args: "--without production development"
 services: postgresql
 
 env:
-  - COMMAND="rspec"
-  - COMMAND="rubocop -D -f simple"
-  - COMMAND="brakeman"
-  - COMMAND="scss-lint app/assets/stylesheets"
-  - COMMAND="rake traceroute FAIL_ON_ERROR=1"
+  - COMMAND="bundle exec rspec && bundle exec rubocop -D -f simple"
+  - COMMAND="bundle exec brakeman && bundle exec scss-lint app/assets/stylesheets && bundle exec rake traceroute FAIL_ON_ERROR=1"
 
 matrix:
   fast_finish: true
   allow_failures:
-    - env: COMMAND="brakeman"
-    - env: COMMAND="scss-lint app/assets/stylesheets"
-    - env: COMMAND="rake traceroute FAIL_ON_ERROR=1"
+    - env: COMMAND="bundle exec brakeman && bundle exec scss-lint app/assets/stylesheets && bundle exec rake traceroute FAIL_ON_ERROR=1"
 
 before_script:
   - psql -c 'create database takoyaki_test;' -U postgres
   - cp config/database.yml.travis config/database.yml
 
 script:
-  - "bundle exec $COMMAND"
+  - "eval $COMMAND"
