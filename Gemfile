@@ -5,7 +5,7 @@ source 'https://rubygems.org'
 # Ruby version
 ruby '2.5.0'
 # Rails version
-gem 'rails'
+gem 'rails', '~> 5.1.0'
 # Use postgres as database
 gem 'pg', '< 1'
 # Use Puma as the app server
