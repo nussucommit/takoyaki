@@ -2,6 +2,7 @@ AllCops:
   TargetRubyVersion: 2.5
   TargetRailsVersion: 5.1
   Include:
+    - '**/*.rb'
     - '**/Rakefile'
     - '**/config.ru'
   Exclude:

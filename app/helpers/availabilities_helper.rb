@@ -21,6 +21,7 @@ module AvailabilitiesHelper
     end
   end
 
+  # rubocop:disable Naming/UncommunicativeMethodParamName
   def generate_select(ts)
     day_index = Availability.days[ts.day]
     time_range_id = ts.time_range_id
@@ -32,6 +33,7 @@ module AvailabilitiesHelper
                  'id', 'username', selected: ts.default_user_id
                ), class: 'availability-select', onclick: 'enableButtons()')
   end
+  # rubocop:enable Naming/UncommunicativeMethodParamName
 
   def change(day_id, timerange_id, users)
     users.map do |u|
@@ -40,6 +42,7 @@ module AvailabilitiesHelper
     end
   end
 
+  # rubocop:disable Naming/UncommunicativeMethodParamName
   def calc_offset(tr)
     (CELL_HEIGHT * tr.start_time.seconds_since_midnight / 1.hour).round
   end
@@ -47,6 +50,7 @@ module AvailabilitiesHelper
   def calc_slot_height(tr)
     (tr.end_time - tr.start_time) / 1.hour * CELL_HEIGHT - 2
   end
+  # rubocop:enable Naming/UncommunicativeMethodParamName
 
   def calc_scroll_availabilities_places
     [(CELL_HEIGHT *
