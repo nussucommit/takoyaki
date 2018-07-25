@@ -3,6 +3,26 @@
 require 'rails_helper'
 
 RSpec.describe AnnouncementsController, type: :controller do
+  describe 'GET #index' do
+    context 'normal user' do
+      it do
+        sign_in create(:user)
+        get :index
+        should respond_with :ok
+      end
+    end
+
+    context 'admin' do
+      it do
+        user = create(:user)
+        user.add_role(:admin)
+        sign_in user
+        get :index
+        should respond_with :ok
+      end
+    end
+  end
+
   describe 'POST #create' do
     it 'denies access to normal user' do
       sign_in create(:user)
