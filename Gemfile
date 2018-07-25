@@ -7,7 +7,7 @@ ruby '2.5.0'
 # Rails version
 gem 'rails', '~> 5.1.0'
 # Use postgres as database
-gem 'pg', '< 1'
+gem 'pg', '< 2'
 # Use Puma as the app server
 gem 'puma'
 # For Travis CI
