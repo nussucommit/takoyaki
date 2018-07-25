@@ -9,10 +9,12 @@
           <%= link_to ' Read more', "#", 'data-target' => "#show_modal_#{a.id}", 'data-toggle' => 'modal' %>
         <% end %>
       </div>
-      <div class="buttons">
-        <%= link_to 'Edit', "#", 'data-target' => "#edit_modal_#{a.id}", 'data-toggle' => 'modal' %>
-        <%= link_to 'Delete', a, method: :delete, data: { confirm: 'Are you sure?' } %>
-      </div>
+      <% if can?(:manage, Announcement) %>
+        <div class="buttons">
+          <%= link_to 'Edit', "#", 'data-target' => "#edit_modal_#{a.id}", 'data-toggle' => 'modal' %>
+          <%= link_to 'Delete', a, method: :delete, data: { confirm: 'Are you sure?' } %>
+        </div>
+      <% end %>
     </div>
   <% end %>
 
