@@ -14,8 +14,7 @@ RSpec.describe AnnouncementsController, type: :controller do
 
     context 'admin' do
       it do
-        user = create(:user)
-        user.add_role(:admin)
+        user = create(:user, mc: true)
         sign_in user
         get :index
         should respond_with :ok
@@ -28,13 +27,13 @@ RSpec.describe AnnouncementsController, type: :controller do
       sign_in create(:user)
       expect do
         post :create, params: { announcement: attributes_for(:announcement) }
-      end.to raise_error(CanCan::AccessDenied)
+      end.to_not change(Announcement, :count)
+      should redirect_to duties_path
     end
 
     context 'valid attributes' do
       before do
-        user = create(:user)
-        user.add_role(:admin)
+        user = create(:user, mc: true)
         sign_in user
       end
 
@@ -52,8 +51,7 @@ RSpec.describe AnnouncementsController, type: :controller do
 
     context 'invalid attributes' do
       before do
-        user = create(:user)
-        user.add_role(:admin)
+        user = create(:user, mc: true)
         sign_in user
       end
 
@@ -79,17 +77,16 @@ RSpec.describe AnnouncementsController, type: :controller do
     it 'denies access to normal user' do
       sign_in create(:user)
       announcement = create(:announcement)
-      expect do
-        put :update, params: { id: announcement.id, announcement:
+      put :update, params: { id: announcement.id, announcement:
           attributes_for(:announcement, subject: 'new subject', details: 'new
             details') }
-      end.to raise_error(CanCan::AccessDenied)
+      expect(Announcement.find(announcement.id).subject).not_to eq('new subject')
+      should redirect_to duties_path
     end
 
     context 'valid attributes' do
       before do
-        user = create(:user)
-        user.add_role(:admin)
+        user = create(:user, mc: true)
         sign_in user
       end
 
@@ -111,8 +108,7 @@ RSpec.describe AnnouncementsController, type: :controller do
 
     context 'invalid attributes' do
       it 'does not update new announcement with invalid subject' do
-        user = create(:user)
-        user.add_role(:admin)
+        user = create(:user, mc: true)
         sign_in user
         announcement = create(:announcement)
         put :update, params: { id: announcement.id,
@@ -130,13 +126,13 @@ RSpec.describe AnnouncementsController, type: :controller do
       announcement = create(:announcement)
       expect do
         delete :destroy, params: { id: announcement.id }
-      end.to raise_error(CanCan::AccessDenied)
+      end.to_not change(Announcement, :count)
+      should redirect_to duties_path
     end
 
     context 'Authenticated' do
       before do
-        user = create(:user)
-        user.add_role(:admin)
+        user = create(:user, mc: true)
         sign_in user
       end
 
