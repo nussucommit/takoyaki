@@ -9,7 +9,7 @@
           <%= link_to ' Read more', "#", 'data-target' => "#show_modal_#{a.id}", 'data-toggle' => 'modal' %>
         <% end %>
       </div>
-      <% if can?(:manage, Announcement) %>
+      <% if current_user.mc %>
         <div class="buttons">
           <%= link_to 'Edit', "#", 'data-target' => "#edit_modal_#{a.id}", 'data-toggle' => 'modal' %>
           <%= link_to 'Delete', a, method: :delete, data: { confirm: 'Are you sure?' } %>
@@ -18,7 +18,7 @@
     </div>
   <% end %>
 
-  <% if can?(:create, Announcement) %>
+  <% if current_user.mc %>
     <p><%= link_to 'Submit New Announcement', '#', 'data-target' => "#new_modal", 'data-toggle' => 'modal' %></p>
   <% end %>
   <p><%= link_to 'Show All Announcements', announcements_path %></p>
