@@ -80,7 +80,8 @@ RSpec.describe AnnouncementsController, type: :controller do
       put :update, params: { id: announcement.id, announcement:
           attributes_for(:announcement, subject: 'new subject', details: 'new
             details') }
-      expect(Announcement.find(announcement.id).subject).not_to eq('new subject')
+      expect(Announcement.find(announcement.id).subject)
+        .not_to eq('new subject')
       should redirect_to duties_path
     end
 
