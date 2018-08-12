@@ -27,6 +27,29 @@ RSpec.describe GenericMailer, type: :mailer do
     end
   end
 
+  describe '#drop_duties' do
+    let(:mail) do
+      user = create(:user)
+      @duties = create_list(:duty, 5, user: user)
+      GenericMailer.drop_duties(@duties, User.pluck(:id))
+    end
+
+    it 'renders the header' do
+      expect(mail.subject).to eq(
+        'DUTY DUTY DUTY ' \
+        "#{@duties.first.time_range.start_time.strftime('%H%M')}-" \
+        "#{@duties.last.time_range.end_time.strftime('%H%M')} on " \
+        "#{@duties.first.date.strftime('%a, %d %b %Y')} at " \
+        "#{@duties.first.place.name}"
+      )
+      expect(mail.to).to eq(User.pluck(:email))
+    end
+
+    it 'renders the body' do
+      expect(mail.body.encoded).to match('grab')
+    end
+  end
+
   describe '#problem_report' do
     let(:mail) do
       @user = create(:user, cell: 'technical')

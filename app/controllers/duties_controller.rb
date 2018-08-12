@@ -54,10 +54,9 @@ class DutiesController < ApplicationController
   def drop
     if owned_duties?(params[:duty_id], current_user)
       duty_ids = params[:duty_id].keys
+      swap_user_id = params[:user_id].to_i
 
-      Duty.find(duty_ids).each do |duty|
-        swap_user(params[:user_id].to_i, duty)
-      end
+      swap_user(duty_ids, swap_user_id)
 
       redirect_to duties_path, notice: 'Duty successfully dropped!'
     else
@@ -82,15 +81,23 @@ class DutiesController < ApplicationController
     end
   end
 
-  def swap_user(swap_user_id, drop_duty)
-    if swap_user_id.zero?
-      drop_duty.update(free: true)
-      GenericMailer.drop_duty(drop_duty, User.pluck(:id)).deliver_later
-    else
-      drop_duty.update(request_user_id: swap_user_id)
-      GenericMailer.drop_duty(drop_duty, swap_user_id)
-                   .deliver_later
+  def swap_user(drop_duty_ids, swap_user_id)
+    duties = duties_sorted_by_start_time(drop_duty_ids)
+    duties.each do |duty|
+      if swap_user_id.zero?
+        duty.update(free: true)
+      else
+        duty.update(request_user_id: swap_user_id)
+      end
     end
+    users_to_notify = swap_user_id.zero? ? User.pluck(:id) : swap_user_id
+    GenericMailer.drop_duties(duties, users_to_notify).deliver_later
+  end
+
+  def duties_sorted_by_start_time(duty_ids)
+    Duty.joins(timeslot: :time_range)
+        .order('time_ranges.start_time ASC')
+        .find(duty_ids)
   end
 
   def generate_header_iter

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <table>
+      <tr>
+        <td>From:</td>
+        <td><%= @from %></td>
+      </tr>
+      <tr>
+        <td>Date:</td>
+        <td><%= @date.strftime('%a, %d %b %Y') %></td>
+      </tr>
+      <tr>
+        <td>Time:</td>
+        <td>
+          <%= @start_time.strftime('%H%M') %>
+          -
+          <%= @end_time.strftime('%H%M') %>
+        </td>
+      </tr>
+      <tr>
+        <td>Venue:</td>
+        <td><%= @venue %></td>
+      </tr>
+    </table>
+    <p>
+      Regards,<br />
+      NUSSU commIT
+    </p>
+    <p>
+      Important: This email is confidential and may be privileged. If you are not the intended recipient, please delete it and notify us immediately; you should not copy or use it for any purpose, nor disclose its contents to any other person. Thank you.
+    </p>
+  </body>
+</html>
