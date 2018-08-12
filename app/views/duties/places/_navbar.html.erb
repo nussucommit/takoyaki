@@ -1,5 +1,6 @@
 <h1 style="flex: none;"><%= @place.name %></h1>
 <div style="display: flex; flex-direction: column; padding: 32px 40px; justify-content: space-around;">
+  <h4><%= @start_date.strftime('%d %b %Y') %> - <%= @end_date.strftime('%d %b %Y') %></h4>
   <%= link_to("Previous Week", edit_duties_place_path(id: params[:id], start_date: @start_date - 7), class: "btn btn-large btn-primary btn-light btn-nav") %>
   <%= link_to("Next Week", edit_duties_place_path(id: params[:id], start_date: @start_date + 7), class: "btn btn-large btn-primary btn-light btn-nav") %>
   <%= submit_tag("Update", id: 'update-button', data: { disable_with: false }, class: "btn btn-large btn-primary btn-nav") %>
