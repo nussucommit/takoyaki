@@ -54,6 +54,7 @@ class User < ApplicationRecord
                                           foreign_key: 'last_update_user_id',
                                           inverse_of: :last_update_user,
                                           dependent: :nullify
+  has_many :availabilities, dependent: :destroy
   validates :cell, presence: true
 
   enum cell: CELLS
