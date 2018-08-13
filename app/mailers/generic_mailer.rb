@@ -6,12 +6,10 @@ class GenericMailer < ApplicationMailer
   def drop_duties(duties, user_ids)
     @from = duties.first.user.username
     @date = duties.first.date
-    @start_time = duties.first.time_range.start_time
-    @end_time = duties.last.time_range.end_time
+    @times = process_duties_times(duties)
     @venue = duties.first.place.name
     mail(to: users_with_name(user_ids),
-         subject: generate_drop_duty_subject_detailed(@start_time, @end_time,
-                                                      @date, @venue))
+         subject: generate_drop_duty_subject_detailed(@times, @date, @venue))
   end
 
   def problem_report(problem)
@@ -22,11 +20,10 @@ class GenericMailer < ApplicationMailer
 
   private
 
-  def generate_drop_duty_subject_detailed(start_time, end_time, date, venue)
+  def generate_drop_duty_subject_detailed(times, date, venue)
     'DUTY DUTY DUTY ' \
-    "#{start_time.strftime('%H%M')}-" \
-    "#{end_time.strftime('%H%M')} on " \
-    "#{date.strftime('%a, %d %b %Y')} at " \
+    "#{date.strftime('%a, %d %b %Y')}, " \
+    "#{times} at " \
     "#{venue}"
   end
 
@@ -34,5 +31,12 @@ class GenericMailer < ApplicationMailer
     User.find(user_ids)&.pluck(:username, :email)&.map do |u|
       %("#{u[0]}" <#{u[1]}>)
     end
+  end
+
+  def process_duties_times(duties)
+    duties.map do |duty|
+      "#{duty.time_range.start_time.strftime('%H%M')}-" \
+      "#{duty.time_range.end_time.strftime('%H%M')}"
+    end.join(', ')
   end
 end

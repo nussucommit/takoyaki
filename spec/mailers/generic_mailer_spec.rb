@@ -4,18 +4,25 @@ require 'rails_helper'
 
 RSpec.describe GenericMailer, type: :mailer do
   describe '#drop_duties' do
-    let(:mail) do
+    let(:duties) do
       user = create(:user)
       @duties = create_list(:duty, 5, user: user)
-      GenericMailer.drop_duties(@duties, User.pluck(:id))
+    end
+
+    let(:mail) do
+      GenericMailer.drop_duties(duties, User.pluck(:id))
     end
 
     it 'renders the header' do
+      times = duties.map do |duty|
+        "#{duty.time_range.start_time.strftime('%H%M')}-" \
+        "#{duty.time_range.end_time.strftime('%H%M')}"
+      end.join(', ')
+
       expect(mail.subject).to eq(
         'DUTY DUTY DUTY ' \
-        "#{@duties.first.time_range.start_time.strftime('%H%M')}-" \
-        "#{@duties.last.time_range.end_time.strftime('%H%M')} on " \
-        "#{@duties.first.date.strftime('%a, %d %b %Y')} at " \
+        "#{@duties.first.date.strftime('%a, %d %b %Y')}, " \
+        "#{times} at " \
         "#{@duties.first.place.name}"
       )
       expect(mail.to).to eq(User.pluck(:email))
@@ -28,9 +35,9 @@ RSpec.describe GenericMailer, type: :mailer do
 
   describe '#problem_report' do
     let(:mail) do
-      @user = create(:user, cell: 'technical')
-      @problem = create(:problem_report, reporter_user: @user)
-      GenericMailer.problem_report(@problem)
+      user = create(:user, cell: 'technical')
+      problem = create(:problem_report, reporter_user: user)
+      GenericMailer.problem_report(problem)
     end
     it 'renders the header' do
       expect(mail.subject).to eq('New computer problem')
