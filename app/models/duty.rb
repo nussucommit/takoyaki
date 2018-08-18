@@ -40,7 +40,9 @@ class Duty < ApplicationRecord
     (start_date..end_date).each do |date|
       day = Date::DAYNAMES[date.wday]
       Timeslot.where(day: day).find_each do |ts|
-        Duty.find_or_create_by(user: ts.default_user, timeslot: ts, date: date)
+        duty = Duty.find_or_create_by(timeslot: ts, date: date)
+        duty.user = ts.default_user
+        duty.save
       end
     end
   end
