@@ -27,8 +27,8 @@
 
 FactoryBot.define do
   factory :duty do
-    user nil
+    user { nil }
     timeslot
-    date '2018-01-31'
+    date { '2018-01-31' }
   end
 end

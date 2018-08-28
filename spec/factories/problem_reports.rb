@@ -30,7 +30,7 @@ FactoryBot.define do
     association :reporter_user, factory: :user
     association :last_update_user, factory: :user
     place factory: :place
-    computer_number 'A10'
-    description 'Desc'
+    computer_number { 'A10' }
+    description { 'Desc' }
   end
 end

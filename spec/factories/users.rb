@@ -40,7 +40,7 @@ FactoryBot.define do
 
   factory :user do
     email
-    password '123456'
-    cell User::CELLS.sample
+    password { '123456' }
+    cell { User::CELLS.sample }
   end
 end

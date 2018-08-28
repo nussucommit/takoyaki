@@ -28,8 +28,8 @@
 
 FactoryBot.define do
   factory :timeslot do
-    mc_only false
-    day Date::DAYNAMES[1]
+    mc_only { false }
+    day { Date::DAYNAMES[1] }
     association :default_user, factory: :user
     time_range
     place
