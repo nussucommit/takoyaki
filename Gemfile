@@ -91,6 +91,7 @@ end
 group :development, :test do
   # Ruby linter
   gem 'rubocop'
+  gem 'rubocop-rspec'
   # SCSS linter
   gem 'scss_lint', require: false
 end
