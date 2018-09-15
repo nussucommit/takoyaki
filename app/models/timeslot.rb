@@ -1,14 +1,13 @@
 # frozen_string_literal: true
-
 # == Schema Information
 #
 # Table name: timeslots
 #
-#  id              :integer          not null, primary key
+#  id              :bigint(8)        not null, primary key
 #  mc_only         :boolean
-#  default_user_id :integer
-#  time_range_id   :integer
-#  place_id        :integer
+#  default_user_id :bigint(8)
+#  time_range_id   :bigint(8)
+#  place_id        :bigint(8)
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #  day             :integer
