@@ -51,6 +51,8 @@ gem 'schema_validations'
 gem 'dotenv-rails', require: 'dotenv/rails-now'
 # Mailgun
 gem 'mailgun-ruby', '~> 1.1.6'
+# Adds delayed job queueing for jobs that are executed in the future
+gem 'delayed_job_active_record'
 
 group :test do
   # Test coverage
@@ -113,6 +115,8 @@ end
 group :production do
   # Sitemap generator
   gem 'sitemap_generator'
+  # Adds daemons for DelayedJob
+  gem 'daemons'
 end
 
 ### END MAINTENANCE
