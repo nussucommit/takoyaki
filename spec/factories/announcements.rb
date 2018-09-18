@@ -13,7 +13,7 @@
 
 FactoryBot.define do
   factory :announcement do |a|
-    a.subject 'MyText'
-    a.details 'MyText'
+    subject { 'MyText' }
+    details { 'MyText' }
   end
 end
