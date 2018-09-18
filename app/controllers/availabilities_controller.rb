@@ -59,6 +59,7 @@ class AvailabilitiesController < ApplicationController
     Availability.days.each_key do |day|
       @time_ranges.each do |time_range|
         next if @availabilities.key?([day, time_range.id])
+
         @availabilities[[day, time_range.id]] = Availability.create(
           user: current_user, day: day,
           time_range_id: time_range.id, status: false
