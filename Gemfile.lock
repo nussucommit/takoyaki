@@ -67,7 +67,7 @@ GEM
       activesupport (>= 3.0.0)
       uniform_notifier (~> 1.11.0)
     byebug (10.0.2)
-    cancancan (2.2.0)
+    cancancan (2.3.0)
     choice (0.2.0)
     concurrent-ruby (1.0.5)
     coveralls (0.8.22)
