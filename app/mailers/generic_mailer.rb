@@ -8,14 +8,18 @@ class GenericMailer < ApplicationMailer
     @date = duties.first.date
     @times = process_duties_times(duties)
     @venue = duties.first.place.name
-    mail(to: users_with_name(user_ids),
-         subject: generate_drop_duty_subject_detailed(@times, @date, @venue))
+    users_with_name(user_ids).each do |u| headers['to'] = u end
+    headers['recipient-variables'] = '{}'
+    mail(subject: generate_drop_duty_subject_detailed(@times, @date, @venue))
   end
 
   def problem_report(problem)
     @problem = problem
-    mail(to: users_with_name(User.where(cell: 'technical').pluck(:id)),
-         subject: 'New computer problem')
+    users_with_name(User.where(cell: 'technical').pluck(:id)).each do |u|
+      headers['to'] = u
+    end
+    headers['recipient-variables'] = '{}'
+    mail(subject: 'New computer problem')
   end
 
   private
