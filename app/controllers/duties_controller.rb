@@ -91,7 +91,7 @@ class DutiesController < ApplicationController
       end
     end
     users_to_notify = swap_user_id.zero? ? User.pluck(:id) : swap_user_id
-    GenericMailer.drop_duties(duties, users_to_notify).deliver_later
+    GenericMailer.delay.drop_duties(duties, users_to_notify)
   end
 
   def duties_sorted_by_start_time(duty_ids)
