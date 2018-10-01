@@ -9,6 +9,6 @@ RSpec.describe StaticPagesController, type: :controller do
       get :guide
     end
 
-    it { should respond_with :ok }
+    it { should redirect_to StaticPagesController::GUIDE_URL }
   end
 end
