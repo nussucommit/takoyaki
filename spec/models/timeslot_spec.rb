@@ -29,9 +29,12 @@
 require 'rails_helper'
 
 RSpec.describe Timeslot, type: :model do
-  it { should have_many(:duties) }
-  it { should belong_to(:default_user).class_name('User') }
+  it { should have_many(:duties).dependent(:destroy) }
+  it {
+    should belong_to(:default_user).class_name('User')
+      .optional.inverse_of(:timeslots)
+  }
   it { should belong_to(:place) }
   it { should belong_to(:time_range) }
-  it { should define_enum_for(:day).with(Date::DAYNAMES) }
+  it { should define_enum_for(:day).with_values(Date::DAYNAMES) }
 end

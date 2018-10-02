@@ -28,9 +28,18 @@
 require 'rails_helper'
 
 RSpec.describe ProblemReport, type: :model do
-  it { should belong_to(:reporter_user) }
-  it { should belong_to(:last_update_user) }
+  it {
+    should belong_to(:reporter_user).optional
+                                    .inverse_of(:reported_problem_reports)
+  }
+  it {
+    should belong_to(:last_update_user)
+      .optional.inverse_of(:last_updated_problem_reports)
+  }
   it { should belong_to(:place) }
+  it { should validate_presence_of(:computer_number) }
+  it { should validate_presence_of(:place_id) }
+  it { should validate_presence_of(:description) }
 
   it 'saves a valid Problem Report' do
     expect(create(:problem_report)).to be_valid
