@@ -67,8 +67,7 @@ class DutiesController < ApplicationController
 
   def show_grabable_duties
     @grabable_duties = Duty.all.select do |d|
-      d.free ||
-        d.request_user == current_user ||
+      d.free || d.request_user == current_user ||
         (d.request_user.present? && duty.user == current_user)
     end
   end
