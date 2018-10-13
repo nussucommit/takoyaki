@@ -43,5 +43,5 @@ Rails.application.routes.draw do
   resources :problem_reports, only: %i[index create new update]
 
   get 'guide', to: 'static_pages#guide'
-  get 'grab_duty', to: 'static_pages#grab_duty'
+  get 'grab_duty', to: 'duties#show_grabable_duties'
 end
