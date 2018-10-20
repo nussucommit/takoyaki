@@ -49,12 +49,15 @@ Date::DAYNAMES.each do |day|
 
     if day == 'Sunday'
       next if open < '0930' || close > '1500'
+
       mc = (open == '0930' || close == '1500')
     elsif day == 'Saturday'
       next if open < '0830' || close > '1700'
+
       mc = (open == '0830' || close == '1700')
     else
       next if open < '0830' || close > '2100'
+
       mc = (open == '0830' || close == '2100')
     end
 

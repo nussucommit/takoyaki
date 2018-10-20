@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 ### BASICS
 
 # Ruby version
-ruby '2.5.0'
+ruby '2.5.1'
 # Rails version
 gem 'rails', '~> 5.1.0'
 # Use postgres as database
@@ -18,7 +18,7 @@ gem 'rake', group: :test
 ### VIEWS, ASSETS, FRONTEND STUFF
 
 # Use SCSS for stylesheets
-gem 'sass-rails'
+gem 'sassc-rails'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier'
 # Use jQuery

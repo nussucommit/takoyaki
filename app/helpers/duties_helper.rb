@@ -65,6 +65,7 @@ module DutiesHelper
     index_array = [0]
     duties.length.times.each_cons(2).select do |prev, current|
       next unless check_condition(duties[prev], duties[current])
+
       index_array.push(current)
     end
     index_array.push(duties.length)

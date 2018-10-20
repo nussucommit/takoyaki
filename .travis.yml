@@ -1,17 +1,17 @@
 language: ruby
 cache: bundler
-rvm: 2.5.0
+rvm: 2.5.1
 bundler_args: "--without production development"
 services: postgresql
 
 env:
-  - COMMAND="bundle exec rspec && bundle exec rubocop -D -f simple"
-  - COMMAND="bundle exec brakeman && bundle exec scss-lint app/assets/stylesheets && bundle exec rake traceroute FAIL_ON_ERROR=1 && bundle exec rspec --require rubocop-rspec"
+  - COMMAND="bundle exec rspec && bundle exec rubocop -D -f simple && bundle exec brakeman"
+  - COMMAND="bundle exec scss-lint app/assets/stylesheets && bundle exec rake traceroute FAIL_ON_ERROR=1 && bundle exec rspec --require rubocop-rspec"
 
 matrix:
   fast_finish: true
   allow_failures:
-    - env: COMMAND="bundle exec brakeman && bundle exec scss-lint app/assets/stylesheets && bundle exec rake traceroute FAIL_ON_ERROR=1 && bundle exec rspec --require rubocop-rspec"
+    - env: COMMAND="bundle exec scss-lint app/assets/stylesheets && bundle exec rake traceroute FAIL_ON_ERROR=1 && bundle exec rspec --require rubocop-rspec"
 
 before_script:
   - psql -c 'create database takoyaki_test;' -U postgres
