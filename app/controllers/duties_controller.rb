@@ -66,9 +66,11 @@ class DutiesController < ApplicationController
   end
 
   def show_grabable_duties
-    duty = Duty.includes(timeslot: [:time_range, :place])
-    @grabable_duties = duty.where("free = true or request_user_id = ?", current_user.id)
-      .or(duty.where.not(request_user_id: nil).where(user_id: current_user.id))
+    duty = Duty.includes(timeslot: %i[time_range place])
+    @grabable_duties = duty.where('free = true or request_user_id = ?',
+                                  current_user.id)
+                           .or(duty.where.not(request_user_id: nil)
+                            .where(user_id: current_user.id))
   end
 
   private
@@ -102,8 +104,7 @@ class DutiesController < ApplicationController
 
   def duties_sorted_by_start_time(duty_ids)
     Duty.joins(timeslot: :time_range)
-        .order('time_ranges.start_time ASC')
-        .find(duty_ids)
+        .order('time_ranges.start_time ASC').find(duty_ids)
   end
 
   def generate_header_iter

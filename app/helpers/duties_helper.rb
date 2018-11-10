@@ -49,7 +49,7 @@ module DutiesHelper
   def format_duties(duty_list)
     duty_list.map do |d|
       { id: d.id, timing: d.timeslot.time_range.start_time.strftime('%H:%M') +
-        ' - ' + d.timeslot.time_range.end_time.strftime('%H:%M'), 
+        ' - ' + d.timeslot.time_range.end_time.strftime('%H:%M'),
         date: d.date, location: d.timeslot.place.name }
     end
   end
