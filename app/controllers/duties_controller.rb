@@ -66,10 +66,9 @@ class DutiesController < ApplicationController
   end
 
   def show_grabable_duties
-    @grabable_duties = Duty.all.select do |d|
-      d.free || d.request_user == current_user ||
-        (d.request_user.present? && duty.user == current_user)
-    end
+    duty = Duty.includes(timeslot: [:time_range, :place])
+    @grabable_duties = duty.where("free = true or request_user_id = ?", current_user.id)
+      .or(duty.where.not(request_user_id: nil).where(user_id: current_user.id))
   end
 
   private
