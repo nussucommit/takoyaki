@@ -1,6 +1,7 @@
 {
   "name": "takoyaki",
   "scripts": {
+    "postdeploy": "bundle exec rails db:setup"
   },
   "env": {
     "HEROKU_POSTGRESQL_MAUVE_URL": {
