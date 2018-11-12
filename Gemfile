@@ -50,7 +50,7 @@ gem 'schema_validations'
 # Environment variables
 gem 'dotenv-rails', require: 'dotenv/rails-now'
 # Mailgun
-gem 'mailgun-ruby', '~> 1.1.6'
+gem 'mailgun-ruby', '~> 1.1.11'
 
 group :test do
   # Test coverage
