@@ -79,7 +79,7 @@ group :development, :test do
   # Factory bot: factories for testing
   gem 'factory_bot_rails'
   # Shoulda Matchers: matchers for testing -- experimental gem for Rails 5
-  gem 'shoulda-matchers', git: 'https://github.com/thoughtbot/shoulda-matchers.git', branch: 'rails-5'
+  gem 'shoulda-matchers', '4.0.0rc1'
   # Trace routes
   gem 'traceroute'
 end
