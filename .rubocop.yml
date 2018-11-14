@@ -16,6 +16,10 @@ AllCops:
     - '**/Vagrantfile'
     - 'vendor/**/*'
 
+Lint/AmbiguousBlockAssociation:
+  Exclude:
+    - "spec/**/*"
+
 Layout/EmptyLinesAroundArguments:
   Enabled: false
 
