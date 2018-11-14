@@ -4,7 +4,7 @@
 #
 # Table name: time_ranges
 #
-#  id         :integer          not null, primary key
+#  id         :bigint(8)        not null, primary key
 #  start_time :time
 #  end_time   :time
 #  created_at :datetime         not null
