@@ -6,12 +6,12 @@ class RegistrationsController < Devise::RegistrationsController
   skip_before_action :require_no_authentication
 
   def new
-    ensure_mc || return
+    ensure_admin || return
     super
   end
 
   def create
-    ensure_mc || return
+    ensure_admin || return
     build_resource(sign_up_params)
     resource.save
     yield resource if block_given?
@@ -32,9 +32,9 @@ class RegistrationsController < Devise::RegistrationsController
 
   private
 
-  def ensure_mc
+  def ensure_admin
     redirect_to(new_user_session_path) && return unless user_signed_in?
-    redirect_to(users_path) && return unless current_user.mc
+    redirect_to(users_path) && return unless current_user.has_role? :admin
     true
   end
 end

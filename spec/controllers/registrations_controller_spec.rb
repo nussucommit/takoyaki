@@ -25,6 +25,15 @@ RSpec.describe RegistrationsController, type: :controller do
       it do
         sign_in create(:user, mc: true)
         get :new
+        should redirect_to users_path
+      end
+    end
+    context 'admin' do
+      it do
+        user = create(:user)
+        user.add_role(:admin)
+        sign_in user
+        get :new
         should respond_with :ok
       end
     end
@@ -59,6 +68,16 @@ RSpec.describe RegistrationsController, type: :controller do
     context 'mc' do
       it do
         sign_in create(:user, mc: true)
+        expect { post :create, params: @params }
+          .to_not change { User.count }
+        should redirect_to users_path
+      end
+    end
+    context 'admin' do
+      it do
+        user = create(:user)
+        user.add_role(:admin)
+        sign_in user
         expect { post :create, params: @params }
           .to change { User.count }.by(1)
         should redirect_to users_path
