@@ -1,44 +1,46 @@
 # frozen_string_literal: true
 
 module DutiesHelper
-  def process_duties(start_date, end_date)
+  def process_duties(start_date, end_date, first_time, last_time, places)
     all_duties = Duty.includes(:user, :request_user, timeslot: [:time_range])
                      .order('time_ranges.start_time')
-
     start_date.upto(end_date).map do |day|
-      Place.all.map do |place|
-        process_day_place(all_duties.where(date: day,
-                                           'timeslots.place' => place))
+      places.map do |place|
+        # force eager evaluation to reduce number of SQL queries
+        process_day_place(
+          all_duties.where(date: day, 'timeslots.place' => place).map { |d| d },
+          first_time, last_time
+        )
       end
     end
   end
 
   private
 
-  # TODO: To be refactored later on
-  # rubocop:disable Metrics/LineLength, Metrics/AbcSize, Metrics/MethodLength
-  def process_day_place(duties)
-    result = []
+  def process_day_place(duties, first_time, last_time)
     if duties.empty?
-      return [{ name: nil,
-                colspan: calc_colspan(TimeRange.first.start_time,
-                                      TimeRange.last.end_time) }]
+      [{ name: nil, colspan: calc_colspan(first_time, last_time) }]
+    else
+      process_duty_prefix(duties, first_time) + process_duty(duties) +
+        process_duty_suffix(duties, last_time)
     end
+  end
 
-    starting_time = TimeRange.order(:start_time).first.start_time
+  def process_duty_prefix(duties, first_time)
+    result = []
     starting_duty = duties.first.timeslot.time_range.start_time
-    if starting_time < starting_duty
-      result.push(name: nil, colspan: calc_colspan(starting_time, starting_duty))
+    if first_time < starting_duty
+      result.push(name: nil, colspan: calc_colspan(first_time, starting_duty))
     end
+    result
+  end
 
-    result += process_duty(duties)
-
-    ending_time = TimeRange.order(:start_time).last.start_time
+  def process_duty_suffix(duties, last_time)
+    result = []
     ending_duty = duties.last.timeslot.time_range.start_time
-    if ending_time > ending_duty
-      result.push(name: nil, colspan: calc_colspan(ending_duty, ending_time))
+    if last_time > ending_duty
+      result.push(name: nil, colspan: calc_colspan(ending_duty, last_time))
     end
-
     result
   end
 
@@ -71,6 +73,7 @@ module DutiesHelper
     index_array.push(duties.length)
   end
 
+  # rubocop:disable Metrics/LineLength, Metrics/AbcSize, Metrics/MethodLength
   def get_result(duties, index_array)
     result = []
     start_index, end_index = *index_array
@@ -87,7 +90,6 @@ module DutiesHelper
     end
     result
   end
-
   # rubocop:enable Metrics/LineLength, Metrics/AbcSize, Metrics/MethodLength
 
   def generate_select_duties(duty)
