@@ -71,6 +71,8 @@ RSpec.describe RegistrationsController, type: :controller do
   end
 
   describe 'after_inactive_sign_up_path_for' do
-    it { expect(subject.after_inactive_sign_up_path_for(nil)).to eq(users_path) }
+    it {
+      expect(subject.after_inactive_sign_up_path_for(nil)).to eq(users_path)
+    }
   end
 end
