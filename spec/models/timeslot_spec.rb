@@ -4,11 +4,11 @@
 #
 # Table name: timeslots
 #
-#  id              :integer          not null, primary key
+#  id              :bigint(8)        not null, primary key
 #  mc_only         :boolean
-#  default_user_id :integer
-#  time_range_id   :integer
-#  place_id        :integer
+#  default_user_id :bigint(8)
+#  time_range_id   :bigint(8)
+#  place_id        :bigint(8)
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #  day             :integer
@@ -29,9 +29,12 @@
 require 'rails_helper'
 
 RSpec.describe Timeslot, type: :model do
-  it { should have_many(:duties) }
-  it { should belong_to(:default_user).class_name('User') }
+  it { should have_many(:duties).dependent(:destroy) }
+  it {
+    should belong_to(:default_user).class_name('User')
+      .optional.inverse_of(:timeslots)
+  }
   it { should belong_to(:place) }
   it { should belong_to(:time_range) }
-  it { should define_enum_for(:day).with(Date::DAYNAMES) }
+  it { should define_enum_for(:day).with_values(Date::DAYNAMES) }
 end
