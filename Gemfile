@@ -5,13 +5,15 @@ source 'https://rubygems.org'
 # Ruby version
 ruby '2.5.1'
 # Rails version
-gem 'rails', '~> 5.1.0'
+gem 'rails', '~> 5.2'
 # Use postgres as database
-gem 'pg', '< 2'
+gem 'pg'
 # Use Puma as the app server
 gem 'puma'
 # For Travis CI
 gem 'rake', group: :test
+# Make loading large Ruby/Rails apps faster
+gem 'bootsnap', require: false
 
 ### END BASICS
 
@@ -45,8 +47,6 @@ end
 
 ### UTILITIES
 
-# Schema Validations: to maintin referential integrity in database and models
-gem 'schema_validations'
 # Environment variables
 gem 'dotenv-rails', require: 'dotenv/rails-now'
 # Mailgun

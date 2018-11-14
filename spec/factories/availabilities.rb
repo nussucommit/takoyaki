@@ -1,15 +1,14 @@
 # frozen_string_literal: true
 
 # rubocop:disable Metrics/LineLength
-
 # == Schema Information
 #
 # Table name: availabilities
 #
-#  id            :integer          not null, primary key
-#  user_id       :integer
+#  id            :bigint(8)        not null, primary key
+#  user_id       :bigint(8)
 #  day           :integer          not null
-#  time_range_id :integer
+#  time_range_id :bigint(8)
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
 #  status        :boolean          not null
