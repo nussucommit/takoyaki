@@ -72,8 +72,9 @@ class DutiesController < ApplicationController
 
   def owned_duties?(duty_id_params, supposed_user)
     duty_id_params.present? &&
-      !Duty.where('id IN (?) AND user_id = ?',
-                  duty_id_params.keys, supposed_user.id).empty?
+      Duty.where('id IN (?) AND user_id = ?',
+                 duty_id_params.keys, supposed_user.id)
+          .count == duty_id_params.keys.length
   end
 
   def grabable?(duty_id_params)

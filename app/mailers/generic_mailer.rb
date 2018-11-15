@@ -6,7 +6,10 @@ class GenericMailer < ApplicationMailer
   def drop_duties(duties, user_ids)
     @from = duties.first.user.username
     @date = duties.first.date
-    @times = process_duties_times(duties)
+    # Prevent (n + 1) queries
+    @times = process_duties_times(
+      Duty.includes(:time_range).find(duties.map(&:id))
+    )
     @venue = duties.first.place.name
     mail(to: users_with_name(user_ids),
          subject: generate_drop_duty_subject_detailed(@times, @date, @venue))
