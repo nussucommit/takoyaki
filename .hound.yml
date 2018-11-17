@@ -1,0 +1,5 @@
+scss:
+  config_file: .scss-lint.yml
+
+rubocop:
+  config_file: .rubocop.yml

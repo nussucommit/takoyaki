@@ -6,7 +6,8 @@ class DutiesController < ApplicationController
     @start_date = (params[:start_date] || Time.zone.today.beginning_of_week)
                   .to_date
     @end_date = @start_date.to_date + 6.days
-    @places = Place.all
+    # Eager load all rows in Place
+    @places = Place.all.map { |p| p }
     prepare_announcements
   end
 
@@ -21,7 +22,8 @@ class DutiesController < ApplicationController
 
   def open_drop_modal
     @users = User.where.not(id: current_user.id)
-    @drop_duty_list = Duty.find(params[:drop_duty_list])
+    @drop_duty_list = Duty.includes(timeslot: :time_range)
+                          .find(params[:drop_duty_list])
     respond_to do |format|
       format.js
       format.html
@@ -29,7 +31,8 @@ class DutiesController < ApplicationController
   end
 
   def open_grab_modal
-    @grab_duty_list = Duty.find(params[:grab_duty_list])
+    @grab_duty_list = Duty.includes(timeslot: :time_range)
+                          .find(params[:grab_duty_list])
     respond_to do |format|
       format.js
       format.html
@@ -77,7 +80,9 @@ class DutiesController < ApplicationController
 
   def owned_duties?(duty_id_params, supposed_user)
     duty_id_params.present? &&
-      duty_id_params.keys.all? { |d| Duty.find(d).user == supposed_user }
+      Duty.where('id IN (?) AND user_id = ?',
+                 duty_id_params.keys, supposed_user.id)
+          .count == duty_id_params.keys.length
   end
 
   def grabable?(duty_id_params)
@@ -91,11 +96,11 @@ class DutiesController < ApplicationController
 
   def swap_user(drop_duty_ids, swap_user_id)
     duties = duties_sorted_by_start_time(drop_duty_ids)
-    duties.each do |duty|
+    Duty.transaction do
       if swap_user_id.zero?
-        duty.update(free: true)
+        duties.each { |duty| duty.update(free: true) }
       else
-        duty.update(request_user_id: swap_user_id)
+        duties.each { |duty| duty.update(request_user_id: swap_user_id) }
       end
     end
     users_to_notify = swap_user_id.zero? ? User.pluck(:id) : swap_user_id
@@ -109,9 +114,9 @@ class DutiesController < ApplicationController
 
   def generate_header_iter
     time_range = TimeRange.order(:start_time)
-    first_time = time_range.first.start_time
-    last_time = time_range.last.start_time
-    first_time.to_i.step(last_time.to_i, 1.hour)
+    @first_time = time_range.first.start_time
+    @last_time = time_range.last.start_time
+    @first_time.to_i.step(@last_time.to_i, 1.hour)
   end
 
   def prepare_announcements

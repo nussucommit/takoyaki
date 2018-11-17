@@ -5,13 +5,15 @@ source 'https://rubygems.org'
 # Ruby version
 ruby '2.5.1'
 # Rails version
-gem 'rails', '~> 5.1.0'
+gem 'rails', '~> 5.2'
 # Use postgres as database
-gem 'pg', '< 2'
+gem 'pg'
 # Use Puma as the app server
 gem 'puma'
 # For Travis CI
 gem 'rake', group: :test
+# Make loading large Ruby/Rails apps faster
+gem 'bootsnap', require: false
 
 ### END BASICS
 
@@ -45,12 +47,10 @@ end
 
 ### UTILITIES
 
-# Schema Validations: to maintin referential integrity in database and models
-gem 'schema_validations'
 # Environment variables
 gem 'dotenv-rails', require: 'dotenv/rails-now'
 # Mailgun
-gem 'mailgun-ruby', '~> 1.1.6'
+gem 'mailgun-ruby', '~> 1.1.11'
 
 group :test do
   # Test coverage
@@ -79,7 +79,7 @@ group :development, :test do
   # Factory bot: factories for testing
   gem 'factory_bot_rails'
   # Shoulda Matchers: matchers for testing -- experimental gem for Rails 5
-  gem 'shoulda-matchers', git: 'https://github.com/thoughtbot/shoulda-matchers.git', branch: 'rails-5'
+  gem 'shoulda-matchers', '4.0.0rc1'
   # Trace routes
   gem 'traceroute'
 end

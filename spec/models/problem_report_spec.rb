@@ -4,17 +4,17 @@
 #
 # Table name: problem_reports
 #
-#  id                  :integer          not null, primary key
+#  id                  :bigint(8)        not null, primary key
 #  created_at          :datetime         not null
 #  updated_at          :datetime         not null
-#  computer_number     :string
-#  description         :text
+#  computer_number     :string           not null
+#  description         :text             not null
 #  is_critical         :boolean
-#  is_fixed            :boolean          default(FALSE)
-#  is_fixable          :boolean          default(TRUE)
+#  is_fixed            :boolean          default(FALSE), not null
+#  is_fixable          :boolean          default(TRUE), not null
 #  remarks             :text
 #  place_id            :integer
-#  is_blocked          :boolean          default(FALSE)
+#  is_blocked          :boolean          default(FALSE), not null
 #  reporter_user_id    :integer
 #  last_update_user_id :integer
 #
@@ -28,9 +28,17 @@
 require 'rails_helper'
 
 RSpec.describe ProblemReport, type: :model do
-  it { should belong_to(:reporter_user) }
-  it { should belong_to(:last_update_user) }
+  it {
+    should belong_to(:reporter_user).optional
+                                    .inverse_of(:reported_problem_reports)
+  }
+  it {
+    should belong_to(:last_update_user)
+      .optional.inverse_of(:last_updated_problem_reports)
+  }
   it { should belong_to(:place) }
+  it { should validate_presence_of(:computer_number) }
+  it { should validate_presence_of(:description) }
 
   it 'saves a valid Problem Report' do
     expect(create(:problem_report)).to be_valid

@@ -19,7 +19,12 @@
 #
 # rubocop:enable Metrics/LineLength
 
-FactoryBot.define do
-  factory :role do
-  end
+require 'rails_helper'
+
+RSpec.describe Role, type: :model do
+  it { should belong_to(:resource).optional }
+  it {
+    should validate_inclusion_of(:resource_type)
+      .in_array(Rolify.resource_types)
+  }
 end
