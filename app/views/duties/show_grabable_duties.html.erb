@@ -2,7 +2,7 @@
 	<h1>Grab Duties</h1>
 	<div class="container">
     <div class="row">
-      <div class="col-md-6 offset-md-3" id="duty-list">
+      <div class="col-md-6 offset-md-3 duty-list">
         <%= form_tag(grab_duties_path, method: :post) do %>
           <% format_duties(@grabable_duties).each do |d| %>
             <p>
@@ -13,7 +13,7 @@
             </p>
           <% end %>
           <p>
-            <%= submit_tag "Grab", class: "btn btn-primary", id: "grab" %>
+            <%= submit_tag "Grab", class: "btn btn-primary", class: "grab" %>
           </p>
         </div>
       <% end %>
