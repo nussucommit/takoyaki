@@ -178,4 +178,19 @@ RSpec.describe DutiesController, type: :controller do
       expect(flash[:alert]).to be('Error in dropping duty! Please try again.')
     end
   end
+
+  describe 'GET duties#show_grabable_duties' do
+    context 'unauthenticated' do
+      it do
+        get(:show_grabable_duties)
+        should redirect_to new_user_session_path
+      end
+    end
+    context 'authenticated' do
+      it do
+        sign_in create(:user)
+        get :show_grabable_duties
+        should respond_with :ok
+      end
+    end
 end
