@@ -16,6 +16,7 @@ matrix:
 before_script:
   - psql -c 'create database takoyaki_test;' -U postgres
   - cp config/database.yml.travis config/database.yml
+  - cp .env.default .env
 
 script:
   - "eval $COMMAND"
