@@ -41,9 +41,7 @@ class DutiesController < ApplicationController
 
   def grab
     if grabable?(params[:duty_id])
-      duty_ids = params[:duty_id].keys
-
-      Duty.find(duty_ids).each do |duty|
+      Duty.find(params[:duty_id].keys).each do |duty|
         duty.update(user: current_user, free: false, request_user: nil)
       end
 
@@ -56,16 +54,21 @@ class DutiesController < ApplicationController
 
   def drop
     if owned_duties?(params[:duty_id], current_user)
-      duty_ids = params[:duty_id].keys
-      swap_user_id = params[:user_id].to_i
-
-      swap_user(duty_ids, swap_user_id)
+      swap_user(params[:duty_id].keys, params[:user_id].to_i)
 
       redirect_to duties_path, notice: 'Duty successfully dropped!'
     else
       redirect_to duties_path, alert: 'Error in dropping duty! ' \
         'Please try again.'
     end
+  end
+
+  def show_grabable_duties
+    duty = Duty.includes(timeslot: %i[time_range place])
+    @grabable_duties = duty.where('free = true or request_user_id = ?',
+                                  current_user.id)
+                           .or(duty.where.not(request_user_id: nil)
+                            .where(user_id: current_user.id))
   end
 
   private
@@ -80,8 +83,7 @@ class DutiesController < ApplicationController
   def grabable?(duty_id_params)
     duty_id_params.present? && duty_id_params.keys.all? do |d|
       duty = Duty.find(d)
-      duty.free ||
-        duty.request_user == current_user ||
+      duty.free || duty.request_user == current_user ||
         (duty.request_user.present? && duty.user == current_user)
     end
   end
@@ -100,10 +102,8 @@ class DutiesController < ApplicationController
   end
 
   def duties_sorted_by_start_time(duty_ids)
-    Duty.joins(timeslot: :time_range)
-        .order('time_ranges.start_time ASC')
-        .includes(timeslot: :time_range)
-        .find(duty_ids)
+    Duty.joins(timeslot: :time_range).order('time_ranges.start_time ASC')
+        .includes(timeslot: :time_range).find(duty_ids)
   end
 
   def generate_header_iter

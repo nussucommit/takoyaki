@@ -1,0 +1,22 @@
+<div class="grabable-duties">
+	<h1>Grab Duties</h1>
+	<div class="container">
+    <div class="row">
+      <div class="col-md-6 offset-md-3 duty-list">
+        <%= form_tag(grab_duties_path, method: :post) do %>
+          <% format_duties(@grabable_duties).each do |d| %>
+            <p>
+              <%= check_box_tag "duty_id[#{d[:id]}]", d[:id] %>
+              <%= label_tag "duty_id[#{d[:id]}]",  "Time: " + d[:date].to_s + ", " + d[:timing] %>
+              <br/>
+              <%= label_tag "Location: " + d[:location] %>
+            </p>
+          <% end %>
+          <p>
+            <%= submit_tag "Grab", class: "btn btn-primary", class: "grab" %>
+          </p>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
