@@ -193,4 +193,5 @@ RSpec.describe DutiesController, type: :controller do
         should respond_with :ok
       end
     end
+  end
 end
