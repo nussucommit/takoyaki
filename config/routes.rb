@@ -44,4 +44,6 @@ Rails.application.routes.draw do
 
   get 'guide', to: 'static_pages#guide'
   get 'grab_duty', to: 'duties#show_grabable_duties'
+
+  resource :settings, only: %i[edit update]
 end

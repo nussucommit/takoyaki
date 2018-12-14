@@ -62,6 +62,9 @@
               <% if current_user %>
                 <%= link_to 'Change Password', edit_user_path(current_user), class: 'dropdown-item' %>
               <% end %>
+              <% if current_user&.has_role? :admin %>
+                <%= link_to 'Site Settings', edit_settings_path, class: 'dropdown-item' %>
+              <% end %>
               <%= link_to 'Logout', destroy_user_session_path, class: 'dropdown-item', method: :delete %>
             </div>
           </li>
