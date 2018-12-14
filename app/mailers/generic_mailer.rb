@@ -11,7 +11,7 @@ class GenericMailer < ApplicationMailer
       Duty.includes(:time_range).find(duties.map(&:id))
     )
     @venue = duties.first.place.name
-    mail(to: users_with_name(user_ids),
+    mail(to: users_with_name(process_user_ids(user_ids)),
          subject: generate_drop_duty_subject_detailed(@times, @date, @venue))
   end
 
@@ -41,5 +41,17 @@ class GenericMailer < ApplicationMailer
       "#{duty.time_range.start_time.strftime('%H%M')}-" \
       "#{duty.time_range.end_time.strftime('%H%M')}"
     end.join(', ')
+  end
+
+  def mc_only?
+    Setting.retrieve.mc_only
+  end
+
+  def process_user_ids(user_ids)
+    if mc_only?
+      User.where('id in (?) and mc = TRUE', user_ids).pluck(:id)
+    else
+      user_ids
+    end
   end
 end

@@ -31,6 +31,13 @@ RSpec.describe GenericMailer, type: :mailer do
     it 'renders the body' do
       expect(mail.body.encoded).to match('grab')
     end
+
+    it 'follows mc_only flag' do
+      create_list(:user, 5, mc: false)
+      create_list(:user, 5, mc: true)
+      Setting.retrieve.update(mc_only: true)
+      expect(mail.to).to eq(User.select(&:mc).pluck(:email))
+    end
   end
 
   describe '#problem_report' do

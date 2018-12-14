@@ -1,0 +1,11 @@
+<h1>Site Settings</h1>
+
+<div class="container">
+  <%= form_for(@settings, url: settings_path) do |s| %>
+    <div class="form-group form-check">
+      <%= s.check_box :mc_only, class: 'form-check-input' %>
+      <%= s.label :mc_only, 'Send drop duty emails to MC only', class: 'form-check-label' %>
+    </div>
+    <%= s.submit 'Update Settings', class: 'btn btn-primary' %>
+  <% end %>
+</div>
