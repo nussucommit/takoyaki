@@ -121,6 +121,7 @@ RSpec.describe UsersController, type: :controller do
         user = create(:user)
         user.add_role(:admin)
         sign_in user
+        @user = user
       end
       it 'adds role' do
         user = create(:user)
@@ -168,6 +169,17 @@ RSpec.describe UsersController, type: :controller do
           User.find(user.id).mc
         }.from(false).to(true)
         should redirect_to(users_path)
+      end
+      it 'handles failure' do
+        user = create(:user, mc: false)
+        user.add_role(:admin)
+        allow(user).to receive(:update).and_return(false)
+        allow(User).to receive(:find).and_return(user)
+        put :update_roles, params: { id: user.id, user: { cell: 'technical',
+                                                          mc: 'true' },
+                                     admin: 0 }
+        should redirect_to(users_path)
+        expect(flash['alert']).to eq('Updating roles failed!')
       end
     end
   end
