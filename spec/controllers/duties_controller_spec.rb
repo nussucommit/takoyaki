@@ -194,4 +194,43 @@ RSpec.describe DutiesController, type: :controller do
       end
     end
   end
+
+  describe 'POST duties#open_drop_modal' do
+    context 'unauthenticated' do
+      it do
+        post :open_drop_modal, params: { 'drop_duty_list' => ['1'] }
+        should redirect_to new_user_session_path
+      end
+    end
+    context 'authenticated' do
+      it do
+        user = create(:user)
+        sign_in user
+        duties = create_list(:duty, 3, user: user)
+        params = { 'drop_duty_list' => duties.map(&:id).map(&:to_s) }
+        post :open_drop_modal, params: params, xhr: true
+        should respond_with :ok
+      end
+    end
+  end
+
+  describe 'POST duties #open_grab_modal' do
+    context 'unauthenticated' do
+      it do
+        post :open_grab_modal, params: { 'drop_duty_list' => ['1'] }
+        should redirect_to new_user_session_path
+      end
+    end
+
+    context 'authenticated' do
+      it do
+        user = create(:user)
+        sign_in user
+        duties = create_list(:duty, 3, user: user)
+        params = { 'grab_duty_list' => duties.map(&:id).map(&:to_s) }
+        post :open_grab_modal, params: params, xhr: true
+        should respond_with :ok
+      end
+    end
+  end
 end
