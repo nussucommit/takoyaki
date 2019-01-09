@@ -54,7 +54,7 @@ RSpec.describe Duty, type: :model do
     today = Time.zone.today
     Duty.generate(today.beginning_of_week, today)
     expect(
-      Duty.where(date: today.beginning_of_week).order(:start_time)
+      Duty.where(date: today.beginning_of_week).ordered_by_start_time
           .each_cons(2).all? { |a, b| a < b }
     ).to be(true)
   end

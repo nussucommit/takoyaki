@@ -6,10 +6,22 @@ RSpec.describe ProblemReportsController, type: :controller do
   describe 'GET problem_reports#index' do
     before do
       sign_in create(:user)
-      get :index
     end
 
-    it { should respond_with :ok }
+    it 'without param' do
+      get :index
+      should respond_with :ok
+    end
+
+    it 'all problems' do
+      get :index, params: { all_problems: true }
+      should respond_with :ok
+    end
+
+    it 'critical problems' do
+      get :index, params: { critical_problems: true }
+      should respond_with :ok
+    end
   end
 
   describe 'POST problem_reports#create' do

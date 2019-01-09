@@ -57,14 +57,27 @@ RSpec.describe SettingsController, type: :controller do
       end
     end
     context 'admin' do
-      it do
+      before do
         user = create(:user, mc: true)
         user.add_role(:admin)
         sign_in user
+      end
+
+      it do
         Setting.retrieve.update(mc_only: false)
         expect do
           put :update, params: { setting: { mc_only: true } }
         end.to change { Setting.retrieve.mc_only }.from(false).to(true)
+      end
+
+      it 'handles failure' do
+        setting = Setting.retrieve
+        setting.update(mc_only: false)
+        allow(setting).to receive(:update).and_return(false)
+        allow(Setting).to receive(:retrieve).and_return(setting)
+        put :update, params: { setting: { mc_only: true } }
+        should redirect_to edit_settings_path
+        expect(flash['alert']).to eq('Updating settings failed!')
       end
     end
   end
