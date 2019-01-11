@@ -66,10 +66,10 @@ module AvailabilitiesHelper
       .min / 1.hour).round - CELL_HEIGHT / 2, 0].max
   end
 
-  def choose_form_path(path)
-    case path
+  def choose_form_path
+    case params[:controller]
     when 'availabilities/places'
-      availabilities_place_path
+      availabilities_place_path(params[:id])
     when 'availabilities'
       availabilities_path
     end

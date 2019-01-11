@@ -6,7 +6,10 @@ SimpleCov.formatters = SimpleCov::Formatter::MultiFormatter.new(
   [SimpleCov::Formatter::HTMLFormatter, Coveralls::SimpleCov::Formatter]
 )
 
-SimpleCov.start 'rails'
+SimpleCov.start 'rails' do
+  add_filter '/app/jobs/'
+  add_filter '/app/channels/'
+end
 
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 require 'spec_helper'
