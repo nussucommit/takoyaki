@@ -45,4 +45,20 @@ RSpec.describe AvailabilitiesHelper, type: :helper do
         .to eq(78.0)
     end
   end
+
+  describe '#choose_form_path' do
+    context 'availabilities/places' do
+      it do
+        controller.params[:controller] = 'availabilities/places'
+        controller.params[:id] = 1
+        expect(helper.choose_form_path).to eq('/availabilities/places/1')
+      end
+    end
+    context 'availabilities' do
+      it do
+        controller.params[:controller] = 'availabilities'
+        expect(helper.choose_form_path).to eq('/availabilities')
+      end
+    end
+  end
 end
