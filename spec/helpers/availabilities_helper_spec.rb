@@ -61,4 +61,42 @@ RSpec.describe AvailabilitiesHelper, type: :helper do
       end
     end
   end
+
+  describe '#generate' do
+    it do
+      availability = Struct.new(:id, :status).new(2, true)
+      expect(helper.generate(availability))
+        .to eq('<input type="checkbox" name="availability_ids[2]" ' \
+               'id="availability_ids_2" value="2" style="visibility: hidden;"' \
+               ' checked="checked" />')
+    end
+
+    it do
+      availability = Struct.new(:id, :status).new(42, false)
+      expect(helper.generate(availability))
+        .to eq('<input type="checkbox" name="availability_ids[42]" ' \
+               'id="availability_ids_42" value="42" ' \
+               'style="visibility: hidden;" />')
+    end
+  end
+
+  describe '#generate_cell' do
+    it do
+      assign(:availabilities,
+             [1, 10] => Struct.new(:id, :status).new(2, true))
+      expect(helper.generate_cell(1, Struct.new(:id).new(10)))
+        .to eq('<input type="checkbox" name="availability_ids[2]" ' \
+               'id="availability_ids_2" value="2" style="visibility: hidden;"' \
+               ' checked="checked" />')
+    end
+
+    it do
+      assign(:availabilities,
+             [10, 100] => Struct.new(:id, :status).new(42, false))
+      expect(helper.generate_cell(10, Struct.new(:id).new(100)))
+        .to eq('<input type="checkbox" name="availability_ids[42]" ' \
+               'id="availability_ids_42" value="42" ' \
+               'style="visibility: hidden;" />')
+    end
+  end
 end
