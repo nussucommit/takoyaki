@@ -9,8 +9,6 @@ class DutiesController < ApplicationController
     # Eager load all rows in Place
     @places = Place.all.map { |p| p }
     prepare_announcements
-    @duty_hours = User.find_by(id: current_user.id).timeslots.count +
-                    User.find_by(id: current_user.id).duties.count
   end
 
   def generate_duties

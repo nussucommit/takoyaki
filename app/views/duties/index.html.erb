@@ -25,7 +25,7 @@
         <% if can?(:update_default_duties, Duty) %>
           <%= link_to 'Update Default Duties', availabilities_places_path, class: "btn btn-large btn-light duty-table-button" %>
         <% end %>
-        <div class = "duty_hours">Your hours: <%= @duty_hours %></div>
+        <div class = "duty_hours">Your hours: <%= User.find_by(id: current_user.id).timeslots.count + User.find_by(id: current_user.id).duties.count %></div>
       </div>
 
       <div class="schedule-container">
