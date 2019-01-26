@@ -11,14 +11,14 @@
               <div class="field">
                 <tr>
                   <th><%= u.label :cell %></th>
-                  <td><%= u.select(:cell, options_for_select(User::CELLS.map { |c| [c.capitalize, c] }, @user.cell), {:class => 'form-control'}) %>
+                  <td><%= u.select(:cell, options_for_select(User::CELLS.map { |c| [c.capitalize, c] }, @user.cell), {:class => 'form-control'}) %></td>
                 </tr>
               </div>
 
               <div class="field">
                 <tr>
                   <th><%= u.label :mc %></th>
-                  <td><%= u.select(:mc, options_for_select(["true", "false"], @user.mc), {:class => 'form-control'}) %>
+                  <td><%= u.select(:mc, options_for_select(["true", "false"], @user.mc), {:class => 'form-control'}) %></td>
                 </tr>
               </div>
 
