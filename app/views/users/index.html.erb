@@ -11,7 +11,9 @@
         <table>
           <tr>
             <th class="name">Name</th>
-            <th class="matric">Matric number</th>
+            <% if current_user.mc %>
+              <th class="matric">Matric number</th>
+            <% end %>
             <th class="contact">Contact number</th>
             <th class="email">E-mail</th>
             <th class="cell">Cell</th>
@@ -28,7 +30,9 @@
           <% @users.each do |p| %>
             <tr>
               <td class="name"><%= p.username %></td>
-              <td class="matric"><%= p.matric_num %></td>
+              <% if current_user.mc %>
+                <td class="matric"><%= p.matric_num %></td>
+              <% end %>
               <td class="contact"><%= p.contact_num %></td>
               <td class="email"><%= p.email %></td>
               <td class="cell"><%= p.cell %></td>
