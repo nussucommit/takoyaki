@@ -9,7 +9,7 @@
   </div>
 
   <div class="row body-container">
-    <div class="col-md-3 sidebar-container announcement-sidebar">
+    <div class="col-md-3 sidebar-container announcement-sidebar" id="announcement-sidebar">
       <h1>Announcements</h1>
         <%= render partial: 'announcements/index' %>
     </div>
@@ -89,7 +89,7 @@
                         <% if current_user == duty[:user] %>
                           <td class="schedule-name text-overflow-ellipsis my-duty-cell" colspan="<%= duty[:colspan] %>">
                             <%= button_to duty[:user].username, { controller: 'duties', action: 'open_drop_modal', drop_duty_list: duty[:span_duty] }, { method: :post, remote: true, class: 'btn btn-link', style: "line-height: 0;", 'data-toggle': "modal", 'data-target': '.grab-drop-modal' } %>
-                            <div class="modal hide fade grab-drop-modal" role="dialog" aria-labelledby="grabDropModal" aria-hidden="true">
+                            <div id="grab-drop-modal" class="modal hide fade grab-drop-modal" role="dialog" aria-labelledby="grabDropModal" aria-hidden="true">
                               <div class="modal-dialog" role="document">
                               </div>
                             </div>
@@ -97,7 +97,7 @@
                         <% else %>
                           <td class="schedule-name text-overflow-ellipsis" colspan="<%= duty[:colspan] %>">
                             <%= duty[:user].username %>
-                            <div class="modal hide fade grab-drop-modal" role="dialog" aria-labelledby="grabDropModal" aria-hidden="true">
+                            <div id="grab-drop-modal" class="modal hide fade grab-drop-modal" role="dialog" aria-labelledby="grabDropModal" aria-hidden="true">
                               <div class="modal-dialog" role="document">
                               </div>
                             </div>
