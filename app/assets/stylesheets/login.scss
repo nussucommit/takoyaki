@@ -33,9 +33,7 @@
     margin-top: 20px;
   }
 
-  #user_username,
-  #user_email,
-  #user_password {
+  .user-info input {
     background-color: $transparent-black-0;
     border-bottom: 2px solid $yellow;
     border-left: 0;
@@ -56,7 +54,7 @@
     outline: none;
   }
 
-  #user_remember_me {
+  .remember input {
     margin-top: 0;
     vertical-align: middle;
   }
@@ -90,8 +88,8 @@
       height: 46px;
       margin-left: auto;
       margin-right: auto;
-      text-shadow: 0 -1px 0 $black,
-                   0 1px 0 $transparent-white;
+      text-shadow: 0 -.3px 0 $black,
+                   0 .5px 0 $transparent-white;
       width: 100%;
     }
 
@@ -109,15 +107,16 @@
   }
 
   .account-wall {
-    background-color: rgba(255,255,255,0.9);
+    background-color: $white;
     box-shadow: 0 0 30px $grey;
     height: 100%;
+    opacity: .9;
     padding-bottom: 10%;
     padding-top: 10%;
     text-align: center;
   }
 
-  form#new_user.new_user {
+  form {
     margin-bottom: 10px;
     padding-left: 15%;
     padding-right: 15%;
@@ -125,12 +124,13 @@
   }
 
   .footer {
-    background-color: rgba(0,0,0,0.7);
+    background-color: $black;
     bottom: 0;
     color: $yellow;
     height: 30px;
     left: 0;
     margin: 0 auto;
+    opacity: .7;
     position: fixed;
     width: 100%;
 
@@ -179,15 +179,9 @@
     padding-top: 10%;
   }
 
-  .password form#new_user.new_user {
+  .password form {
     padding-left: 0;
     padding-right: 0;
-  }
-
-  .password .actions input {
-    margin-top: 25px;
-    text-shadow: 0 -.3px 0 $black,
-                 0 .5px 0 $transparent-white;
   }
 
   h2 {
@@ -226,15 +220,13 @@
       width: 100%;
     }
 
-    #user_username,
-    #user_email,
-    #user_password {
+    .user-info input {
       height: 5%;
       margin-bottom: 5%;
       margin-top: 10%;
     }
 
-    #user_remember_me {
+    .remember input {
       height: 15px;
       width: 15px;
     }
