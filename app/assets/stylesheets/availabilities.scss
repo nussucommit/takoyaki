@@ -334,19 +334,22 @@ body {
 }
 
 .availabilities-title-container {
+  align-items: center;
+  border-bottom: 1px solid $border-grey;
   display: flex;
   height: 101px;
-  padding: 8px 8px;
   justify-content: center;
-  align-items: center;
-  border-bottom: 1px solid #e0e0e0;
+  padding: 8px;
 }
 
 .availabilities-title {
-  font-weight: normal; 
+  font-weight: normal;
   text-align: center;
 }
 
-.availabilities-navbar-button-container{
-  display: flex; flex-direction: column; padding: 32px 40px; justify-content: space-around;
+.availabilities-navbar-button-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  padding: 32px 40px;
 }
