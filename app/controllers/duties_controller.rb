@@ -21,7 +21,7 @@ class DutiesController < ApplicationController
   end
 
   def open_drop_modal
-    @users = User.where.not(id: current_user.id)
+    @users = User.where.not(id: current_user.id).order(:username)
     @drop_duty_list = Duty.includes(timeslot: :time_range)
                           .find(params[:drop_duty_list])
     respond_to do |format|
