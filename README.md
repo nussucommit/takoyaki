@@ -12,7 +12,7 @@ To generate the current Entity-Relationship Diagram, install `graphviz` (`sudo a
 then run `rake generate_erd`. This is also run as a post-migration hook (i.e. after `bin/rails db:migrate`)
 
 ## Installation
-Make sure you have Ruby 2.5.0, Bundler, and PostgreSQL 9.6 installed. Also, create an account on Mailgun for email services.
+Make sure you have Ruby 2.6.0, Bundler, and PostgreSQL >9.6 installed. Also, create an account on Mailgun for email services.
 Adjust the content of `database.yml` and `.env`
 
 ```bash
