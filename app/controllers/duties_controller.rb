@@ -54,9 +54,13 @@ class DutiesController < ApplicationController
 
   def drop
     if owned_duties?(params[:duty_id], current_user)
-      swap_user(params[:duty_id].keys, params[:user_id].to_i)
-
-      redirect_to duties_path, notice: 'Duty successfully dropped!'
+      if drop_eligible?(params[:duty_id].keys)
+        swap_user(params[:duty_id].keys, params[:user_id].to_i)
+        redirect_to duties_path, notice: 'Duty successfully dropped!'
+      else
+        redirect_to duties_path, alert: 'Error in dropping duty! ' \
+          'You can only drop your duty at most 2 hours before it starts'
+      end
     else
       redirect_to duties_path, alert: 'Error in dropping duty! ' \
         'Please try again.'
@@ -86,6 +90,17 @@ class DutiesController < ApplicationController
       duty.free || duty.request_user == current_user ||
         (duty.request_user.present? && duty.user == current_user)
     end
+  end
+
+  def drop_eligible?(drop_duty_ids)
+    duties = duties_sorted_by_start_time(drop_duty_ids)
+    first_timeslot = duties[0].timeslot_id
+    first_timerange = Timeslot.find(first_timeslot).time_range_id
+    first_start_time = TimeRange.find(first_timerange).start_time
+    date_limit = duties[0].date
+    time_limit = first_start_time - 7200
+    Time.zone.today <= date_limit &&
+      Time.zone.now.strftime("%H:%M:%S") < time_limit.strftime("%H:%M:%S")
   end
 
   def swap_user(drop_duty_ids, swap_user_id)
