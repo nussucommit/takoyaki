@@ -32,8 +32,8 @@ class AvailabilitiesController < ApplicationController
 
   def load_all_availabilities
     result = {}
-    Availability.joins(:time_range)
-                .order(:day, 'time_ranges.start_time')
+    Availability.joins(:time_range, :user)
+                .order('users.mc DESC, users.username ASC')
                 .each do |a|
       result[[a.day, a.time_range_id]] ||= []
       result[[a.day, a.time_range_id]].push(a.user_id) if a.status
