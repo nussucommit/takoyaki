@@ -133,3 +133,11 @@ h1 {
 .my-duty-cell {
   background-color: $light-red;
 }
+
+.duty_hours {
+  font-size: 20px;
+  border: 1px solid black;
+  display: inline;
+  align: right;
+  padding: 5px;
+}
