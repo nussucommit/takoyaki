@@ -3,12 +3,19 @@
 
   <div class="container">
     <div class="row">
-      <div class="col-md-12 scrollable">
+      <div class="col-md-6 align-self-center">
         <% if can?(:create, User) %>
           <%= button_to("Add User", new_user_registration_path, method: "get", class: "btn btn-info users-btn") %>
         <% end %>
-
-        <table>
+      </div>
+      <div class="col-md-3 align-self-center">
+        <div class="row">Total members: <%= @users.size %></div>
+        <div class="row">Total MC: <%= @users.select { |u| u.mc }.size %></div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12 scrollable">
+        <table class="table">
           <tr>
             <th class="name">Name</th>
             <th class="matric">Matric number</th>
