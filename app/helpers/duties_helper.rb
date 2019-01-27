@@ -15,6 +15,12 @@ module DutiesHelper
     end
   end
 
+  def current_user_hours
+    # rubocop:disable LineLength
+    User.find_by(id: current_user.id).duties.where(date: @start_date..@end_date, free: false, request_user_id: nil).count
+    # rubocop:enable LineLength
+  end
+
   private
 
   def process_day_place(duties, first_time, last_time)
