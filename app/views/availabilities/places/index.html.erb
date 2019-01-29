@@ -1,12 +1,12 @@
 <div class="container-fluid availabilities-places-container">
   <div>
-    <h2 style="border-bottom: 1px solid #e0e0e0; padding: 32px 64px;">Places</h2>
-    <div style="display: flex; flex-direction: column; align-items: stretch; padding: 32px; border-bottom: 1px solid #e0e0e0;">
+    <h2 class="availabilities-admin-heading">Places</h2>
+    <div class="availabilities-admin-update-button-container availabilities-admin-update-button-color" >
       <% @places.each do |place| %>
         <%= link_to place.name, edit_availabilities_place_path(id: place.id), class: "btn btn-large btn-primary btn-nav", style: "padding: 16px;" %>
       <% end %>
     </div>
-    <div style="display: flex; flex-direction: column; align-items: stretch; padding: 32px;">
+    <div class="availabilities-admin-update-button-container">
       <%= link_to "Show all", show_everyone_availabilities_path, class: "btn btn-large btn-light btn-nav", style: "padding: 16px;" %>
       <%= link_to "Back", duties_path, method: "get", class: "btn btn-large btn-danger btn-nav", style: "padding: 16px;" %>
     </div>

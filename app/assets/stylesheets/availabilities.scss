@@ -332,3 +332,40 @@ body {
 .btn-nav {
   margin: 16px;
 }
+
+.availabilities-title-container {
+  align-items: center;
+  border-bottom: 1px solid $border-grey;
+  display: flex;
+  height: 101px;
+  justify-content: center;
+  padding: 8px;
+}
+
+.availabilities-title {
+  font-weight: normal;
+  text-align: center;
+}
+
+.availabilities-navbar-button-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  padding: 32px 40px;
+}
+
+.availabilities-admin-update-button-container {
+  align-items: stretch;
+  display: flex;
+  flex-direction: column;
+  padding: 32px;
+}
+
+.availabilities-admin-update-button-color {
+  border-bottom: 1px solid $border-grey;
+}
+
+.availabilities-admin-heading {
+  border-bottom: 1px solid $border-grey;
+  padding: 32px 64px;
+}
