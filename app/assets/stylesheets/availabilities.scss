@@ -2,7 +2,7 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-@import "constants";
+@import 'constants';
 
 .availabilities-places-container {
   align-items: center;
@@ -67,7 +67,7 @@
 
 .availability:hover {
   box-shadow: 0 6px 10px 0 $transparent-black-1, 0 1px 18px 0 $transparent-black-2, 0 3px 5px -1px $transparent-black-3;
-  z-index: 1002 !important;
+  z-index: 1002;
 }
 
 .availability-yes {
@@ -141,7 +141,7 @@
 }
 
 .availabilities-all-cell {
-  border: 1px solid $black !important;
+  border: 1px solid $black;
 }
 
 .availability-list {
@@ -166,21 +166,21 @@ body {
   height: 100%;
 }
 
-.places-container {
+.container-fluid.places-container {
   height: calc(100% - #{$navbar-height});
-  padding: 0 !important;
+  padding: 0;
 }
 
 .edit-places-form {
   height: 100%;
-  margin: 0 !important;
+  margin: 0;
   width: 100%;
 }
 
 .edit-places-nav {
   border-right: 1px solid $border-grey;
   height: 100%;
-  padding: 0 !important;
+  padding: 0;
 }
 
 .edit-places-table {
@@ -195,7 +195,7 @@ body {
   flex: none;
 }
 
-#scroll-table {
+.scroll-table {
   align-items: flex-start;
   border-top: 1px solid $border-grey;
   display: flex;
@@ -317,7 +317,7 @@ body {
 
 .timeslot:hover {
   box-shadow: 0 6px 10px 0 $transparent-black-1, 0 1px 18px 0 $transparent-black-2, 0 3px 5px -1px $transparent-black-3;
-  z-index: 1002 !important;
+  z-index: 1002;
 }
 
 .timeslot-vertical {
