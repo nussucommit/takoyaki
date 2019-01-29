@@ -12,12 +12,12 @@ function setDutyTableButtons() {
 
 function toggleSidebar() {
   $('#announcement-toggle-btn').on('click', function() {
-    if ($('.announcement-sidebar').css('display') == "block") {
-      $('.announcement-sidebar').hide().removeClass('open');
+    if ($('#announcement-sidebar').css('display') == "block") {
+      $('#announcement-sidebar').hide().removeClass('open');
 
       $('#duty-table').addClass('col-md-12');
     } else {
-      $('.announcement-sidebar').fadeIn('fast').addClass('open');
+      $('#announcement-sidebar').fadeIn('fast').addClass('open');
 
       $('#duty-table').addClass('col-md-9').removeClass('col-md-12');
     }
