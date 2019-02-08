@@ -1,14 +1,16 @@
 <div class="modal fade" id="new_modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true" data-backdrop="static">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
-
-      <div class="modal-header">
+	
+      <div class="modal-header">	
         <h5 class="modal-title title">Submit New Announcement</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
       </div>
-
+	<% if @quota_warning.present? %>
+		<span><%= @quota_warning %></span>
+	<% end %>
       <%= form_for @new_announcement, :html => { class: "announcement-form" } do |a| %>
         <div class="modal-body">
           <%= a.label :subject, class: 'font-group' %>

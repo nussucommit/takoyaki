@@ -1,6 +1,9 @@
 <div class="sidebar">
   <% @announcements.each do |a| %>
     <div class="post">
+	<% if @quota_warning.present? %>
+		<span><%= @quota_warning %></span>
+	<% end %>
       <div class="title"><%= a.subject %></div>
       <div class="date">Posted on <%= format_time(a.created_at) %></div>
       <div class="content">

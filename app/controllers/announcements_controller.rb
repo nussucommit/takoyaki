@@ -40,4 +40,14 @@ class AnnouncementsController < ApplicationController
   def announcement_params
     params.require(:announcement).permit(:subject, :details)
   end
+
+class PostsController < ApplicationController
+  before_filter :check_quota 
+	
+  def check_quota
+	if user.posts.count >=3
+		@quota_warning = "You've reached maximum posts you can import"
+		end
+	end
+  end
 end

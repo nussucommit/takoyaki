@@ -1,6 +1,9 @@
 <% @announcements.each do |announcement| %>
   <div class="modal fade" id="edit_modal_<%= announcement.id %>" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true" data-backdrop="static">
     <div class="modal-dialog" role="document">
+	  <% if @quota_warning.present? %>
+		<span><%= @quota_warning %></span>
+	  <% end %>
       <div class="modal-content">
 
         <div class="modal-header">
