@@ -2,8 +2,17 @@
 
 require_relative 'boot'
 
-require 'rails/all'
-
+require 'rails'
+%w(
+action _controller
+action_mailer
+action_resource
+rails/test_unit).each do |framework|
+begin
+reuire "#{framework}/railtie"
+rescue LoadError
+end
+end
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
