@@ -7,7 +7,7 @@ module Duties
 
     def index
       @start_date = (params[:start_date] || Time.zone.today.beginning_of_week)
-      .to_date
+                    .to_date
     end
 
     def edit
