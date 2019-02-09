@@ -72,7 +72,7 @@ h1 {
 }
 
 .schedule-name {
-  border: 1px solid $black !important;
+  border: 1px solid $black;
   text-align: center;
   text-overflow: ellipsis;
   width: 170px;
@@ -80,7 +80,7 @@ h1 {
 
 .schedule-name-empty {
   background-color: $light-grey;
-  border: 1px solid $black !important;
+  border: 1px solid $black;
 }
 
 .duty-table {
@@ -118,11 +118,11 @@ h1 {
   margin-right: 10px;
 }
 
-#announcement-sidebar {
+.announcement-sidebar {
   display: block;
 }
 
-#grab-drop-modal {
+.grab-drop-modal {
   bottom: 25%;
   left: 25%;
   outline: none;
