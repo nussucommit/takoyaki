@@ -17,7 +17,7 @@ class ApplicationController < ActionController::Base
 
   def access_denied(exception)
     store_location_for :user, request.path
-    redirect_to user_signed_in? ? root_path : new_user_session_path,
-                alert: exception.message
+    redirect_to(user_signed_in? ? root_path : new_user_session_path,
+                alert: exception.message)
   end
 end
