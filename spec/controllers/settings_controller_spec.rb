@@ -13,13 +13,15 @@ RSpec.describe SettingsController, type: :controller do
     context 'normal user' do
       it do
         sign_in create(:user)
-        expect { get :edit }.to raise_error(CanCan::AccessDenied)
+        get :edit
+        should redirect_to(root_path)
       end
     end
     context 'mc' do
       it do
         sign_in create(:user, mc: true)
-        expect { get :edit }.to raise_error(CanCan::AccessDenied)
+        get :edit
+        should redirect_to(root_path)
       end
     end
     context 'admin' do
@@ -43,17 +45,15 @@ RSpec.describe SettingsController, type: :controller do
     context 'normal user' do
       it do
         sign_in create(:user)
-        expect do
-          put :update, params: { setting: { mc_only: true } }
-        end.to raise_error(CanCan::AccessDenied)
+        put :update, params: { setting: { mc_only: true } }
+        should redirect_to(root_path)
       end
     end
     context 'mc' do
       it do
         sign_in create(:user, mc: true)
-        expect do
-          put :update, params: { setting: { mc_only: true } }
-        end.to raise_error(CanCan::AccessDenied)
+        put :update, params: { setting: { mc_only: true } }
+        should redirect_to(root_path)
       end
     end
     context 'admin' do
