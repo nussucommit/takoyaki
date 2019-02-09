@@ -5,16 +5,14 @@ require 'rails_helper'
 RSpec.describe Duties::PlacesController, type: :controller do
   describe 'GET #index' do
     it 'denies access when unauthenticated' do
-      expect do
-        get :index
-      end.to raise_error(CanCan::AccessDenied)
+      get :index
+      should redirect_to(new_user_session_path)
     end
 
     it 'denies access to normal user' do
       sign_in create(:user)
-      expect do
-        get :index
-      end.to raise_error(CanCan::AccessDenied)
+      get :index
+      should redirect_to(root_path)
     end
 
     it 'renders for admin' do

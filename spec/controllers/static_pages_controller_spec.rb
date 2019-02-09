@@ -11,4 +11,13 @@ RSpec.describe StaticPagesController, type: :controller do
 
     it { should redirect_to StaticPagesController::GUIDE_URL }
   end
+
+  describe 'GET static_pages#claim_form' do
+    before do
+      sign_in create(:user)
+      get :claim_form
+    end
+
+    it { should redirect_to StaticPagesController::CLAIM_FORM_URL }
+  end
 end
