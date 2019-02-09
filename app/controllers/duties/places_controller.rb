@@ -5,7 +5,10 @@ module Duties
     load_and_authorize_resource
     before_action :authenticate_user!
 
-    def index; end
+    def index
+      @start_date = (params[:start_date] || Time.zone.today.beginning_of_week)
+      .to_date
+    end
 
     def edit
       @start_date = (params[:start_date] || Time.zone.today.beginning_of_week)
