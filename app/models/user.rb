@@ -57,6 +57,8 @@ class User < ApplicationRecord
   has_many :availabilities, dependent: :destroy
   validates :cell, presence: true
   validates :email, presence: true
-
+  validates_uniqueness_of :email
+  validates_uniqueness_of :username
+  
   enum cell: CELLS
 end
