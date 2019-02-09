@@ -13,14 +13,16 @@ class RegistrationsController < Devise::RegistrationsController
   def create
     ensure_admin || return
     build_resource(sign_up_params)
-    if resource.save
+    resource.save
+    success = resource.save
+    yield resource if block_given?
+    if success
       redirect_to users_path,
-              notice:'New User Created'
+        notice:'New User Created'
     else
       redirect_to users_path,
-              alert: 'User name already exist!'
+        alert: 'User name already exist!'
     end
-    yield resource if block_given?
   end
 
   def after_sign_up_path_for(_resource)
