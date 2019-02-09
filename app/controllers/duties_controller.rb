@@ -96,7 +96,7 @@ class DutiesController < ApplicationController
     duty_date = duties.first.date
     duty_start_time = duties.first.timeslot.time_range.start_time
     duty_datetime = duty_date + duty_start_time.seconds_since_midnight.seconds
-    Time.zone.now <= (duty_datetime - 2.hours)
+    Time.zone.now < (duty_datetime - 2.hours)
   end
 
   def swap_user(drop_duty_ids, swap_user_id)
