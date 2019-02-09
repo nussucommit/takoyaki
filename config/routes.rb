@@ -43,6 +43,7 @@ Rails.application.routes.draw do
   resources :problem_reports, only: %i[index create new update]
 
   get 'guide', to: 'static_pages#guide'
+  get 'claim_form', to: 'static_pages#claim_form'
   get 'grab_duty', to: 'duties#show_grabable_duties'
 
   resource :settings, only: %i[edit update]
