@@ -151,7 +151,7 @@ RSpec.describe DutiesController, type: :controller do
     end
 
     it 'does nothing when duties to be dropped exceed the drop time limit' do
-      time_range = create(:time_range, start_time: Time.zone.now + 2.hours)
+      time_range = create(:time_range, start_time: Time.zone.now + 1.hours)
       timeslot = create(:timeslot, time_range: time_range)
       duty = create(:duty, user: @user, timeslot: timeslot)
       patch :drop, params: { duty_id: { duty.id => duty.id }, user_id: 0 }
