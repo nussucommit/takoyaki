@@ -77,7 +77,7 @@ module AvailabilitiesHelper
 
   def total_user_hours
     relevant_duties = Availability.includes(:time_range)
-                          .where(user_id: current_user.id,
+                                  .where(user_id: current_user.id,
                                  date: @start_date..@end_date,
                                  free: false, request_user_id: nil)
     total_seconds = relevant_duties.map do |d|
