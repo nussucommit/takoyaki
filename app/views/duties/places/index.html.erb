@@ -7,7 +7,7 @@
       <% end %>
     </div>
     <div style="display: flex; flex-direction: column; align-items: stretch; padding: 32px;">
-      <%= link_to "Back", duties_path, method: "get", class: "btn btn-large btn-danger btn-nav", style: "padding: 16px;" %>
+      <%= link_to "Back", duties_path(start_date: @start_date), method: "get", class: "btn btn-large btn-danger btn-nav", style: "padding: 16px;" %>
     </div>
   </div>
 </div>
