@@ -44,7 +44,6 @@ class DutiesController < ApplicationController
       Duty.find(params[:duty_id].keys).each do |duty|
         duty.update(user: current_user, free: false, request_user: nil)
       end
-
       redirect_to duties_path, notice: 'Duty successfully grabbed!'
     else
       redirect_to duties_path, alert: 'Error in grabbing duty! ' \
@@ -55,7 +54,6 @@ class DutiesController < ApplicationController
   def drop
     if owned_duties?(params[:duty_id], current_user)
       swap_user(params[:duty_id].keys, params[:user_id].to_i)
-
       redirect_to duties_path, notice: 'Duty successfully dropped!'
     else
       redirect_to duties_path, alert: 'Error in dropping duty! ' \
@@ -65,11 +63,14 @@ class DutiesController < ApplicationController
 
   def show_grabable_duties
     duty = Duty.includes(timeslot: %i[time_range place])
-    @grabable_duties = duty.where('free = true or request_user_id = ?',
-                                  current_user.id)
-                           .or(duty.where.not(request_user_id: nil)
-                            .where(user_id: current_user.id))
-                           .select{|d| Time.zone.now < (d.date + d.timeslot.time_range.start_time.seconds_since_midnight.seconds)}
+    @grabable_duties = duty.where('free = true or request_user_id = ? or
+                                  request_user_id IS NOT NULL and user_id = ?',
+                                  current_user.id, current_user.id)
+                           .select do |d|
+                             Time.zone.now < (d.date +
+                             d.timeslot.time_range.start_time
+                              .seconds_since_midnight.seconds)
+                           end
   end
 
   private
