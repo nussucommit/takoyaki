@@ -69,6 +69,7 @@ class DutiesController < ApplicationController
                                   current_user.id)
                            .or(duty.where.not(request_user_id: nil)
                             .where(user_id: current_user.id))
+                           .select{|d| Time.zone.now < (d.date + d.timeslot.time_range.start_time.seconds_since_midnight.seconds)}
   end
 
   private
