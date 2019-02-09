@@ -23,9 +23,8 @@ RSpec.describe UsersController, type: :controller do
     it 'denies access when normal user access another users page' do
       user = create(:user)
       sign_in user
-      expect do
-        get :edit, params: { id: create(:user).id }
-      end.to raise_error(CanCan::AccessDenied)
+      get :edit, params: { id: create(:user).id }
+      should redirect_to(root_path)
     end
     it 'provides access to admin' do
       user = create(:user)
@@ -74,13 +73,12 @@ RSpec.describe UsersController, type: :controller do
         user = create(:user)
         new_user = create(:user, password: '123456')
         sign_in user
-        expect do
-          get :update, params: { id: new_user.id, user: { password: '1234567',
-                                                          confirmation_password:
+        get :update, params: { id: new_user.id, user: { password: '1234567',
+                                                        confirmation_password:
                                                           '1234567',
-                                                          current_password:
+                                                        current_password:
                                                           '123456' } }
-        end.to raise_error(CanCan::AccessDenied)
+        should redirect_to(root_path)
       end
     end
     context 'admin' do
@@ -111,10 +109,9 @@ RSpec.describe UsersController, type: :controller do
     it 'denies access to normal user' do
       user = create(:user)
       sign_in user
-      expect do
-        put :update_roles, params: { id: user.id, user: { cell: 'technical',
-                                                          mc: 'false' } }
-      end.to raise_error(CanCan::AccessDenied)
+      put :update_roles, params: { id: user.id, user: { cell: 'technical',
+                                                        mc: 'false' } }
+      should redirect_to(root_path)
     end
     context 'admin' do
       before do
