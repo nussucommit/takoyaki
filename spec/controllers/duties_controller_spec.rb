@@ -98,20 +98,20 @@ RSpec.describe DutiesController, type: :controller do
     it 'does nothing when no duties are grabbed' do
       patch :grab, params: { duty_id: {} }
       should redirect_to duties_path
-      expect(flash[:alert]).to be('Error in grabbing duty! Please try again.')
+      expect(flash[:alert]).to be('No hax pl0x')
     end
 
     it 'does nothing when the duty is not for me' do
       duty = create(:duty, free: false, request_user_id: create(:user))
       patch :grab, params: { duty_id: { duty.id => duty.id } }
       should redirect_to duties_path
-      expect(flash[:alert]).to be('Error in grabbing duty! Please try again.')
+      expect(flash[:alert]).to be('No hax pl0x')
     end
 
     it 'does nothing when nil duties are grabbed' do
       patch :grab, params: { duty_id: nil }
       should redirect_to duties_path
-      expect(flash[:alert]).to be('Error in grabbing duty! Please try again.')
+      expect(flash[:alert]).to be('No hax pl0x')
     end
 
     it 'does nothing when nonfree are grabbed' do
@@ -119,7 +119,7 @@ RSpec.describe DutiesController, type: :controller do
       patch :grab, params: { duty_id: { duty.id => duty.id } }
 
       should redirect_to duties_path
-      expect(flash[:alert]).to be('Error in grabbing duty! Please try again.')
+      expect(flash[:alert]).to be('No hax pl0x')
     end
   end
 
@@ -130,7 +130,7 @@ RSpec.describe DutiesController, type: :controller do
     end
 
     it 'drop a duty to all' do
-      duty = create(:duty, user: @user)
+      duty = create(:duty, user: @user, date: Time.zone.today + 1.day)
       expect do
         patch :drop, params: { duty_id: { duty.id => duty.id }, user_id: 0 }
         duty.reload
@@ -140,7 +140,7 @@ RSpec.describe DutiesController, type: :controller do
     end
 
     it 'drop a duty to someone' do
-      duty = create(:duty, user: @user)
+      duty = create(:duty, user: @user, date: Time.zone.today + 1.day)
       user = create(:user)
       expect do
         patch :drop, params: { duty_id: { duty.id => duty.id },
@@ -150,16 +150,26 @@ RSpec.describe DutiesController, type: :controller do
       should redirect_to duties_path
     end
 
+    it 'does nothing when duties to be dropped exceed the drop time limit' do
+      time_range = create(:time_range, start_time: Time.zone.now + 1.hour)
+      timeslot = create(:timeslot, time_range: time_range)
+      duty = create(:duty, user: @user, timeslot: timeslot)
+      patch :drop, params: { duty_id: { duty.id => duty.id }, user_id: 0 }
+      should redirect_to duties_path
+      expect(flash[:alert]).to be('Error in dropping duty! ' \
+        'You can only drop your duty at most 2 hours before it starts')
+    end
+
     it 'does nothing when no duties are dropped' do
       patch :drop, params: { duty_id: {} }
       should redirect_to duties_path
-      expect(flash[:alert]).to be('Error in dropping duty! Please try again.')
+      expect(flash[:alert]).to be('No hax pl0x')
     end
 
     it 'does nothing when nil duties are dropped' do
       patch :drop, params: { duty_id: nil }
       should redirect_to duties_path
-      expect(flash[:alert]).to be('Error in dropping duty! Please try again.')
+      expect(flash[:alert]).to be('No hax pl0x')
     end
 
     it 'does nothing when nil duty owners are dropped' do
@@ -167,7 +177,7 @@ RSpec.describe DutiesController, type: :controller do
       patch :drop, params: { duty_id: { duty.id => duty.id } }
 
       should redirect_to duties_path
-      expect(flash[:alert]).to be('Error in dropping duty! Please try again.')
+      expect(flash[:alert]).to be('No hax pl0x')
     end
 
     it 'does nothing when duty not owned by the user are dropped' do
@@ -175,7 +185,7 @@ RSpec.describe DutiesController, type: :controller do
       patch :drop, params: { duty_id: { duty.id => duty.id } }
 
       should redirect_to duties_path
-      expect(flash[:alert]).to be('Error in dropping duty! Please try again.')
+      expect(flash[:alert]).to be('No hax pl0x')
     end
   end
 
