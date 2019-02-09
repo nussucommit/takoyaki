@@ -47,23 +47,22 @@ class DutiesController < ApplicationController
 
       redirect_to duties_path, notice: 'Duty successfully grabbed!'
     else
-      redirect_to duties_path, alert: 'Error in grabbing duty! ' \
-        'Please try again.'
+      redirect_to duties_path, alert: 'No hax pl0x'
     end
   end
 
   def drop
     if owned_duties?(params[:duty_id], current_user)
-      if can_drop_duties?(params[:duty_id].keys)
-        swap_user(params[:duty_id].keys, params[:user_id].to_i)
+      drop_duty_ids = params[:duty_id].keys
+      if can_drop_duties?(drop_duty_ids)
+        swap_user(drop_duty_ids, params[:user_id])
         redirect_to duties_path, notice: 'Duty successfully dropped!'
       else
         redirect_to duties_path, alert: 'Error in dropping duty! ' \
           'You can only drop your duty at most 2 hours before it starts'
       end
     else
-      redirect_to duties_path, alert: 'Error in dropping duty! ' \
-        'Please try again.'
+      redirect_to duties_path, alert: 'No hax pl0x'
     end
   end
 
@@ -103,13 +102,13 @@ class DutiesController < ApplicationController
   def swap_user(drop_duty_ids, swap_user_id)
     duties = duties_sorted_by_start_time(drop_duty_ids)
     Duty.transaction do
-      if swap_user_id.zero?
+      if swap_user_id.to_i.zero?
         duties.each { |duty| duty.update(free: true) }
       else
         duties.each { |duty| duty.update(request_user_id: swap_user_id) }
       end
     end
-    users_to_notify = swap_user_id.zero? ? User.pluck(:id) : swap_user_id
+    users_to_notify = swap_user_id.to_i.zero? ? User.pluck(:id) : swap_user_id
     GenericMailer.drop_duties(duties, users_to_notify).deliver_later
   end
 
