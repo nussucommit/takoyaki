@@ -42,5 +42,6 @@ FactoryBot.define do
     email
     password { '123456' }
     cell { User::CELLS.sample }
+    username {(0...8).map { (65 + rand(26)).chr }.join}
   end
 end
