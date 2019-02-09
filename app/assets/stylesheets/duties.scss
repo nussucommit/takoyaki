@@ -135,8 +135,12 @@ h1 {
 }
 
 .duty-hours {
-  border: 1px solid $black;
-  display: inline;
-  font-size: 20px;
+  float: right;
+  padding: 5px;
+}
+
+.duty-hours-exceed {
+  color: $free-speech-red;
+  float: right;
   padding: 5px;
 }

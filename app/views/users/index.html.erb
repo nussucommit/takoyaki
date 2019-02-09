@@ -25,7 +25,6 @@
             <th class="email">E-mail</th>
             <th class="cell">Cell</th>
             <th class="pos">Position</th>
-            <th class="hours-heading">Hours This Week</th>
 
             <% if can?(:show_full, User) %>
               <!-- <th>Edit Profile</th> -->
@@ -45,7 +44,6 @@
               <td class="email"><%= p.email %></td>
               <td class="cell"><%= p.cell %></td>
               <td class="pos"><%= p.mc ? "MC" : "Member" %></td>
-              <td class="hours"><%= p.duties.where(date: @start_date..@end_date, free: false, request_user_id: nil).count %></td>
               <% if can?(:show_full, User) %>
                 <td class="role"><%= link_to 'Allocate roles', allocate_roles_user_path(p) %></td>
                 <td class="change-pw"><%= link_to 'Change password', edit_user_path(p) %></td>

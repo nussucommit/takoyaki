@@ -25,7 +25,11 @@
         <% if can?(:update_default_duties, Duty) %>
           <%= link_to 'Update Default Duties', availabilities_places_path, class: "btn btn-large btn-light duty-table-button" %>
         <% end %>
-        <div class = "duty-hours">Your hours: <%= current_user_hours %></div>
+        <% if current_user_hours > 16 %>
+          <div class = "duty-hours-exceed">Your hours: <%= current_user_hours %></div>
+        <% else %>
+          <div class = "duty-hours">Your hours: <%= current_user_hours %></div>
+        <% end %>
       </div>
 
       <div class="schedule-container">
