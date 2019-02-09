@@ -6,13 +6,11 @@ module Duties
     before_action :authenticate_user!
 
     def index
-      @start_date = (params[:start_date] || Time.zone.today.beginning_of_week)
-                    .to_date
+      set_start_date
     end
 
     def edit
-      @start_date = (params[:start_date] || Time.zone.today.beginning_of_week)
-                    .to_date
+      set_start_date
       @end_date = @start_date.to_date + 6.days
       @users = User.order(:username)
       load_availabilities
@@ -29,6 +27,10 @@ module Duties
     end
 
     private
+    def set_start_date
+      @start_date = (params[:start_date] || Time.zone.today.beginning_of_week)
+                    .to_date
+    end
 
     def load_availabilities
       @availabilities = Hash.new { |h, k| h[k] = Set[] }
