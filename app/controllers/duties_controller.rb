@@ -72,14 +72,13 @@ class DutiesController < ApplicationController
   private
 
   def grabable_duties
-    duty = Duty.includes(timeslot: %i[time_range place])
-    duty.where('free = true or request_user_id = ? or
+    Duty.includes(timeslot: %i[time_range place])
+        .where('free = true or request_user_id = ? or
                                   request_user_id IS NOT NULL and user_id = ?',
                current_user.id, current_user.id)
         .select do |d|
       Time.zone.now < (d.date +
-      d.timeslot.time_range.start_time
-       .seconds_since_midnight.seconds)
+      d.timeslot.time_range.start_time.seconds_since_midnight.seconds)
     end
   end
 
