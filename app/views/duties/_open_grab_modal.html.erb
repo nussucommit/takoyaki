@@ -1,22 +1,23 @@
-<div class="modal-content">
-  <div class="modal-header">
-    <h5 class="modal-title" id="grab-modal">Grab</h5>
-    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  <div class="modal-body">
-    <%= form_tag(grab_duties_path, method: :post) do %>
-      <% format_duties(@grab_duty_list).each do |d| %>
+<div class="modal-dialog" role="document">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" id="grab-modal">Grab</h5>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <%= form_tag(grab_duties_path, method: :post) do %>
+        <% format_duties(@grab_duty_list).each do |d| %>
+          <p>
+            <%= check_box_tag "duty_id[#{d[:id]}]", d[:id] %>
+            <%= label_tag "duty_id[#{d[:id]}]", d[:timing] %>
+          </p>
+        <% end %>
         <p>
-          <%= check_box_tag "duty_id[#{d[:id]}]", d[:id] %>
-          <%= label_tag "duty_id[#{d[:id]}]", d[:timing] %>
+          <%= submit_tag "Grab", class: "btn btn-primary"%>
         </p>
       <% end %>
-      <p>
-        <%= submit_tag "Grab", class: "btn btn-primary"%>
-      </p>
-    <% end %>
+    </div>
   </div>
 </div>
-
