@@ -71,19 +71,19 @@
 }
 
 .availability-yes {
-  background-color: $dark-cyan;
+  background-color: $yellow;
 }
 
 .availability-no {
-  background-color: $free-speech-red;
+  background-color: $dim-grey;
 }
 
 .availability-yes-pending {
-  background-color: $dark-cyan;
+  background-color: $yellow;
 }
 
 .availability-no-pending {
-  background-color: $free-speech-red;
+  background-color: $dim-grey;
 }
 
 .availability-vertical {
@@ -95,7 +95,7 @@
 }
 
 .vertical {
-  background-color: $grey;
+  background-color: $dim-grey;
 }
 
 .vertical-pending {
@@ -283,7 +283,7 @@ body {
   appearance: none;
   background-color: transparent;
   border: 0;
-  color: $white;
+  color: $black;
   font-size: 14px;
   height: 100%;
   padding: 0 0 0 10px;
@@ -307,7 +307,7 @@ body {
 }
 
 .timeslot {
-  background-color: $dark-cyan;
+  background-color: $yellow;
   border-radius: 4px;
   position: absolute;
   transition: box-shadow .2s;
@@ -321,7 +321,7 @@ body {
 }
 
 .timeslot-vertical {
-  background-color: $grey;
+  background-color: $dim-grey;
   border-radius: 4px 0 0 4px;
   height: 100%;
   position: absolute;
