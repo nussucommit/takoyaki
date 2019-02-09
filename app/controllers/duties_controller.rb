@@ -54,7 +54,7 @@ class DutiesController < ApplicationController
 
   def drop
     if owned_duties?(params[:duty_id], current_user)
-      if drop_eligible?(params[:duty_id].keys)
+      if can_drop_duties?(params[:duty_id].keys)
         swap_user(params[:duty_id].keys, params[:user_id].to_i)
         redirect_to duties_path, notice: 'Duty successfully dropped!'
       else
@@ -92,15 +92,12 @@ class DutiesController < ApplicationController
     end
   end
 
-  def drop_eligible?(drop_duty_ids)
+  def can_drop_duties?(drop_duty_ids)
     duties = duties_sorted_by_start_time(drop_duty_ids)
-    first_timeslot = duties[0].timeslot_id
-    first_timerange = Timeslot.find(first_timeslot).time_range_id
-    first_start_time = TimeRange.find(first_timerange).start_time
-    date_limit = duties[0].date
-    time_limit = first_start_time - 7200
-    Time.zone.today <= date_limit &&
-      Time.zone.now.strftime("%H:%M:%S") < time_limit.strftime("%H:%M:%S")
+    duty_date = duties.first.date
+    duty_start_time = duties.first.timeslot.time_range.start_time
+    duty_datetime = duty_date + duty_start_time.seconds_since_midnight.seconds
+    Time.zone.now < (duty_datetime - 2.hours)
   end
 
   def swap_user(drop_duty_ids, swap_user_id)
