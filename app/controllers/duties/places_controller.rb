@@ -27,6 +27,7 @@ module Duties
     end
 
     private
+
     def set_start_date
       @start_date = (params[:start_date] || Time.zone.today.beginning_of_week)
                     .to_date
