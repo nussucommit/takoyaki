@@ -86,12 +86,12 @@
                         <td class="schedule-name-empty" colspan="<%= duty[:colspan] %>">&nbsp;</td>
                       <% elsif duty[:free] || current_user.id == duty[:request_user_id] || (duty[:user] == current_user && duty[:request_user_id].present?) %>
                         <td class="schedule-name-empty text-center" colspan="<%= duty[:colspan] %>">
-                           <%= button_to "Grab", { controller: 'duties', action: 'open_grab_modal', grab_duty_list: duty[:span_duty] }, { method: :post, remote: true, class: 'btn btn-link', style: "line-height: 0;", 'data-toggle': "modal", 'data-target': '#grab-drop-modal' } %>
+                           <%= button_to "Grab", { controller: 'duties', action: 'open_grab_modal', grab_duty_list: duty[:span_duty] }, { method: :post, remote: true, class: 'btn btn-link', style: "line-height: 0;" } %>
                         </td>
                       <% else %>
                         <% if current_user == duty[:user] %>
                           <td class="schedule-name text-overflow-ellipsis my-duty-cell" colspan="<%= duty[:colspan] %>">
-                            <%= button_to duty[:user].username, { controller: 'duties', action: 'open_drop_modal', drop_duty_list: duty[:span_duty] }, { method: :post, remote: true, class: 'btn btn-link', style: "line-height: 0;", 'data-toggle': "modal", 'data-target': '#grab-drop-modal' } %>
+                            <%= button_to duty[:user].username, { controller: 'duties', action: 'open_drop_modal', drop_duty_list: duty[:span_duty] }, { method: :post, remote: true, class: 'btn btn-link', style: "line-height: 0;" } %>
                             <div id="grab-drop-modal" class="modal hide fade grab-drop-modal" role="dialog" aria-labelledby="grabDropModal" aria-hidden="true">
                               <div class="modal-dialog" role="document">
                               </div>
