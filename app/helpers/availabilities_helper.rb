@@ -15,9 +15,9 @@ module AvailabilitiesHelper
 
   def stylise_user(user)
     if user[:mc]
-      content_tag(:span, user[:username], class: 'mc')
+      content_tag(:span, user[:username] + "(10)", class: 'mc') 
     else
-      user[:username]
+      user[:username] + "(10)" #call function to return number of hours
     end
   end
 
@@ -75,9 +75,9 @@ module AvailabilitiesHelper
     end
   end
 
-  def total_user_hours
-    relevant_duties = Availability.includes(:time_range)
-                                  .where(user_id: current_user.id,
+  def total_user_hours(user)
+    relevant_duties = user.includes(:time_range)
+                          .where(user_id: user.id,
                                  date: @start_date..@end_date,
                                  free: false, request_user_id: nil)
     total_seconds = relevant_duties.map do |d|
