@@ -15,9 +15,9 @@ module AvailabilitiesHelper
 
   def stylise_user(user)
     if user[:mc]
-      content_tag(:span, user[:username] + '(10)', class: 'mc')
+      content_tag(:span, user[:username] + ' (' + current_user_hours.to_s + ')', class: 'mc')
     else
-      user[:username] + '(10)' #call function to return number of hours
+      user[:username] # call function to return number of hours
     end
   end
 
@@ -79,7 +79,7 @@ module AvailabilitiesHelper
     relevant_duties = user.availabilities.includes(:time_range)
                           .where(user_id: user.id,
                                  date: @start_date..@end_date,
-                                 free: false, 
+                                 free: false,
                                  request_user_id: nil)
     total_seconds = relevant_duties.map do |d|
       d.time_range.end_time - d.time_range.start_time
@@ -87,4 +87,16 @@ module AvailabilitiesHelper
     total_hours = total_seconds / 3600
     total_hours
   end
+end
+
+# just for reference. Will rename later
+def current_user_hours
+  relevant_duties = Availability.includes(:time_range)
+                        .where(user_id: current_user.id,
+                               status: true)
+  total_seconds = relevant_duties.map do |d|
+    d.time_range.end_time - d.time_range.start_time
+  end.sum
+  total_hours = total_seconds / 3600
+  total_hours
 end
