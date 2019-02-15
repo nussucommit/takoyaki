@@ -36,11 +36,11 @@ class AvailabilitiesController < ApplicationController
                 .order('users.mc DESC, users.username ASC')
                 .each do |a|
       result[[a.day, a.time_range_id]] ||= []
-      result[[a.day, a.time_range_id]].push(a.user_id) if a.status 
+      result[[a.day, a.time_range_id]].push(a.user_id) if a.status
     end
     result
   end
-  #push user id and hours from sort
+  # push user id and hours from sort
 
   def load_all_users
     User.all.map do |u|
