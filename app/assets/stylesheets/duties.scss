@@ -125,3 +125,12 @@ h1 {
 .my-duty-cell {
   background-color: $light-red;
 }
+
+.duty-hours {
+  float: right;
+  padding: 5px;
+}
+
+.duty-hours-exceed {
+  color: $free-speech-red;
+}

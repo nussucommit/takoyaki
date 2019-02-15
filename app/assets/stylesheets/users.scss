@@ -35,7 +35,8 @@
   .pos,
   .role,
   .change-pw,
-  .del {
+  .del,
+  .hours {
     text-align: center;
     width: 15%;
   }
@@ -43,6 +44,12 @@
   .email {
     text-align: center;
     width: 25%;
+  }
+
+  .hours-heading {
+    font-size: 12px;
+    text-align: center;
+    width: 15%;
   }
 
   .role,
