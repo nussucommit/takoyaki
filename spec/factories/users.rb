@@ -42,6 +42,6 @@ FactoryBot.define do
     email
     password { '123456' }
     cell { User::CELLS.sample }
-    username { (0...8).map { rand(65..90).chr }.join }
+    SecureRandom.alphanumric(8)
   end
 end
