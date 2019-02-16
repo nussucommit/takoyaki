@@ -57,7 +57,7 @@ module DutiesHelper
   end
 
   def process_duty(duties)
-    get_result(duties, get_index_array(duties))
+    get_result(duties, get_starting_indices(duties))
   end
 
   def format_duties(duty_list)
@@ -68,19 +68,18 @@ module DutiesHelper
     end
   end
 
-  def check_condition(prev_duty, current_duty)
-    prev_duty&.free != current_duty&.free ||
-      (!prev_duty&.free && !current_duty&.free &&
-        ((!prev_duty.request_user.nil? &&
-          prev_duty&.request_user != current_duty&.request_user) ||
-        prev_duty&.user_id != current_duty&.user_id))
+  def should_merge?(prev_duty, current_duty)
+    get_duty_status(prev_duty) == get_duty_status(current_duty)
   end
 
-  def get_index_array(duties)
+  def get_duty_status(duty)
+    [duty&.user_id, duty&.free, duty&.request_user]
+  end
+
+  def get_starting_indices(duties)
     index_array = [0]
     duties.length.times.each_cons(2).select do |prev, current|
-      next unless check_condition(duties[prev], duties[current])
-
+      next if should_merge?(duties[prev], duties[current])
       index_array.push(current)
     end
     index_array.push(duties.length)
