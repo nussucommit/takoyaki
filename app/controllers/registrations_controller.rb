@@ -16,7 +16,7 @@ class RegistrationsController < Devise::RegistrationsController
     resource.save
     success = resource.save
     yield resource if block_given?
-    redirect_to users_path, resource.errors.full_messages.join(',') if success
+    redirect_to users_path, alert: resource.errors.full_messages.join(',') if success
   end
 
   def after_sign_up_path_for(_resource)
