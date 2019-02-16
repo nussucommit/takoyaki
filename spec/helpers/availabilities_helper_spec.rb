@@ -5,12 +5,12 @@ require 'rails_helper'
 RSpec.describe AvailabilitiesHelper, type: :helper do
   describe '#stylise_user' do
     it 'bolds mcs' do
-      expect(helper.stylise_user(username: 'anu', mc: true))
-        .to eq('<span class="mc">anu</span>')
+      expect(helper.stylise_user(username: 'anu', mc: true, hours: 2.0))
+        .to eq('<span class="mc">anu (2.0)</span>')
     end
     it 'returns username unstyled for non-mc' do
-      expect(helper.stylise_user(username: 'anu', mc: false))
-        .to eq('anu')
+      expect(helper.stylise_user(username: 'anu', mc: false, hours: 2.0))
+        .to eq('anu (2.0)')
     end
   end
 
