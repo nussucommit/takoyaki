@@ -46,7 +46,7 @@ class DutiesController < ApplicationController
       end
       redirect_to duties_path, notice: 'Duty successfully grabbed!'
     else
-      redirect_to duties_path, alert: 'No hax pl0x'
+      redirect_to duties_path, alert: 'Invalid duties to grab'
     end
   end
 
@@ -61,7 +61,7 @@ class DutiesController < ApplicationController
           'You can only drop your duty at most 2 hours before it starts'
       end
     else
-      redirect_to duties_path, alert: 'No hax pl0x'
+      redirect_to duties_path, alert: 'Invalid duties to drop'
     end
   end
 
@@ -107,14 +107,16 @@ class DutiesController < ApplicationController
 
   def swap_user(drop_duty_ids, swap_user_id)
     duties = duties_sorted_by_start_time(drop_duty_ids)
+    to_all = swap_user_id.to_i.zero?
     Duty.transaction do
-      if swap_user_id.to_i.zero?
+      if to_all
         duties.each { |duty| duty.update(free: true) }
       else
         duties.each { |duty| duty.update(request_user_id: swap_user_id) }
       end
     end
-    users_to_notify = swap_user_id.to_i.zero? ? User.pluck(:id) : swap_user_id
+    users_to_notify =
+      to_all ? User.pluck(:id) - [duties.first.user.id] : swap_user_id
     GenericMailer.drop_duties(duties, users_to_notify).deliver_later
   end
 

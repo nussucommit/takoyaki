@@ -98,20 +98,20 @@ RSpec.describe DutiesController, type: :controller do
     it 'does nothing when no duties are grabbed' do
       patch :grab, params: { duty_id: {} }
       should redirect_to duties_path
-      expect(flash[:alert]).to be('No hax pl0x')
+      expect(flash[:alert]).to be('Invalid duties to grab')
     end
 
     it 'does nothing when the duty is not for me' do
       duty = create(:duty, free: false, request_user_id: create(:user))
       patch :grab, params: { duty_id: { duty.id => duty.id } }
       should redirect_to duties_path
-      expect(flash[:alert]).to be('No hax pl0x')
+      expect(flash[:alert]).to be('Invalid duties to grab')
     end
 
     it 'does nothing when nil duties are grabbed' do
       patch :grab, params: { duty_id: nil }
       should redirect_to duties_path
-      expect(flash[:alert]).to be('No hax pl0x')
+      expect(flash[:alert]).to be('Invalid duties to grab')
     end
 
     it 'does nothing when nonfree are grabbed' do
@@ -119,7 +119,7 @@ RSpec.describe DutiesController, type: :controller do
       patch :grab, params: { duty_id: { duty.id => duty.id } }
 
       should redirect_to duties_path
-      expect(flash[:alert]).to be('No hax pl0x')
+      expect(flash[:alert]).to be('Invalid duties to grab')
     end
   end
 
@@ -163,13 +163,13 @@ RSpec.describe DutiesController, type: :controller do
     it 'does nothing when no duties are dropped' do
       patch :drop, params: { duty_id: {} }
       should redirect_to duties_path
-      expect(flash[:alert]).to be('No hax pl0x')
+      expect(flash[:alert]).to be('Invalid duties to drop')
     end
 
     it 'does nothing when nil duties are dropped' do
       patch :drop, params: { duty_id: nil }
       should redirect_to duties_path
-      expect(flash[:alert]).to be('No hax pl0x')
+      expect(flash[:alert]).to be('Invalid duties to drop')
     end
 
     it 'does nothing when nil duty owners are dropped' do
@@ -177,7 +177,7 @@ RSpec.describe DutiesController, type: :controller do
       patch :drop, params: { duty_id: { duty.id => duty.id } }
 
       should redirect_to duties_path
-      expect(flash[:alert]).to be('No hax pl0x')
+      expect(flash[:alert]).to be('Invalid duties to drop')
     end
 
     it 'does nothing when duty not owned by the user are dropped' do
@@ -185,7 +185,7 @@ RSpec.describe DutiesController, type: :controller do
       patch :drop, params: { duty_id: { duty.id => duty.id } }
 
       should redirect_to duties_path
-      expect(flash[:alert]).to be('No hax pl0x')
+      expect(flash[:alert]).to be('Invalid duties to drop')
     end
   end
 
