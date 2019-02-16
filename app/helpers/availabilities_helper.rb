@@ -14,10 +14,11 @@ module AvailabilitiesHelper
   end
 
   def stylise_user(user)
+    text = "#{user[:username]} (#{user[:hours] || 0})"
     if user[:mc]
-      content_tag(:span, user[:username], class: 'mc')
+      content_tag(:span, text, class: 'mc')
     else
-      user[:username]
+      text
     end
   end
 
