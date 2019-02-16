@@ -34,7 +34,7 @@ class ProblemReportsController < ApplicationController
                   notice: 'New Problem Report Created'
     else
       @report = report
-      flash.now[:alert] = 'Fail To Make New Problem Report!'
+      flash.now[:alert] = 'Failed To Make New Problem Report!'
       render new_problem_report_path
     end
   end
