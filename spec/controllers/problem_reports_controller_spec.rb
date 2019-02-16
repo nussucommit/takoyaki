@@ -33,24 +33,24 @@ RSpec.describe ProblemReportsController, type: :controller do
     end
 
     it 'should redirect to problem_reports_path and create new report' do
-      post :create, params: { place_id: @venue.id, computer_number: 'A10',
-                              description: "I'm too rich" }
+      post :create, params: { problem_report: { place_id: @venue.id, computer_number: 'A10',
+                              description: "I'm too rich" } }
       should redirect_to problem_reports_path
       expect(ProblemReport.exists?(place_id: @venue.id, computer_number: 'A10',
                                    description: "I'm too rich")).to be true
     end
 
     it 'should redirect_to new_problem_report_path and not create new report' do
-      post :create, params: { place_id: @venue.id, computer_number: '',
-                              description: "I'm too rich" }
+      post :create, params: { problem_report: {place_id: @venue.id, computer_number: '',
+                              description: "I'm too rich" } }
       assert_template :new
 
-      post :create, params: { place_id: @venue.id, computer_number: '',
-                              description: '' }
+      post :create, params: { problem_report: {place_id: @venue.id, computer_number: '',
+                              description: '' } }
       assert_template :new
 
-      post :create, params: { place_id: @venue.id, computer_number: 'A10',
-                              description: '' }
+      post :create, params: { problem_report: {place_id: @venue.id, computer_number: 'A10',
+                              description: '' } }
       assert_template :new
 
       expect(ProblemReport.exists?(place_id: @venue.id)).to be false
