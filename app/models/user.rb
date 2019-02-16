@@ -56,7 +56,7 @@ class User < ApplicationRecord
                                           dependent: :nullify
   has_many :availabilities, dependent: :destroy
   validates :cell, presence: true
-  validates :email, presence: true
-
+  validates :email, presence: true, uniqueness: true
+  validates :username, uniqueness: true
   enum cell: CELLS
 end
