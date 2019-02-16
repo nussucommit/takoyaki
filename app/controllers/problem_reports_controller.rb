@@ -34,7 +34,8 @@ class ProblemReportsController < ApplicationController
                   notice: 'Created new problem report'
     else
       @report = report
-      flash.now[:alert] = "Failed to create problem report: #{report.errors.full_messages.join(', ')}"
+      flash.now[:alert] = "Failed to create problem report:
+                          #{report.errors.full_messages.join(', ')}"
       render new_problem_report_path
     end
   end
