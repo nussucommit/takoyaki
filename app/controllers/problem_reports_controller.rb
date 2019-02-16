@@ -20,17 +20,21 @@ class ProblemReportsController < ApplicationController
   end
   # rubocop:enable Metrics/MethodLength
 
-  def new; end
+  def new
+    @report = ProblemReport.new
+  end
 
   def create
-    report = new_report
+    report = ProblemReport.new report_params
+    report.update(reporter_user: current_user, last_update_user: current_user)
     if report.save
       send_email(report)
       redirect_to problem_reports_path,
                   notice: 'New Problem Report Created'
     else
-      redirect_to new_problem_report_path,
-                  alert: 'Fail To Make New Problem Report!'
+      @report = report
+      flash.now[:alert] = 'Fail To Make New Problem Report!'
+      render new_problem_report_path
     end
   end
 
@@ -63,12 +67,7 @@ class ProblemReportsController < ApplicationController
     @report.update(boolean_params)
   end
 
-  def new_report
-    ProblemReport.new(reporter_user: current_user,
-                      last_update_user: current_user,
-                      place: Place.find_by(name: params[:venue]),
-                      computer_number: params[:computer_number],
-                      description: params[:description],
-                      is_critical: params[:is_critical])
+  def report_params
+    params.require(:problem_report).permit(:computer_number, :description, :is_critical, :place_id)
   end
 end
