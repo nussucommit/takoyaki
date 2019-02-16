@@ -114,7 +114,7 @@ class DutiesController < ApplicationController
         duties.each { |duty| duty.update(request_user_id: swap_user_id) }
       end
     end
-    users_to_notify = swap_user_id.to_i.zero? ? User.pluck(:id) : swap_user_id
+    users_to_notify = swap_user_id.to_i.zero? ? User.pluck(:id) - [duties.first.user.id] : swap_user_id
     GenericMailer.drop_duties(duties, users_to_notify).deliver_later
   end
 
