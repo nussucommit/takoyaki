@@ -20,8 +20,8 @@ class RegistrationsController < Devise::RegistrationsController
       redirect_to users_path,
         notice:'New User Created'
     else
+      resource.errors.full_messages.join(',')
       redirect_to users_path,
-        alert: 'User name already exist!'
     end
   end
 
