@@ -60,38 +60,41 @@ RSpec.describe DutiesController, type: :controller do
 
     it 'grab a duty' do
       duty = create(:duty, free: true)
+      start_date = duty.date.beginning_of_week
       expect do
         patch :grab, params: { duty_id: { duty.id => duty.id } }
         duty.reload
       end.to change { duty.user }.to(subject.current_user)
       expect(duty.free).to be(false)
       expect(duty.request_user_id).to be(nil)
-      should redirect_to duties_path
+      should redirect_to duties_path(start_date: start_date)
       expect(flash[:notice]).to be('Duty successfully grabbed!')
     end
 
     it 'grabs duty given to me' do
       duty = create(:duty, free: false, request_user: subject.current_user)
+      start_date = duty.date.beginning_of_week
       expect do
         patch :grab, params: { duty_id: { duty.id => duty.id } }
         duty.reload
       end.to change { duty.user }.to(subject.current_user)
       expect(duty.free).to be(false)
       expect(duty.request_user_id).to be(nil)
-      should redirect_to duties_path
+      should redirect_to duties_path(start_date: start_date)
       expect(flash[:notice]).to be('Duty successfully grabbed!')
     end
 
     it 'regrabs duty dropped to someone' do
       duty = create(:duty, user: subject.current_user,
                            request_user: create(:user))
+      start_date = duty.date.beginning_of_week
 
       patch :grab, params: { duty_id: { duty.id => duty.id } }
       duty.reload
 
       expect(duty.free).to be(false)
       expect(duty.request_user_id).to be(nil)
-      should redirect_to duties_path
+      should redirect_to duties_path(start_date: start_date)
       expect(flash[:notice]).to be('Duty successfully grabbed!')
     end
 
@@ -130,7 +133,7 @@ RSpec.describe DutiesController, type: :controller do
     end
 
     it 'drop a duty to all' do
-      duty = create(:duty, user: @user, date: Time.zone.today + 1.day)
+      duty = create(:duty, user: @user, date: Time.zone.today + 2.weeks)
       start_date = duty.date.beginning_of_week
       expect do
         patch :drop, params: { duty_id: { duty.id => duty.id }, user_id: 0 }
@@ -141,7 +144,7 @@ RSpec.describe DutiesController, type: :controller do
     end
 
     it 'drop a duty to someone' do
-      duty = create(:duty, user: @user, date: Time.zone.today + 1.day)
+      duty = create(:duty, user: @user, date: Time.zone.today + 2.weeks)
       user = create(:user)
       start_date = duty.date.beginning_of_week
       expect do

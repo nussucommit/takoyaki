@@ -41,10 +41,12 @@ class DutiesController < ApplicationController
 
   def grab
     if grabable?(params[:duty_id])
-      Duty.find(params[:duty_id].keys).each do |duty|
-        duty.update(user: current_user, free: false, request_user: nil)
-      end
-      redirect_to duties_path, notice: 'Duty successfully grabbed!'
+      grab_duty_ids = params[:duty_id].keys
+      start_of_week = Duty.find(grab_duty_ids.first)
+                          .date.beginning_of_week
+      grab_duty(grab_duty_ids, start_of_week)
+      redirect_to duties_path(start_date: start_of_week),
+                  notice: 'Duty successfully grabbed!'
     else
       redirect_to duties_path, alert: 'Invalid duties to grab'
     end
@@ -130,6 +132,12 @@ class DutiesController < ApplicationController
   def prepare_announcements
     @announcements = Announcement.order(created_at: :desc).limit(3)
     @new_announcement = Announcement.new
+  end
+
+  def grab_duty(grab_duty_ids, _start_of_week)
+    Duty.find(grab_duty_ids).each do |duty|
+      duty.update(user: current_user, free: false, request_user: nil)
+    end
   end
 
   def drop_duty(drop_duty_ids, week_start)
