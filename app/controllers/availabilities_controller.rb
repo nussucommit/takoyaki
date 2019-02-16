@@ -24,13 +24,13 @@ class AvailabilitiesController < ApplicationController
 
   def show_everyone
     @time_ranges = TimeRange.order(:start_time)
-    @availabilities = load_all_availabilities
     @users = load_all_users
+    @availabilities = load_all_availabilities(@users)
   end
 
   private
 
-  def load_all_availabilities
+  def load_all_availabilities(users)
     result = {}
     Availability.joins(:time_range, :user)
                 .order('users.mc DESC, users.username ASC')
@@ -38,9 +38,19 @@ class AvailabilitiesController < ApplicationController
       result[[a.day, a.time_range_id]] ||= []
       result[[a.day, a.time_range_id]].push(a.user_id) if a.status
     end
-    result
+    sort_availabilities(result, users)
   end
-  # push user id and hours from sort
+
+  def sort_availabilities(availabilities, users)
+    availabilities.map do |k, v|
+      [k,
+       v.sort_by do |a|
+         [users[a][:mc] ? 0 : 1,
+          users[a][:hours] || 0,
+          users[a][:username]]
+       end]
+    end.to_h
+  end
 
   def load_all_users
     availabilities = load_availabilities_hours
