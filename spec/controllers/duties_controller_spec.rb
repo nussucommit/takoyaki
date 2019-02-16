@@ -131,31 +131,34 @@ RSpec.describe DutiesController, type: :controller do
 
     it 'drop a duty to all' do
       duty = create(:duty, user: @user, date: Time.zone.today + 1.day)
+      start_date = duty.date.beginning_of_week
       expect do
         patch :drop, params: { duty_id: { duty.id => duty.id }, user_id: 0 }
         duty.reload
       end.to change { duty.free }.to(true)
-      should redirect_to duties_path
+      should redirect_to duties_path(start_date: start_date)
       expect(flash[:notice]).to be('Duty successfully dropped!')
     end
 
     it 'drop a duty to someone' do
       duty = create(:duty, user: @user, date: Time.zone.today + 1.day)
       user = create(:user)
+      start_date = duty.date.beginning_of_week
       expect do
         patch :drop, params: { duty_id: { duty.id => duty.id },
                                user_id: user.id }
         duty.reload
       end.to change { duty.request_user_id }.to(user.id)
-      should redirect_to duties_path
+      should redirect_to duties_path(start_date: start_date)
     end
 
     it 'does nothing when duties to be dropped exceed the drop time limit' do
       time_range = create(:time_range, start_time: Time.zone.now + 1.hour)
       timeslot = create(:timeslot, time_range: time_range)
       duty = create(:duty, user: @user, timeslot: timeslot)
+      start_date = duty.date.beginning_of_week
       patch :drop, params: { duty_id: { duty.id => duty.id }, user_id: 0 }
-      should redirect_to duties_path
+      should redirect_to duties_path(start_date: start_date)
       expect(flash[:alert]).to be('Error in dropping duty! ' \
         'You can only drop your duty at most 2 hours before it starts')
     end
