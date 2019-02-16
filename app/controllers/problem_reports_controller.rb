@@ -26,7 +26,8 @@ class ProblemReportsController < ApplicationController
 
   def create
     report = ProblemReport.new report_params
-    report.update(reporter_user: current_user, last_update_user: current_user)
+    report.reporter_user = current_user
+    report.last_update_user = current_user
     if report.save
       send_email(report)
       redirect_to problem_reports_path,
