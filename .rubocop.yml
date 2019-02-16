@@ -36,8 +36,12 @@ Metrics/BlockLength:
     - 'config/routes.rb'
 
 Metrics/ClassLength:
+  Max: 140
   Exclude:
     - 'spec/**/*'
+
+Metrics/MethodLength:
+  Max: 12
 
 Naming/FileName:
   Exclude:
