@@ -18,10 +18,7 @@ class RegistrationsController < Devise::RegistrationsController
     yield resource if block_given?
     if success
       redirect_to users_path,
-        notice:'New User Created'
-    else
-      resource.errors.full_messages.join(',')
-      redirect_to users_path,
+        resource.errors.full_messages.join(',')
     end
   end
 
