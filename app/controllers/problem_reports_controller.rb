@@ -68,6 +68,7 @@ class ProblemReportsController < ApplicationController
   end
 
   def report_params
-    params.require(:problem_report).permit(:computer_number, :description, :is_critical, :place_id)
+    params.permit(:computer_number, :description,
+                  :is_critical, :place_id)
   end
 end

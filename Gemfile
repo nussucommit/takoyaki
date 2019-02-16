@@ -82,6 +82,8 @@ group :development, :test do
   gem 'shoulda-matchers', '4.0.0rc1'
   # Trace routes
   gem 'traceroute'
+  # For assert_template (check if view is rendered)
+  gem 'rails-controller-testing'
 end
 
 ### END UTILITIES
