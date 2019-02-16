@@ -93,7 +93,7 @@ module DutiesHelper
     (2..index_array.length).each do |next_index|
       span_duty = duties[start_index, end_index - start_index]
       colspan = span_duty.map do |duty|
-        calc_colspan(duty.timeslot.time_range.start_time, duty.timeslot.time_range.end_time)
+        calc_colspan(duty.time_range.start_time, duty.time_range.end_time)
       end.sum
       result.push(user: duties[start_index]&.user, colspan: colspan, span_duty: span_duty,
                   free: duties[start_index].free,
