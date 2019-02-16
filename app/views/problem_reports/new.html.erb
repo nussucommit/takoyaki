@@ -7,7 +7,7 @@
     <li><%= button_to("Back To Problem Report List", problem_reports_path, method: "get", class: "btn btn-large btn-light problem-report-btn") %></li>
   </ul>
 
-  <%= form_tag(problem_reports_path, method: "post") do %>
+  <%= form_for @report do |r|%>
     <div class="table-responsive-lg new-problem-report-table">
       <table>
         <tr>
@@ -17,12 +17,12 @@
 
         <tr>
           <td class="container td-container venue"><b>Venue</b></td>
-          <td><%= select_tag(:venue, options_for_select(Place.all.map {|a| a.name}), {:class => 'form-control new-problem-report-form'}) %></td>
+          <td><%= r.select(:place_id, options_for_select(Place.all.map {|a| [a.name, a.id]}, selected: r.object.place_id), {:class => 'form-control new-problem-report-form'}) %></td>
         </tr>
 
         <tr>
           <td class="container td-container pc-number"><b>PC Number</b></td>
-          <td><%= text_field_tag(:computer_number, "", class: "form-control new-problem-report-form") %></td>
+          <td><%= r.text_field(:computer_number, class: "form-control new-problem-report-form") %></td>
         </tr>
 
         <tr>
@@ -30,20 +30,20 @@
           <td class="container td-container description"><b>Description</b></td>
           <% desc_place_holder = "Please try to describe the problem as descriptive as possible. If there is an error message, try to type the error message."%>
           <td>
-            <%= text_area_tag(:description, "", size: "100x10", placeholder: desc_place_holder, class: "form-control new-problem-report-form") %>
+            <%= r.text_area(:description, size: "100x10", placeholder: desc_place_holder, class: "form-control new-problem-report-form") %>
           </td>
         </tr>
 
         <tr>
           <td class="container td-container"></td>
           <td>
-            <%= check_box_tag(:is_critical) %>
-            <%= label_tag(:is_critical, 'Critical') %>
+            <%= check_box_tag(:is_critical, nil, params[:is_critical] ? params[:is_critical] : false) %>
+            <%= r.label(:is_critical, 'Critical') %>
           </td>
         </tr>
 
         <tr>
-          <td colspan="2" class="submit-btn"><%= submit_tag("Submit", class: "btn btn-large btn-dark problem-report-btn center-block")%></td>
+          <td colspan="2" class="submit-btn"><%= r.submit("Submit", class: "btn btn-large btn-dark problem-report-btn center-block")%></td>
         </tr>
       </table>
     </div>
