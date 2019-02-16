@@ -15,6 +15,18 @@ module DutiesHelper
     end
   end
 
+  def current_user_hours
+    relevant_duties = Duty.includes(:time_range)
+                          .where(user_id: current_user.id,
+                                 date: @start_date..@end_date,
+                                 free: false, request_user_id: nil)
+    total_seconds = relevant_duties.map do |d|
+      d.time_range.end_time - d.time_range.start_time
+    end.sum
+    total_hours = total_seconds / 3600
+    total_hours
+  end
+
   private
 
   def process_day_place(duties, first_time, last_time)

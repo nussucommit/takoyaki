@@ -71,6 +71,7 @@ Rails.application.configure do
     Bullet.rails_logger = true
     Bullet.console = true
     Bullet.bullet_logger = true
+    Bullet.unused_eager_loading_enable = false
   end
 end
 # rubocop:enable Metrics/BlockLength
