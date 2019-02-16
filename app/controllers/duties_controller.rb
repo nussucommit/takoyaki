@@ -46,7 +46,7 @@ class DutiesController < ApplicationController
       end
       redirect_to duties_path, notice: 'Duty successfully grabbed!'
     else
-      redirect_to duties_path, alert: 'No hax pl0x'
+      redirect_to duties_path, alert: 'Invalid duties to grab'
     end
   end
 
@@ -61,7 +61,7 @@ class DutiesController < ApplicationController
           'You can only drop your duty at most 2 hours before it starts'
       end
     else
-      redirect_to duties_path, alert: 'No hax pl0x'
+      redirect_to duties_path, alert: 'Invalid duties to drop'
     end
   end
 
