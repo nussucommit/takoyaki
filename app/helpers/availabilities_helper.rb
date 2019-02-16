@@ -14,10 +14,11 @@ module AvailabilitiesHelper
   end
 
   def stylise_user(user)
+    text = "#{user[:username]} (#{user[:hours] || 0})"
     if user[:mc]
-      content_tag(:span, user[:username] + ' (' + current_user_hours.to_s + ')', class: 'mc')
+      content_tag(:span, text, class: 'mc')
     else
-      user[:username] # call function to return number of hours
+      text
     end
   end
 
@@ -87,16 +88,4 @@ module AvailabilitiesHelper
     total_hours = total_seconds / 3600
     total_hours
   end
-end
-
-# just for reference. Will rename later
-def current_user_hours
-  relevant_duties = Availability.includes(:time_range)
-                        .where(user_id: current_user.id,
-                               status: true)
-  total_seconds = relevant_duties.map do |d|
-    d.time_range.end_time - d.time_range.start_time
-  end.sum
-  total_hours = total_seconds / 3600
-  total_hours
 end

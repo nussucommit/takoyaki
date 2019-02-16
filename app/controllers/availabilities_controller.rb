@@ -43,9 +43,22 @@ class AvailabilitiesController < ApplicationController
   # push user id and hours from sort
 
   def load_all_users
+    availabilities = load_availabilities_hours
     User.all.map do |u|
-      [u.id, { username: u.username, mc: u.mc }]
+      [u.id, { username: u.username, mc: u.mc, hours: availabilities[u.id] }]
     end.to_h
+  end
+
+  def load_availabilities_hours
+    Availability.where(status: true)
+                .includes(:time_range)
+                .map do |a|
+                  [a.user_id,
+                   (a.time_range.end_time - a.time_range.start_time) / 3600]
+                end
+                .group_by(&:first)
+                .map { |k, v| [k, v.map(&:last).sum] }
+                .to_h
   end
 
   def load_availabilities

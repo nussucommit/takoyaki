@@ -83,3 +83,6 @@ Style/SingleLineBlockParams:
 
 Style/StringMethods:
   Enabled: true
+
+Style/MultilineBlockChain:
+  Enabled: false
