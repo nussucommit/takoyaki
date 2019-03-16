@@ -22,7 +22,7 @@ class DutiesController < ApplicationController
 
   def open_drop_modal
     @users = User.where.not(id: current_user.id).order(:username)
-    @drop_duty_list = Duty.includes(timeslot: :time_range)
+    @drop_duty_list = Duty.includes(timeslot: %i[time_range place])
                           .find(params[:drop_duty_list])
     respond_to do |format|
       format.js
@@ -31,7 +31,7 @@ class DutiesController < ApplicationController
   end
 
   def open_grab_modal
-    @grab_duty_list = Duty.includes(timeslot: :time_range)
+    @grab_duty_list = Duty.includes(timeslot: %i[time_range place])
                           .find(params[:grab_duty_list])
     respond_to do |format|
       format.js
@@ -45,8 +45,6 @@ class DutiesController < ApplicationController
       start_of_week = Duty.find(grab_duty_ids.first)
                           .date.beginning_of_week
       grab_duty(grab_duty_ids, start_of_week)
-      redirect_to duties_path(start_date: start_of_week),
-                  notice: 'Duty successfully grabbed!'
     else
       redirect_to duties_path, alert: 'Invalid duties to grab'
     end
@@ -134,19 +132,25 @@ class DutiesController < ApplicationController
     @new_announcement = Announcement.new
   end
 
-  def grab_duty(grab_duty_ids, _start_of_week)
+  def grab_duty(grab_duty_ids, start_of_week)
     Duty.find(grab_duty_ids).each do |duty|
-      duty.update(user: current_user, free: false, request_user: nil)
+      if duty.update(user: current_user, free: false, request_user: nil)
+        redirect_to duties_path(start_date: start_of_week),
+                    notice: 'Duty successfully grabbed!'
+      else
+        redirect_to duties_path(start_date: start_of_week),
+                    notice: 'Error in grabbing duty! Please try again'
+      end
     end
   end
 
-  def drop_duty(drop_duty_ids, week_start)
+  def drop_duty(drop_duty_ids, start_of_week)
     if can_drop_duties?(drop_duty_ids)
       swap_user(drop_duty_ids, params[:user_id])
-      redirect_to duties_path(start_date: week_start),
+      redirect_to duties_path(start_date: start_of_week),
                   notice: 'Duty successfully dropped!'
     else
-      redirect_to duties_path(start_date: week_start),
+      redirect_to duties_path(start_date: start_of_week),
                   alert: 'Error in dropping duty! ' \
                   'You can only drop your duty at most 2 hours before it starts'
     end
