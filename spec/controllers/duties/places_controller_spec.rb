@@ -46,7 +46,9 @@ RSpec.describe Duties::PlacesController, type: :controller do
       @time_range = create(:time_range)
       timeslot = create(:timeslot, time_range: @time_range, place: @place)
       @duty = create(:duty, timeslot: timeslot, user: user, free: true,
-                            request_user: create(:user))
+                            request_user: create(:user),
+                            date: Time.zone.today + 2.weeks)
+      @start_date = @duty.date.beginning_of_week
     end
 
     it do
@@ -60,7 +62,8 @@ RSpec.describe Duties::PlacesController, type: :controller do
       end.to change {
         @duty.user_id
       }.from(old_user_id).to(user.id)
-      should redirect_to(edit_duties_place_path(id: @place.id))
+      should redirect_to(edit_duties_place_path(id: @place.id,
+                                                start_date: @start_date))
     end
 
     it 'clears dropped status' do
