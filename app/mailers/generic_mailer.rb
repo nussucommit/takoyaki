@@ -37,11 +37,31 @@ class GenericMailer < ApplicationMailer
   end
 
   def process_duties_times(duties)
+    prev_start = nil
+    prev_end = nil
+    new_duties = []
     duties.map do |duty|
-      "#{duty.time_range.start_time.strftime('%H%M')}-" \
-      "#{duty.time_range.end_time.strftime('%H%M')}"
-    end.join(', ')
-  end
+      start_time = "#{duty.time_range.start_time.strftime('%H%M')}"
+      end_time = "#{duty.time_range.end_time.strftime('%H%M')}"
+
+      if prev_end and prev_end != start_time
+        new_duties.push("#{prev_start}-#{prev_end}")
+        prev_start = start_time
+        prev_end = end_time
+      else 
+        if !prev_start
+          prev_start = start_time
+        end
+
+        prev_end = end_time
+
+        if duty == duties.last
+          new_duties.push("#{prev_start}-#{prev_end}")
+        end
+      end
+    end
+    duties = new_duties.join(', ')
+  end 
 
   def mc_only?
     Setting.retrieve.mc_only
