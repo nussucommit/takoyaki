@@ -11,16 +11,19 @@ RSpec.describe ProblemReportsController, type: :controller do
     it 'without param' do
       get :index
       should respond_with :ok
+      assert_template :index
     end
 
     it 'all problems' do
       get :index, params: { all_problems: true }
       should respond_with :ok
+      assert_template :index
     end
 
     it 'critical problems' do
       get :index, params: { critical_problems: true }
       should respond_with :ok
+      assert_template :index
     end
   end
 
@@ -71,7 +74,10 @@ RSpec.describe ProblemReportsController, type: :controller do
       get :new
     end
 
-    it { should respond_with :ok }
+    it {
+      should respond_with :ok
+      assert_template :new
+    }
   end
 
   describe 'PATCH problem_reports#update' do
