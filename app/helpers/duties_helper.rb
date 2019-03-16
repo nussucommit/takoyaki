@@ -2,7 +2,7 @@
 
 module DutiesHelper
   def process_duties(start_date, end_date, first_time, last_time, places)
-    all_duties = Duty.includes(:user, :request_user, timeslot: [:time_range])
+    all_duties = Duty.includes(:user, :request_user, :time_range)
                      .order('time_ranges.start_time')
     start_date.upto(end_date).map do |day|
       places.map do |place|
@@ -40,7 +40,7 @@ module DutiesHelper
 
   def process_duty_prefix(duties, first_time)
     result = []
-    starting_duty = duties.first.timeslot.time_range.start_time
+    starting_duty = duties.first.time_range.start_time
     if first_time < starting_duty
       result.push(name: nil, colspan: calc_colspan(first_time, starting_duty))
     end
@@ -49,7 +49,7 @@ module DutiesHelper
 
   def process_duty_suffix(duties, last_time)
     result = []
-    ending_duty = duties.last.timeslot.time_range.start_time
+    ending_duty = duties.last.time_range.start_time
     if last_time > ending_duty
       result.push(name: nil, colspan: calc_colspan(ending_duty, last_time))
     end
@@ -62,9 +62,9 @@ module DutiesHelper
 
   def format_duties(duty_list)
     duty_list.map do |d|
-      { id: d.id, timing: d.timeslot.time_range.start_time.strftime('%H:%M') +
-        ' - ' + d.timeslot.time_range.end_time.strftime('%H:%M'),
-        date: d.date, location: d.timeslot.place.name }
+      { id: d.id, timing: d.time_range.start_time.strftime('%H:%M') +
+        ' - ' + d.time_range.end_time.strftime('%H:%M'),
+        date: d.date, location: d.place.name }
     end
   end
 
@@ -93,7 +93,7 @@ module DutiesHelper
     (2..index_array.length).each do |next_index|
       span_duty = duties[start_index, end_index - start_index]
       colspan = span_duty.map do |duty|
-        calc_colspan(duty.timeslot.time_range.start_time, duty.timeslot.time_range.end_time)
+        calc_colspan(duty.time_range.start_time, duty.time_range.end_time)
       end.sum
       result.push(user: duties[start_index]&.user, colspan: colspan, span_duty: span_duty,
                   free: duties[start_index].free,

@@ -1,8 +1,8 @@
 <% (@start_date..@end_date).each do |date| %>
   <div class="table-columns">
     <div class="table-columns-padded">
-      <% Duty.includes(:timeslot).where(date: date, 'timeslots.place_id' => @place.id).each do |duty| %>
-        <% tr = duty.timeslot.time_range %>
+      <% Duty.includes(:timeslot, :time_range).where(date: date, 'timeslots.place_id' => @place.id).each do |duty| %>
+        <% tr = duty.time_range %>
         <div class="timeslot" style="
           top: <%= calc_offset(tr)%>px;
           height: <%= calc_slot_height(tr) %>px;">

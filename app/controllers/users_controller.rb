@@ -5,9 +5,7 @@ class UsersController < ApplicationController
 
   def index
     @users = User.order(username: :asc)
-    @start_date = (params[:start_date] || Time.zone.today.beginning_of_week)
-                  .to_date
-    @end_date = @start_date.to_date + 6.days
+    set_start_end_dates
   end
 
   def show; end
