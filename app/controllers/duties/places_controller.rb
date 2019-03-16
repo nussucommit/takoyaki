@@ -20,7 +20,10 @@ module Duties
 
     def update
       duty_params.each do |id, user_id|
-        Duty.find(id).update(user_id: user_id, free: false, request_user: nil)
+        duty = Duty.find(id)
+        unless duty.free
+          duty.update(user_id: user_id, free: false, request_user: nil)
+        end
       end
       redirect_to edit_duties_place_path(@place),
                   notice: 'Duties successfully updated!'

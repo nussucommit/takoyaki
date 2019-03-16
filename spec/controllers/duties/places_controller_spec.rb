@@ -45,7 +45,7 @@ RSpec.describe Duties::PlacesController, type: :controller do
       @place = create(:place)
       @time_range = create(:time_range)
       timeslot = create(:timeslot, time_range: @time_range, place: @place)
-      @duty = create(:duty, timeslot: timeslot, user: user, free: true,
+      @duty = create(:duty, timeslot: timeslot, user: user, free: false,
                             request_user: create(:user))
     end
 
@@ -63,15 +63,17 @@ RSpec.describe Duties::PlacesController, type: :controller do
       should redirect_to(edit_duties_place_path(id: @place.id))
     end
 
-    it 'clears dropped status' do
+    it 'preserves dropped status' do
+      @duty.update(free: true)
       user = create(:user)
+
       expect do
         put :update, params: { id: @place.id,
                                duty: { @duty.id.to_s => user.id.to_s } }
         @duty.reload
-      end.to change {
+      end.not_to change {
         @duty.free
-      }.from(true).to(false)
+      }.from(true)
     end
 
     it 'clears request_user' do
