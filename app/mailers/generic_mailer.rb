@@ -56,8 +56,8 @@ class GenericMailer < ApplicationMailer
     else
       @prev_start ||= start_time
       @prev_end = end_time
-      @new_duties.push("#{@prev_start}-#{@prev_end}") if is_last
     end
+    @new_duties.push("#{@prev_start}-#{@prev_end}") if is_last
   end
 
   def mc_only?
