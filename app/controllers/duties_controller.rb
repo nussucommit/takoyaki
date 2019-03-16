@@ -3,26 +3,23 @@
 class DutiesController < ApplicationController
   def index
     @header_iter = generate_header_iter
-    @start_date = (params[:start_date] || Time.zone.today.beginning_of_week)
-                  .to_date
-    @end_date = @start_date.to_date + 6.days
+    set_start_end_dates
     # Eager load all rows in Place
     @places = Place.all.map { |p| p }
     prepare_announcements
   end
 
   def generate_duties
-    start_date = (params[:start_date] || Time.zone.today.beginning_of_week)
-                 .to_date
-    end_date = start_date + (params[:num_weeks].to_i * 7 - 1).days
-    Duty.generate(start_date, end_date)
-    redirect_to duties_path(start_date: start_date),
+    set_start_end_dates
+    end_date = @start_date + (params[:num_weeks].to_i * 7 - 1).days
+    Duty.generate(@start_date, end_date)
+    redirect_to duties_path(start_date: @start_date),
                 notice: 'Duties successfully generated!'
   end
 
   def open_drop_modal
     @users = User.where.not(id: current_user.id).order(:username)
-    @drop_duty_list = Duty.includes(timeslot: :time_range)
+    @drop_duty_list = Duty.includes(%i[time_range place])
                           .find(params[:drop_duty_list])
     respond_to do |format|
       format.js
@@ -31,7 +28,7 @@ class DutiesController < ApplicationController
   end
 
   def open_grab_modal
-    @grab_duty_list = Duty.includes(timeslot: :time_range)
+    @grab_duty_list = Duty.includes(%i[time_range place])
                           .find(params[:grab_duty_list])
     respond_to do |format|
       format.js
@@ -72,13 +69,13 @@ class DutiesController < ApplicationController
   private
 
   def grabable_duties
-    Duty.includes(timeslot: %i[time_range place])
+    Duty.includes(%i[time_range place])
         .where('free = true or request_user_id = ? or
                                   request_user_id IS NOT NULL and user_id = ?',
                current_user.id, current_user.id)
         .select do |d|
       Time.zone.now < (d.date +
-      d.timeslot.time_range.start_time.seconds_since_midnight.seconds)
+                       d.time_range.start_time.seconds_since_midnight.seconds)
     end
   end
 
@@ -100,7 +97,7 @@ class DutiesController < ApplicationController
   def can_drop_duties?(drop_duty_ids)
     duties = duties_sorted_by_start_time(drop_duty_ids)
     duty_date = duties.first.date
-    duty_start_time = duties.first.timeslot.time_range.start_time
+    duty_start_time = duties.first.time_range.start_time
     duty_datetime = duty_date + duty_start_time.seconds_since_midnight.seconds
     Time.zone.now <= (duty_datetime - 2.hours)
   end
@@ -122,7 +119,7 @@ class DutiesController < ApplicationController
 
   def duties_sorted_by_start_time(duty_ids)
     Duty.joins(timeslot: :time_range).order('time_ranges.start_time ASC')
-        .includes(timeslot: :time_range).find(duty_ids)
+        .includes(:time_range).find(duty_ids)
   end
 
   def generate_header_iter
