@@ -139,7 +139,7 @@ class DutiesController < ApplicationController
                     notice: 'Duty successfully grabbed!'
       else
         redirect_to duties_path(start_date: start_of_week),
-                    notice: 'Error in grabbing duty! Please try again'
+                    alert: 'Error in grabbing duty! Please try again'
       end
     end
   end
