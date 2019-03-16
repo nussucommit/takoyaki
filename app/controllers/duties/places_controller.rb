@@ -6,7 +6,7 @@ module Duties
     before_action :authenticate_user!
 
     def index
-      set_start_date
+      set_start_end_dates
     end
 
     def edit
