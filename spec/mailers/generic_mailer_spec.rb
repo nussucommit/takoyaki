@@ -6,16 +6,21 @@ RSpec.describe GenericMailer, type: :mailer do
   describe '#drop_duties' do
     let(:duties) do
       user = create(:user)
-      times = [create(:time_range, start_time: Time.zone.at('08:00'),
-                                   end_time: Time.zone.at('09:00')),
-               create(:time_range, start_time: Time.zone.at('09:00'),
-                                   end_time: Time.zone.at('10:00')),
-               create(:time_range, start_time: Time.zone.at('10:00'),
-                                   end_time: Time.zone.at('11:00')),
-               create(:time_range, start_time: Time.zone.at('11:00'),
-                                   end_time: Time.zone.at('12:00')),
-               create(:time_range, start_time: Time.zone.at('12:00'),
-                                   end_time: Time.zone.at('13:00'))]
+      times = [create(:time_range,
+                      start_time: Time.zone.at('08:00'.in_time_zone.to_i),
+                      end_time: Time.zone.at('09:00'.in_time_zone.to_i)),
+               create(:time_range,
+                      start_time: Time.zone.at('09:00'.in_time_zone.to_i),
+                      end_time: Time.zone.at('10:00'.in_time_zone.to_i)),
+               create(:time_range,
+                      start_time: Time.zone.at('10:00'.in_time_zone.to_i),
+                      end_time: Time.zone.at('11:00'.in_time_zone.to_i)),
+               create(:time_range,
+                      start_time: Time.zone.at('11:00'.in_time_zone.to_i),
+                      end_time: Time.zone.at('12:00'.in_time_zone.to_i)),
+               create(:time_range,
+                      start_time: Time.zone.at('12:00'.in_time_zone.to_i),
+                      end_time: Time.zone.at('13:00'.in_time_zone.to_i))]
       @duties = create_list(:duty, 5, user: user)
                 .map.with_index { |duty, i| duty.time_range = times[i] }
     end
