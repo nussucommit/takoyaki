@@ -40,7 +40,7 @@ module DutiesHelper
 
   def process_duty_prefix(duties, first_time)
     result = []
-    starting_duty = duties.first.timeslot.time_range.start_time
+    starting_duty = duties.first.time_range.start_time
     if first_time < starting_duty
       result.push(name: nil, colspan: calc_colspan(first_time, starting_duty))
     end
@@ -49,7 +49,7 @@ module DutiesHelper
 
   def process_duty_suffix(duties, last_time)
     result = []
-    ending_duty = duties.last.timeslot.time_range.start_time
+    ending_duty = duties.last.time_range.start_time
     if last_time > ending_duty
       result.push(name: nil, colspan: calc_colspan(ending_duty, last_time))
     end
@@ -62,9 +62,9 @@ module DutiesHelper
 
   def format_duties(duty_list)
     duty_list.map do |d|
-      { id: d.id, timing: d.timeslot.time_range.start_time.strftime('%H:%M') +
-        ' - ' + d.timeslot.time_range.end_time.strftime('%H:%M'),
-        date: d.date, location: d.timeslot.place.name }
+      { id: d.id, timing: d.time_range.start_time.strftime('%H:%M') +
+        ' - ' + d.time_range.end_time.strftime('%H:%M'),
+        date: d.date, location: d.place.name }
     end
   end
 
