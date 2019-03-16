@@ -52,11 +52,10 @@ class GenericMailer < ApplicationMailer
     if @prev_end && @prev_end != start_time
       @new_duties.push("#{@prev_start}-#{@prev_end}")
       @prev_start = start_time
-      @prev_end = end_time
     else
       @prev_start ||= start_time
-      @prev_end = end_time
     end
+    @prev_end = end_time
     @new_duties.push("#{@prev_start}-#{@prev_end}") if is_last
   end
 
