@@ -22,7 +22,7 @@ class DutiesController < ApplicationController
 
   def open_drop_modal
     @users = User.where.not(id: current_user.id).order(:username)
-    @drop_duty_list = Duty.includes(timeslot: %i[time_range place])
+    @drop_duty_list = Duty.includes(%i[time_range place])
                           .find(params[:drop_duty_list])
     respond_to do |format|
       format.js
@@ -31,7 +31,7 @@ class DutiesController < ApplicationController
   end
 
   def open_grab_modal
-    @grab_duty_list = Duty.includes(timeslot: %i[time_range place])
+    @grab_duty_list = Duty.includes(%i[time_range place])
                           .find(params[:grab_duty_list])
     respond_to do |format|
       format.js
@@ -72,7 +72,7 @@ class DutiesController < ApplicationController
   private
 
   def grabable_duties
-    Duty.includes(timeslot: %i[time_range place])
+    Duty.includes(%i[time_range place])
         .where('free = true or request_user_id = ? or
                                   request_user_id IS NOT NULL and user_id = ?',
                current_user.id, current_user.id)
@@ -122,7 +122,7 @@ class DutiesController < ApplicationController
 
   def duties_sorted_by_start_time(duty_ids)
     Duty.joins(timeslot: :time_range).order('time_ranges.start_time ASC')
-        .includes(timeslot: :time_range).find(duty_ids)
+        .includes(:time_range).find(duty_ids)
   end
 
   def generate_header_iter
