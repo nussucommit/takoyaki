@@ -7,22 +7,22 @@ RSpec.describe GenericMailer, type: :mailer do
     let(:duties) do
       user = create(:user)
       @duties = [create(:time_range,
-                      start_time: Time.zone.at('08:00'.in_time_zone.to_i),
-                      end_time: Time.zone.at('09:00'.in_time_zone.to_i)),
-               create(:time_range,
-                      start_time: Time.zone.at('09:00'.in_time_zone.to_i),
-                      end_time: Time.zone.at('10:00'.in_time_zone.to_i)),
-               create(:time_range,
-                      start_time: Time.zone.at('10:00'.in_time_zone.to_i),
-                      end_time: Time.zone.at('11:00'.in_time_zone.to_i)),
-               create(:time_range,
-                      start_time: Time.zone.at('11:00'.in_time_zone.to_i),
-                      end_time: Time.zone.at('12:00'.in_time_zone.to_i)),
-               create(:time_range,
-                      start_time: Time.zone.at('12:00'.in_time_zone.to_i),
-                      end_time: Time.zone.at('13:00'.in_time_zone.to_i))]
-               .map { |tr| create(:timeslot, time_range: tr) }
-               .map { |ts| create(:duty, user: user, timeslot: ts) }
+                        start_time: Time.zone.at('08:00'.in_time_zone.to_i),
+                        end_time: Time.zone.at('09:00'.in_time_zone.to_i)),
+                 create(:time_range,
+                        start_time: Time.zone.at('09:00'.in_time_zone.to_i),
+                        end_time: Time.zone.at('10:00'.in_time_zone.to_i)),
+                 create(:time_range,
+                        start_time: Time.zone.at('10:00'.in_time_zone.to_i),
+                        end_time: Time.zone.at('11:00'.in_time_zone.to_i)),
+                 create(:time_range,
+                        start_time: Time.zone.at('11:00'.in_time_zone.to_i),
+                        end_time: Time.zone.at('12:00'.in_time_zone.to_i)),
+                 create(:time_range,
+                        start_time: Time.zone.at('12:00'.in_time_zone.to_i),
+                        end_time: Time.zone.at('13:00'.in_time_zone.to_i))]
+                .map { |tr| create(:timeslot, time_range: tr) }
+                .map { |ts| create(:duty, user: user, timeslot: ts) }
     end
 
     let(:mail) do
