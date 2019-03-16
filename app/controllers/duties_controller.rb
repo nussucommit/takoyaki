@@ -78,7 +78,7 @@ class DutiesController < ApplicationController
                current_user.id, current_user.id)
         .select do |d|
       Time.zone.now < (d.date +
-      d.timeslot.time_range.start_time.seconds_since_midnight.seconds)
+                       d.time_range.start_time.seconds_since_midnight.seconds)
     end
   end
 
@@ -100,7 +100,7 @@ class DutiesController < ApplicationController
   def can_drop_duties?(drop_duty_ids)
     duties = duties_sorted_by_start_time(drop_duty_ids)
     duty_date = duties.first.date
-    duty_start_time = duties.first.timeslot.time_range.start_time
+    duty_start_time = duties.first.time_range.start_time
     duty_datetime = duty_date + duty_start_time.seconds_since_midnight.seconds
     Time.zone.now <= (duty_datetime - 2.hours)
   end
