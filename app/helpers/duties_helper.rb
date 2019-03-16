@@ -2,7 +2,7 @@
 
 module DutiesHelper
   def process_duties(start_date, end_date, first_time, last_time, places)
-    all_duties = Duty.includes(:user, :request_user, timeslot: [:time_range])
+    all_duties = Duty.includes(:user, :request_user, :time_range)
                      .order('time_ranges.start_time')
     start_date.upto(end_date).map do |day|
       places.map do |place|
