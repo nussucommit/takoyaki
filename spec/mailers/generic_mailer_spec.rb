@@ -6,7 +6,7 @@ RSpec.describe GenericMailer, type: :mailer do
   describe '#drop_duties' do
     let(:duties) do
       user = create(:user)
-      times = [create(:time_range,
+      @duties = [create(:time_range,
                       start_time: Time.zone.at('08:00'.in_time_zone.to_i),
                       end_time: Time.zone.at('09:00'.in_time_zone.to_i)),
                create(:time_range,
@@ -21,8 +21,8 @@ RSpec.describe GenericMailer, type: :mailer do
                create(:time_range,
                       start_time: Time.zone.at('12:00'.in_time_zone.to_i),
                       end_time: Time.zone.at('13:00'.in_time_zone.to_i))]
-      @duties = create_list(:duty, 5, user: user)
-                .map.with_index { |duty, i| duty.time_range = times[i] }
+               .map { |tr| create(:timeslot, time_range: tr) }
+               .map { |ts| create(:duty, user: user, timeslot: ts) }
     end
 
     let(:mail) do
