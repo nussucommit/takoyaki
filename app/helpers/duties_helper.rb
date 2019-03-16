@@ -31,7 +31,7 @@ module DutiesHelper
 
   def process_day_place(duties, first_time, last_time)
     if duties.empty?
-      [{ name: nil, colspan: calc_colspan(first_time, last_time) }]
+      [{ colspan: calc_colspan(first_time, last_time) }]
     else
       process_duty_prefix(duties, first_time) + process_duty(duties) +
         process_duty_suffix(duties, last_time)
@@ -42,7 +42,7 @@ module DutiesHelper
     result = []
     starting_duty = duties.first.timeslot.time_range.start_time
     if first_time < starting_duty
-      result.push(name: nil, colspan: calc_colspan(first_time, starting_duty))
+      result.push(colspan: calc_colspan(first_time, starting_duty))
     end
     result
   end
@@ -51,7 +51,7 @@ module DutiesHelper
     result = []
     ending_duty = duties.last.timeslot.time_range.start_time
     if last_time > ending_duty
-      result.push(name: nil, colspan: calc_colspan(ending_duty, last_time))
+      result.push(colspan: calc_colspan(ending_duty, last_time))
     end
     result
   end
