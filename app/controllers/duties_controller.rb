@@ -78,7 +78,7 @@ class DutiesController < ApplicationController
                current_user.id, current_user.id)
         .select do |d|
       Time.zone.now < (d.date +
-      d.time_range.start_time.seconds_since_midnight.seconds)
+                       d.time_range.start_time.seconds_since_midnight.seconds)
     end
   end
 
