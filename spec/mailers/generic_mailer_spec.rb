@@ -30,7 +30,7 @@ RSpec.describe GenericMailer, type: :mailer do
     end
 
     it 'renders the header' do
-      times = '08.00-13.00'
+      times = '0800-1300'
 
       expect(mail.subject).to eq(
         'DUTY DUTY DUTY ' \
