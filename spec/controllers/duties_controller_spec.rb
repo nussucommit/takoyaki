@@ -156,7 +156,8 @@ RSpec.describe DutiesController, type: :controller do
     end
 
     it 'does nothing when duties to be dropped exceed the drop time limit' do
-      time_range = create(:time_range, start_time: Time.zone.now + 1.hour)
+      time_range = create(:time_range, start_time: Time.zone.now + 1.hour,
+                                       end_time: Time.zone.now + 2.hours)
       timeslot = create(:timeslot, time_range: time_range)
       duty = create(:duty, user: @user, timeslot: timeslot)
       start_date = duty.date.beginning_of_week
