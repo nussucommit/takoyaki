@@ -3,9 +3,7 @@
 class DutiesController < ApplicationController
   def index
     @header_iter = generate_header_iter
-    @start_date = (params[:start_date] || Time.zone.today.beginning_of_week)
-                  .to_date
-    @end_date = @start_date.to_date + 6.days
+    set_start_end_dates
     # Eager load all rows in Place
     @places = Place.all.map { |p| p }
     prepare_announcements
