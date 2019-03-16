@@ -74,10 +74,10 @@ RSpec.describe ProblemReportsController, type: :controller do
       get :new
     end
 
-    it {
+    it do
       should respond_with :ok
       assert_template :new
-    }
+    end
   end
 
   describe 'PATCH problem_reports#update' do
