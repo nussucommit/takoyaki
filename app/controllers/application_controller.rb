@@ -20,4 +20,10 @@ class ApplicationController < ActionController::Base
     redirect_to(user_signed_in? ? root_path : new_user_session_path,
                 alert: exception.message)
   end
+
+  def set_start_end_dates
+    @start_date = (params[:start_date] || Time.zone.today.beginning_of_week)
+                  .to_date
+    @end_date = @start_date.to_date + 6.days
+  end
 end
