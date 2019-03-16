@@ -79,9 +79,11 @@ group :development, :test do
   # Factory bot: factories for testing
   gem 'factory_bot_rails'
   # Shoulda Matchers: matchers for testing -- experimental gem for Rails 5
-  gem 'shoulda-matchers', '4.0.0rc1'
+  gem 'shoulda-matchers', '~> 4.0.0'
   # Trace routes
   gem 'traceroute'
+  # For assert_template (check if view is rendered)
+  gem 'rails-controller-testing'
 end
 
 ### END UTILITIES

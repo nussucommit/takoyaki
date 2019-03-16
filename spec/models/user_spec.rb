@@ -54,6 +54,9 @@ RSpec.describe User, type: :model do
   it { should have_many(:availabilities).dependent(:destroy) }
   it { should validate_presence_of(:cell) }
   it { should validate_presence_of(:email) }
+  subject { create(:user) }
+  it { should validate_uniqueness_of(:email).ignoring_case_sensitivity }
+  it { should validate_uniqueness_of(:username) }
   it { should define_enum_for(:cell).with_values(User::CELLS) }
   it 'has false as default value for mc' do
     expect(create(:user).mc).to eq(false)

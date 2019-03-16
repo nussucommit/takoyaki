@@ -14,8 +14,15 @@ class RegistrationsController < Devise::RegistrationsController
     ensure_admin || return
     build_resource(sign_up_params)
     resource.save
+    success = resource.save
     yield resource if block_given?
-    redirect_to users_path
+
+    if success
+      redirect_to users_path, notice: 'Created user succesfully'
+    else
+      redirect_to users_path,
+                  alert: resource.errors.full_messages.join(',')
+    end
   end
 
   def after_sign_up_path_for(_resource)

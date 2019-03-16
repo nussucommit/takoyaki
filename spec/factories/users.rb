@@ -42,5 +42,6 @@ FactoryBot.define do
     email
     password { '123456' }
     cell { User::CELLS.sample }
+    username { SecureRandom.alphanumeric(8) }
   end
 end
