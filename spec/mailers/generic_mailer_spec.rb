@@ -15,7 +15,7 @@ RSpec.describe GenericMailer, type: :mailer do
 
     it 'renders the header' do
       times = duties.map do |duty|
-        "13.00-18.00"
+        '13.00-18.00'
       end
 
       expect(mail.subject).to eq(
