@@ -22,7 +22,7 @@ class DutiesController < ApplicationController
 
   def open_drop_modal
     @users = User.where.not(id: current_user.id).order(:username)
-    @drop_duty_list = Duty.includes(timeslot: :time_range)
+    @drop_duty_list = Duty.includes(timeslot: %i[time_range place])
                           .find(params[:drop_duty_list])
     respond_to do |format|
       format.js
@@ -31,7 +31,7 @@ class DutiesController < ApplicationController
   end
 
   def open_grab_modal
-    @grab_duty_list = Duty.includes(timeslot: :time_range)
+    @grab_duty_list = Duty.includes(timeslot: %i[time_range place])
                           .find(params[:grab_duty_list])
     respond_to do |format|
       format.js
