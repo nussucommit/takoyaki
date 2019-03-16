@@ -19,7 +19,7 @@ class DutiesController < ApplicationController
 
   def open_drop_modal
     @users = User.where.not(id: current_user.id).order(:username)
-    @drop_duty_list = Duty.includes(timeslot: :time_range)
+    @drop_duty_list = Duty.includes(timeslot: %i[time_range place])
                           .find(params[:drop_duty_list])
     respond_to do |format|
       format.js
@@ -28,7 +28,7 @@ class DutiesController < ApplicationController
   end
 
   def open_grab_modal
-    @grab_duty_list = Duty.includes(timeslot: :time_range)
+    @grab_duty_list = Duty.includes(timeslot: %i[time_range place])
                           .find(params[:grab_duty_list])
     respond_to do |format|
       format.js
@@ -75,7 +75,7 @@ class DutiesController < ApplicationController
                current_user.id, current_user.id)
         .select do |d|
       Time.zone.now < (d.date +
-      d.timeslot.time_range.start_time.seconds_since_midnight.seconds)
+                       d.time_range.start_time.seconds_since_midnight.seconds)
     end
   end
 
@@ -97,7 +97,7 @@ class DutiesController < ApplicationController
   def can_drop_duties?(drop_duty_ids)
     duties = duties_sorted_by_start_time(drop_duty_ids)
     duty_date = duties.first.date
-    duty_start_time = duties.first.timeslot.time_range.start_time
+    duty_start_time = duties.first.time_range.start_time
     duty_datetime = duty_date + duty_start_time.seconds_since_midnight.seconds
     Time.zone.now <= (duty_datetime - 2.hours)
   end
