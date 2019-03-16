@@ -21,6 +21,7 @@ RSpec.describe Duties::PlacesController, type: :controller do
       sign_in user
       get :index
       should respond_with :ok
+      assert_template :index
     end
   end
 
@@ -34,7 +35,10 @@ RSpec.describe Duties::PlacesController, type: :controller do
       sign_in user
       get :edit, params: { id: @place }
     end
-    it { should respond_with :ok }
+    it do
+      should respond_with :ok
+      assert_template :edit
+    end
   end
 
   describe 'PUT #update' do
