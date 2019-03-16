@@ -45,7 +45,7 @@ RSpec.describe Duties::PlacesController, type: :controller do
       @place = create(:place)
       @time_range = create(:time_range)
       timeslot = create(:timeslot, time_range: @time_range, place: @place)
-      @duty = create(:duty, timeslot: timeslot, user: user, free: true,
+      @duty = create(:duty, timeslot: timeslot, user: user, free: false,
                             request_user: create(:user),
                             date: Time.zone.today + 2.weeks)
       @start_date = @duty.date.beginning_of_week
