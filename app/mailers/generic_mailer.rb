@@ -41,25 +41,22 @@ class GenericMailer < ApplicationMailer
     prev_end = nil
     new_duties = []
     duties.map do |duty|
-      d = combine_duties_times(duty, new_duties, prev_start, prev_end)
-      prev_start = d[0]
-      prev_end = d[1]
-      new_duties.push("#{prev_start}-#{prev_end}") if duty == duties.last
+      prev_start, prev_end =
+        combine_duties_times(duty, new_duties, prev_start, prev_end)
     end
-    duties = new_duties.join(', ')
+    new_duties.push("#{prev_start}-#{prev_end}")
+    new_duties.join(', ')
   end
 
   def combine_duties_times(duty, new_duties, prev_start, prev_end)
-    start_time = duty.time_range.start_time.strftime('%H%M').to_s
-    end_time = duty.time_range.end_time.strftime('%H%M').to_s
+    start_time = duty.time_range.start_time.strftime('%H%M')
+    end_time = duty.time_range.end_time.strftime('%H%M')
     if prev_end && prev_end != start_time
       new_duties.push("#{prev_start}-#{prev_end}")
-      prev_start = start_time
+      [start_time, end_time]
     else
-      prev_start ||= start_time
+      [prev_start || start_time, end_time]
     end
-    prev_end = end_time
-    [prev_start, prev_end]
   end
 
   def mc_only?
