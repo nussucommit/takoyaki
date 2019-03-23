@@ -19,9 +19,13 @@ module Duties
 
     def update
       duty_params.each do |id, user_id|
-        Duty.find(id).update(user_id: user_id, free: false, request_user: nil)
+        duty = Duty.find(id)
+        unless duty.free
+          duty.update(user_id: user_id, free: false, request_user: nil)
+        end
       end
-      redirect_to edit_duties_place_path(@place),
+      start_of_week = Duty.find(duty_params.keys.first).date.beginning_of_week
+      redirect_to edit_duties_place_path(@place, start_date: start_of_week),
                   notice: 'Duties successfully updated!'
     end
 
