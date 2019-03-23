@@ -9,6 +9,7 @@ RSpec.describe AnnouncementsController, type: :controller do
         sign_in create(:user)
         get :index
         should respond_with :ok
+        assert_template :index
       end
     end
 
@@ -18,6 +19,7 @@ RSpec.describe AnnouncementsController, type: :controller do
         sign_in user
         get :index
         should respond_with :ok
+        assert_template :index
       end
     end
   end

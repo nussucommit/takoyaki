@@ -12,6 +12,7 @@ RSpec.describe UsersController, type: :controller do
       sign_in create(:user)
       get :index
       should respond_with :ok
+      assert_template :index
     end
   end
 
@@ -32,6 +33,7 @@ RSpec.describe UsersController, type: :controller do
       sign_in user
       get :edit, params: { id: create(:user).id }
       should respond_with :ok
+      assert_template :edit
     end
   end
 

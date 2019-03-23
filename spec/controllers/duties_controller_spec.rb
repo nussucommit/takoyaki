@@ -12,7 +12,10 @@ RSpec.describe DutiesController, type: :controller do
       get :index
     end
 
-    it { should respond_with :ok }
+    it do
+      should respond_with :ok
+      assert_template :index
+    end
   end
 
   describe 'POST duties#generate_duties' do
@@ -208,6 +211,7 @@ RSpec.describe DutiesController, type: :controller do
         sign_in create(:user)
         get :show_grabable_duties
         should respond_with :ok
+        assert_template :show_grabable_duties
       end
     end
   end
@@ -227,6 +231,7 @@ RSpec.describe DutiesController, type: :controller do
         params = { 'drop_duty_list' => duties.map(&:id).map(&:to_s) }
         post :open_drop_modal, params: params, xhr: true
         should respond_with :ok
+        assert_template :open_drop_modal
       end
     end
   end
@@ -247,6 +252,7 @@ RSpec.describe DutiesController, type: :controller do
         params = { 'grab_duty_list' => duties.map(&:id).map(&:to_s) }
         post :open_grab_modal, params: params, xhr: true
         should respond_with :ok
+        assert_template :open_grab_modal
       end
     end
   end

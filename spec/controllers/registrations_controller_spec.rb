@@ -35,6 +35,7 @@ RSpec.describe RegistrationsController, type: :controller do
         sign_in user
         get :new
         should respond_with :ok
+        assert_template :new
       end
     end
   end
