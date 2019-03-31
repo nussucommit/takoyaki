@@ -3,7 +3,7 @@
 	<div class="container">
     <div class="row">
       <div class="col-md-6 offset-md-3 duty-list">
-        <%= form_tag(grab_duties_path, method: :post) do %>
+        <%= form_tag(grab_duties_path, method: :post, id: :"grab-page-form") do %>
           <% format_duties(@grabable_duties).each do |d| %>
             <p>
               <%= check_box_tag "duty_id[#{d[:id]}]", d[:id] %>
@@ -13,7 +13,7 @@
             </p>
           <% end %>
           <p>
-            <%= submit_tag "Grab", class: "btn btn-primary", class: "grab" %>
+            <%= submit_tag "Grab", class: "btn btn-primary", class: "grab", onclick: :"return validateGrabPage();" %>
           </p>
         </div>
       <% end %>

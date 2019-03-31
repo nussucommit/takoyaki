@@ -63,4 +63,20 @@ function load() {
   setDutyTableWidth(AVERAGE_COLSPAN);
 }
 
+function validateModal() {
+  if ($("#grab-drop-modal input[type=checkbox]:checked").length > 0)
+    return true;
+  else
+    alert("Please select at least one time slot");
+    return false;
+}
+
+function validateGrabPage() {
+  if ($("#grab-page-form input[type=checkbox]:checked").length > 0)
+    return true;
+  else
+    alert("Please select at least one time slot");
+    return false;
+}
+
 $(document).on('turbolinks:load', load);
