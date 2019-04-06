@@ -32,7 +32,7 @@ module AvailabilitiesHelper
                options_from_collection_for_select(
                  [OpenStruct.new(id: nil, username: '')] + current_users,
                  'id', 'username', selected: ts.default_user_id
-               ), class: 'availability-select', onclick: 'enableButtons()')
+               ), class: 'availability-select', onchange: 'enableButtons()')
   end
   # rubocop:enable Naming/UncommunicativeMethodParamName
 
