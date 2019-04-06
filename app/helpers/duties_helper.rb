@@ -90,7 +90,7 @@ module DutiesHelper
     index_array.push(duties.length)
   end
 
-  # rubocop:disable Metrics/LineLength, Metrics/AbcSize, Metrics/MethodLength
+  # rubocop:disable Metrics/LineLength, Metrics/AbcSize
   def get_result(duties, index_array)
     result = []
     start_index, end_index = *index_array
@@ -107,7 +107,7 @@ module DutiesHelper
     end
     result
   end
-  # rubocop:enable Metrics/LineLength, Metrics/AbcSize, Metrics/MethodLength
+  # rubocop:enable Metrics/LineLength, Metrics/AbcSize
 
   def generate_select_duties(duty)
     select_tag("duty[#{duty.id}]",

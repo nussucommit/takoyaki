@@ -41,7 +41,7 @@ Metrics/ClassLength:
     - 'spec/**/*'
 
 Metrics/MethodLength:
-  Max: 12
+  Max: 15
 
 Naming/FileName:
   Exclude:
