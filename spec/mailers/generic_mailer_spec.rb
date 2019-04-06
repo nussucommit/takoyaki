@@ -47,7 +47,7 @@ RSpec.describe GenericMailer, type: :mailer do
   describe '#combine_duties' do
     let(:duties) do
       user = create(:user)
-      @duties = (8, 9, 12, 13)
+      @duties = [8, 9, 12, 13]
                 .map { |n| format('%2d:00', n).in_time_zone }
                 .map do |start_time|
                   create(:time_range, start_time: start_time,
