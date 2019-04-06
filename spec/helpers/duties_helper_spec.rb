@@ -105,7 +105,7 @@ RSpec.describe DutiesHelper, type: :helper do
       expect(pd[0][0].length).to eq(2)
     end
 
-    it 'should not merge dropped duties from same user but different user to drop' do
+    it 'should not merge dropped duties from 1 user to many users' do
       user1 = create(:user)
       user2 = create(:user)
       user3 = create(:user)
