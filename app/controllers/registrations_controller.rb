@@ -6,7 +6,7 @@ class RegistrationsController < Devise::RegistrationsController
   skip_before_action :require_no_authentication
 
   def new
-    @last_mc_value = User.order(:updated_at).last&.mc
+    @last_mc_value = User.order(:updated_at).last&.mc&.to_s || "false"
     ensure_admin || return
     super
   end
