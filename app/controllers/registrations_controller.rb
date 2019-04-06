@@ -6,6 +6,7 @@ class RegistrationsController < Devise::RegistrationsController
   skip_before_action :require_no_authentication
 
   def new
+    @users = User.order(:updated_at)
     ensure_admin || return
     super
   end

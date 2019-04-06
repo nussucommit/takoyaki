@@ -48,7 +48,7 @@
                 <div class="field">
                   <tr>
                     <th><%= f.label :mc %></th>
-                    <td><%= f.select(:mc, options_for_select(["true", "false"]), {:class => 'form-control'}) %>
+                    <td><%= f.select(:mc, options_for_select(["true", "false"], :selected => @users.last.mc.to_s), {:class => 'form-control'}) %>
                   </tr>
                 </div>
 
