@@ -123,6 +123,7 @@ end
 
 # Adds authentication
 gem 'devise'
+gem 'devise_masquerade'
 # Adds roles
 gem 'rolify'
 # Adds privileges
