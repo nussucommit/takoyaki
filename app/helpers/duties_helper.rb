@@ -73,7 +73,11 @@ module DutiesHelper
   end
 
   def get_duty_status(duty)
-    [duty&.user_id, duty&.free, duty&.request_user]
+    if (duty&.free)
+      [duty&.free, duty&.request_user]
+    else
+      [duty&.free, duty&.user_id]
+    end
   end
 
   def get_starting_indices(duties)
