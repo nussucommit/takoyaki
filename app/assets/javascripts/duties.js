@@ -27,15 +27,15 @@ function sideBarCookieState(state) {
 }
 
 function sidebarOnLoad() {
-    if (sideBarCookieState("state") == null || sideBarCookieState("state") == "display") {
-      $('#announcement-sidebar').fadeIn('fast').addClass('open');
+  if (sideBarCookieState("state") == null || sideBarCookieState("state") == "display") {
+    $('#announcement-sidebar').fadeIn('fast').addClass('open');
 
-      $('#duty-table').addClass('col-md-9').removeClass('col-md-12');
-    } else {
-      $('#announcement-sidebar').hide().removeClass('open');
+    $('#duty-table').addClass('col-md-9').removeClass('col-md-12');
+  } else {
+    $('#announcement-sidebar').hide().removeClass('open');
 
-      $('#duty-table').addClass('col-md-12');
-    }
+    $('#duty-table').addClass('col-md-12');
+  }
 }
 
 function toggleSidebar() {
