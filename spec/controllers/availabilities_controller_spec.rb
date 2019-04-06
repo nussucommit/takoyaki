@@ -10,12 +10,17 @@ RSpec.describe AvailabilitiesController, type: :controller do
       sign_in @user, scope: :user
       get :index
     end
-    it { should respond_with :ok }
+
+    it do
+      should respond_with :ok
+      assert_template :index
+    end
 
     it 'creates availability' do
       TimeRange.all.all? do |time_range|
         Availability.exists?(user: @user, time_range: time_range)
       end
+      assert_template :index
     end
 
     context 'with availabilities' do
@@ -23,7 +28,11 @@ RSpec.describe AvailabilitiesController, type: :controller do
         create(:availability)
         get :index
       end
-      it { should respond_with :ok }
+
+      it do
+        should respond_with :ok
+        assert_template :index
+      end
     end
   end
 
@@ -78,14 +87,20 @@ RSpec.describe AvailabilitiesController, type: :controller do
     end
     context 'without availabilities' do
       before { get :show_everyone }
-      it { should respond_with :ok }
+      it do
+        should respond_with :ok
+        assert_template :show_everyone
+      end
     end
     context 'with availabilities' do
       before do
         create(:availability)
         get :show_everyone
       end
-      it { should respond_with :ok }
+      it do
+        should respond_with :ok
+        assert_template :show_everyone
+      end
     end
   end
 end

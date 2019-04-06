@@ -31,6 +31,7 @@ RSpec.describe SettingsController, type: :controller do
         sign_in user
         get :edit
         should respond_with(:ok)
+        assert_template :edit
       end
     end
   end
