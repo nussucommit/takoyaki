@@ -18,7 +18,7 @@
           Drop to <%= select_tag "user_id", options_from_collection_for_select(@users, "id", "username"), prompt: "all" %>
         </p>
         <p>
-          <%= submit_tag "Drop/Swap", class: "btn btn-primary" %>
+          <%= submit_tag "Drop/Swap", class: "btn btn-primary", onclick: :"return validateModal();" %>
         </p>
       <% end %>
       <div class="drop-notes">
