@@ -105,7 +105,7 @@ RSpec.describe DutiesHelper, type: :helper do
       expect(pd[0][0].length).to eq(2)
     end
 
-    it 'should not merge duties from same user but different user to drop' do
+    it 'should not merge dropped duties from same user but different user to drop' do
       user1 = create(:user)
       user2 = create(:user)
       user3 = create(:user)
@@ -114,11 +114,11 @@ RSpec.describe DutiesHelper, type: :helper do
       duties = []
       (0..4).each do |i|
         duties.push(create(:duty, user: user1, timeslot: timeslots[i],
-                                  request_user: user2))
+                                  request_user: user2, free: true))
       end
       (5..9).each do |i|
         duties.push(create(:duty, user: user1, timeslot: timeslots[i],
-                                  request_user: user3))
+                                  request_user: user3, free: true))
       end
       pd = helper.process_duties(duties[0].date, duties[-1].date,
                                  duties[0].time_range.start_time,

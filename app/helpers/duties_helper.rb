@@ -73,7 +73,7 @@ module DutiesHelper
   end
 
   def get_duty_status(duty)
-    if (duty&.free)
+    if duty&.free
       [duty&.free, duty&.request_user]
     else
       [duty&.free, duty&.user_id]
