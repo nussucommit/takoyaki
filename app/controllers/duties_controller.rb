@@ -51,7 +51,7 @@ class DutiesController < ApplicationController
     if owned_duties?(params[:duty_id], current_user)
       drop_duty_ids = params[:duty_id].keys
       start_of_week = Duty.find(drop_duty_ids.first).date.beginning_of_week
-      drop_duty(drop_duty_ids, start_of_week)
+      drop_duties(drop_duty_ids, start_of_week)
     else
       redirect_to duties_path, alert: 'Invalid duties to drop'
     end
@@ -97,7 +97,7 @@ class DutiesController < ApplicationController
     Time.zone.now <= (duty_datetime - 2.hours)
   end
 
-  def swap_user(drop_duty_ids, swap_user_id)
+  def drop_duties_to_user(drop_duty_ids, swap_user_id)
     duties = duties_sorted_by_start_time(drop_duty_ids)
     to_all = swap_user_id.to_i.zero?
     Duty.transaction do
@@ -130,22 +130,28 @@ class DutiesController < ApplicationController
   end
 
   def grab_duty(grab_duty_ids, start_of_week)
-    Duty.find(grab_duty_ids).each do |duty|
-      if duty.update(user: current_user, free: false, request_user: nil)
-        redirect_to duties_path(start_date: start_of_week),
-                    notice: 'Duty successfully grabbed!'
-      else
-        redirect_to duties_path(start_date: start_of_week),
-                    alert: 'Error in grabbing duty! Please try again'
+    Duty.transaction do
+      Duty.find(grab_duty_ids).each do |duty|
+        duty.update!(user: current_user, free: false, request_user: nil)
       end
+      redirect_to duties_path(start_date: start_of_week),
+                  notice: 'Duty successfully grabbed!'
     end
+  rescue ActiveRecord::RecordInvalid
+    redirect_to duties_path(start_date: start_of_week),
+                alert: 'Error in grabbing duty! Please try again'
   end
 
-  def drop_duty(drop_duty_ids, start_of_week)
+  def drop_duties(drop_duty_ids, start_of_week)
     if can_drop_duties?(drop_duty_ids)
-      swap_user(drop_duty_ids, params[:user_id])
-      redirect_to duties_path(start_date: start_of_week),
-                  notice: 'Duty successfully dropped!'
+      begin
+        drop_duties_to_user(drop_duty_ids, params[:user_id])
+        redirect_to duties_path(start_date: start_of_week),
+                    notice: 'Duty successfully dropped!'
+      rescue ActiveRecord::RecordInvalid
+        redirect_to duties_path(start_date: start_of_week),
+                    alert: 'Error in dropping duty! Please try again later.'
+      end
     else
       redirect_to duties_path(start_date: start_of_week),
                   alert: 'Error in dropping duty! ' \
