@@ -44,6 +44,36 @@ RSpec.describe GenericMailer, type: :mailer do
     end
   end
 
+  describe '#combine_duties' do
+    let(:duties) do
+      user = create(:user)
+      @duties = (8, 9, 12, 13)
+                .map { |n| format('%2d:00', n).in_time_zone }
+                .map do |start_time|
+                  create(:time_range, start_time: start_time,
+                                      end_time: start_time + 1.hour)
+                end
+                .map { |tr| create(:timeslot, time_range: tr) }
+                .map { |ts| create(:duty, user: user, timeslot: ts) }
+    end
+
+    let(:mail) do
+      GenericMailer.drop_duties(duties, User.pluck(:id))
+    end
+
+    it 'renders the header' do
+      times = '0800-1000,1200-1400'
+
+      expect(mail.subject).to eq(
+        'DUTY DUTY DUTY ' \
+        "#{@duties.first.date.strftime('%a, %d %b %Y')}, " \
+        "#{times} at " \
+        "#{@duties.first.place.name}"
+      )
+      expect(mail.to).to eq(User.pluck(:email))
+    end
+  end
+
   describe '#problem_report' do
     let(:mail) do
       user = create(:user, cell: 'technical')
