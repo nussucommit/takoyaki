@@ -130,15 +130,16 @@ class DutiesController < ApplicationController
   end
 
   def grab_duty(grab_duty_ids, start_of_week)
-    Duty.find(grab_duty_ids).each do |duty|
-      if duty.update(user: current_user, free: false, request_user: nil)
-        redirect_to duties_path(start_date: start_of_week),
-                    notice: 'Duty successfully grabbed!'
-      else
-        redirect_to duties_path(start_date: start_of_week),
-                    alert: 'Error in grabbing duty! Please try again'
+    Duty.transaction do
+      Duty.find(grab_duty_ids).each do |duty|
+        duty.update!(user: current_user, free: false, request_user: nil)
       end
+      redirect_to duties_path(start_date: start_of_week),
+                  notice: 'Duty successfully grabbed!'
     end
+  rescue ActiveRecord::RecordInvalid
+    redirect_to duties_path(start_date: start_of_week),
+                alert: 'Error in grabbing duty! Please try again'
   end
 
   def drop_duty(drop_duty_ids, start_of_week)
