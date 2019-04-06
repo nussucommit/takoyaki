@@ -114,6 +114,6 @@ module DutiesHelper
                options_from_collection_for_select(
                  [OpenStruct.new(id: nil, username: '')] + @users,
                  'id', 'username', selected: duty.user_id
-               ), class: 'availability-select', onclick: 'enableButtons()')
+               ), class: 'availability-select', onchange: 'enableButtons()')
   end
 end
