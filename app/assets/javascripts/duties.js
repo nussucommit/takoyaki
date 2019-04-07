@@ -27,7 +27,7 @@ function sideBarCookieState(state) {
 }
 
 function sidebarOnLoad() {
-  if (sideBarCookieState("state") == null || sideBarCookieState("state") == "display") {
+  if (sideBarCookieState("state") === "display" || document.cookie === "") {
     $('#announcement-sidebar').fadeIn('fast').addClass('open');
 
     $('#duty-table').addClass('col-md-9').removeClass('col-md-12');
