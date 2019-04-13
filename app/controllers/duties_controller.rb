@@ -64,14 +64,10 @@ class DutiesController < ApplicationController
   private
 
   def grabable_duties
-    Duty.includes(%i[time_range place])
-        .where('free = true or request_user_id = ? or
-                                  request_user_id IS NOT NULL and user_id = ?',
-               current_user.id, current_user.id)
-        .select do |d|
-      Time.zone.now < (d.date +
-                       d.time_range.start_time.seconds_since_midnight.seconds)
-    end
+    duties = Duty.joins(%i[time_range place])
+    duties.where(free: true, user_id: current_user.id)
+          .or(duties.where(request_user_id: current_user.id).where.not(request_user_id: nil))
+          .where('(date + time_ranges.start_time) > ?', Time.zone.now)
   end
 
   def owned_duties?(duty_id_params, supposed_user)
