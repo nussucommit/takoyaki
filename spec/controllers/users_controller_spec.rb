@@ -84,7 +84,7 @@ RSpec.describe UsersController, type: :controller do
       end
     end
     context 'admin' do
-      it 'updates password' do
+      it 'updates password without current password' do
         admin = create(:user)
         admin.add_role(:admin)
         user = create(:user, password: '123456')

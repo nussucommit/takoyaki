@@ -21,7 +21,7 @@
                 </tr>
               </div>
 
-              <% if not can?(:change_without_password, User) %>
+              <% if cannot?(:change_without_password, User) %>
                 <div class="field">
                   <tr>
                     <th><%= f.label :current_password %></th>
