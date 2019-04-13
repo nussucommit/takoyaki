@@ -14,6 +14,7 @@ class Ability
     cannot %i[create destroy allocate_roles update_roles show_full], User
 
     cannot :manage, Setting
+    cannot :masquerade, User
 
     user.roles.each { |role| __send__(role.name.downcase) }
   end
