@@ -49,7 +49,7 @@
                 <td class="role"><%= link_to 'Allocate roles', allocate_roles_user_path(p) %></td>
                 <td class="change-pw"><%= link_to 'Change password', edit_user_path(p) %></td>
                 <td class="del"><%= link_to 'Delete', user_path(p), method: :delete, data: { confirm: 'Are you sure?' } %></td>
-                <td class="masquerade"><%= link_to 'Login As', user_masquerade(p) %></td>
+                <td class="masquerade"><%= link_to 'Login As', user_masquerade_path(p) %></td>
               <% end %>
             </tr>
           <% end %>
