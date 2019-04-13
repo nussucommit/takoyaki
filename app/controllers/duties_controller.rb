@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# rubocop:disable Metrics/ClassLength
 class DutiesController < ApplicationController
   def index
     @header_iter = generate_header_iter
@@ -37,8 +38,8 @@ class DutiesController < ApplicationController
   end
 
   def grab
-    if grabable?(params[:duty_id])
-      grab_duty_ids = params[:duty_id].keys
+    grab_duty_ids = params[:duty_id].present? && params[:duty_id].keys
+    if grabable?(grab_duty_ids)
       start_of_week = Duty.find(grab_duty_ids.first)
                           .date.beginning_of_week
       grab_duty(grab_duty_ids, start_of_week)
@@ -64,14 +65,12 @@ class DutiesController < ApplicationController
   private
 
   def grabable_duties
-    Duty.includes(%i[time_range place])
-        .where('free = true or request_user_id = ? or
-                                  request_user_id IS NOT NULL and user_id = ?',
-               current_user.id, current_user.id)
-        .select do |d|
-      Time.zone.now < (d.date +
-                       d.time_range.start_time.seconds_since_midnight.seconds)
-    end
+    duties = Duty.joins(%i[time_range place])
+    duties.where(free: true)
+          .or(duties.where(request_user_id: current_user.id))
+          .or(duties.where(user_id: current_user.id)
+                    .where.not(request_user_id: nil))
+          .where('(date + time_ranges.start_time) > ?', Time.zone.now)
   end
 
   def owned_duties?(duty_id_params, supposed_user)
@@ -81,12 +80,19 @@ class DutiesController < ApplicationController
           .count == duty_id_params.keys.length
   end
 
-  def grabable?(duty_id_params)
-    duty_id_params.present? && duty_id_params.keys.all? do |d|
-      duty = Duty.find(d)
-      duty.free || duty.request_user == current_user ||
-        (duty.request_user.present? && duty.user == current_user)
-    end
+  def can_duty_mc_timeslots?(duty_ids)
+    return true if current_user.mc
+
+    timeslot_ids = Duty.where(id: duty_ids).pluck(:timeslot_id)
+    timeslots = Timeslot.find(timeslot_ids)
+    timeslots.all? { |t| !t.mc_only }
+  end
+
+  def grabable?(duty_ids)
+    return false if duty_ids.blank?
+    return false unless can_duty_mc_timeslots?(duty_ids)
+
+    grabable_duties.where(id: duty_ids).size == duty_ids.size
   end
 
   def can_drop_duties?(drop_duty_ids)
@@ -159,3 +165,4 @@ class DutiesController < ApplicationController
     end
   end
 end
+# rubocop:enable Metrics/ClassLength
