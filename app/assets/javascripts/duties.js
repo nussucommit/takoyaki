@@ -2,8 +2,6 @@ var ONE_HOUR_TO_MILLISECONDS = 1000 * 60 * 60;
 var SCROLL_LEFT_PX = 150;
 var MEDIUM_SCREEN_SIZE = 768;
 var BACKGROUND_COLOR = "#f6e1af";
-var sidebarState = {state: "display", expiry: -1};
-sessionStorage.setItem("state", JSON.stringify(sidebarState));
 
 function setDutyTableButtons() {
   if ($(window).width() <= MEDIUM_SCREEN_SIZE) {
@@ -13,9 +11,15 @@ function setDutyTableButtons() {
 }
 
 function sidebarOnLoad() {
-  var currSbState = JSON.parse(sessionStorage.getItem("state"));
-  if (currSbState.state === "hide" ||
-      currSbState.expiry !== -1  && Date.now() > currSbState.expiry) {
+  var currSbStateStr = sessionStorage.getItem("sidebarState");
+  var currSbState = null;
+  if (currSbStateStr !== null) {
+    currSbState = JSON.parse(currSbStateStr);
+    if (Date.now() > currSbState.expiry) {
+      sessionStorage.clear();
+    }
+  }
+  if (currSbState !== null) {
     $('#announcement-sidebar').hide().removeClass('open');
 
     $('#duty-table').addClass('col-md-12');
@@ -27,21 +31,21 @@ function sidebarOnLoad() {
 }
 
 function toggleSidebar() {
-  var sidebarExpiry = new Date(Date.now());
-  sidebarExpiry.setHours(sidebarExpiry.getHours() + 1);
   $('#announcement-toggle-btn').on('click', function() {
     if ($('#announcement-sidebar').css('display') == "block") {
       $('#announcement-sidebar').hide().removeClass('open');
 
       $('#duty-table').addClass('col-md-12');
-      sidebarState = {state: "hide", expiry: sidebarExpiry};
+      var sidebarExpiry = new Date(Date.now());
+      sidebarExpiry.setHours(sidebarExpiry.getHours() + 1);
+      var sidebarState = {state: "hide", expiry: sidebarExpiry};
+      sessionStorage.setItem("sidebarState", JSON.stringify(sidebarState));
     } else {
       $('#announcement-sidebar').fadeIn('fast').addClass('open');
 
       $('#duty-table').addClass('col-md-9').removeClass('col-md-12');
-      sidebarState = {state: "display", expiry: sidebarExpiry};
+      sessionStorage.clear();
     }
-    sessionStorage.setItem("state", JSON.stringify(sidebarState));
   });
 }
 
