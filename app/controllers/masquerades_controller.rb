@@ -12,7 +12,7 @@ class MasqueradesController < Devise::MasqueradesController
   protected
 
   def masquerade_authorize!
-    authorize!(:masquerade, User) unless params[:action] == 'back'
+    authorize!(:masquerade, User) unless user_masquerade?
   end
 
   def after_masquerade_path_for(_resource)
