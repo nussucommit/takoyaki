@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-
 # == Schema Information
 #
 # Table name: users
@@ -25,6 +24,7 @@
 #  contact_num            :string
 #  cell                   :integer          not null
 #  mc                     :boolean          default(FALSE), not null
+#  receive_email          :boolean          default(TRUE), not null
 #
 # Indexes
 #
