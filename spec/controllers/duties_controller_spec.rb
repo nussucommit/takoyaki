@@ -219,7 +219,7 @@ RSpec.describe DutiesController, type: :controller do
         time_range = create(:time_range, start_time: Time.zone.now - 2.hours,
           end_time: Time.zone.now - 1.hour)
         timeslot = create(:timeslot, time_range: time_range)
-        duty = create(:duty, user: user, timeslot: timeslot, date: Date.today, free: true)
+        duty = create(:duty, user: user, timeslot: timeslot, free: true)
         sign_in user
         get :show_grabable_duties
         expect(assigns(:grabable_duties)).to be_empty
@@ -230,7 +230,7 @@ RSpec.describe DutiesController, type: :controller do
         time_range = create(:time_range, start_time: Time.zone.now + 1.hour,
           end_time: Time.zone.now + 2.hours)
         timeslot = create(:timeslot, time_range: time_range)
-        duty = create(:duty, user: user, timeslot: timeslot, date: Date.today, free: true)
+        duty = create(:duty, user: user, timeslot: timeslot, free: true)
         sign_in user
         get :show_grabable_duties
         expect(assigns(:grabable_duties)).not_to be_empty

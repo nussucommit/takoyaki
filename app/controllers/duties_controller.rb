@@ -37,8 +37,8 @@ class DutiesController < ApplicationController
   end
 
   def grab
-    if grabable?(params[:duty_id])
-      grab_duty_ids = params[:duty_id].keys
+    grab_duty_ids = params[:duty_id].present? && params[:duty_id].keys
+    if grabable?(grab_duty_ids)
       start_of_week = Duty.find(grab_duty_ids.first)
                           .date.beginning_of_week
       grab_duty(grab_duty_ids, start_of_week)
@@ -65,8 +65,9 @@ class DutiesController < ApplicationController
 
   def grabable_duties
     duties = Duty.joins(%i[time_range place])
-    duties.where(free: true, user_id: current_user.id)
-          .or(duties.where(request_user_id: current_user.id).where.not(request_user_id: nil))
+    duties.where(free: true)
+          .or(duties.where(request_user_id: current_user.id))
+          .or(duties.where(user_id: current_user.id).where.not(request_user_id: nil))
           .where('(date + time_ranges.start_time) > ?', Time.zone.now)
   end
 
@@ -78,11 +79,8 @@ class DutiesController < ApplicationController
   end
 
   def grabable?(duty_id_params)
-    duty_id_params.present? && duty_id_params.keys.all? do |d|
-      duty = Duty.find(d)
-      duty.free || duty.request_user == current_user ||
-        (duty.request_user.present? && duty.user == current_user)
-    end
+    return false unless duty_id_params.present?
+    grabable_duties.where(id: duty_id_params).size == duty_id_params.size
   end
 
   def can_drop_duties?(drop_duty_ids)
