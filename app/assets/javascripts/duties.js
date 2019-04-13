@@ -2,7 +2,6 @@ var ONE_HOUR_TO_MILLISECONDS = 1000 * 60 * 60;
 var SCROLL_LEFT_PX = 150;
 var MEDIUM_SCREEN_SIZE = 768;
 var BACKGROUND_COLOR = "#f6e1af";
-var sidebarExpiry;
 var sidebarState = {state: "display", expiry: -1};
 sessionStorage.setItem("state", JSON.stringify(sidebarState));
 
@@ -28,7 +27,7 @@ function sidebarOnLoad() {
 }
 
 function toggleSidebar() {
-  sidebarExpiry = new Date(Date.now());
+  var sidebarExpiry = new Date(Date.now());
   sidebarExpiry.setHours(sidebarExpiry.getHours() + 1);
   $('#announcement-toggle-btn').on('click', function() {
     if ($('#announcement-sidebar').css('display') == "block") {
