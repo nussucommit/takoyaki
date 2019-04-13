@@ -2,6 +2,9 @@ var ONE_HOUR_TO_MILLISECONDS = 1000 * 60 * 60;
 var SCROLL_LEFT_PX = 150;
 var MEDIUM_SCREEN_SIZE = 768;
 var BACKGROUND_COLOR = "#f6e1af";
+var sidebarExpiry;
+var sidebarState = {state: "display", expiry: -1};
+sessionStorage.setItem("state", JSON.stringify(sidebarState));
 
 function setDutyTableButtons() {
   if ($(window).width() <= MEDIUM_SCREEN_SIZE) {
@@ -10,47 +13,36 @@ function setDutyTableButtons() {
   }
 }
 
-function sideBarCookieState(state) {
-  var name = state + "=";
-  var decodedCookie = decodeURIComponent(document.cookie);
-  var cookieArray = decodedCookie.split(';');
-  for(var i = 0; i < cookieArray.length; i++) {
-    var c = cookieArray[i];
-    while (c.charAt(0) == ' ') {
-      c = c.substring(1);
-    }
-    if (c.indexOf(name) == 0) {
-      return c.substring(name.length, c.length);
-    }
-  }
-  return "";
-}
-
 function sidebarOnLoad() {
-  if (sideBarCookieState("state") === "display" || document.cookie === "") {
-    $('#announcement-sidebar').fadeIn('fast').addClass('open');
-
-    $('#duty-table').addClass('col-md-9').removeClass('col-md-12');
-  } else {
+  var currSbState = JSON.parse(sessionStorage.getItem("state"));
+  if (currSbState.state === "hide"
+      || currSbState.expiry !== -1  && Date.now() > currSbState.expiry) {
     $('#announcement-sidebar').hide().removeClass('open');
 
     $('#duty-table').addClass('col-md-12');
+  } else {
+    $('#announcement-sidebar').fadeIn('fast').addClass('open');
+
+    $('#duty-table').addClass('col-md-9').removeClass('col-md-12');
   }
 }
 
 function toggleSidebar() {
+  sidebarExpiry = new Date(Date.now());
+  sidebarExpiry.setHours(sidebarExpiry.getHours() + 1);
   $('#announcement-toggle-btn').on('click', function() {
     if ($('#announcement-sidebar').css('display') == "block") {
       $('#announcement-sidebar').hide().removeClass('open');
 
       $('#duty-table').addClass('col-md-12');
-      document.cookie = "state=hide; max-age=3600; path=/;";
+      sidebarState = {state: "hide", expiry: sidebarExpiry}
     } else {
       $('#announcement-sidebar').fadeIn('fast').addClass('open');
 
       $('#duty-table').addClass('col-md-9').removeClass('col-md-12');
-      document.cookie = "state=display; max-age=3600; path=/;";
+      sidebarState = {state: "display", expiry: sidebarExpiry}
     }
+    sessionStorage.setItem("state", JSON.stringify(sidebarState));
   });
 }
 
