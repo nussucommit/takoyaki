@@ -42,6 +42,14 @@ RSpec.describe GenericMailer, type: :mailer do
       Setting.retrieve.update(mc_only: true)
       expect(mail.to).to eq(User.select(&:mc).pluck(:email))
     end
+
+    it 'follows receive_email flag' do
+      create_list(:user, 5, mc: false, receive_email: false)
+      create_list(:user, 5, mc: false, receive_email: true)
+      create_list(:user, 5, mc: true, receive_email: false)
+      create_list(:user, 5, mc: true, receive_email: true)
+      expect(mail.to).to eq(User.select(&:receive_email).pluck(:email))
+    end
   end
 
   describe '#combine_duties' do
@@ -81,6 +89,7 @@ RSpec.describe GenericMailer, type: :mailer do
       GenericMailer.problem_report(problem)
     end
     it 'renders the header' do
+      create_list(:user, 5, cell: 'technical', receive_email: false)
       expect(mail.subject).to eq('New computer problem')
       expect(mail.to).to eq(User.where(cell: 'technical').pluck(:email))
     end
