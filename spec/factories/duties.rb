@@ -29,6 +29,6 @@ FactoryBot.define do
   factory :duty do
     user { nil }
     timeslot
-    date { Date.today }
+    date { Time.zone.today }
   end
 end

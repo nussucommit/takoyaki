@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# rubocop:disable Metrics/ClassLength
 class DutiesController < ApplicationController
   def index
     @header_iter = generate_header_iter
@@ -67,7 +68,8 @@ class DutiesController < ApplicationController
     duties = Duty.joins(%i[time_range place])
     duties.where(free: true)
           .or(duties.where(request_user_id: current_user.id))
-          .or(duties.where(user_id: current_user.id).where.not(request_user_id: nil))
+          .or(duties.where(user_id: current_user.id)
+                    .where.not(request_user_id: nil))
           .where('(date + time_ranges.start_time) > ?', Time.zone.now)
   end
 
@@ -78,9 +80,19 @@ class DutiesController < ApplicationController
           .count == duty_id_params.keys.length
   end
 
-  def grabable?(duty_id_params)
-    return false unless duty_id_params.present?
-    grabable_duties.where(id: duty_id_params).size == duty_id_params.size
+  def can_duty_mc_timeslots?(duty_ids)
+    return true if current_user.mc
+
+    timeslot_ids = Duty.where(id: duty_ids).pluck(:timeslot_id)
+    timeslots = Timeslot.find(timeslot_ids)
+    timeslots.all? { |t| !t.mc_only }
+  end
+
+  def grabable?(duty_ids)
+    return false if duty_ids.blank?
+    return false unless can_duty_mc_timeslots?(duty_ids)
+
+    grabable_duties.where(id: duty_ids).size == duty_ids.size
   end
 
   def can_drop_duties?(drop_duty_ids)
@@ -153,3 +165,4 @@ class DutiesController < ApplicationController
     end
   end
 end
+# rubocop:enable Metrics/ClassLength
