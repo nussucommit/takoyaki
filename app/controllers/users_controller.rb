@@ -13,7 +13,7 @@ class UsersController < ApplicationController
   def edit; end
 
   def update
-    if User.where(id: current_user.id)[0].has_role?(:admin) &&
+    if User.find(current_user.id).has_role?(:admin) &&
        @user.update(user_params)
       redirect_to users_path, notice: 'Password successfully changed!'
     elsif @user.update_with_password user_params

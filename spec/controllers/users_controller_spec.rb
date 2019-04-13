@@ -92,9 +92,7 @@ RSpec.describe UsersController, type: :controller do
         expect do
           put :update, params: { id: user.id, user: { password: '1234567',
                                                       confirmation_password:
-                                                      '1234567',
-                                                      current_password:
-                                                      '123456' } }
+                                                      '1234567'} }
         end.to change {
           User.find(user.id).valid_password?('1234567')
         }.from(false).to(true)
