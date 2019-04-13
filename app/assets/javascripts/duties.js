@@ -16,7 +16,7 @@ function setDutyTableButtons() {
 function sidebarOnLoad() {
   var currSbState = JSON.parse(sessionStorage.getItem("state"));
   if (currSbState.state === "hide"
-      || currSbState.expiry !== -1  && Date.now() > currSbState.expiry) {
+        || currSbState.expiry !== -1  && Date.now() > currSbState.expiry) {
     $('#announcement-sidebar').hide().removeClass('open');
 
     $('#duty-table').addClass('col-md-12');
@@ -35,12 +35,12 @@ function toggleSidebar() {
       $('#announcement-sidebar').hide().removeClass('open');
 
       $('#duty-table').addClass('col-md-12');
-      sidebarState = {state: "hide", expiry: sidebarExpiry}
+      sidebarState = {state: "hide", expiry: sidebarExpiry};
     } else {
       $('#announcement-sidebar').fadeIn('fast').addClass('open');
 
       $('#duty-table').addClass('col-md-9').removeClass('col-md-12');
-      sidebarState = {state: "display", expiry: sidebarExpiry}
+      sidebarState = {state: "display", expiry: sidebarExpiry};
     }
     sessionStorage.setItem("state", JSON.stringify(sidebarState));
   });
