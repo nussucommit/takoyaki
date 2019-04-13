@@ -3,3 +3,6 @@ scss:
 
 rubocop:
   config_file: .rubocop.yml
+
+jshint:
+  config_file: .jshintrc
