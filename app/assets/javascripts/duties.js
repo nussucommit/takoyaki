@@ -15,8 +15,8 @@ function setDutyTableButtons() {
 
 function sidebarOnLoad() {
   var currSbState = JSON.parse(sessionStorage.getItem("state"));
-  if (currSbState.state === "hide"
-        || currSbState.expiry !== -1  && Date.now() > currSbState.expiry) {
+  if (currSbState.state === "hide" ||
+      currSbState.expiry !== -1  && Date.now() > currSbState.expiry) {
     $('#announcement-sidebar').hide().removeClass('open');
 
     $('#duty-table').addClass('col-md-12');
