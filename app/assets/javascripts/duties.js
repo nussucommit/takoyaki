@@ -11,15 +11,9 @@ function setDutyTableButtons() {
 }
 
 function sidebarOnLoad() {
-  var currSbStateStr = sessionStorage.getItem("sidebarState");
-  var currSbState = null;
-  if (currSbStateStr !== null) {
-    currSbState = JSON.parse(currSbStateStr);
-    if (Date.now() > currSbState.expiry) {
-      sessionStorage.clear();
-    }
-  }
-  if (currSbState !== null) {
+  checkSidebarStateExpiry();
+  let currSbStateStr = sessionStorage.getItem("sidebarState");
+  if (currSbStateStr) {
     $('#announcement-sidebar').hide().removeClass('open');
 
     $('#duty-table').addClass('col-md-12');
@@ -27,6 +21,16 @@ function sidebarOnLoad() {
     $('#announcement-sidebar').fadeIn('fast').addClass('open');
 
     $('#duty-table').addClass('col-md-9').removeClass('col-md-12');
+  }
+}
+
+function checkSidebarStateExpiry() {
+  let currSbStateStr = sessionStorage.getItem("sidebarState");
+  if (currSbStateStr) {
+    let currSbState = JSON.parse(currSbStateStr);
+    if (Date.now() > currSbState.expiry) {
+      sessionStorage.removeItem("sidebarState");
+    }
   }
 }
 
@@ -44,7 +48,7 @@ function toggleSidebar() {
       $('#announcement-sidebar').fadeIn('fast').addClass('open');
 
       $('#duty-table').addClass('col-md-9').removeClass('col-md-12');
-      sessionStorage.clear();
+      sessionStorage.removeItem("sidebarState");
     }
   });
 }
