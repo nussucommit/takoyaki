@@ -10,16 +10,45 @@ function setDutyTableButtons() {
   }
 }
 
+function sidebarOnLoad() {
+  checkSidebarStateExpiry();
+  var currSbStateStr = sessionStorage.getItem("sidebarState");
+  if (currSbStateStr) {
+    $('#announcement-sidebar').hide().removeClass('open');
+
+    $('#duty-table').addClass('col-md-12');
+  } else {
+    $('#announcement-sidebar').fadeIn('fast').addClass('open');
+
+    $('#duty-table').addClass('col-md-9').removeClass('col-md-12');
+  }
+}
+
+function checkSidebarStateExpiry() {
+  var currSbStateStr = sessionStorage.getItem("sidebarState");
+  if (currSbStateStr) {
+    var currSbState = JSON.parse(currSbStateStr);
+    if (Date.now() > currSbState.expiry) {
+      sessionStorage.removeItem("sidebarState");
+    }
+  }
+}
+
 function toggleSidebar() {
   $('#announcement-toggle-btn').on('click', function() {
     if ($('#announcement-sidebar').css('display') == "block") {
       $('#announcement-sidebar').hide().removeClass('open');
 
       $('#duty-table').addClass('col-md-12');
+      var sidebarExpiry = new Date(Date.now());
+      sidebarExpiry.setHours(sidebarExpiry.getHours() + 1);
+      var sidebarState = {state: "hide", expiry: sidebarExpiry};
+      sessionStorage.setItem("sidebarState", JSON.stringify(sidebarState));
     } else {
       $('#announcement-sidebar').fadeIn('fast').addClass('open');
 
       $('#duty-table').addClass('col-md-9').removeClass('col-md-12');
+      sessionStorage.removeItem("sidebarState");
     }
   });
 }
@@ -58,6 +87,7 @@ function load() {
 
   scrollToCurrentTime(START_TIME);
   toggleSidebar();
+  sidebarOnLoad();
   setDutyTableButtons();
   colourScheduleTable(NUM_OF_PLACES);
   setDutyTableWidth(AVERAGE_COLSPAN);
