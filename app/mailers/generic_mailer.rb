@@ -64,6 +64,7 @@ class GenericMailer < ApplicationMailer
   end
 
   def process_user_ids(user_ids)
+    user_ids = User.where('id in (?) and receive_email = TRUE', user_ids).pluck(:id)
     if mc_only?
       User.where('id in (?) and mc = TRUE', user_ids).pluck(:id)
     else
