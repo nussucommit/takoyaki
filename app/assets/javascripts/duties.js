@@ -12,7 +12,7 @@ function setDutyTableButtons() {
 
 function sidebarOnLoad() {
   checkSidebarStateExpiry();
-  let currSbStateStr = sessionStorage.getItem("sidebarState");
+  var currSbStateStr = sessionStorage.getItem("sidebarState");
   if (currSbStateStr) {
     $('#announcement-sidebar').hide().removeClass('open');
 
@@ -25,9 +25,9 @@ function sidebarOnLoad() {
 }
 
 function checkSidebarStateExpiry() {
-  let currSbStateStr = sessionStorage.getItem("sidebarState");
+  var currSbStateStr = sessionStorage.getItem("sidebarState");
   if (currSbStateStr) {
-    let currSbState = JSON.parse(currSbStateStr);
+    var currSbState = JSON.parse(currSbStateStr);
     if (Date.now() > currSbState.expiry) {
       sessionStorage.removeItem("sidebarState");
     }
