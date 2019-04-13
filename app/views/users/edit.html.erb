@@ -21,12 +21,14 @@
                 </tr>
               </div>
 
-              <div class="field">
-                <tr>
-                  <th><%= f.label :current_password %></th>
-                  <td><%= f.password_field :current_password, :placeholder => "6 characters minimum", autocomplete: "off", :required => true, :minlength => "6" %></td>
-                </tr>
-              </div>
+              <% if not can?(:change_without_password, User) %>
+                <div class="field">
+                  <tr>
+                    <th><%= f.label :current_password %></th>
+                    <td><%= f.password_field :current_password, :placeholder => "6 characters minimum", autocomplete: "off", :required => true, :minlength => "6" %></td>
+                  </tr>
+                </div>
+              <% end %>
 
             </table>
 
