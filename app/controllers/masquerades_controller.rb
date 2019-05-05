@@ -12,7 +12,16 @@ class MasqueradesController < Devise::MasqueradesController
   protected
 
   def masquerade_authorize!
-    authorize!(:masquerade, User) unless user_masquerade?
+    if user_masquerade?
+      if cannot? :masquerade, User
+        if params[:action] != 'back'
+          raise CanCan::AccessDenied.new('You are not authorized to ' \
+                                         'access this page.', :masquerade, User)
+        end
+      end
+    else
+      authorize!(:masquerade, User)
+    end
   end
 
   def after_masquerade_path_for(_resource)
