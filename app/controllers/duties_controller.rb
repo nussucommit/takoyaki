@@ -66,6 +66,7 @@ class DutiesController < ApplicationController
 
   def grabable_duties
     duties = Duty.joins(%i[time_range place])
+                 .includes(:time_range, :place)
     duties.where(free: true)
           .or(duties.where(request_user_id: current_user.id))
           .or(duties.where(user_id: current_user.id)
@@ -88,12 +89,24 @@ class DutiesController < ApplicationController
     timeslots.all? { |t| !t.mc_only }
   end
 
+  # rubocop:disable Metrics/AbcSize
   def grabable?(duty_ids)
     return false if duty_ids.blank?
     return false unless can_duty_mc_timeslots?(duty_ids)
 
-    grabable_duties.where(id: duty_ids).size == duty_ids.size
+    selected_grab_duty_hours = Duty.includes(:time_range)
+                                   .find(duty_ids)
+                                   .map do |d|
+                                     d.time_range.end_time -
+                                       d.time_range.start_time
+                                   end
+                                   .sum / 3600
+
+    grabable_duties.where(id: duty_ids).size == duty_ids.size &&
+      (current_user.mc ||
+        (helpers.current_user_hours + selected_grab_duty_hours) <= 16)
   end
+  # rubocop:enable Metrics/AbcSize
 
   def can_drop_duties?(drop_duty_ids)
     duties = duties_sorted_by_start_time(drop_duty_ids)
