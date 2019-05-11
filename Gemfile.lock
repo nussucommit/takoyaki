@@ -240,7 +240,7 @@ GEM
     ruby-progressbar (1.10.0)
     ruby_dep (1.5.0)
     rubyzip (1.2.2)
-    sass (3.7.2)
+    sass (3.7.4)
       sass-listen (~> 4.0.0)
     sass-listen (4.0.0)
       rb-fsevent (~> 0.9, >= 0.9.4)
@@ -254,7 +254,7 @@ GEM
       sprockets (> 3.0)
       sprockets-rails
       tilt
-    scss_lint (0.57.1)
+    scss_lint (0.58.0)
       rake (>= 0.9, < 13)
       sass (~> 3.5, >= 3.5.5)
     shoulda-matchers (4.0.1)
