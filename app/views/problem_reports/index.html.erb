@@ -30,7 +30,9 @@
     <% @problem_reports.each do |pb| %>
       <tr>
       <td><%= pb.id %></td>
-      <td><%= User.find(pb.reporter_user_id)&.username %></td>
+      <td><%= pb.reporter_user_id == nil \
+                ? "(Deleted member)" \
+                : User.find(pb.reporter_user_id)&.username %></td>
       <td><%= Place.find(pb.place_id).name %></td>
       <td><%= pb.computer_number %></td>
       <td><%= pb.description %></td>
@@ -47,7 +49,11 @@
         <%= text_area_tag(:remarks, "", size: "20x2", class: "form-control") %> <br>
         <%= submit_tag('Change Remark', :class=>'btn btn-large btn-light problem-report-btn') %>
       <% end %></td>
-      <td class="last-updated-by"><%= User.find(pb.last_update_user_id)&.username %></td>
+      <td class="last-updated-by">
+        <%= pb.reporter_user_id == nil \
+              ? "(Deleted member)" \
+              : User.find(pb.last_update_user_id)&.username %>
+      </td>
       <td class="last-updated-at"><%= pb.updated_at.strftime("%d %b %Y %H:%M") %></td>
       </tr>
     <% end %>
