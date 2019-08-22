@@ -50,7 +50,7 @@ end
 # Environment variables
 gem 'dotenv-rails', require: 'dotenv/rails-now'
 # Mailgun
-gem 'mailgun-ruby', '~> 1.1.11'
+gem 'mailgun-ruby', '~> 1.2.0'
 
 group :test do
   # Test coverage
