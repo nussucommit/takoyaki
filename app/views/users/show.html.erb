@@ -27,7 +27,7 @@
           </tr>
           <tr>
             <th class="pos">Position</th>
-            <td class="pos"></td>
+            <td class="pos"><%= current_user.mc ? "MC" : "Member" %></td>
           </tr>
         </table>
         <%= button_to "Edit Profile", edit_user_registration_path, method: "get" %>
