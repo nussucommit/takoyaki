@@ -29,6 +29,9 @@
             <th class="pos">Position</th>
             <td class="pos"><%= current_user.mc ? "MC" : "Member" %></td>
           </tr>
+          <tr>
+            <th class="email-notification">Receive email notification</th>
+            <td class="email-notification"><%= current_user.receive_email ? "Yes" : "No" %></td>
         </table>
         <%= button_to "Edit Profile", edit_user_registration_path, method: "get" %>
       </div>
