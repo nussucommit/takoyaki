@@ -48,7 +48,6 @@ class UsersController < ApplicationController
     end
   end
 
-
   def destroy
     redirect_to users_path if @user.destroy
   end

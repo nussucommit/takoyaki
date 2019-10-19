@@ -189,7 +189,7 @@ RSpec.describe UsersController, type: :controller do
     it 'denies access to normal user' do
       user = create(:user)
       sign_in user
-      put :update_name, params: { id: user.id, user: { username: 'Name'} }
+      put :update_name, params: { id: user.id, user: { username: 'Name' } }
       should redirect_to(root_path)
     end
     context 'admin' do
@@ -219,16 +219,20 @@ RSpec.describe UsersController, type: :controller do
     end
     context 'pre-existing name' do
       before do
-        user = create(:user,)
+        user = create(:user)
         user.add_role(:admin)
         sign_in user
         @user = user
-        user2 = create(:user, username: 'Duplicate')
+
+        # rubocop:disable Lint/UselessAssignment
+        duplicate = create(:user, username: 'Duplicate')
+        # rubocop:enable Lint/UselessAssignment
       end
       it 'denies change to same name' do
         old_name = @user.username
         expect do
-          put :update_name, params: { id: @user.id, user: { username: 'Duplicate' } }
+          put :update_name, params: { id: @user.id,
+                                      user: { username: 'Duplicate' } }
         end.to_not change {
           User.find(@user.id).username
         }.from(old_name)
