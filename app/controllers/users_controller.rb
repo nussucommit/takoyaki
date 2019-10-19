@@ -38,11 +38,26 @@ class UsersController < ApplicationController
     end
   end
 
+  def change_name; end
+
+  def update_name
+    if @user.update name_params
+      redirect_to users_path, notice: 'Name sucessfuly updated!'
+    else
+      redirect_to users_path, alert: 'Name updating failed!'
+    end
+  end
+
+
   def destroy
     redirect_to users_path if @user.destroy
   end
 
   private
+
+  def name_params
+    params.require(:user).permit(:username)
+  end
 
   def user_params
     params.require(:user).permit(:password, :password_confirmation,
