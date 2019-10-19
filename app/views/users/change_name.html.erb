@@ -1,0 +1,34 @@
+<h1>Change Name</h1>
+
+<div class="change-name">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 offset-md-3">
+        <div class="box">
+
+          <%= form_for @user, :url => { controller: 'users', action: 'update_name' } do |u| %>
+            <table>
+              <div class="field">
+                <tr>
+                  <th><%= u.label :current_username %></th>
+                  <td><%= @user.username %></td>
+                </tr>
+              </div>
+
+              <div class="field">
+                <tr>
+                  <th><%= u.label :new_username %></th>
+                  <td><%= u.text_field :username, placeholder: @user.username, autocomplete: "off", :required => true %></td>
+                </tr>
+              </div>
+            </table>
+
+            <div class="actions">
+              <%= u.submit "Change Name" %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
