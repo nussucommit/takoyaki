@@ -11,7 +11,7 @@ class Ability
     cannot :show_everyone, Availability
 
     can :manage, User, id: user.id
-    cannot %i[create destroy allocate_roles update_roles show_full], User
+    cannot %i[create destroy allocate_roles update_roles update_name show_full], User
     cannot :change_without_password, User
 
     cannot :manage, Setting
