@@ -1,64 +1,64 @@
 .edit-name {
-    width: 100%;
-  
-    .container {
-      margin-top: 5%;
-      text-align: center;
-    }
-  
-    .field {
-      text-align: left;
-    }
-  
-    tr {
-      height: 40px;
-      text-align: left;
-    }
-  
-    th,
-    td {
-      width: 100%;
-    }
-  
-    th {
-      font-weight: normal;
-    }
-  
-    input {
-      border-bottom: 2px solid $yellow;
-      border-left: 0;
-      border-right: 0;
-      border-top: 0;
-      color: $grey;
-      margin-bottom: 20px;
-      padding-left: 0%;
-      width: 250px;
-    }
-  
-    input:focus {
-      outline: none;
-    }
-  
-    .actions input:hover {
-      background-color: $light-yellow;
-    }
-  
-    .actions input {
-      background-color: $yellow;
-      border: 2px solid $yellow;
-      border-radius: 50px;
-      box-shadow: inset 1px 1px 3px -1px $light-yellow;
-      color: $black;
-      height: 50px;
-      margin-bottom: 0;
-      margin-top: 5%;
-      text-align: center;
-      text-shadow: 0 -.8px 0 $black,
-                   0 1px 0 $transparent-white;
-      width: 50%;
-    }
-  
-    .box {
-      overflow: auto;
-    }
+  width: 100%;
+
+  .container {
+    margin-top: 5%;
+    text-align: center;
   }
+
+  .field {
+    text-align: left;
+  }
+
+  tr {
+    height: 40px;
+    text-align: left;
+  }
+
+  th,
+  td {
+    width: 100%;
+  }
+
+  th {
+    font-weight: normal;
+  }
+
+  input {
+    border-bottom: 2px solid $yellow;
+    border-left: 0;
+    border-right: 0;
+    border-top: 0;
+    color: $grey;
+    margin-bottom: 20px;
+    padding-left: 0%;
+    width: 250px;
+  }
+
+  input:focus {
+    outline: none;
+  }
+
+  .actions input:hover {
+    background-color: $light-yellow;
+  }
+
+  .actions input {
+    background-color: $yellow;
+    border: 2px solid $yellow;
+    border-radius: 50px;
+    box-shadow: inset 1px 1px 3px -1px $light-yellow;
+    color: $black;
+    height: 50px;
+    margin-bottom: 0;
+    margin-top: 5%;
+    text-align: center;
+    text-shadow: 0 -.8px 0 $black,
+                  0 1px 0 $transparent-white;
+    width: 50%;
+  }
+
+  .box {
+    overflow: auto;
+  }
+}
