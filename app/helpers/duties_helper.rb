@@ -20,7 +20,12 @@ module DutiesHelper
                           .where(user_id: current_user.id,
                                  date: start_date..end_date,
                                  free: false, request_user_id: nil)
-    total_seconds = relevant_duties.map do |d|
+    
+    sum_hours(relevant_duties)
+  end
+                              
+  def sum_hours(duties)
+    total_seconds = duties.map do |d|      
       d.time_range.end_time - d.time_range.start_time
     end.sum
     total_hours = total_seconds / 3600
