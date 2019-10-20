@@ -135,10 +135,10 @@ RSpec.describe DutiesHelper, type: :helper do
       user = create(:user)
       sign_in user
       duties = create_list(:duty, 10, user: user)
-      assign(:start_date, duties[0].date)
-      assign(:end_date, duties[9].date)
+      start_date = duties[0].date
+      end_date = duties[9].date
 
-      result = helper.current_user_hours
+      result = helper.current_user_hours(start_date, end_date)
       expect(result).to eq((duties[-1].time_range.end_time -
        duties[0].time_range.start_time) / 3600)
 
