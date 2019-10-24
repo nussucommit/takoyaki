@@ -137,7 +137,22 @@ class DutiesController < ApplicationController
 
   def grab_duty(grab_duty_ids, start_of_week)
     Duty.transaction do
-      Duty.find(grab_duty_ids).each do |duty|
+      duties = Duty.find(grab_duty_ids)
+      unless current_user.mc 
+        weeks = separate(duties)
+        weeks.each do |start, wk_duties|
+          start_date = start.to_date
+          end_date = start_date + 6.days
+          total_hours = helpers.current_user_hours(start_date, end_date) + helpers.sum_hours(wk_duties)
+          if total_hours > 16 && wk_duties.length > 0
+            redirect_to duties_path(start_date: start_of_week),
+                        alert: 'Cannot duty for more than 16 hours!'
+            return
+          end
+        end
+      end
+
+      duties.each do |duty|
         duty.update!(user: current_user, free: false, request_user: nil)
       end
       redirect_to duties_path(start_date: start_of_week),
@@ -146,6 +161,22 @@ class DutiesController < ApplicationController
   rescue ActiveRecord::RecordInvalid
     redirect_to duties_path(start_date: start_of_week),
                 alert: 'Error in grabbing duty! Please try again'
+  end
+
+  def separate(duties)
+    start = Time.zone.today.beginning_of_week.to_date
+    num_duties = duties.length
+    count = 0
+    result = {}
+
+    while count < num_duties do
+      wk_duties = duties.select {|d| d.date.beginning_of_week.to_date == start}
+      count += wk_duties.length
+      result[start.to_s] = wk_duties
+      start = start + 7.days
+    end
+
+    return result
   end
 
   def drop_duties(drop_duty_ids, start_of_week)
