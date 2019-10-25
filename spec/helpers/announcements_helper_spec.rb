@@ -15,7 +15,7 @@ require 'rails_helper'
 RSpec.describe AnnouncementsHelper, type: :helper do
   it 'format_time working sucessfully' do
     expect(format_time(Time.new(
-      2018, 3, 3, 4, 4, 0, "+08:00"
+      2018, 3, 3, 4, 4, 0, '+08:00'
     ).in_time_zone)).to eq('03 March 2018, 04:04 AM')
   end
 end
