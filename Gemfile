@@ -51,6 +51,8 @@ end
 gem 'dotenv-rails', require: 'dotenv/rails-now'
 # Mailgun
 gem 'mailgun-ruby', '~> 1.2.0'
+# Excel (XLSX) importing
+gem 'axlsx'
 
 group :test do
   # Test coverage
