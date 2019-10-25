@@ -147,13 +147,11 @@ RSpec.describe DutiesHelper, type: :helper do
     end
   end
 
-  describe '#sum_hours' do 
-    it 'calculate hours correctly' do 
+  describe '#sum_hours' do
+    it 'calculate hours correctly' do
       user = create(:user)
       sign_in user
       duties = create_list(:duty, 10, user: user)
-      start_date = duties[0].date
-      end_date = duties[9].date
 
       result = helper.sum_hours(duties)
       expect(result).to eq((duties[-1].time_range.end_time -

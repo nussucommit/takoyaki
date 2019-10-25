@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-# rubocop:disable Metrics/ClassLength
 class DutiesController < ApplicationController
   def index
     @header_iter = generate_header_iter
@@ -138,25 +137,29 @@ class DutiesController < ApplicationController
   def grab_duty(grab_duty_ids, start_of_week)
     Duty.transaction do
       duties = Duty.find(grab_duty_ids)
-      unless current_user.mc 
+      can_grab = true
+      unless current_user.mc
         weeks = separate(duties)
         weeks.each do |start, wk_duties|
           start_date = start.to_date
           end_date = start_date + 6.days
-          total_hours = helpers.current_user_hours(start_date, end_date) + helpers.sum_hours(wk_duties)
-          if total_hours > 16 && wk_duties.length > 0
-            redirect_to duties_path(start_date: start_of_week),
-                        alert: 'Cannot duty for more than 16 hours!'
-            return
-          end
+          total_hours = helpers.current_user_hours(start_date, end_date) +
+                        helpers.sum_hours(wk_duties)
+          next unless total_hours > 16 && !wk_duties.empty?
+
+          redirect_to duties_path(start_date: start_of_week),
+                      alert: 'Cannot duty for more than 16 hours!'
+          can_grab = false
         end
       end
 
-      duties.each do |duty|
-        duty.update!(user: current_user, free: false, request_user: nil)
+      if can_grab
+        duties.each do |duty|
+          duty.update!(user: current_user, free: false, request_user: nil)
+        end
+        redirect_to duties_path(start_date: start_of_week),
+                    notice: 'Duty successfully grabbed!'
       end
-      redirect_to duties_path(start_date: start_of_week),
-                  notice: 'Duty successfully grabbed!'
     end
   rescue ActiveRecord::RecordInvalid
     redirect_to duties_path(start_date: start_of_week),
@@ -169,14 +172,16 @@ class DutiesController < ApplicationController
     count = 0
     result = {}
 
-    while count < num_duties do
-      wk_duties = duties.select {|d| d.date.beginning_of_week.to_date == start}
+    while count < num_duties
+      wk_duties = duties.select do |d|
+        d.date.beginning_of_week.to_date == start
+      end
       count += wk_duties.length
       result[start.to_s] = wk_duties
-      start = start + 7.days
+      start += 7.days
     end
 
-    return result
+    result
   end
 
   def drop_duties(drop_duty_ids, start_of_week)
@@ -196,4 +201,3 @@ class DutiesController < ApplicationController
     end
   end
 end
-# rubocop:enable Metrics/ClassLength
