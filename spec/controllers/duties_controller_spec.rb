@@ -58,8 +58,7 @@ RSpec.describe DutiesController, type: :controller do
 
   describe 'POST duties#grab' do
     before do
-      @user = create(:user)
-      sign_in @user
+      sign_in create(:user)
     end
 
     it 'grab a duty' do
@@ -147,6 +146,24 @@ RSpec.describe DutiesController, type: :controller do
       patch :grab, params: { duty_id: { duty.id => duty.id } }
       should redirect_to duties_path(start_date: start_of_week)
       expect(flash[:alert]).to be('Cannot duty for more than 16 hours!')
+    end
+
+    it 'grabs duty when MC user tries to grab beyond 16 hours' do
+      sign_in create(:user, mc: true)
+      timeslot = create(:timeslot)
+      duty = create(:duty, timeslot: timeslot, free: true)
+      allow(controller.helpers).to receive(:current_user_hours).and_return(16)
+      start_of_week = duty.date.beginning_of_week
+
+      expect do
+        patch :grab, params: { duty_id: { duty.id => duty.id } }
+        duty.reload
+      end.to change { duty.user }.to(subject.current_user)
+
+      expect(duty.free).to be(false)
+      expect(duty.request_user_id).to be(nil)
+      should redirect_to duties_path(start_date: start_of_week)
+      expect(flash[:notice]).to be('Duty successfully grabbed!')
     end
   end
 
