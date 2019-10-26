@@ -62,6 +62,24 @@ class DutiesController < ApplicationController
     @grabable_duties = grabable_duties
   end
 
+  def export
+    set_start_end_dates
+
+    @places = Place.all.sort_by do |p|
+      p.name
+    end
+
+    @relevant_duties = Duty.includes(%i[time_range place])
+                           .where(date: @start_date..@end_date)
+
+    respond_to do |format|
+      format.xlsx {
+        response.headers['Content-Disposition'] = "attachment; filename=duties.xlsx"
+      }
+      format.html { render :export }
+    end
+  end
+
   private
 
   def grabable_duties
