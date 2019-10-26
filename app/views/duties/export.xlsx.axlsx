@@ -1,0 +1,21 @@
+wb = xlsx_package.workbook
+
+
+
+wb.styles do |style|
+  heading = style.add_style(b: true)
+
+  @places.each do |p|
+    wb.add_worksheet(name: p.name) do |sheet|
+      sheet.add_row ["Name", "Date", "Start Time", "End Time"], style: heading
+
+      @place_duties = @relevant_duties.joins(:place)
+                                      .merge(Place.where(name: p.name))
+
+      @place_duties.each do |d|
+        sheet.add_row [d.user.username, d.date, d.time_range.start_time.strftime("%H:%M"), d.time_range.end_time.strftime("%H:%M")]
+      end
+    end
+  end
+end
+
