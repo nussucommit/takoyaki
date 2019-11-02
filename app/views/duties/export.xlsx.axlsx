@@ -7,13 +7,19 @@ wb.styles do |style|
 
   @places.each do |p|
     wb.add_worksheet(name: p.name) do |sheet|
-      sheet.add_row ["Name", "Date", "Start Time", "End Time"], style: heading
-
-      @place_duties = @relevant_duties.joins(:place)
+      place_duties = @relevant_duties.joins(:place)
                                       .merge(Place.where(name: p.name))
 
-      @place_duties.each do |d|
-        sheet.add_row [d.user.username, d.date, d.time_range.start_time.strftime("%H:%M"), d.time_range.end_time.strftime("%H:%M")]
+      timings = @header_iter.flat_map {|t| 
+        [Time.zone.at(t).strftime('%H%M') + '-' + Time.zone.at(t+30.minutes).strftime('%H%M'),
+         Time.zone.at(t+30.minutes).strftime('%H%M') + '-' + Time.zone.at(t+1.hour).strftime('%H%M')]
+      }
+
+      sheet.add_row [" "].push(*timings), style:heading
+
+      dates = (@start_date..@end_date)
+      dates.each do |d|
+        sheet.add_row [d.strftime("%d %b")], style: heading
       end
     end
   end

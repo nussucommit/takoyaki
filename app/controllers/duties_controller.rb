@@ -63,11 +63,14 @@ class DutiesController < ApplicationController
   end
 
   def export
-    set_start_end_dates
+    @start_date = (Time.zone.today - 1.month).beginning_of_month.to_date
+    @end_date = (Time.zone.today.beginning_of_month - 1.day).to_date
 
     @places = Place.all.sort_by do |p|
       p.name
     end
+
+    @header_iter = generate_header_iter
 
     @relevant_duties = Duty.includes(%i[time_range place])
                            .where(date: @start_date..@end_date)
