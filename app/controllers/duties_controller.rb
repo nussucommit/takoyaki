@@ -72,7 +72,7 @@ class DutiesController < ApplicationController
 
     @header_iter = generate_header_iter
 
-    @relevant_duties = Duty.includes(%i[time_range place])
+    @relevant_duties = Duty.includes(%i[time_range place user])
                            .where(date: @start_date..@end_date)
 
     respond_to do |format|
