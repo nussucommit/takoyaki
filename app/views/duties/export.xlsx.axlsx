@@ -8,18 +8,37 @@ wb.styles do |style|
   @places.each do |p|
     wb.add_worksheet(name: p.name) do |sheet|
       place_duties = @relevant_duties.joins(:place)
-                                      .merge(Place.where(name: p.name))
+                                     .merge(Place.where(name: p.name))
 
-      timings = @header_iter.flat_map {|t| 
+      timings = @header_iter.flat_map do |t| 
         [Time.zone.at(t).strftime('%H%M') + '-' + Time.zone.at(t+30.minutes).strftime('%H%M'),
          Time.zone.at(t+30.minutes).strftime('%H%M') + '-' + Time.zone.at(t+1.hour).strftime('%H%M')]
-      }
+      end
+
+      start_time = Time.zone.at(@header_iter.first)
 
       sheet.add_row [" "].push(*timings), style:heading
 
       dates = (@start_date..@end_date)
       dates.each do |d|
-        sheet.add_row [d.strftime("%d %b")], style: heading
+
+        date_duties = place_duties.where(date: d)
+                                  .sort_by {|duty| duty.time_range.start_time}
+
+        if date_duties.empty?
+          padding = [''] * timings.length
+          names = []
+        else
+          padding = [''] * ( (date_duties.first.time_range.start_time - start_time) / 30.minutes )
+          
+          names = date_duties.flat_map do |dd|
+            [dd.user.username] * ( (dd.time_range.end_time - dd.time_range.start_time) / 30.minutes )
+          end
+        end
+        
+
+        sheet.add_row [d.strftime("%d %b")].push(*padding).push(*names), style: heading
+        
       end
     end
   end
