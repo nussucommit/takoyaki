@@ -18,8 +18,6 @@ wb.styles do |style|
          Time.zone.at(t+30.minutes).strftime('%H%M') + '-' + Time.zone.at(t+1.hour).strftime('%H%M')]
       end
 
-      puts end_time
-
       start_time = Time.zone.at(@header_iter.first)
 
       sheet.add_row [" "].push(*timings), style:heading
@@ -39,9 +37,6 @@ wb.styles do |style|
         else
           early_time = (date_duties.first.time_range.start_time - start_time) / 30.minutes 
           late_time = (end_time - date_duties.last.time_range.end_time) / 30.minutes 
-          puts end_time
-          puts date_duties.last.time_range.end_time
-          puts late_time
 
           (1..early_time).each do
             c = r.add_cell(value='')
