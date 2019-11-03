@@ -10,7 +10,9 @@ wb.styles do |style|
       place_duties = @relevant_duties.joins(:place)
                                      .merge(Place.where(name: p.name))
 
+      end_time = 0
       timings = @header_iter.flat_map do |t| 
+        end_time = Time.zone.at(t+1.hour)
         [Time.zone.at(t).strftime('%H%M') + '-' + Time.zone.at(t+30.minutes).strftime('%H%M'),
          Time.zone.at(t+30.minutes).strftime('%H%M') + '-' + Time.zone.at(t+1.hour).strftime('%H%M')]
       end
@@ -21,23 +23,51 @@ wb.styles do |style|
 
       dates = (@start_date..@end_date)
       dates.each do |d|
+        r = sheet.add_row [d.strftime("%d %b")], style: heading
 
         date_duties = place_duties.where(date: d)
                                   .sort_by {|duty| duty.time_range.start_time}
 
         if date_duties.empty?
-          padding = [''] * timings.length
-          names = []
+          (1..timings.length).each do 
+            r.add_cell(value='')
+          end
         else
-          padding = [''] * ( (date_duties.first.time_range.start_time - start_time) / 30.minutes )
+          early_time = (date_duties.first.time_range.start_time - start_time) / 30.minutes 
+          late_time = (end_time - date_duties.last.time_range.end_time) / 30.minutes 
+
+          (1..early_time).each do
+            r.add_cell(value='')
+          end
+
+          prev = ''
+          times = 0
           
           names = date_duties.flat_map do |dd|
-            [dd.user.username] * ( (dd.time_range.end_time - dd.time_range.start_time) / 30.minutes )
+            if prev == dd.user.username 
+              times = times + (dd.time_range.end_time - dd.time_range.start_time) / 30.minutes
+            else 
+              unless times == 0 
+                (1..times).each do 
+                  r.add_cell(value=prev)
+                end
+
+                if times > 1
+                  sheet.merge_cells r.cells[(-times..-1)]
+                end
+              end
+
+              prev = dd.user.username
+              times = (dd.time_range.end_time - dd.time_range.start_time) / 30.minutes
+            end
+          end
+
+          (1..late_time).each do
+            r.add_cell(value='')
           end
         end
         
 
-        sheet.add_row [d.strftime("%d %b")].push(*padding).push(*names), style: heading
         
       end
     end
