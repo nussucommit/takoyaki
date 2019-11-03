@@ -70,6 +70,16 @@ wb.styles do |style|
             end
           end
 
+          unless times == 0 
+            (1..times).each do 
+              r.add_cell(value=prev)
+            end
+
+            if times > 1
+              sheet.merge_cells r.cells[(-times..-1)]
+            end
+          end
+
           (1..late_time).each do
             c = r.add_cell(value='')
             c.style = no_duty
