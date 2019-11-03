@@ -25,7 +25,7 @@
         <% if can?(:update_default_duties, Duty) %>
           <%= link_to 'Update Default Duties', availabilities_places_path, class: "btn btn-large btn-light duty-table-button" %>
         <% end %>
-        <% if can?(:update_default_duties, Duty) %>
+        <% if can?(:download_excel, Duty) %>
           <%= link_to 'Excel', export_duties_path(format: :xlsx), class: "btn btn-large btn-light duty-table-button" %>
         <% end %>
         <div class = "duty-hours<%= current_user_hours > 16 ? " duty-hours-exceed" : "" %>">
