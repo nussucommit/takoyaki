@@ -4,6 +4,7 @@ wb = xlsx_package.workbook
 
 wb.styles do |style|
   heading = style.add_style(b: true)
+  no_duty = style.add_style(bg_color: '00000000')
 
   @places.each do |p|
     wb.add_worksheet(name: p.name) do |sheet|
@@ -16,6 +17,8 @@ wb.styles do |style|
         [Time.zone.at(t).strftime('%H%M') + '-' + Time.zone.at(t+30.minutes).strftime('%H%M'),
          Time.zone.at(t+30.minutes).strftime('%H%M') + '-' + Time.zone.at(t+1.hour).strftime('%H%M')]
       end
+
+      puts end_time
 
       start_time = Time.zone.at(@header_iter.first)
 
@@ -30,14 +33,19 @@ wb.styles do |style|
 
         if date_duties.empty?
           (1..timings.length).each do 
-            r.add_cell(value='')
+            c = r.add_cell(value='')
+            c.style = no_duty
           end
         else
           early_time = (date_duties.first.time_range.start_time - start_time) / 30.minutes 
           late_time = (end_time - date_duties.last.time_range.end_time) / 30.minutes 
+          puts end_time
+          puts date_duties.last.time_range.end_time
+          puts late_time
 
           (1..early_time).each do
-            r.add_cell(value='')
+            c = r.add_cell(value='')
+            c.style = no_duty
           end
 
           prev = ''
@@ -63,7 +71,8 @@ wb.styles do |style|
           end
 
           (1..late_time).each do
-            r.add_cell(value='')
+            c = r.add_cell(value='')
+            c.style = no_duty
           end
         end
         
