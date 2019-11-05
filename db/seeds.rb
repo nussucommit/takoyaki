@@ -48,13 +48,13 @@ Date::DAYNAMES.each do |day|
     close = tr.end_time.in_time_zone.strftime('%H%M')
 
     if day == 'Sunday'
-      next if open < '0930' || close > '1500'
+      next if open < '0930' || close > '1700'
 
-      mc = (open == '0930' || close == '1500')
+      mc = (open == '0930' || close == '1700')
     elsif day == 'Saturday'
-      next if open < '0830' || close > '1700'
+      next if open < '0830' || close > '1900'
 
-      mc = (open == '0830' || close == '1700')
+      mc = (open == '0830' || close == '1900')
     else
       next if open < '0830' || close > '2100'
 
@@ -74,8 +74,8 @@ Date::DAYNAMES.each do |day|
     open = tr.start_time.in_time_zone.strftime('%H%M')
     close = tr.end_time.in_time_zone.strftime('%H%M')
 
-    next if day == 'Sunday'
-    next if (day == 'Saturday') && (open < '0800' || close > '1700')
+    next if (day == 'Sunday') && (open < '0930' || close > '1700')
+    next if (day == 'Saturday') && (open < '0800' || close > '1900')
     next if open < '0800' || close > '2100'
 
     Timeslot.create(mc_only: mc, day: day,
