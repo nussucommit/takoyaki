@@ -10,9 +10,12 @@ def create_xlsx(wb)
                         .where(date: start_date..end_date)
 
   wb.styles do |style|
-    heading = style.add_style(b: true)
-    no_duty = style.add_style(bg_color: '00000000')
-    styles = {heading: heading, no_duty: no_duty}
+    time_range = style.add_style(b: true, border: { :style => :thin, :color => "000000" })
+    no_duty = style.add_style(bg_color: '000000')
+    date = style.add_style(b: true, bg_color: '00FFFF', border: { :style => :thin, :color => "000000" })
+    duty = style.add_style(alignment: {horizontal: :center}, bg_color: 'F6E1AF', border: { :style => :thin, :color => "000000" })
+
+    styles = {time_range: time_range, no_duty: no_duty, date: date, duty: duty}
 
     places.each do |p|
       wb.add_worksheet(name: p.name) do |sheet|
@@ -23,11 +26,11 @@ def create_xlsx(wb)
         end_time = Time.zone.at(@header_iter.to_a[-1] + 1.hour)
         timings = generate_half_hour_intervals(@header_iter)
 
-        sheet.add_row [" "].push(*timings), style:heading
+        sheet.add_row [" "].push(*timings), style:time_range
 
         dates = (start_date..end_date)
         dates.each do |d|
-          r = sheet.add_row [d.strftime("%d %b")], style: heading
+          r = sheet.add_row [d.strftime("%d %b")], style: date
 
           date_duties = place_duties.where(date: d)
                                     .sort_by {|duty| duty.time_range.start_time}
@@ -47,8 +50,6 @@ def insert_merged_cells(sheet, row, length, value: '', style: nil)
       c.style = style
     end
   end
-
-  puts style
 
   if length > 1
     sheet.merge_cells row.cells[(-length..-1)]
@@ -80,14 +81,14 @@ def tabulate_duties(sheet, row, duties:, start_time:, end_time:, styles:)
       if prev == d.user.username 
         times = times + (d.time_range.end_time - d.time_range.start_time) / 30.minutes
       else 
-        insert_merged_cells(sheet, row, times, value: prev)
+        insert_merged_cells(sheet, row, times, value: prev, style: styles[:duty])
 
         prev = d.user.username
         times = (d.time_range.end_time - d.time_range.start_time) / 30.minutes
       end
     end
 
-    insert_merged_cells(sheet, row, times, value: prev)
+    insert_merged_cells(sheet, row, times, value: prev, style: styles[:duty])
 
     insert_merged_cells(sheet, row, late_time, style: styles[:no_duty])
   end
