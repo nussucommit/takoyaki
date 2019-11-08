@@ -64,11 +64,12 @@ class DutiesController < ApplicationController
 
   def export
     @header_iter = generate_header_iter
-    
+
     respond_to do |format|
-      format.xlsx {
-        response.headers['Content-Disposition'] = "attachment; filename=duties.xlsx"
-      }
+      format.xlsx do
+        header = 'attachment; filename=duties.xlsx'
+        response.headers['Content-Disposition'] = header
+      end
       format.html { render :export }
     end
   end
