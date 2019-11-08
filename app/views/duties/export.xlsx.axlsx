@@ -1,5 +1,14 @@
 wb = xlsx_package.workbook
 
+@start_date = (Time.zone.today - 1.month).beginning_of_month.to_date
+@end_date = (Time.zone.today.beginning_of_month - 1.day).to_date
+
+@places = Place.all.sort_by do |p|
+  p.name
+end
+
+@relevant_duties = Duty.includes(%i[time_range place user])
+                        .where(date: @start_date..@end_date)
 
 
 wb.styles do |style|
