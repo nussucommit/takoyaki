@@ -2,6 +2,7 @@
 
 # rubocop:disable Metrics/ClassLength
 class DutiesController < ApplicationController
+  load_and_authorize_resource only: [:export]
   def index
     @header_iter = generate_header_iter
     set_start_end_dates
@@ -64,7 +65,6 @@ class DutiesController < ApplicationController
 
   def export
     @header_iter = generate_header_iter
-
     respond_to do |format|
       format.xlsx do
         header = 'attachment; filename=duties.xlsx'
