@@ -301,7 +301,9 @@ RSpec.describe DutiesController, type: :controller do
         @user.add_role :admin
 
         get :export, format: :xlsx
-        expect(response.header['Content-Type']).to include 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        expect(response.header['Content-Type']).to include(
+          'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        )
       end
     end
 
@@ -310,9 +312,13 @@ RSpec.describe DutiesController, type: :controller do
         get :export, format: :xlsx
 
         should redirect_to root_path
-        expect(flash[:alert]).to eq('You are not authorized to access this page.')
+        expect(flash[:alert]).to(
+          eq('You are not authorized to access this page.')
+        )
 
-        expect(response.header['Content-Type']).not_to include 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        expect(response.header['Content-Type']).not_to include(
+          'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        )
       end
     end
   end
