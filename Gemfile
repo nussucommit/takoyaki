@@ -57,7 +57,8 @@ gem 'axlsx_rails'
 gem 'rubyzip', '>= 1.2.1'
 # Axlsx dependency
 gem 'caxlsx'
-
+# Force loofah update
+gem 'loofah', '>= 2.3.1'
 
 group :test do
   # Test coverage
