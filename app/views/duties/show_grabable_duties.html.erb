@@ -12,9 +12,15 @@
               <%= label_tag "Location: " + d[:location] %>
             </p>
           <% end %>
-          <p>
-            <%= submit_tag "Grab", class: "btn btn-primary", class: "grab", onclick: :"return validateGrabPage();" %>
-          </p>
+          <%if @grabable_duties.length != 0%>
+            <p>
+              <%= submit_tag "Grab", class: "btn btn-primary", class: "grab", onclick: :"return validateGrabPage();" %>
+            </p>
+          <%else%>
+            <p>
+              There is no duty to grab.
+            </p>
+          <% end %>
         </div>
       <% end %>
     </div>
