@@ -39,8 +39,9 @@ require 'rails_helper'
 RSpec.describe User, type: :model do
   it { should have_many(:duties).dependent(:nullify) }
   it {
-    should have_many(:timeslots).with_foreign_key(:default_user_id)
-                                .inverse_of(:default_user).dependent(:nullify)
+    should have_many(:timeslots)
+      .with_foreign_key(:default_user_id)
+      .inverse_of(:default_user).dependent(:nullify)
   }
   it {
     should have_many(:reported_problem_reports)
