@@ -31,7 +31,7 @@ RSpec.describe Duty, type: :model do
   it { should belong_to(:user).optional }
   it {
     should belong_to(:request_user).class_name('User')
-      .optional.inverse_of(:duties)
+                                   .optional.inverse_of(:duties)
   }
   it { should belong_to(:timeslot) }
   it { should have_one(:time_range).through(:timeslot) }

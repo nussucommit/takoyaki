@@ -40,17 +40,21 @@ RSpec.describe User, type: :model do
   it { should have_many(:duties).dependent(:nullify) }
   it {
     should have_many(:timeslots).with_foreign_key(:default_user_id)
-      .inverse_of(:default_user).dependent(:nullify)
+                                .inverse_of(:default_user).dependent(:nullify)
   }
   it {
-    should have_many(:reported_problem_reports).class_name('ProblemReport')
-      .with_foreign_key('reporter_user_id').inverse_of(:reporter_user)
-                                               .dependent(:nullify)
+    should have_many(:reported_problem_reports)
+      .class_name('ProblemReport')
+      .with_foreign_key('reporter_user_id')
+      .inverse_of(:reporter_user)
+      .dependent(:nullify)
   }
   it {
-    should have_many(:last_updated_problem_reports).class_name('ProblemReport')
-      .with_foreign_key(:last_update_user_id).inverse_of(:last_update_user)
-                                                   .dependent(:nullify)
+    should have_many(:last_updated_problem_reports)
+      .class_name('ProblemReport')
+      .with_foreign_key(:last_update_user_id)
+      .inverse_of(:last_update_user)
+      .dependent(:nullify)
   }
   it { should have_many(:availabilities).dependent(:destroy) }
   it { should validate_presence_of(:cell) }

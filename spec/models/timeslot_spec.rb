@@ -32,7 +32,7 @@ RSpec.describe Timeslot, type: :model do
   it { should have_many(:duties).dependent(:destroy) }
   it {
     should belong_to(:default_user).class_name('User')
-      .optional.inverse_of(:timeslots)
+                                   .optional.inverse_of(:timeslots)
   }
   it { should belong_to(:place) }
   it { should belong_to(:time_range) }
