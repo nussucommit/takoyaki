@@ -74,7 +74,7 @@ function drawLine(startTime, endTime) {
   var currMinutes;
   setInterval(function () {
     var date = new Date();
-    currHours = date.getHours() - 13;
+    currHours = date.getHours();
     currMinutes = date.getMinutes();
     if (currHours < startTime || (currHours >= endTime && currMinutes > 0)) {
       line.style.display = "none";
@@ -87,7 +87,7 @@ function drawLine(startTime, endTime) {
     var rightColumnWidth = table.rows[0].cells[0].offsetWidth;
     var leftColumnWidth = tableLeft.offsetWidth + 15;
     // I am so sorry for hardcoding the adjusting term, but let's just get this thing working, okay :")
-    var lowTime = container.scrollLeft / rightColumnWidth * 60 + 480;
+    var lowTime = container.scrollLeft / rightColumnWidth * 60 + startTime * 60;
     var highTime = lowTime + container.clientWidth;
     if (lowTime <= currTimeInMinutes && currTimeInMinutes <= highTime) {
       line.style.display = "block";
