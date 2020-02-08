@@ -76,8 +76,8 @@ function drawLine(startTime, endTime) {
   var currMinutes;
   setInterval(function () {
     var date = new Date();
-    currHours = date.getHours() - 4;
-    currMinutes = date.getMinutes() + 5;
+    currHours = date.getHours();
+    currMinutes = date.getMinutes();
     if (currHours < startTime || (currHours >= endTime && currMinutes > 0)) {
       line.style.display = "none";
     } else {
