@@ -287,4 +287,39 @@ RSpec.describe DutiesController, type: :controller do
       end
     end
   end
+
+  describe 'GET duties #export' do
+    before do
+      @user = create(:user)
+      sign_in @user
+      @place = create(:place)
+
+      allow(controller).to receive(:generate_header_iter).and_return([])
+    end
+    context 'admin' do
+      it 'downloads excel' do
+        @user.add_role :admin
+
+        get :export, format: :xlsx
+        expect(response.header['Content-Type']).to include(
+          'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        )
+      end
+    end
+
+    context 'non-admin' do
+      it 'does not download excel and redirect' do
+        get :export, format: :xlsx
+
+        should redirect_to root_path
+        expect(flash[:alert]).to(
+          eq('You are not authorized to access this page.')
+        )
+
+        expect(response.header['Content-Type']).not_to include(
+          'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        )
+      end
+    end
+  end
 end
