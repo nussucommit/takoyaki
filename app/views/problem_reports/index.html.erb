@@ -50,7 +50,7 @@
         <%= submit_tag('Change Remark', :class=>'btn btn-large btn-light problem-report-btn') %>
       <% end %></td>
       <td class="last-updated-by">
-        <%= pb.reporter_user_id == nil \
+        <%= pb.last_update_user_id == nil \
               ? "(Deleted member)" \
               : User.find(pb.last_update_user_id)&.username %>
       </td>
