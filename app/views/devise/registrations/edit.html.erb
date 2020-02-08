@@ -24,14 +24,14 @@
               <div class="field">
                 <tr>
                   <th> <%= f.label :matric_number %></th>
-                  <td> <%= f.text_field :matric_num, autocomplete: "off" %></td>
+                  <td> <%= f.text_field :matric_num, autocomplete: "off", :pattern => "^A[0-9]{7}[A-Z]" %></td>
                 </tr>
               </div>
 
               <div class="field">
                 <tr>
                   <th><%= f.label :contact_number %></th>
-                  <td><%= f.text_field :contact_num, autocomplete: "off", :type => "text" %></td>
+                  <td><%= f.text_field :contact_num, autocomplete: "off", :type => "text", :pattern => "[89][0-9]{7}" %></td>
                 </tr>
               </div>
 

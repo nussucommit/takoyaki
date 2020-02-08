@@ -64,6 +64,8 @@ function scrollToCurrentTime(startTime) {
   }
 }
 
+
+
 function colourScheduleTable(numOfPlaces) {
   var nthChildInt = numOfPlaces * 2;
 
