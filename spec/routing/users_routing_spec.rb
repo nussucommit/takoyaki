@@ -13,6 +13,11 @@ RSpec.describe UsersController, type: :routing do
         .to route_to('users#allocate_roles', id: '1')
     end
 
+    it 'routes to #change_name' do
+      expect(get: '/users/1/change_name')
+        .to route_to('users#change_name', id: '1')
+    end
+
     it 'routes to #edit' do
       expect(get: '/users/1/edit').to route_to('users#edit', id: '1')
     end

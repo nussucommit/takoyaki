@@ -25,6 +25,10 @@ Rails.application.routes.draw do
       get 'allocate_roles', to: 'users#allocate_roles', as: 'allocate_roles'
       patch 'allocate_roles', to: 'users#update_roles'
       put 'allocate_roles', to: 'users#update_roles'
+
+      get 'change_name', to: 'users#change_name', as: 'change_name'
+      patch 'change_name', to: 'users#update_name'
+      put 'change_name', to: 'users#update_name'
     end
   end
 

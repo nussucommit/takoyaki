@@ -181,6 +181,67 @@ RSpec.describe UsersController, type: :controller do
     end
   end
 
+  describe 'PUT #update_name' do
+    it 'redirects when unauthenticated' do
+      put :update_name, params: { id: create(:user).id }
+      should redirect_to(new_user_session_path)
+    end
+    it 'denies access to normal user' do
+      user = create(:user)
+      sign_in user
+      put :update_name, params: { id: user.id, user: { username: 'Name' } }
+      should redirect_to(root_path)
+    end
+    context 'admin' do
+      before do
+        user = create(:user)
+        user.add_role(:admin)
+        sign_in user
+        @user = user
+      end
+      it 'changes name' do
+        old_name = @user.username
+        expect do
+          put :update_name, params: { id: @user.id, user: { username: 'Name' } }
+        end.to change {
+          User.find(@user.id).username
+        }.from(old_name).to('Name')
+        should redirect_to(users_path)
+        expect(flash['notice']).to eq('Name sucessfuly updated!')
+      end
+      it 'handles failure' do
+        allow(@user).to receive(:update).and_return(false)
+        allow(User).to receive(:find).and_return(@user)
+        put :update_name, params: { id: @user.id, user: { username: 'Name' } }
+        should redirect_to(users_path)
+        expect(flash['alert']).to eq('Name updating failed!')
+      end
+    end
+    context 'pre-existing name' do
+      before do
+        user = create(:user)
+        user.add_role(:admin)
+        sign_in user
+        @user = user
+
+        # rubocop:disable Lint/UselessAssignment
+        duplicate = create(:user, username: 'Duplicate')
+        # rubocop:enable Lint/UselessAssignment
+      end
+      it 'denies change to same name' do
+        old_name = @user.username
+        expect do
+          put :update_name, params: { id: @user.id,
+                                      user: { username: 'Duplicate' } }
+        end.to_not change {
+          User.find(@user.id).username
+        }.from(old_name)
+        should redirect_to(users_path)
+        expect(flash['alert']).to eq('Name updating failed!')
+      end
+    end
+  end
+
   describe 'DELETE #destroy' do
     it 'redirects when unauthenticated' do
       delete :destroy, params: { id: create(:user).id }
