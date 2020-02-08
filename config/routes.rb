@@ -35,6 +35,7 @@ Rails.application.routes.draw do
       post 'open_grab_modal', to: 'duties#open_grab_modal'
       post 'grab', to: 'duties#grab'
       post 'drop', to: 'duties#drop'
+      get 'export', to: 'duties#export', as: 'export'
     end
   end
 
