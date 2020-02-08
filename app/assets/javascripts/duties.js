@@ -123,7 +123,7 @@ function load() {
   var NUM_OF_PLACES = $('#num-of-places').data('num-of-places');
   var AVERAGE_COLSPAN = $('#average-colspan').data('average-colspan');
 
-  //scrollToCurrentTime(START_TIME); I find this mildly annoying, and when the drawLine function is properly implemented, I think we can yeet this function away
+  scrollToCurrentTime(START_TIME); //I find this mildly annoying, and when the drawLine function is properly implemented, I think we can yeet this function away
   drawLine(START_TIME, END_TIME);
   toggleSidebar();
   sidebarOnLoad();
