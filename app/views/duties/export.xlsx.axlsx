@@ -78,12 +78,12 @@ def tabulate_duties(sheet, row, duties:, start_time:, end_time:, styles:)
     
     # find consecutive duties and merge them
     names = duties.flat_map do |d|
-      if prev == d.user.username 
+      if not d.user.nil? and prev == d.user.username 
         times = times + (d.time_range.end_time - d.time_range.start_time) / 30.minutes
       else 
         insert_merged_cells(sheet, row, times, value: prev, style: styles[:duty])
 
-        prev = d.user.username
+        prev = d.user.nil? ? '(deleted user)' : d.user.username
         times = (d.time_range.end_time - d.time_range.start_time) / 30.minutes
       end
     end
