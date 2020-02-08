@@ -73,15 +73,20 @@ function drawLine(startTime, endTime){
   var currTimeMinutes = date.getMinutes();
   if(currTimeHours<startTime || (currTimeHours>=endTime&& currTimeMinutes>0)){
     line.style.display="none";
+  }else{
+    // TODO: keep updating the position of the line
+    // start at the right position from the beginning
+    helper();
   }
   container.addEventListener("scroll", helper);
   function helper(){
-    var scrollpercent = Math.round((container.scrollLeft) / (container.scrollWidth)*100)/100;
-    var dayPercentage = Math.round((currTimeHours+currTimeMinutes/60-startTime)/(endTime-startTime)*100)/100;
-    var viewWindow = Math.round(container.clientWidth/container.scrollWidth*100)/100;
+    var scrollpercent = container.scrollLeft / (container.scrollWidth);
+    var dayPercentage = (currTimeHours+currTimeMinutes/60-startTime)/(endTime-startTime);
+    var viewWindow = container.clientWidth/container.scrollWidth;
     if(scrollpercent<=dayPercentage&&dayPercentage<=scrollpercent+viewWindow){
       line.style.display="block";
       line.style.left = Math.round((dayPercentage-scrollpercent)/viewWindow*85)+15+"%";
+      // I am so sorry for hardcoding this, but let's just get this thing working, okay :")
     }else{
       line.style.display="none";
     }
@@ -110,7 +115,7 @@ function load() {
   var NUM_OF_PLACES = $('#num-of-places').data('num-of-places');
   var AVERAGE_COLSPAN = $('#average-colspan').data('average-colspan');
 
-  scrollToCurrentTime(START_TIME);
+  //scrollToCurrentTime(START_TIME);
   drawLine(START_TIME, END_TIME); //I need to hard code end time because I can't find the end time in database...
   toggleSidebar();
   sidebarOnLoad();
