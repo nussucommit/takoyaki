@@ -70,16 +70,14 @@ function drawLine(startTime, endTime) {
   var table = document.getElementById("table");
   var tableLeft = document.getElementById("tableLeft");
   var container = document.getElementById("container");
-  var rightColumnWidth = table.rows[0].cells[0].offsetWidth;
-  var leftColumnWidth = tableLeft.offsetWidth;
   line.style.height = (container.clientHeight) + "px";
   container.addEventListener("scroll", helper);
   var currHours;
   var currMinutes;
   setInterval(function () {
     var date = new Date();
-    currHours = date.getHours();
-    currMinutes = date.getMinutes();
+    currHours = date.getHours()-4;
+    currMinutes = date.getMinutes()+5;
     if (currHours < startTime || (currHours >= endTime && currMinutes > 0)) {
       line.style.display = "none";
     } else {
@@ -88,9 +86,13 @@ function drawLine(startTime, endTime) {
   }, 1000);
   function helper() {
     var currTimeInMinutes = currHours * 60 + currMinutes;
+    var rightColumnWidth = table.rows[0].cells[0].offsetWidth;
+    var leftColumnWidth = tableLeft.offsetWidth+15;
+    // I am so sorry for hardcoding the adjusting term, but let's just get this thing working, okay :")
     var lowTime = container.scrollLeft / rightColumnWidth * 60 + startTime * 60;
+    console.log(rightColumnWidth);
     var highTime = lowTime + container.clientWidth / rightColumnWidth * 60;
-    if (lowTime + 5 <= currTimeInMinutes && currTimeInMinutes <= highTime + 5) {
+    if (lowTime <= currTimeInMinutes && currTimeInMinutes <= highTime) {
       line.style.display = "block";
       line.style.left = (((currTimeInMinutes - lowTime) / 60) * rightColumnWidth) + leftColumnWidth + "px";
     } else {
