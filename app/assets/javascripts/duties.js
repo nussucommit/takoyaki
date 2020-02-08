@@ -66,6 +66,7 @@ function scrollToCurrentTime(startTime) {
 
 function drawLine(startTime, endTime) {
   var line = document.getElementById("vertical_line");
+  line.style.display = "none";
   var table = document.getElementById("table");
   var tableLeft = document.getElementById("tableLeft");
   var container = document.getElementById("container");
