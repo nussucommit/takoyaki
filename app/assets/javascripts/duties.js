@@ -35,14 +35,14 @@ function checkSidebarStateExpiry() {
 }
 
 function toggleSidebar() {
-  $('#announcement-toggle-btn').on('click', function() {
+  $('#announcement-toggle-btn').on('click', function () {
     if ($('#announcement-sidebar').css('display') == "block") {
       $('#announcement-sidebar').hide().removeClass('open');
 
       $('#duty-table').addClass('col-md-12');
       var sidebarExpiry = new Date(Date.now());
       sidebarExpiry.setHours(sidebarExpiry.getHours() + 1);
-      var sidebarState = {state: "hide", expiry: sidebarExpiry};
+      var sidebarState = { state: "hide", expiry: sidebarExpiry };
       sessionStorage.setItem("sidebarState", JSON.stringify(sidebarState));
     } else {
       $('#announcement-sidebar').fadeIn('fast').addClass('open');
@@ -64,31 +64,36 @@ function scrollToCurrentTime(startTime) {
   }
 }
 
-function drawLine(startTime, endTime){
+function drawLine(startTime, endTime) {
   var line = document.getElementById("vertical_line");
-  var container = document.getElementById("container");
   var table = document.getElementById("table");
-  var date = new Date();
-  var currTimeHours = date.getHours();
-  var currTimeMinutes = date.getMinutes();
-  if(currTimeHours<startTime || (currTimeHours>=endTime&& currTimeMinutes>0)){
-    line.style.display="none";
-  }else{
-    // TODO: keep updating the position of the line
-    // start at the right position from the beginning
-    helper();
-  }
+  var tableLeft = document.getElementById("tableLeft");
+  var container = document.getElementById("container");
   container.addEventListener("scroll", helper);
-  function helper(){
-    var scrollpercent = container.scrollLeft / (container.scrollWidth);
-    var dayPercentage = (currTimeHours+currTimeMinutes/60-startTime)/(endTime-startTime);
-    var viewWindow = container.clientWidth/container.scrollWidth;
-    if(scrollpercent<=dayPercentage&&dayPercentage<=scrollpercent+viewWindow){
-      line.style.display="block";
-      line.style.left = Math.round((dayPercentage-scrollpercent)/viewWindow*85)+15+"%";
-      // I am so sorry for hardcoding this, but let's just get this thing working, okay :")
-    }else{
-      line.style.display="none";
+  var currHours;
+  var currMinutes;
+  setInterval(function () {
+    var date = new Date();
+    currHours = date.getHours() - 13;
+    currMinutes = date.getMinutes();
+    if (currHours < startTime || (currHours >= endTime && currMinutes > 0)) {
+      line.style.display = "none";
+    } else {
+      helper();
+    }
+  }, 1000);
+  function helper() {
+    var currTimeInMinutes = currHours * 60 + currMinutes;
+    var rightColumnWidth = table.rows[0].cells[0].offsetWidth;
+    var leftColumnWidth = tableLeft.offsetWidth + 15;
+    // I am so sorry for hardcoding the adjusting term, but let's just get this thing working, okay :")
+    var lowTime = container.scrollLeft / rightColumnWidth * 60 + 480;
+    var highTime = lowTime + container.clientWidth;
+    if (lowTime <= currTimeInMinutes && currTimeInMinutes <= highTime) {
+      line.style.display = "block";
+      line.style.left = (((currTimeInMinutes - lowTime) / 60) * rightColumnWidth) + leftColumnWidth + "px";
+    } else {
+      line.style.display = "none";
     }
   }
 }
@@ -111,12 +116,12 @@ function setDutyTableWidth(averageColspan) {
 
 function load() {
   var START_TIME = $('#duty-start-time').data('start-time');
-  var END_TIME = 21;
+  var END_TIME = 21;//I need to hard code end time because I can't find the end time in database...
   var NUM_OF_PLACES = $('#num-of-places').data('num-of-places');
   var AVERAGE_COLSPAN = $('#average-colspan').data('average-colspan');
 
-  //scrollToCurrentTime(START_TIME);
-  drawLine(START_TIME, END_TIME); //I need to hard code end time because I can't find the end time in database...
+  //scrollToCurrentTime(START_TIME); I find this mildly annoying, and when the drawLine function is properly implemented, I think we can yeet this function away
+  drawLine(START_TIME, END_TIME);
   toggleSidebar();
   sidebarOnLoad();
   setDutyTableButtons();
@@ -129,7 +134,7 @@ function validateModal() {
     return true;
   else
     alert("Please select at least one time slot");
-    return false;
+  return false;
 }
 
 function validateGrabPage() {
@@ -137,7 +142,7 @@ function validateGrabPage() {
     return true;
   else
     alert("Please select at least one time slot");
-    return false;
+  return false;
 }
 
 $(document).on('turbolinks:load', load);
