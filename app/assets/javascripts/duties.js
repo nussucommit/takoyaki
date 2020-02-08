@@ -64,6 +64,30 @@ function scrollToCurrentTime(startTime) {
   }
 }
 
+function drawLine(startTime, endTime){
+  var line = document.getElementById("vertical_line");
+  var container = document.getElementById("container");
+  var table = document.getElementById("table");
+  var date = new Date();
+  var currTimeHours = date.getHours();
+  var currTimeMinutes = date.getMinutes();
+  if(currTimeHours<startTime || (currTimeHours>=endTime&& currTimeMinutes>0)){
+    line.style.display="none";
+  }
+  container.addEventListener("scroll", helper);
+  function helper(){
+    var scrollpercent = Math.round((container.scrollLeft) / (container.scrollWidth)*100)/100;
+    var dayPercentage = Math.round((currTimeHours+currTimeMinutes/60-startTime)/(endTime-startTime)*100)/100;
+    var viewWindow = Math.round(container.clientWidth/container.scrollWidth*100)/100;
+    if(scrollpercent<=dayPercentage&&dayPercentage<=scrollpercent+viewWindow){
+      line.style.display="block";
+      line.style.left = Math.round((dayPercentage-scrollpercent)/viewWindow*85)+15+"%";
+    }else{
+      line.style.display="none";
+    }
+  }
+}
+
 function colourScheduleTable(numOfPlaces) {
   var nthChildInt = numOfPlaces * 2;
 
@@ -82,10 +106,12 @@ function setDutyTableWidth(averageColspan) {
 
 function load() {
   var START_TIME = $('#duty-start-time').data('start-time');
+  var END_TIME = 21;
   var NUM_OF_PLACES = $('#num-of-places').data('num-of-places');
   var AVERAGE_COLSPAN = $('#average-colspan').data('average-colspan');
 
   scrollToCurrentTime(START_TIME);
+  drawLine(START_TIME, END_TIME); //I need to hard code end time because I can't find the end time in database...
   toggleSidebar();
   sidebarOnLoad();
   setDutyTableButtons();

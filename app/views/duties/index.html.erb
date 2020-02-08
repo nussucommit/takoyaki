@@ -59,8 +59,22 @@
 
           </table>
         </div>
-        <div class="schedule-right scrollable">
-          <table class="table table-sm duty-table">
+        <div class="schedule-right scrollable", id="container">
+        <style>
+              .vl {
+              border-left: 4px solid green;
+              height: 550px;
+              position: absolute;
+              margin-left: -3px;
+              top: 10%;
+              }
+            }
+            </style>
+
+          <div class="vl", id="vertical_line">
+          </div>
+          <table class="table table-sm duty-table", id="table">
+          
             <thead>
               <tr>
                 <% @header_iter.each do |t| %>
