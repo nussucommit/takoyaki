@@ -2,7 +2,7 @@
 // All this logic will automatically be available in application.js.
 
 $(document).on('turbolinks:load', function() {
-  $('.close-button').click(function() {
-    $('.announcement-form').trigger('reset');
-  });
+    $('.close-button').click(function() {
+        $('.announcement-form').trigger('reset');
+    });
 });
