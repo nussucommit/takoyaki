@@ -1,0 +1,99 @@
+def create_xlsx(wb)
+  start_date = (Time.zone.today - 1.month).beginning_of_month.to_date
+  end_date = (Time.zone.today.beginning_of_month - 1.day).to_date
+
+  places = Place.all.sort_by do |p|
+    p.name
+  end
+
+  relevant_duties = Duty.includes(%i[time_range place user])
+                        .where(date: start_date..end_date)
+
+  wb.styles do |style|
+    time_range = style.add_style(b: true, border: { :style => :thin, :color => "000000" })
+    no_duty = style.add_style(bg_color: '000000')
+    date = style.add_style(b: true, bg_color: '00FFFF', border: { :style => :thin, :color => "000000" })
+    duty = style.add_style(alignment: {horizontal: :center}, bg_color: 'F6E1AF', border: { :style => :thin, :color => "000000" })
+
+    styles = {time_range: time_range, no_duty: no_duty, date: date, duty: duty}
+
+    places.each do |p|
+      wb.add_worksheet(name: p.name) do |sheet|
+        place_duties = relevant_duties.joins(:place)
+                                      .merge(Place.where(name: p.name))
+        
+        start_time = Time.zone.at(@header_iter.first)
+        end_time = Time.zone.at(@header_iter.to_a[-1] + 1.hour)
+        timings = generate_half_hour_intervals(@header_iter)
+
+        sheet.add_row [" "].push(*timings), style:time_range
+
+        dates = (start_date..end_date)
+        dates.each do |d|
+          r = sheet.add_row [d.strftime("%d %b")], style: date
+
+          date_duties = place_duties.where(date: d)
+                                    .sort_by {|duty| duty.time_range.start_time}
+
+          tabulate_duties(sheet, r, duties: date_duties, start_time: start_time, end_time: end_time, styles: styles)
+          
+        end
+      end
+    end
+  end
+end
+
+def insert_merged_cells(sheet, row, length, value: '', style: nil)
+  (1..length).each do
+    c = row.add_cell(value=value)
+    unless style.nil?
+      c.style = style
+    end
+  end
+
+  if length > 1
+    sheet.merge_cells row.cells[(-length..-1)]
+  end
+end
+
+def generate_half_hour_intervals(hours)
+  hours.flat_map do |t| 
+    [Time.zone.at(t).strftime('%H%M') + '-' + Time.zone.at(t+30.minutes).strftime('%H%M'),
+    Time.zone.at(t+30.minutes).strftime('%H%M') + '-' + Time.zone.at(t+1.hour).strftime('%H%M')]
+  end
+end
+
+def tabulate_duties(sheet, row, duties:, start_time:, end_time:, styles:)
+  if duties.empty?
+    total_length = (end_time - start_time) / 30.minutes
+    insert_merged_cells(sheet, row, total_length, style: styles[:no_duty])
+  else
+    early_time = (duties.first.time_range.start_time - start_time) / 30.minutes 
+    late_time = (end_time - duties.last.time_range.end_time) / 30.minutes 
+
+    insert_merged_cells(sheet, row, early_time, style: styles[:no_duty])
+
+    prev = ''
+    times = 0
+    
+    # find consecutive duties and merge them
+    names = duties.flat_map do |d|
+      if not d.user.nil? and prev == d.user.username 
+        times = times + (d.time_range.end_time - d.time_range.start_time) / 30.minutes
+      else 
+        insert_merged_cells(sheet, row, times, value: prev, style: styles[:duty])
+
+        prev = d.user.nil? ? '(deleted user)' : d.user.username
+        times = (d.time_range.end_time - d.time_range.start_time) / 30.minutes
+      end
+    end
+
+    insert_merged_cells(sheet, row, times, value: prev, style: styles[:duty])
+
+    insert_merged_cells(sheet, row, late_time, style: styles[:no_duty])
+  end
+end
+
+# run code
+create_xlsx(xlsx_package.workbook)
+
