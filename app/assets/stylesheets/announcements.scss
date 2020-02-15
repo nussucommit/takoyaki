@@ -8,6 +8,8 @@
   h1 {
     font-size: 2em;
     text-align: center;
+    background: white;
+    box-shadow: none;
   }
 
   @media (min-width: 768px) {
@@ -41,12 +43,11 @@
 
   h1 {
     padding: 20px 20px 0;
-    background: transparent;
   }
 
   @media (min-width: 1025px) {
     h1 {
-      padding: 20px 20px 0 50px;
+      padding: 20px 20px 0 50px;    
     }
   }
 
