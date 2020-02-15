@@ -106,7 +106,7 @@
                       <% else %>
                         <% if current_user == duty[:user] %>
                           <td class="schedule-name text-overflow-ellipsis my-duty-cell" colspan="<%= duty[:colspan] %>">
-                            <%= button_to duty[:user].username, { controller: 'duties', action: 'open_drop_modal', drop_duty_list: duty[:span_duty] }, { method: :post, remote: true, class: 'btn btn-link', style: "line-height: 0;" } %>
+                            <%= button_to duty[:user].username, { controller: 'duties', action: 'open_drop_modal', drop_duty_list: duty[:span_duty] }, { method: :post, remote: true, class: 'btn btn-link', style: "line-height: 0.3;" } %>
                           </td>
                         <% else %>
                           <td class="schedule-name text-overflow-ellipsis" colspan="<%= duty[:colspan] %>">

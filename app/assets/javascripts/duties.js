@@ -90,7 +90,6 @@ function drawLine(startTime, endTime) {
     var leftColumnWidth = tableLeft.offsetWidth + 15;
     // I am so sorry for hardcoding the adjusting term, but let's just get this thing working, okay :")
     var lowTime = container.scrollLeft / rightColumnWidth * 60 + startTime * 60;
-    console.log(rightColumnWidth);
     var highTime = lowTime + container.clientWidth / rightColumnWidth * 60;
     if (lowTime <= currTimeInMinutes && currTimeInMinutes <= highTime) {
       line.style.display = "block";
