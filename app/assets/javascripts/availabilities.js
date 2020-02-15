@@ -52,7 +52,7 @@ function disableButton(buttonName) {
 function enableButton(buttonName) {
     var button = document.getElementById(buttonName);
     if (!button) return;
-    button.classList.remove("disabled")
+    button.classList.remove("disabled");
     button.disabled = false;
 }
 
