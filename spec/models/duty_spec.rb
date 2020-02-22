@@ -30,7 +30,8 @@ require 'rails_helper'
 RSpec.describe Duty, type: :model do
   it { should belong_to(:user).optional }
   it {
-    should belong_to(:request_user).class_name('User')
+    should belong_to(:request_user)
+      .class_name('User')
       .optional.inverse_of(:duties)
   }
   it { should belong_to(:timeslot) }

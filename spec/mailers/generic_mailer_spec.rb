@@ -7,7 +7,7 @@ RSpec.describe GenericMailer, type: :mailer do
     let(:duties) do
       user = create(:user)
       @duties = (8..12)
-                .map { |n| format('%2d:00', n).in_time_zone }
+                .map { |n| format('%<hour>2d:00', hour: n).in_time_zone }
                 .map do |start_time|
                   create(:time_range, start_time: start_time,
                                       end_time: start_time + 1.hour)
@@ -56,7 +56,7 @@ RSpec.describe GenericMailer, type: :mailer do
     let(:duties) do
       user = create(:user)
       @duties = [8, 9, 12, 13]
-                .map { |n| format('%2d:00', n).in_time_zone }
+                .map { |n| format('%<hour>2d:00', hour: n).in_time_zone }
                 .map do |start_time|
                   create(:time_range, start_time: start_time,
                                       end_time: start_time + 1.hour)
