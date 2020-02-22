@@ -42,7 +42,10 @@ function toggleSidebar() {
       $('#duty-table').addClass('col-md-12');
       var sidebarExpiry = new Date(Date.now());
       sidebarExpiry.setHours(sidebarExpiry.getHours() + 1);
-      var sidebarState = { state: "hide", expiry: sidebarExpiry };
+      var sidebarState = {
+        state: "hide",
+        expiry: sidebarExpiry
+      };
       sessionStorage.setItem("sidebarState", JSON.stringify(sidebarState));
     } else {
       $('#announcement-sidebar').fadeIn('fast').addClass('open');
@@ -76,7 +79,9 @@ function colourScheduleTable(numOfPlaces) {
 
 function setDutyTableWidth(averageColspan) {
   if (averageColspan !== undefined) {
-    $('.schedule-timings').css({ width: 150 - 5 * averageColspan });
+    $('.schedule-timings').css({
+      width: 150 - 5 * averageColspan
+    });
   }
 }
 
@@ -94,19 +99,21 @@ function load() {
 }
 
 function validateModal() {
-  if ($("#grab-drop-modal input[type=checkbox]:checked").length > 0)
+  if ($("#grab-drop-modal input[type=checkbox]:checked").length > 0) {
     return true;
-  else
+  } else {
     alert("Please select at least one time slot");
-  return false;
+    return false;
+  }
 }
 
 function validateGrabPage() {
-  if ($("#grab-page-form input[type=checkbox]:checked").length > 0)
+  if ($("#grab-page-form input[type=checkbox]:checked").length > 0) {
     return true;
-  else
+  } else {
     alert("Please select at least one time slot");
-  return false;
+    return false;
+  }
 }
 
 $(document).on('turbolinks:load', load);
