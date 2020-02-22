@@ -23,7 +23,6 @@
 .byebug_history
 
 /config/database.yml
-/config/database.yml.example
 .ruby-version
 
 # OS Generated Files
