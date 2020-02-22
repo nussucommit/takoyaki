@@ -35,14 +35,14 @@ function checkSidebarStateExpiry() {
 }
 
 function toggleSidebar() {
-  $('#announcement-toggle-btn').on('click', function() {
+  $('#announcement-toggle-btn').on('click', function () {
     if ($('#announcement-sidebar').css('display') == "block") {
       $('#announcement-sidebar').hide().removeClass('open');
 
       $('#duty-table').addClass('col-md-12');
       var sidebarExpiry = new Date(Date.now());
       sidebarExpiry.setHours(sidebarExpiry.getHours() + 1);
-      var sidebarState = {state: "hide", expiry: sidebarExpiry};
+      var sidebarState = { state: "hide", expiry: sidebarExpiry };
       sessionStorage.setItem("sidebarState", JSON.stringify(sidebarState));
     } else {
       $('#announcement-sidebar').fadeIn('fast').addClass('open');
@@ -63,8 +63,6 @@ function scrollToCurrentTime(startTime) {
     $('.schedule-right').scrollLeft(SCROLL_LEFT_PX * offset);
   }
 }
-
-
 
 function colourScheduleTable(numOfPlaces) {
   var nthChildInt = numOfPlaces * 2;
@@ -100,7 +98,7 @@ function validateModal() {
     return true;
   else
     alert("Please select at least one time slot");
-    return false;
+  return false;
 }
 
 function validateGrabPage() {
@@ -108,7 +106,7 @@ function validateGrabPage() {
     return true;
   else
     alert("Please select at least one time slot");
-    return false;
+  return false;
 }
 
 $(document).on('turbolinks:load', load);
