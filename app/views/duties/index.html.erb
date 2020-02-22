@@ -104,9 +104,9 @@
                            <%= button_to "Grab", { controller: 'duties', action: 'open_grab_modal', grab_duty_list: duty[:span_duty] }, { method: :post, remote: true, class: 'btn btn-link', style: "line-height: 0;" } %>
                         </td>
                       <% else %>
-                        <% if current_user == duty[:user] %>
+                        <% if current_user == duty[:user] && Time.zone.now <= @start_date - 2.hours %>
                           <td class="schedule-name text-overflow-ellipsis my-duty-cell" colspan="<%= duty[:colspan] %>">
-                            <%= button_to duty[:user].username, { controller: 'duties', action: 'open_drop_modal', drop_duty_list: duty[:span_duty] }, { method: :post, remote: true, class: 'btn btn-link', style: "line-height: 0;" } %>
+                            <%= button_to duty[:user].username, { controller: 'duties', action: 'open_drop_modal', drop_duty_list: duty[:span_duty] }, { method: :post, remote: true, class: 'btn btn-link', style: "line-height: 0.3;" } %>
                           </td>
                         <% else %>
                           <td class="schedule-name text-overflow-ellipsis" colspan="<%= duty[:colspan] %>">
