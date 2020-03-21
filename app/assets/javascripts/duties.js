@@ -124,7 +124,7 @@ function setDutyTableWidth(averageColspan) {
 
 function load() {
   var START_TIME = $('#duty-start-time').data('start-time');
-  var END_TIME = 21;//I need to hard code end time because I can't find the end time in database...
+  var END_TIME = $('#duty-end-time').data('end-time');
   var NUM_OF_PLACES = $('#num-of-places').data('num-of-places');
   var AVERAGE_COLSPAN = $('#average-colspan').data('average-colspan');
 
