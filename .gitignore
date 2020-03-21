@@ -23,6 +23,7 @@
 .byebug_history
 
 /config/database.yml
+.ruby-version
 
 # OS Generated Files
 .DS_Store

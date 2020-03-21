@@ -1,4 +1,5 @@
 <div id="duty-start-time" data-start-time=<%= TimeRange.order(:start_time).first.start_time.strftime('%H') %>></div>
+<div id="duty-end-time" data-end-time=<%= TimeRange.order(:end_time).last.end_time.strftime('%H')%>></div>
 <div id="num-of-places" data-num-of-places=<%= @places.count %>></div>
 
 <div class="container-fluid no-padding-top">
@@ -34,7 +35,7 @@
       </div>
 
       <div class="schedule-container">
-        <div class="schedule-left">
+        <div class="schedule-left" id="tableLeft">
           <table class="table table-sm">
             <!-- Empty row to accommodate the timing -->
             <thead>
@@ -62,8 +63,19 @@
 
           </table>
         </div>
-        <div class="schedule-right scrollable">
-          <table class="table table-sm duty-table">
+        <div class="schedule-right scrollable" id="container">
+          <style>
+              .vl {
+              border-left: 4px solid tomato;
+              position: absolute;
+              opacity:0.5;
+              }
+            }
+            </style>
+
+          <div class="vl" id="vertical_line"></div>
+          <table class="table table-sm duty-table" id="table">
+          
             <thead>
               <tr>
                 <% @header_iter.each do |t| %>
@@ -92,9 +104,9 @@
                            <%= button_to "Grab", { controller: 'duties', action: 'open_grab_modal', grab_duty_list: duty[:span_duty] }, { method: :post, remote: true, class: 'btn btn-link', style: "line-height: 0;" } %>
                         </td>
                       <% else %>
-                        <% if current_user == duty[:user] %>
+                        <% if current_user == duty[:user] && Time.zone.now <= @start_date - 2.hours %>
                           <td class="schedule-name text-overflow-ellipsis my-duty-cell" colspan="<%= duty[:colspan] %>">
-                            <%= button_to duty[:user].username, { controller: 'duties', action: 'open_drop_modal', drop_duty_list: duty[:span_duty] }, { method: :post, remote: true, class: 'btn btn-link', style: "line-height: 0;" } %>
+                            <%= button_to duty[:user].username, { controller: 'duties', action: 'open_drop_modal', drop_duty_list: duty[:span_duty] }, { method: :post, remote: true, class: 'btn btn-link', style: "line-height: 0.3;" } %>
                           </td>
                         <% else %>
                           <td class="schedule-name text-overflow-ellipsis" colspan="<%= duty[:colspan] %>">
