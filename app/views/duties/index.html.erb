@@ -1,5 +1,6 @@
 <div id="duty-start-time" data-start-time=<%= TimeRange.order(:start_time).first.start_time.strftime('%H') %>></div>
 <div id="num-of-places" data-num-of-places=<%= @places.count %>></div>
+<div id="current-user" data-current-user=<%= current_user%>>
 
 <div class="container-fluid no-padding-top">
   <div class="row">

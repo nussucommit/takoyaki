@@ -90,6 +90,9 @@ function load() {
   var NUM_OF_PLACES = $('#num-of-places').data('num-of-places');
   var AVERAGE_COLSPAN = $('#average-colspan').data('average-colspan');
 
+  var test = $('#current-user').data('current-user');
+  console.log(test);
+
   scrollToCurrentTime(START_TIME);
   toggleSidebar();
   sidebarOnLoad();
