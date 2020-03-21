@@ -64,7 +64,7 @@ GEM
     browser_details (0.0.6)
       useragent (>= 0.4)
     builder (3.2.4)
-    bullet (6.0.2)
+    bullet (6.1.0)
       activesupport (>= 3.0.0)
       uniform_notifier (~> 1.11)
     byebug (11.0.1)
@@ -297,7 +297,7 @@ GEM
       unf_ext
     unf_ext (0.0.7.6)
     unicode-display_width (1.6.0)
-    uniform_notifier (1.12.1)
+    uniform_notifier (1.13.0)
     useragent (0.16.10)
     warden (1.2.8)
       rack (>= 2.0.6)
