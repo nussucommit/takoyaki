@@ -67,6 +67,43 @@ function scrollToCurrentTime(startTime) {
   }
 }
 
+function drawLine(startTime, endTime) {
+  var line = document.getElementById("vertical_line");
+  line.style.display = "none";
+  var table = document.getElementById("table");
+  var tableLeft = document.getElementById("tableLeft");
+  var container = document.getElementById("container");
+  line.style.height = (container.clientHeight) + "px";
+  container.addEventListener("scroll", helper);
+  var currHours;
+  var currMinutes;
+  setInterval(function () {
+    var date = new Date();
+    currHours = date.getHours();
+    currMinutes = date.getMinutes();
+    if (currHours < startTime || (currHours >= endTime && currMinutes > 0)) {
+      line.style.display = "none";
+    } else {
+      helper();
+    }
+  }, 1000);
+  function helper() {
+    var currTimeInMinutes = currHours * 60 + currMinutes;
+    var rightColumnWidth = table.rows[0].cells[0].offsetWidth;
+    var leftColumnWidth = tableLeft.offsetWidth + 15;
+    // I am so sorry for hardcoding the adjusting term, but let's just get this thing working, okay :")
+    var lowTime = container.scrollLeft / rightColumnWidth * 60 + startTime * 60;
+    console.log(rightColumnWidth);
+    var highTime = lowTime + container.clientWidth / rightColumnWidth * 60;
+    if (lowTime <= currTimeInMinutes && currTimeInMinutes <= highTime) {
+      line.style.display = "block";
+      line.style.left = (((currTimeInMinutes - lowTime) / 60) * rightColumnWidth) + leftColumnWidth + "px";
+    } else {
+      line.style.display = "none";
+    }
+  }
+}
+
 function colourScheduleTable(numOfPlaces) {
   var nthChildInt = numOfPlaces * 2;
 
@@ -87,10 +124,12 @@ function setDutyTableWidth(averageColspan) {
 
 function load() {
   var START_TIME = $('#duty-start-time').data('start-time');
+  var END_TIME = $('#duty-end-time').data('end-time');
   var NUM_OF_PLACES = $('#num-of-places').data('num-of-places');
   var AVERAGE_COLSPAN = $('#average-colspan').data('average-colspan');
 
-  scrollToCurrentTime(START_TIME);
+  scrollToCurrentTime(START_TIME); //I find this mildly annoying, and when the drawLine function is properly implemented, I think we can yeet this function away
+  drawLine(START_TIME, END_TIME);
   toggleSidebar();
   sidebarOnLoad();
   setDutyTableButtons();
