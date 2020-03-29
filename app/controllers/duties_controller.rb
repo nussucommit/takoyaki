@@ -102,28 +102,35 @@ class DutiesController < ApplicationController
 
   def non_mc_exceed_hrs?(num_hrs, duty_ids)
     return false if current_user.mc
+
+    # collect timeslots of duty to grab
     timeslot_ids = Duty.where(id: duty_ids).pluck(:timeslot_id)
-    timeslots = Timeslot.find(timeslot_ids).pluck(:time_range_id)
-
-    # collect the timeslot
-    timerange = TimeRange.find(timeslots)
-    start_time = timerange.pluck(:start_time)
-    end_time = timerange.pluck(:end_time)
+    time_range_ids = Timeslot.find(timeslot_ids).pluck(:time_range_id)
+    time_ranges = TimeRange.find(time_range_ids)
     
-    # collect the timeslots on the day
-    day = Duty.where(id: duty_ids).pluck(:day)
-    other_slots = Duty.where(:day = day).pluck(:timeslot_id)
-    slots_array = Array.new
-    other_slots.each do |slots|
-      range = TimeRange.find(slots)
-      start_time1 = range.pluck(:start_time)
-      end_time1 = range.pluck(:end_time)
+    # collect all timeslots of user on the day
+    date = Duty.where(id: duty_ids).pluck(:date)
+    usr_timeslot_ids = Duty.where(:date = date, :user_id = current_user.id).pluck(:timeslot_id)
+    usr_time_range_ids = Timeslot.find(usr_timeslot_ids).pluck(:time_range_id)
+    usr_time_ranges = TimeRange.find(usr_time_range_ids)
 
-      if start_time - end_time1 < num_hrs*60*60 | start_time1 - end_time > num_hrs*60*60
-        slots_array.push(range)
+    # merge user duty times on that day with times of new duty to grab
+    all_time_ranges = time_ranges + usr_time_ranges
+    all_time_ranges.sort! { |r1, r2| r1.start_time <=> r2.start_time}
+    
+    total_hrs = 0.5
+    prev_range = all_time_ranges[0]
+    for i in (1...all_time_ranges.length)
+      range = all_time_ranges[i]
+      if range.start_time == prev_range.end_time
+        total_hrs += 0.5
+        return true if total_hrs > num_hrs
+      else
+        total_hrs = 0.5  # reset hour counter
       end
     end
-    
+
+    return false
   end
 
   def grabable?(duty_ids)
