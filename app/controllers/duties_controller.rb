@@ -102,7 +102,17 @@ class DutiesController < ApplicationController
 
   def non_mc_exceed_hrs?(num_hrs, duty_ids)
     return false if current_user.mc
+    timeslot_ids = Duty.where(id: duty_ids).pluck(:timeslot_id)
+    timeslots = Timeslot.find(timeslot_ids).pluck(:time_range_id)
 
+    # collect the timeslot
+    timerange = TimeRange.find(timeslots)
+    start_time = timerange.pluck(:start_time)
+    end_time = timerange.pluck(:end_time)
+    
+    # collect the timeslots on the day
+    day = Duty.where(id: duty_ids).pluck(:day)
+    other_slots = Duty.where(:day = day).not(id: duty_ids)
     
   end
 
@@ -111,7 +121,7 @@ class DutiesController < ApplicationController
     MAX_HRS = 6
     return false if duty_ids.blank?
     return false unless can_duty_mc_timeslots?(duty_ids)
-    retrun false if non_mc_exceed_hrs?(MAX_HRS, duty_ids)
+    return false if non_mc_exceed_hrs?(MAX_HRS, duty_ids)
 
     grabable_duties.where(id: duty_ids).size == duty_ids.size
   end
