@@ -209,6 +209,11 @@ RSpec.describe DutiesController, type: :controller do
   end
 
   describe 'GET duties#show_grabable_duties' do
+    before do
+      @mock_time = Time.zone.parse("#{Time.zone.today} 10:00")
+
+      allow(Time).to receive(:now).and_return(@mock_time)
+    end
     context 'unauthenticated' do
       it do
         get(:show_grabable_duties)
