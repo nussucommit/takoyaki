@@ -112,7 +112,17 @@ class DutiesController < ApplicationController
     
     # collect the timeslots on the day
     day = Duty.where(id: duty_ids).pluck(:day)
-    other_slots = Duty.where(:day = day).not(id: duty_ids)
+    other_slots = Duty.where(:day = day).pluck(:timeslot_id)
+    slots_array = Array.new
+    other_slots.each do |slots|
+      range = TimeRange.find(slots)
+      start_time1 = range.pluck(:start_time)
+      end_time1 = range.pluck(:end_time)
+
+      if start_time - end_time1 < num_hrs*60*60 | start_time1 - end_time > num_hrs*60*60
+        slots_array.push(range)
+      end
+    end
     
   end
 
