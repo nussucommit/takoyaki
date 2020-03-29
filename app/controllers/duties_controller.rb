@@ -61,14 +61,6 @@ class DutiesController < ApplicationController
 
   def show_grabable_duties
     @grabable_duties = grabable_duties
-
-    if !current_user.mc
-      timeslot_ids = Duty.where(user_id: current_user.id).pluck(:timeslot_id);
-      timeslots = Timeslot.find(timeslot_ids).pluck(:time_range_id);
-      timerange = TimeRange.find(timeslots);
-      puts timerange.inspect;
-
-    end
   end
 
   def export
