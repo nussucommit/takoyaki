@@ -44,7 +44,12 @@ class DutiesController < ApplicationController
                           .date.beginning_of_week
       grab_duty(grab_duty_ids, start_of_week)
     else
-      redirect_to duties_path, alert: 'Invalid duties to grab'
+      if can_duty_mc_timeslots(grab_duty_ids) == false
+        redirect_to duties_path, alert: 'Invalid duties to grab since you cannot duty MC timeslots'
+      elsif Duty.find_params(grab_duty_ids).where('(date + time_ranges.start_time) <= ?', Time.zone.now)
+         redirect_to duties_path, alert: 'Invalid duties to grab since you cannot grab a past slot'
+      else
+         redirect_to duties_path, alert: 'Invalid duties to grab'
     end
   end
 
