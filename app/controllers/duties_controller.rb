@@ -61,14 +61,6 @@ class DutiesController < ApplicationController
 
   def show_grabable_duties
     @grabable_duties = grabable_duties
-
-    if !current_user.mc
-      timeslot_ids = Duty.where(user_id: current_user.id).pluck(:timeslot_id);
-      timeslots = Timeslot.find(timeslot_ids).pluck(:time_range_id);
-      timerange = TimeRange.find(timeslots);
-      puts timerange.inspect;
-
-    end
   end
 
   def export
@@ -110,7 +102,17 @@ class DutiesController < ApplicationController
 
   def non_mc_exceed_hrs?(num_hrs, duty_ids)
     return false if current_user.mc
+    timeslot_ids = Duty.where(id: duty_ids).pluck(:timeslot_id)
+    timeslots = Timeslot.find(timeslot_ids).pluck(:time_range_id)
 
+    # collect the timeslot
+    timerange = TimeRange.find(timeslots)
+    start_time = timerange.pluck(:start_time)
+    end_time = timerange.pluck(:end_time)
+    
+    # collect the timeslots on the day
+    day = Duty.where(id: duty_ids).pluck(:day)
+    other_slots = Duty.where(:day = day).not(id: duty_ids)
     
   end
 
