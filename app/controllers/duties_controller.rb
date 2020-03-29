@@ -128,6 +128,8 @@ class DutiesController < ApplicationController
       else
         total_hrs = 0.5  # reset hour counter
       end
+
+      prev_range = range
     end
 
     return false
