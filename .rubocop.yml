@@ -63,9 +63,6 @@ Security/YAMLLoad:
 Style/AutoResourceCleanup:
   Enabled: true
 
-Style/BracesAroundHashParameters:
-  EnforcedStyle: context_dependent
-
 Style/CollectionMethods:
   Enabled: true
 
