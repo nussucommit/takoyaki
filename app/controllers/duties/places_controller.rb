@@ -18,13 +18,24 @@ module Duties
     end
 
     def update
+      message=[]
       duty_params.each do |id, user_id|
         duty = Duty.find(id)
-        unless duty.free
+        timeslot = duty.timeslot
+        user_on_duty = Duty.joins(:timeslot)
+                           .where(timeslots:{time_range_id: timeslot.time_range_id})
+                           .where.not(timeslots:{place_id: timeslot.place_id}).exists?(user_id: user_id)
+        unless duty.free || user_on_duty
           duty.update(user_id: user_id, free: false, request_user: nil)
+        else
+          message.push("#{User.find(user_id).username} is on duty")
         end
       end
       start_of_week = Duty.find(duty_params.keys.first).date.beginning_of_week
+      if message.size
+        redirect_to edit_duties_place_path(@place, start_date: start_of_week),
+                    alert: message.join("\n") and return
+      end
       redirect_to edit_duties_place_path(@place, start_date: start_of_week),
                   notice: 'Duties successfully updated!'
     end
