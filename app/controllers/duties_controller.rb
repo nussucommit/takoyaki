@@ -117,7 +117,7 @@ class DutiesController < ApplicationController
 
     # merge user duty times on that day with times of new duty to grab
     all_time_ranges = time_ranges + usr_time_ranges
-    all_time_ranges.sort! { |r1, r2| r1.start_time <=> r2.start_time}
+    all_time_ranges.sort! { |r1, r2| r1.start_time <=> r2.start_time }
     
     prev_range = all_time_ranges[0]
     total_hrs = (prev_range.end_time.to_i - prev_range.start_time.to_i)/3600.0
