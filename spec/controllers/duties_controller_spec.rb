@@ -203,7 +203,7 @@ RSpec.describe DutiesController, type: :controller do
       timeslot2 = create(:timeslot, time_range: time_range2)
       create(:duty, user: @user, timeslot: timeslot2)
 
-      time_range3 = create(:time_range, start_time: Time.zone.now + 2.hours, 
+      time_range3 = create(:time_range, start_time: Time.zone.now + 2.hours,
                                         end_time: Time.zone.now + 4.hours)
       timeslot3 = create(:timeslot, time_range: time_range3)
       duty_to_grab = create(:duty, free: true, timeslot: timeslot3)
