@@ -132,6 +132,8 @@ class DutiesController < ApplicationController
 
       prev_range = range
     end
+
+    return false
   end
 
   def grabable?(duty_ids)
