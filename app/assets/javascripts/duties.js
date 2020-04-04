@@ -147,23 +147,13 @@ function validateModal() {
 }
 
 function validateGrabPage() {
-  // for non-MCs, make sure duty grabbed does not result in more than 6 consecutive hrs
-  if (isMoreThanSixConsecutiveHours(user)) {
-    alert("You cannot grab duties for more than 6 consecutive hours");
-    return false;
-  }
-
   // make sure at least one checkbox is checked
   if (!$("#grab-page-form input[type=checkbox]:checked").length > 0) {
     alert("Please select at least one time slot");
     return false;
-  }
+  } 
 
   return true;
-}
-
-function isMoreThanSixConsecutiveHours(user) {
-
 }
 
 $(document).on('turbolinks:load', load);
