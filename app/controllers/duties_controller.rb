@@ -152,10 +152,12 @@ class DutiesController < ApplicationController
       Duty.find(grab_duty_ids).each do |duty|
         timeslot = duty.timeslot
         user_on_duty = Duty.joins(:timeslot)
-                           .where(timeslots: { time_range_id: timeslot.time_range_id })
-                           .where.not(timeslots: { place_id: timeslot.place_id })
+                           .where(timeslots: { time_range_id:
+                           timeslot.time_range_id })
+                           .where.not(timeslots: { place_id:
+                           timeslot.place_id })
                            .exists?(user_id: current_user.id)
-        raise StandardError, 'You are already on duty in other place!' if user_on_duty
+        raise StandardError, 'You need to duty in other places!' if user_on_duty
 
         duty.update!(user: current_user, free: false, request_user: nil)
       end

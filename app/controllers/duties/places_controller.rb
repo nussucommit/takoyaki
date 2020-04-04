@@ -23,8 +23,11 @@ module Duties
         duty = Duty.find(id)
         timeslot = duty.timeslot
         user_on_duty = Duty.joins(:timeslot)
-                           .where(timeslots: { time_range_id: timeslot.time_range_id })
-                           .where.not(timeslots: { place_id: timeslot.place_id }).exists?(user_id: user_id)
+                           .where(timeslots: { time_range_id:
+                           timeslot.time_range_id })
+                           .where.not(timeslots: { place_id:
+                           timeslot.place_id })
+                           .exists?(user_id: user_id)
         if duty.free || user_on_duty
           message.push("#{User.find(user_id).username} is on duty")
         else
