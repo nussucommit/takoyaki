@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-# rubocop:disable Metrics/ClassLength
 class DutiesController < ApplicationController
   def index
     @header_iter = generate_header_iter
@@ -43,12 +42,16 @@ class DutiesController < ApplicationController
       start_of_week = Duty.find(grab_duty_ids.first)
                           .date.beginning_of_week
       grab_duty(grab_duty_ids, start_of_week)
-    elsif can_duty_mc_timeslots(grab_duty_ids) == false
-        redirect_to duties_path, alert: 'Invalid duties to grab since you cannot duty MC timeslots'
-    elsif Duty.find_params(grab_duty_ids).where('(date + time_ranges.start_time) <= ?', Time.zone.now)
-         redirect_to duties_path, alert: 'Invalid duties to grab since you cannot grab a past slot'
+    elsif can_duty_mc_timeslots?(grab_duty_ids) == false
+      flash[:error] = 'You cannot duty MC timeslots'
+      redirect_to duties_path, alert: 'Invalid duties to grab'
+    elsif Duty.joins(%i[time_range place]).where(
+      '(date + time_ranges.start_time) <= ?', Time.zone.now
+    )
+      flash[:error] = 'You cannot grab a past slot'
+      redirect_to duties_path, alert: 'Invalid duties to grab'
     else
-         redirect_to duties_path, alert: 'Invalid duties to grab'
+      redirect_to duties_path, alert: 'Invalid duties to grab'
     end
   end
 
@@ -169,4 +172,3 @@ class DutiesController < ApplicationController
     end
   end
 end
-# rubocop:enable Metrics/ClassLength
