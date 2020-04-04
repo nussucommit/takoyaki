@@ -128,15 +128,8 @@ function load() {
   var NUM_OF_PLACES = $('#num-of-places').data('num-of-places');
   var AVERAGE_COLSPAN = $('#average-colspan').data('average-colspan');
 
-<<<<<<< HEAD
-  var test = $('#current-user').data('current-user');
-  console.log(test);
-
-  scrollToCurrentTime(START_TIME);
-=======
   scrollToCurrentTime(START_TIME); //I find this mildly annoying, and when the drawLine function is properly implemented, I think we can yeet this function away
   drawLine(START_TIME, END_TIME);
->>>>>>> master
   toggleSidebar();
   sidebarOnLoad();
   setDutyTableButtons();
@@ -154,13 +147,23 @@ function validateModal() {
 }
 
 function validateGrabPage() {
+  // for non-MCs, make sure duty grabbed does not result in more than 6 consecutive hrs
+  if (isMoreThanSixConsecutiveHours(user)) {
+    alert("You cannot grab duties for more than 6 consecutive hours");
+    return false;
+  }
+
   // make sure at least one checkbox is checked
   if (!$("#grab-page-form input[type=checkbox]:checked").length > 0) {
     alert("Please select at least one time slot");
     return false;
-  } 
+  }
 
   return true;
+}
+
+function isMoreThanSixConsecutiveHours(user) {
+
 }
 
 $(document).on('turbolinks:load', load);
