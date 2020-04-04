@@ -2,6 +2,7 @@
 
 # rubocop:disable Metrics/ClassLength
 class DutiesController < ApplicationController
+  MAX_HRS = 6
   load_and_authorize_resource only: [:export]
   def index
     @header_iter = generate_header_iter
@@ -110,7 +111,7 @@ class DutiesController < ApplicationController
     
     # collect all timeslots of user on the day
     date = Duty.where(id: duty_ids).pluck(:date)
-    usr_timeslot_ids = Duty.where(:date = date, :user_id = current_user.id).pluck(:timeslot_id)
+    usr_timeslot_ids = Duty.where(date: date, user_id: current_user.id).pluck(:timeslot_id)
     usr_time_range_ids = Timeslot.find(usr_timeslot_ids).pluck(:time_range_id)
     usr_time_ranges = TimeRange.find(usr_time_range_ids)
 
@@ -136,7 +137,6 @@ class DutiesController < ApplicationController
   end
 
   def grabable?(duty_ids)
-    MAX_HRS = 6
     return false if duty_ids.blank?
     return false unless can_duty_mc_timeslots?(duty_ids)
     return false if non_mc_exceed_hrs?(MAX_HRS, duty_ids)
