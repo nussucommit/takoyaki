@@ -191,17 +191,17 @@ RSpec.describe DutiesController, type: :controller do
 
     it 'grabs duty when non-MC user tries to duty for more than 6 hours non-consecutively' do
       time_range_1 = create(:time_range, start_time: Time.zone.now - 1.hour,
-        end_time: Time.zone.now + 2.hours)
+                            end_time: Time.zone.now + 2.hours)
       timeslot_1 = create(:timeslot, time_range: time_range_1)
       duty_prev = create(:duty, user: @user, timeslot: timeslot_1)
       
       time_range_2 = create(:time_range, start_time: Time.zone.now + 5.hours,
-        end_time: Time.zone.now + 7.hours)
+                            end_time: Time.zone.now + 7.hours)
       timeslot_2 = create(:timeslot, time_range: time_range_2)
       duty_after = create(:duty, user: @user, timeslot: timeslot_2)
 
       time_range_3 = create(:time_range, start_time: Time.zone.now + 2.hours, 
-        end_time: Time.zone.now + 4.hours)
+                            end_time: Time.zone.now + 4.hours)
       timeslot_3 = create(:timeslot, time_range: time_range_3)
       duty_to_grab = create(:duty, free: true, timeslot: timeslot_3)
 
