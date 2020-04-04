@@ -152,9 +152,11 @@ class DutiesController < ApplicationController
       Duty.find(grab_duty_ids).each do |duty|
         timeslot = duty.timeslot
         user_on_duty = Duty.joins(:timeslot)
-                           .where(timeslots:{time_range_id: timeslot.time_range_id})
-                           .where.not(timeslots:{place_id: timeslot.place_id}).exists?(user_id: current_user.id)
-        raise StandardError.new('You are already on duty in other place!') if user_on_duty
+                           .where(timeslots: { time_range_id: timeslot.time_range_id })
+                           .where.not(timeslots: { place_id: timeslot.place_id })
+                           .exists?(user_id: current_user.id)
+        raise StandardError, 'You are already on duty in other place!' if user_on_duty
+
         duty.update!(user: current_user, free: false, request_user: nil)
       end
       redirect_to duties_path(start_date: start_of_week),
@@ -163,11 +165,10 @@ class DutiesController < ApplicationController
   rescue ActiveRecord::RecordInvalid
     redirect_to duties_path(start_date: start_of_week),
                 alert: 'Error in grabbing duty! Please try again'
-  rescue StandardError=>e
+  rescue StandardError => e
     redirect_to duties_path(start_date: start_of_week),
                 alert: e
   end
-
 
   def drop_duties(drop_duty_ids, start_of_week)
     if can_drop_duties?(drop_duty_ids)
