@@ -157,7 +157,7 @@ RSpec.describe DutiesController, type: :controller do
       duty_to_grab = create(:duty, free: true, timeslot: timeslot3)
 
       patch :grab, params: { duty_id: { duty_to_grab.id => duty_to_grab.id } }
-      
+
       should redirect_to duties_path
       expect(flash[:alert]).to be('Invalid duties to grab')
     end
