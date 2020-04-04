@@ -140,20 +140,20 @@ RSpec.describe DutiesController, type: :controller do
     end
 
     it 'does nothing when non-MC user tries to duty for more than 6 hours consecutively' do
-      time_range_1 = create(:time_range, start_time: Time.zone.now - 1.hour,
-        end_time: Time.zone.now + 2.hours)
-      timeslot_1 = create(:timeslot, time_range: time_range_1)
-      duty_prev = create(:duty, user: @user, timeslot: timeslot_1)
+      time_range1 = create(:time_range, start_time: Time.zone.now - 1.hour,
+                            end_time: Time.zone.now + 2.hours)
+      timeslot1 = create(:timeslot, time_range: time_range1)
+      create(:duty, user: @user, timeslot: timeslot1)
       
-      time_range_2 = create(:time_range, start_time: Time.zone.now + 4.hours,
-        end_time: Time.zone.now + 6.hours)
-      timeslot_2 = create(:timeslot, time_range: time_range_2)
-      duty_after = create(:duty, user: @user, timeslot: timeslot_2)
+      time_range2 = create(:time_range, start_time: Time.zone.now + 4.hours,
+                            end_time: Time.zone.now + 6.hours)
+      timeslot2 = create(:timeslot, time_range: time_range2)
+      create(:duty, user: @user, timeslot: timeslot2)
 
-      time_range_3 = create(:time_range, start_time: Time.zone.now + 2.hours, 
-        end_time: Time.zone.now + 4.hours)
-      timeslot_3 = create(:timeslot, time_range: time_range_3)
-      duty_to_grab = create(:duty, free: true, timeslot: timeslot_3)
+      time_range3 = create(:time_range, start_time: Time.zone.now + 2.hours, 
+                            end_time: Time.zone.now + 4.hours)
+      timeslot3 = create(:timeslot, time_range: time_range3)
+      duty_to_grab = create(:duty, free: true, timeslot: timeslot3)
 
       patch :grab, params: { duty_id: { duty_to_grab.id => duty_to_grab.id } }
       
@@ -162,20 +162,20 @@ RSpec.describe DutiesController, type: :controller do
     end
 
     it 'grabs duty when non-MC user tries to duty for exactly 6 hours consecutively' do
-      time_range_1 = create(:time_range, start_time: Time.zone.now - 1.hour,
-        end_time: Time.zone.now + 2.hours)
-      timeslot_1 = create(:timeslot, time_range: time_range_1)
-      duty_prev = create(:duty, user: @user, timeslot: timeslot_1)
+      time_range1 = create(:time_range, start_time: Time.zone.now - 1.hour,
+                           end_time: Time.zone.now + 2.hours)
+      timeslot1 = create(:timeslot, time_range: time_range_1)
+      create(:duty, user: @user, timeslot: timeslot_1)
       
-      time_range_2 = create(:time_range, start_time: Time.zone.now + 4.hours,
-        end_time: Time.zone.now + 5.hours)
-      timeslot_2 = create(:timeslot, time_range: time_range_2)
-      duty_after = create(:duty, user: @user, timeslot: timeslot_2)
+      time_range2 = create(:time_range, start_time: Time.zone.now + 4.hours,
+                           end_time: Time.zone.now + 5.hours)
+      timeslot2 = create(:timeslot, time_range: time_range2)
+      create(:duty, user: @user, timeslot: timeslot2)
 
-      time_range_3 = create(:time_range, start_time: Time.zone.now + 2.hours, 
+      time_range3 = create(:time_range, start_time: Time.zone.now + 2.hours, 
         end_time: Time.zone.now + 4.hours)
-      timeslot_3 = create(:timeslot, time_range: time_range_3)
-      duty_to_grab = create(:duty, free: true, timeslot: timeslot_3)
+      timeslot3 = create(:timeslot, time_range: time_range3)
+      duty_to_grab = create(:duty, free: true, timeslot: timeslot3)
 
       start_date = duty_to_grab.date.beginning_of_week
       expect do
@@ -190,20 +190,20 @@ RSpec.describe DutiesController, type: :controller do
     end
 
     it 'grabs duty when non-MC user tries to duty for more than 6 hours non-consecutively' do
-      time_range_1 = create(:time_range, start_time: Time.zone.now - 1.hour,
+      time_range1 = create(:time_range, start_time: Time.zone.now - 1.hour,
                             end_time: Time.zone.now + 2.hours)
-      timeslot_1 = create(:timeslot, time_range: time_range_1)
-      duty_prev = create(:duty, user: @user, timeslot: timeslot_1)
+      timeslot1 = create(:timeslot, time_range: time_range1)
+      create(:duty, user: @user, timeslot: timeslot1)
       
-      time_range_2 = create(:time_range, start_time: Time.zone.now + 5.hours,
+      time_range2 = create(:time_range, start_time: Time.zone.now + 5.hours,
                             end_time: Time.zone.now + 7.hours)
-      timeslot_2 = create(:timeslot, time_range: time_range_2)
-      duty_after = create(:duty, user: @user, timeslot: timeslot_2)
+      timeslot2 = create(:timeslot, time_range: time_range2)
+      create(:duty, user: @user, timeslot: timeslot2)
 
-      time_range_3 = create(:time_range, start_time: Time.zone.now + 2.hours, 
+      time_range3 = create(:time_range, start_time: Time.zone.now + 2.hours, 
                             end_time: Time.zone.now + 4.hours)
-      timeslot_3 = create(:timeslot, time_range: time_range_3)
-      duty_to_grab = create(:duty, free: true, timeslot: timeslot_3)
+      timeslot3 = create(:timeslot, time_range: time_range3)
+      duty_to_grab = create(:duty, free: true, timeslot: timeslot3)
 
       start_date = duty_to_grab.date.beginning_of_week
       expect do
