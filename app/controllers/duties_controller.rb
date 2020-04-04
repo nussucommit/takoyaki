@@ -108,26 +108,27 @@ class DutiesController < ApplicationController
     timeslot_ids = Duty.where(id: duty_ids).pluck(:timeslot_id)
     time_range_ids = Timeslot.find(timeslot_ids).pluck(:time_range_id)
     time_ranges = TimeRange.find(time_range_ids)
-    
+
     # collect all timeslots of user on the day
     date = Duty.where(id: duty_ids).pluck(:date)
-    usr_timeslot_ids = Duty.where(date: date, user_id: current_user.id).pluck(:timeslot_id)
+    usr_timeslot_ids = Duty.where(date: date, user_id: current_user.id)
+                            .pluck(:timeslot_id)
     usr_time_range_ids = Timeslot.find(usr_timeslot_ids).pluck(:time_range_id)
     usr_time_ranges = TimeRange.find(usr_time_range_ids)
 
     # merge user duty times on that day with times of new duty to grab
     all_time_ranges = time_ranges + usr_time_ranges
     all_time_ranges.sort! { |r1, r2| r1.start_time <=> r2.start_time }
-    
+
     prev_range = all_time_ranges[0]
-    total_hrs = (prev_range.end_time.to_i - prev_range.start_time.to_i)/3600.0
-    for i in (1...all_time_ranges.length)
+    total_hrs = (prev_range.end_time.to_i - prev_range.start_time.to_i) / 3600.0
+    (1...all_time_ranges.length).each do |i|
       range = all_time_ranges[i]
       if range.start_time.to_i == prev_range.end_time.to_i
-        total_hrs += (range.end_time.to_i-range.start_time.to_i)/3600.0
+        total_hrs += (range.end_time.to_i - range.start_time.to_i) / 3600.0
         return true if total_hrs > num_hrs
       else
-        total_hrs = 0  # reset hour counter
+        total_hrs = 0 # reset hour counter
       end
 
       prev_range = range
