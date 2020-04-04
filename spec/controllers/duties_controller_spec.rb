@@ -139,12 +139,13 @@ RSpec.describe DutiesController, type: :controller do
       expect(flash[:alert]).to be('Invalid duties to grab')
     end
 
-    it 'does nothing when non-MC user tries to duty for more than 6 hours consecutively' do
+    it 'does nothing when non-MC user tries to duty for more than 6 hours
+        consecutively' do
       time_range1 = create(:time_range, start_time: Time.zone.now - 1.hour,
                            end_time: Time.zone.now + 2.hours)
       timeslot1 = create(:timeslot, time_range: time_range1)
       create(:duty, user: @user, timeslot: timeslot1)
-      
+
       time_range2 = create(:time_range, start_time: Time.zone.now + 4.hours,
                            end_time: Time.zone.now + 6.hours)
       timeslot2 = create(:timeslot, time_range: time_range2)
@@ -161,12 +162,13 @@ RSpec.describe DutiesController, type: :controller do
       expect(flash[:alert]).to be('Invalid duties to grab')
     end
 
-    it 'grabs duty when non-MC user tries to duty for exactly 6 hours consecutively' do
+    it 'grabs duty when non-MC user tries to duty for exactly 6 hours
+        consecutively' do
       time_range1 = create(:time_range, start_time: Time.zone.now - 1.hour,
                            end_time: Time.zone.now + 2.hours)
-      timeslot1 = create(:timeslot, time_range: time_range_1)
-      create(:duty, user: @user, timeslot: timeslot_1)
-      
+      timeslot1 = create(:timeslot, time_range: time_range1)
+      create(:duty, user: @user, timeslot: timeslot1)
+
       time_range2 = create(:time_range, start_time: Time.zone.now + 4.hours,
                            end_time: Time.zone.now + 5.hours)
       timeslot2 = create(:timeslot, time_range: time_range2)
@@ -189,7 +191,8 @@ RSpec.describe DutiesController, type: :controller do
       expect(flash[:notice]).to be('Duty successfully grabbed!')
     end
 
-    it 'grabs duty when non-MC user tries to duty for more than 6 hours non-consecutively' do
+    it 'grabs duty when non-MC user tries to duty for more than 6 hours
+        non-consecutively' do
       time_range1 = create(:time_range, start_time: Time.zone.now - 1.hour,
                            end_time: Time.zone.now + 2.hours)
       timeslot1 = create(:timeslot, time_range: time_range1)
