@@ -119,15 +119,15 @@ class DutiesController < ApplicationController
     all_time_ranges = time_ranges + usr_time_ranges
     all_time_ranges.sort! { |r1, r2| r1.start_time <=> r2.start_time}
     
-    total_hrs = 0.5
     prev_range = all_time_ranges[0]
+    total_hrs = (prev_range.end_time.to_i - prev_range.start_time.to_i)/3600.0
     for i in (1...all_time_ranges.length)
       range = all_time_ranges[i]
-      if range.start_time == prev_range.end_time
-        total_hrs += 0.5
+      if range.start_time.to_i == prev_range.end_time.to_i
+        total_hrs += (range.end_time.to_i-range.start_time.to_i)/3600.0
         return true if total_hrs > num_hrs
       else
-        total_hrs = 0.5  # reset hour counter
+        total_hrs = 0  # reset hour counter
       end
 
       prev_range = range
