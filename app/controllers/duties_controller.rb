@@ -124,6 +124,7 @@ class DutiesController < ApplicationController
     all_time_ranges = grabable_timeslots(duty_ids) + user_timeslots(duty_ids)
     all_time_ranges.sort! { |r1, r2| r1.start_time <=> r2.start_time }
     all_time_ranges
+  end
 
   def non_mc_exceed_hrs?(num_hrs, duty_ids)
     return false if current_user.mc
