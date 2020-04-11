@@ -101,24 +101,22 @@ class DutiesController < ApplicationController
     timeslots.all? { |t| !t.mc_only }
   end
 
-  def grabable_timeslots(duty_ids) # helper for non_mc_exceed_hrs?
+   # helper for non_mc_exceed_hrs?
+  def grabable_timeslots(duty_ids)
     # timeslots of duty to grab
     timeslot_ids = Duty.where(id: duty_ids).pluck(:timeslot_id)
     time_range_ids = Timeslot.find(timeslot_ids).pluck(:time_range_id)
     time_ranges = TimeRange.find(time_range_ids)
-
-    time_ranges
   end
 
-  def user_timeslots(duty_ids) # helper for non_mc_exceed_hrs?
+   # helper for non_mc_exceed_hrs?
+  def user_timeslots(duty_ids)
     # timeslots of user on the day
     date = Duty.where(id: duty_ids).pluck(:date)
     usr_timeslot_ids = Duty.where(date: date, user_id: current_user.id)
-                            .pluck(:timeslot_id)
+                           .pluck(:timeslot_id)
     usr_time_range_ids = Timeslot.find(usr_timeslot_ids).pluck(:time_range_id)
     usr_time_ranges = TimeRange.find(usr_time_range_ids)
-
-    usr_time_ranges
   end
 
   def non_mc_exceed_hrs?(num_hrs, duty_ids)
