@@ -129,7 +129,7 @@ class DutiesController < ApplicationController
   def non_mc_exceed_hrs?(num_hrs, duty_ids)
     return false if current_user.mc
 
-    all_time_ranges = get_all_time_ranges(duty_ids))
+    all_time_ranges = get_all_time_ranges(duty_ids)
 
     prev_range = all_time_ranges[0]
     total_hrs = (prev_range.end_time.to_i - prev_range.start_time.to_i) / 3600.0
