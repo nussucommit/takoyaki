@@ -107,7 +107,8 @@ class DutiesController < ApplicationController
     time_range_ids = Timeslot.find(timeslot_ids).pluck(:time_range_id)
     time_ranges = TimeRange.find(time_range_ids)
 
-    return time_ranges
+    time_ranges
+  end
 
   def user_timeslots(duty_ids) # helper for non_mc_exceed_hrs?
     # timeslots of user on the day
@@ -117,7 +118,8 @@ class DutiesController < ApplicationController
     usr_time_range_ids = Timeslot.find(usr_timeslot_ids).pluck(:time_range_id)
     usr_time_ranges = TimeRange.find(usr_time_range_ids)
 
-    return usr_time_ranges
+    usr_time_ranges
+  end
 
   def non_mc_exceed_hrs?(num_hrs, duty_ids)
     return false if current_user.mc
