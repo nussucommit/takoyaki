@@ -119,11 +119,16 @@ class DutiesController < ApplicationController
     TimeRange.find(usr_time_range_ids)
   end
 
+  # helper for non_mc_exceed_hrs
+  def get_all_time_ranges(duty_ids) 
+    all_time_ranges = grabable_timeslots(duty_ids) + user_timeslots(duty_ids)
+    all_time_ranges.sort! { |r1, r2| r1.start_time <=> r2.start_time }
+    all_time_ranges
+
   def non_mc_exceed_hrs?(num_hrs, duty_ids)
     return false if current_user.mc
 
-    all_time_ranges = grabable_timeslots(duty_ids) + user_timeslots(duty_ids)
-    all_time_ranges.sort! { |r1, r2| r1.start_time <=> r2.start_time }
+    all_time_ranges = get_all_time_ranges(duty_ids))
 
     prev_range = all_time_ranges[0]
     total_hrs = (prev_range.end_time.to_i - prev_range.start_time.to_i) / 3600.0
