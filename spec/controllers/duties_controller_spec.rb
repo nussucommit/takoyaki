@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
-require 'pp'
 
 RSpec.describe DutiesController, type: :controller do
   describe 'GET #index' do
