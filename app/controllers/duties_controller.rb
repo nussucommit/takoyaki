@@ -150,14 +150,8 @@ class DutiesController < ApplicationController
   def grab_duty(grab_duty_ids, start_of_week)
     Duty.transaction do
       Duty.find(grab_duty_ids).each do |duty|
-        timeslot = duty.timeslot
-        user_on_duty = Duty.joins(:timeslot)
-                           .where(timeslots: { time_range_id:
-                           timeslot.time_range_id })
-                           .where.not(timeslots: { place_id:
-                           timeslot.place_id })
-                           .exists?(user_id: current_user.id)
-        raise StandardError, 'You need to duty in other places!' if user_on_duty
+        
+        raise StandardError.new('You are already on duty in other place!') if duty.user_on_duty?(current_user.id)
 
         duty.update!(user: current_user, free: false, request_user: nil)
       end

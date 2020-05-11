@@ -35,6 +35,20 @@ class Duty < ApplicationRecord
   validates :date, uniqueness: { scope: :timeslot_id }
   scope :ordered_by_start_time,
         -> { joins(:time_range).order('time_ranges.start_time') }
+        
+  scope :duties_at_timeslot,
+        ->(timeslot){ joins(:timeslot).where(timeslots:{time_range_id: timeslot.time_range_id}) }
+
+  scope :duties_at_timeslot_other_place,
+        ->(timeslot){duties_at_timeslot(timeslot).where.not(timeslots:{place_id: timeslot.place_id}) }
+
+  # To check someone is on_duty at other place
+  # @param  user_id
+  def user_on_duty?(user_id)
+    # reduce query if nil
+    return false if user_id.nil?
+    Duty.duties_at_timeslot_other_place(timeslot).exists?(user_id: user_id)
+  end
 
   def self.generate(start_date, end_date)
     (start_date..end_date).each do |date|
