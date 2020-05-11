@@ -3,6 +3,7 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 .sidebar-container {
+  @import "constants";
   border: 3px solid $black;
 
   h1 {
@@ -32,6 +33,7 @@
 }
 
 .post {
+  @import "constants";
   border: 1px solid $black;
   margin-bottom: 5px;
 }
@@ -80,6 +82,7 @@
 }
 
 .announcements-table {
+  @import "constants";
   padding-left: 20px;
   padding-right: 20px;
 
