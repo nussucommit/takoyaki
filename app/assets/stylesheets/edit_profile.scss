@@ -1,5 +1,5 @@
 .edit-profile {
-  @import "constants";
+  @import 'constants';
   width: 100%;
 
   .container {
@@ -41,12 +41,12 @@
   }
 
   .actions input:hover {
-    @import "constants";
+    @import 'constants';
     background-color: $light-yellow;
   }
 
   .actions input {
-    @import "constants";
+    @import 'constants';
     background-color: $yellow;
     border: 2px solid $yellow;
     border-radius: 50px;

@@ -7,7 +7,7 @@
 }
 
 h1 {
-  @import "constants";
+  @import 'constants';
   background-color: $black;
   box-shadow: 0 1px 10px $grey,
               inset 1px -3px 3px -1px $grey;
@@ -50,7 +50,7 @@ h1 {
 }
 
 .schedule-timings {
-  @import "constants";
+  @import 'constants';
   background-color: $yellow;
   margin: 0;
   padding: 0;
@@ -58,7 +58,7 @@ h1 {
 }
 
 .schedule-hours {
-  @import "constants";
+  @import 'constants';
   border: 1px solid $black;
 }
 
@@ -75,7 +75,7 @@ h1 {
 }
 
 .schedule-name {
-  @import "constants";
+  @import 'constants';
   border: 1px solid $black;
   text-align: center;
   text-overflow: ellipsis;
@@ -83,7 +83,7 @@ h1 {
 }
 
 .schedule-name-empty {
-  @import "constants";
+  @import 'constants';
   background-color: $light-grey;
   border: 1px solid $black;
 }
@@ -100,7 +100,7 @@ h1 {
 }
 
 .duty-table-header {
-  @import "constants";
+  @import 'constants';
   padding-top: 10px;
 
   .duty-table-button {
@@ -130,7 +130,7 @@ h1 {
 }
 
 .my-duty-cell {
-  @import "constants";
+  @import 'constants';
   background-color: $light-red;
 }
 
@@ -140,7 +140,7 @@ h1 {
 }
 
 .duty-hours-exceed {
-  @import "constants";
+  @import 'constants';
   color: $free-speech-red;
 }
 

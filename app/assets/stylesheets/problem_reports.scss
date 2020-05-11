@@ -18,7 +18,7 @@
 }
 
 .problem-report-btn {
-  @import "constants";
+  @import 'constants';
   box-shadow: 0 2px 2px $grey;
   font-size: 13px;
   margin-right: 10px;
@@ -26,7 +26,7 @@
 
 @media (max-width: 768px) {
   .problem-report-btn {
-    @import "constants";
+    @import 'constants';
     box-shadow: 0 2px 2px $grey;
     font-size: 11px;
     margin-right: 0;
@@ -35,7 +35,7 @@
 }
 
 .problem-report-table {
-  @import "constants";
+  @import 'constants';
   border: .5px solid $dim-grey;
   border-collapse: collapse;
   box-shadow: 0 0 10px 1px $grey;
@@ -70,7 +70,7 @@
 }
 
 .new-problem-report-table {
-  @import "constants";
+  @import 'constants';
   background-color: $cream;
   margin-bottom: 10px;
   padding: 10px;
