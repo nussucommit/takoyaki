@@ -40,6 +40,7 @@ class DutiesController < ApplicationController
 
   def grab
     grab_duty_ids = params[:duty_id].present? && params[:duty_id].keys
+
     if grabable?(grab_duty_ids)
       start_of_week = Duty.find(grab_duty_ids.first)
                           .date.beginning_of_week
@@ -150,8 +151,7 @@ class DutiesController < ApplicationController
   def grab_duty(grab_duty_ids, start_of_week)
     Duty.transaction do
       Duty.find(grab_duty_ids).each do |duty|
-        
-        raise StandardError.new('You are already on duty in other place!') if duty.user_on_duty?(current_user.id)
+        raise OnDutyError, 'You are already on duty in other place!' if duty.user_on_duty?(current_user.id)
 
         duty.update!(user: current_user, free: false, request_user: nil)
       end
@@ -161,6 +161,9 @@ class DutiesController < ApplicationController
   rescue ActiveRecord::RecordInvalid
     redirect_to duties_path(start_date: start_of_week),
                 alert: 'Error in grabbing duty! Please try again'
+  rescue OnDutyError => e
+    redirect_to duties_path(start_date: start_of_week),
+                alert: e
   rescue StandardError => e
     redirect_to duties_path(start_date: start_of_week),
                 alert: e

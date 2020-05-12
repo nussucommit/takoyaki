@@ -71,7 +71,11 @@ RSpec.describe DutiesController, type: :controller do
       expect(duty.free).to be(false)
       expect(duty.request_user_id).to be(nil)
       should redirect_to duties_path(start_date: start_date)
-      expect(flash[:notice]).to be('Duty successfully grabbed!')
+      if duty.user_on_duty?(subject.current_user.id)
+        expect(flash[:alert]).to be('You are already on duty in other place!')
+      else
+        expect(flash[:notice]).to be('Duty successfully grabbed!')
+      end
     end
 
     it 'grabs duty given to me' do
@@ -209,11 +213,6 @@ RSpec.describe DutiesController, type: :controller do
   end
 
   describe 'GET duties#show_grabable_duties' do
-    before do
-      @mock_time = Time.zone.parse("#{Time.zone.today} 10:00")
-
-      allow(Time).to receive(:now).and_return(@mock_time)
-    end
     context 'unauthenticated' do
       it do
         get(:show_grabable_duties)
@@ -230,12 +229,10 @@ RSpec.describe DutiesController, type: :controller do
 
       it 'shows nothing if all duties are not grabable' do
         user = create(:user)
-        start_time = Time.zone.now - 2.hours
-        time_range = create(:time_range, start_time: start_time,
-                                         end_time: start_time + 1.hour)
+        time_range = create(:time_range, start_time: Time.zone.now - 2.hours,
+                                         end_time: Time.zone.now - 1.hour)
         timeslot = create(:timeslot, time_range: time_range)
-        date = start_time.to_date
-        create(:duty, user: user, timeslot: timeslot, date: date, free: true)
+        create(:duty, user: user, timeslot: timeslot, free: true)
         sign_in user
         get :show_grabable_duties
         expect(assigns(:grabable_duties)).to be_empty
@@ -243,12 +240,10 @@ RSpec.describe DutiesController, type: :controller do
 
       it 'shows grabable duties' do
         user = create(:user)
-        start_time = Time.zone.now + 1.hour
-        time_range = create(:time_range, start_time: start_time,
-                                         end_time: start_time + 1.hour)
+        time_range = create(:time_range, start_time: Time.zone.now + 1.hour,
+                                         end_time: Time.zone.now + 2.hours)
         timeslot = create(:timeslot, time_range: time_range)
-        date = start_time.to_date
-        create(:duty, user: user, timeslot: timeslot, date: date, free: true)
+        create(:duty, user: user, timeslot: timeslot, free: true)
         sign_in user
         get :show_grabable_duties
         expect(assigns(:grabable_duties)).not_to be_empty

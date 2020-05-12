@@ -18,13 +18,15 @@ module Duties
     end
 
     def update
-      message=[]
+      message = []
       duty_params.each do |id, user_id|
         duty = Duty.find(id)
-        unless duty.free || duty.user_on_duty?(user_id)
-          duty.update(user_id: user_id, free: false, request_user: nil)
-        else
-          message.push("#{User.find(user_id).username} is on duty")
+        if user_id.present?
+          if !duty.free && !duty.user_on_duty?(user_id)
+            message.push("#{User.find(user_id).username} is on duty")
+          else
+            duty.update(user_id: user_id, free: false, request_user: nil)
+          end
         end
       end
       start_of_week = Duty.find(duty_params.keys.first).date.beginning_of_week
