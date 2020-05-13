@@ -1,6 +1,4 @@
 # frozen_string_literal: true
-
-# rubocop:disable Metrics/ClassLength
 class DutiesController < ApplicationController
   load_and_authorize_resource only: [:export]
   def index
@@ -151,7 +149,8 @@ class DutiesController < ApplicationController
   def grab_duty(grab_duty_ids, start_of_week)
     Duty.transaction do
       Duty.find(grab_duty_ids).each do |duty|
-        raise OnDutyError, 'You are already on duty in other place!' if duty.user_on_duty?(current_user.id)
+        raise OnDutyError, 'You are already on duty in other place!' 
+        if duty.user_on_duty?(current_user.id)
 
         duty.update!(user: current_user, free: false, request_user: nil)
       end
