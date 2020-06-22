@@ -1,4 +1,6 @@
 # frozen_string_literal: true
+
+# rubocop:disable Metrics/ClassLength
 class DutiesController < ApplicationController
   load_and_authorize_resource only: [:export]
   def index
@@ -149,23 +151,19 @@ class DutiesController < ApplicationController
   def grab_duty(grab_duty_ids, start_of_week)
     Duty.transaction do
       Duty.find(grab_duty_ids).each do |duty|
-        raise OnDutyError, 'You are already on duty in other place!' 
-        if duty.user_on_duty?(current_user.id)
+        msg = 'You are already on duty in other place!'
+        raise OnDutyError, msg if duty.user_on_duty?(current_user.id)
 
         duty.update!(user: current_user, free: false, request_user: nil)
       end
-      redirect_to duties_path(start_date: start_of_week),
-                  notice: 'Duty successfully grabbed!'
     end
+    redirect_to duties_path(start_date: start_of_week),
+                notice: 'Duty successfully grabbed!'
   rescue ActiveRecord::RecordInvalid
     redirect_to duties_path(start_date: start_of_week),
                 alert: 'Error in grabbing duty! Please try again'
-  rescue OnDutyError => e
-    redirect_to duties_path(start_date: start_of_week),
-                alert: e
   rescue StandardError => e
-    redirect_to duties_path(start_date: start_of_week),
-                alert: e
+    redirect_to duties_path(start_date: start_of_week), alert: e
   end
 
   def drop_duties(drop_duty_ids, start_of_week)
