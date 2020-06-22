@@ -39,13 +39,17 @@ class Duty < ApplicationRecord
   scope :duties_at_timeslot,
         lambda { |timeslot|
           joins(:timeslot)
-            .where(timeslots: { time_range_id: timeslot.time_range_id })
+            .where(timeslots: {
+                     time_range_id: timeslot.time_range_id
+                   })
         }
 
   scope :duties_at_timeslot_other_place,
         lambda { |timeslot|
           duties_at_timeslot(timeslot)
-            .where.not(timeslots: { place_id: timeslot.place_id })
+            .where.not(timeslots: {
+                         place_id: timeslot.place_id
+                       })
         }
 
   # To check someone is on_duty at other place
