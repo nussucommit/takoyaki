@@ -18,17 +18,7 @@ module Duties
     end
 
     def update
-      message = []
-      duty_params.each do |id, user_id|
-        duty = Duty.find(id)
-        if user_id.present?
-          if !duty.free && !duty.user_on_duty?(user_id)
-            message.push("#{User.find(user_id).username} is on duty")
-          else
-            duty.update(user_id: user_id, free: false, request_user: nil)
-          end
-        end
-      end
+      message = assign_duties
       start_of_week = Duty.find(duty_params.keys.first).date.beginning_of_week
       if message.size
         redirect_to edit_duties_place_path(@place, start_date: start_of_week),
@@ -40,6 +30,21 @@ module Duties
     end
 
     private
+
+    def assign_duties
+      message = []
+      duty_params.each do |id, user_id|
+        duty = Duty.find(id)
+        if user_id.present?
+          if !duty.free && !duty.user_on_duty?(user_id)
+            message.push("#{User.find(user_id).username} is on duty")
+          else
+            duty.update(user_id: user_id, free: false, request_user: nil)
+          end
+        end
+      end
+      message
+    end
 
     def load_availabilities
       @availabilities = Hash.new { |h, k| h[k] = Set[] }
