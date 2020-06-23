@@ -36,7 +36,7 @@ module Duties
       duty_params.each do |id, user_id|
         duty = Duty.find(id)
         if user_id.present?
-          if !duty.free && !duty.user_on_duty?(user_id)
+          if !duty.free || duty.user_on_duty?(user_id)
             message.push("#{User.find(user_id).username} is on duty")
           else
             duty.update(user_id: user_id, free: false, request_user: nil)
