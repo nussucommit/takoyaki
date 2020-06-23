@@ -56,6 +56,7 @@ RSpec.describe Duties::PlacesController, type: :controller do
     end
 
     it do
+      @duty.update(free: true)
       user = create(:user)
       old_user_id = @duty.user_id
 
@@ -71,7 +72,7 @@ RSpec.describe Duties::PlacesController, type: :controller do
     end
 
     it 'preserves dropped status' do
-      @duty.update(free: true)
+      @duty.update(free: false)
       user = create(:user)
 
       expect do
@@ -80,10 +81,11 @@ RSpec.describe Duties::PlacesController, type: :controller do
         @duty.reload
       end.not_to change {
         @duty.free
-      }.from(true)
+      }.from(false)
     end
 
     it 'clears request_user' do
+      @duty.update(free: true)
       user = create(:user)
       request_user_id = @duty.request_user_id
       expect do

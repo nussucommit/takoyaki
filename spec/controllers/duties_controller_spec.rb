@@ -71,7 +71,11 @@ RSpec.describe DutiesController, type: :controller do
       expect(duty.free).to be(false)
       expect(duty.request_user_id).to be(nil)
       should redirect_to duties_path(start_date: start_date)
-      expect(flash[:notice]).to be('Duty successfully grabbed!')
+      if duty.user_on_duty?(subject.current_user.id)
+        expect(flash[:alert]).to be('You are already on duty in other place!')
+      else
+        expect(flash[:notice]).to be('Duty successfully grabbed!')
+      end
     end
 
     it 'grabs duty given to me' do
