@@ -15,6 +15,7 @@ class Ability
     cannot :change_without_password, User
 
     cannot :manage, Setting
+    cannot :masquerade, User
 
     user.roles.each { |role| __send__(role.name.downcase) }
   end

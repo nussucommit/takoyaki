@@ -2,13 +2,20 @@
   <h1>Members List</h1>
 
   <div class="container">
+    <% if user_masquerade? %>
+      <div class="row">
+        <div class="col-md-6 text-left"> You masquerade as <%=current_user.username%> </div>
+        <div class="col-md-6 text-right"> <%= link_to "Get back to " + user_masquerade_owner.username,
+            back_masquerade_path(current_user) %> </div>
+      </div>
+    <% end %>
     <div class="row">
       <div class="col-md-6 align-self-center">
         <% if can?(:create, User) %>
           <%= button_to("Add User", new_user_registration_path, method: "get", class: "btn btn-info users-btn") %>
         <% end %>
       </div>
-      <div class="col-md-3 align-self-center">
+      <div class="col-md-6 align-self-center">
         <div class="row">Total members: <%= @users.size %></div>
         <div class="row">Total MC: <%= @users.select { |u| u.mc }.size %></div>
       </div>
@@ -31,6 +38,7 @@
               <th class="role">Allocate Role</th>
               <th class="change-pw">Change Password</th>
               <th class="del">Delete</th>
+              <th class="masquerade">Masquerade</th>
             <% end %>
 
           </tr>
@@ -48,6 +56,7 @@
                 <td class="role"><%= link_to 'Allocate roles', allocate_roles_user_path(p) %></td>
                 <td class="change-pw"><%= link_to 'Change password', edit_user_path(p) %></td>
                 <td class="del"><%= link_to 'Delete', user_path(p), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+                <td class="masquerade"><%= link_to 'Login As', masquerade_path(p) %></td>
               <% end %>
             </tr>
           <% end %>
