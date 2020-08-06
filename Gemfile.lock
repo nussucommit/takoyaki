@@ -60,7 +60,7 @@ GEM
       autoprefixer-rails (>= 9.1.0)
       popper_js (>= 1.14.3, < 2)
       sassc-rails (>= 2.0.0)
-    brakeman (4.8.1)
+    brakeman (4.9.0)
     browser_details (0.0.6)
       useragent (>= 0.4)
     builder (3.2.4)
