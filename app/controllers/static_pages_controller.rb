@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class StaticPagesController < ApplicationController
-  GUIDE_URL = 'https://docs.google.com/document/d/1rNjei4GOOAiDBk4p9EP4ipvmTcq2jJxaY-bIR8XUCVw/edit?usp=sharing'
+  GUIDE_URL = 'https://docs.google.com/document/d/1JP3GL9Zm7l6Gw6uiZ5isdygBBXMe5S5v3aoaYBskjGE/edit'
   CLAIM_FORM_URL = 'http://tinyurl.com/committs'
 
   def guide
