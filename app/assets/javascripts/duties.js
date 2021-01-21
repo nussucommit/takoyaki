@@ -147,12 +147,13 @@ function validateModal() {
 }
 
 function validateGrabPage() {
-  if ($("#grab-page-form input[type=checkbox]:checked").length > 0) {
-    return true;
-  } else {
+  // make sure at least one checkbox is checked
+  if (!$("#grab-page-form input[type=checkbox]:checked").length > 0) {
     alert("Please select at least one time slot");
     return false;
-  }
+  } 
+
+  return true;
 }
 
 $(document).on('turbolinks:load', load);

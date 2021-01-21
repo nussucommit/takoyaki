@@ -1,0 +1,3 @@
+MAILGUN_API_KEY=key-0123456789abcdef0123456789abcdef
+MAILGUN_DOMAIN=sandbox0123456789abcdef0123456789abcdef.mailgun.org
+MAILER_HOST=nussucommit.org

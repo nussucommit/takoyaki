@@ -2,6 +2,7 @@
 
 # rubocop:disable Metrics/ClassLength
 class DutiesController < ApplicationController
+  MAX_HRS = 6
   load_and_authorize_resource only: [:export]
   def index
     @header_iter = generate_header_iter
@@ -100,9 +101,56 @@ class DutiesController < ApplicationController
     timeslots.all? { |t| !t.mc_only }
   end
 
+  # helper for non_mc_exceed_hrs
+  def grabable_timeslots(duty_ids)
+    # timeslots of duty to grab
+    timeslot_ids = Duty.where(id: duty_ids).pluck(:timeslot_id)
+    time_range_ids = Timeslot.find(timeslot_ids).pluck(:time_range_id)
+    TimeRange.find(time_range_ids)
+  end
+
+  # helper for non_mc_exceed_hrs
+  def user_timeslots(duty_ids)
+    # timeslots of user on the day
+    date = Duty.where(id: duty_ids).pluck(:date)
+    usr_timeslot_ids = Duty.where(date: date, user_id: current_user.id)
+                           .pluck(:timeslot_id)
+    usr_time_range_ids = Timeslot.find(usr_timeslot_ids).pluck(:time_range_id)
+    TimeRange.find(usr_time_range_ids)
+  end
+
+  # helper for non_mc_exceed_hrs
+  def get_all_time_ranges(duty_ids)
+    all_time_ranges = grabable_timeslots(duty_ids) + user_timeslots(duty_ids)
+    all_time_ranges.sort! { |r1, r2| r1.start_time <=> r2.start_time }
+  end
+
+  def non_mc_exceed_hrs?(num_hrs, duty_ids)
+    return false if current_user.mc
+
+    all_time_ranges = get_all_time_ranges(duty_ids)
+
+    prev_range = all_time_ranges[0]
+    total_hrs = (prev_range.end_time.to_i - prev_range.start_time.to_i) / 3600.0
+    (1...all_time_ranges.length).each do |i|
+      range = all_time_ranges[i]
+      if range.start_time.to_i == prev_range.end_time.to_i
+        total_hrs += (range.end_time.to_i - range.start_time.to_i) / 3600.0
+        return true if total_hrs > num_hrs
+      else
+        total_hrs = 0 # reset hour counter
+      end
+
+      prev_range = range
+    end
+
+    false
+  end
+
   def grabable?(duty_ids)
     return false if duty_ids.blank?
     return false unless can_duty_mc_timeslots?(duty_ids)
+    return false if non_mc_exceed_hrs?(MAX_HRS, duty_ids)
 
     grabable_duties.where(id: duty_ids).size == duty_ids.size
   end

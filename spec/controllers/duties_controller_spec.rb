@@ -58,7 +58,8 @@ RSpec.describe DutiesController, type: :controller do
 
   describe 'POST duties#grab' do
     before do
-      sign_in create(:user)
+      @user = create(:user)
+      sign_in @user
     end
 
     it 'grab a duty' do
@@ -135,6 +136,87 @@ RSpec.describe DutiesController, type: :controller do
 
       should redirect_to duties_path
       expect(flash[:alert]).to be('Invalid duties to grab')
+    end
+
+    it 'does nothing when non-MC user tries to duty for more than 6 hours
+        consecutively' do
+      time_range1 = create(:time_range, start_time: Time.zone.now - 1.hour,
+                                        end_time: Time.zone.now + 2.hours)
+      timeslot1 = create(:timeslot, time_range: time_range1)
+      create(:duty, user: @user, timeslot: timeslot1)
+
+      time_range2 = create(:time_range, start_time: Time.zone.now + 4.hours,
+                                        end_time: Time.zone.now + 6.hours)
+      timeslot2 = create(:timeslot, time_range: time_range2)
+      create(:duty, user: @user, timeslot: timeslot2)
+
+      time_range3 = create(:time_range, start_time: Time.zone.now + 2.hours,
+                                        end_time: Time.zone.now + 4.hours)
+      timeslot3 = create(:timeslot, time_range: time_range3)
+      duty_to_grab = create(:duty, free: true, timeslot: timeslot3)
+
+      patch :grab, params: { duty_id: { duty_to_grab.id => duty_to_grab.id } }
+
+      should redirect_to duties_path
+      expect(flash[:alert]).to be('Invalid duties to grab')
+    end
+
+    it 'grabs duty when non-MC user tries to duty for exactly 6 hours
+        consecutively' do
+      time_range1 = create(:time_range, start_time: Time.zone.now - 1.hour,
+                                        end_time: Time.zone.now + 2.hours)
+      timeslot1 = create(:timeslot, time_range: time_range1)
+      create(:duty, user: @user, timeslot: timeslot1)
+
+      time_range2 = create(:time_range, start_time: Time.zone.now + 4.hours,
+                                        end_time: Time.zone.now + 5.hours)
+      timeslot2 = create(:timeslot, time_range: time_range2)
+      create(:duty, user: @user, timeslot: timeslot2)
+
+      time_range3 = create(:time_range, start_time: Time.zone.now + 2.hours,
+                                        end_time: Time.zone.now + 4.hours)
+      timeslot3 = create(:timeslot, time_range: time_range3)
+      duty_to_grab = create(:duty, free: true, timeslot: timeslot3)
+
+      start_date = duty_to_grab.date.beginning_of_week
+      expect do
+        patch :grab, params: { duty_id: { duty_to_grab.id => duty_to_grab.id } }
+        duty_to_grab.reload
+      end.to change { duty_to_grab.user }.to(subject.current_user)
+
+      expect(duty_to_grab.free).to be(false)
+      expect(duty_to_grab.request_user_id).to be(nil)
+      should redirect_to duties_path(start_date: start_date)
+      expect(flash[:notice]).to be('Duty successfully grabbed!')
+    end
+
+    it 'grabs duty when non-MC user tries to duty for more than 6 hours
+        non-consecutively' do
+      time_range1 = create(:time_range, start_time: Time.zone.now - 1.hour,
+                                        end_time: Time.zone.now + 2.hours)
+      timeslot1 = create(:timeslot, time_range: time_range1)
+      create(:duty, user: @user, timeslot: timeslot1)
+
+      time_range2 = create(:time_range, start_time: Time.zone.now + 5.hours,
+                                        end_time: Time.zone.now + 7.hours)
+      timeslot2 = create(:timeslot, time_range: time_range2)
+      create(:duty, user: @user, timeslot: timeslot2)
+
+      time_range3 = create(:time_range, start_time: Time.zone.now + 2.hours,
+                                        end_time: Time.zone.now + 4.hours)
+      timeslot3 = create(:timeslot, time_range: time_range3)
+      duty_to_grab = create(:duty, free: true, timeslot: timeslot3)
+
+      start_date = duty_to_grab.date.beginning_of_week
+      expect do
+        patch :grab, params: { duty_id: { duty_to_grab.id => duty_to_grab.id } }
+        duty_to_grab.reload
+      end.to change { duty_to_grab.user }.to(subject.current_user)
+
+      expect(duty_to_grab.free).to be(false)
+      expect(duty_to_grab.request_user_id).to be(nil)
+      should redirect_to duties_path(start_date: start_date)
+      expect(flash[:notice]).to be('Duty successfully grabbed!')
     end
   end
 
