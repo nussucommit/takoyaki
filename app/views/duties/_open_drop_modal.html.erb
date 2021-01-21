@@ -7,10 +7,16 @@
       </button>
     </div>
     <div class="modal-body">
+       <% if @drop_duty_list && @drop_duty_list.size>1 %>
+        <p>
+          <%= check_box_tag "duty_all",'all',false,id:'allCheckBox' %>
+          <%= label_tag "duty_all", 'Select   All' %>
+        </p>
+      <% end %>
       <%= form_tag(drop_duties_path, method: :post) do %>
         <% format_duties(@drop_duty_list).each do |d| %>
           <p>
-            <%= check_box_tag "duty_id[#{d[:id]}]", d[:id] %>
+            <%= check_box_tag "duty_id[#{d[:id]}]", d[:id],false,class:'timeCheckBox' %>
             <%= label_tag "duty_id[#{d[:id]}]", d[:timing] %>
           </p>
         <% end %>
@@ -30,3 +36,30 @@
     </div>
   </div>
 </div>
+
+<script>
+  $(document).ready(function(){
+      // Set the initial check status when ready
+      setSelectAllCheckBoxStatus();
+
+      // Click event on time checkbox
+      $('.timeCheckBox').click(function(){
+          setSelectAllCheckBoxStatus();
+      });
+
+      // Click event on select all checkbox
+      $('#allCheckBox').click(function(){
+          $('.timeCheckBox').prop('checked',$(this).prop('checked'));
+      });
+
+      // check whether all checkbox is selected, return boolean
+      function isSelectAll(){
+          return $('input[type=checkbox].timeCheckBox').length==$('input[type=checkbox]:checked.timeCheckBox').length;
+      }
+
+      // Set select all checkbox status
+      function setSelectAllCheckBoxStatus(){
+          $('#allCheckBox').prop('checked',isSelectAll());
+      }
+  })
+</script>
