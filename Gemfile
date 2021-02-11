@@ -5,7 +5,7 @@ source 'https://rubygems.org'
 # Ruby version
 ruby '2.6.0'
 # Rails version
-gem 'rails', '~> 5.2'
+gem 'rails', '~> 6.0', '>= 6.0.3.5'
 # Use postgres as database
 gem 'pg'
 # Use Puma as the app server
@@ -38,7 +38,7 @@ gem 'mini_racer', platforms: :ruby
 
 group :development do
   # Favicon set
-  gem 'rails_real_favicon', '>= 0.0.7'
+  gem 'rails_real_favicon', '>= 0.1.0'
   # Generate Entity-Relationship Diagram
   gem 'rails-erd', require: false
 end
@@ -89,7 +89,7 @@ group :development, :test do
   # Shoulda Matchers: matchers for testing -- experimental gem for Rails 5
   gem 'shoulda-matchers', '~> 4.3'
   # Trace routes
-  gem 'traceroute'
+  gem 'traceroute', '>= 0.8.1'
   # For assert_template (check if view is rendered)
   gem 'rails-controller-testing'
 end
