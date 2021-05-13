@@ -9,7 +9,7 @@ gem 'rails', '~> 5.2'
 # Use postgres as database
 gem 'pg'
 # Use Puma as the app server
-gem 'puma'
+gem 'puma', '>= 4.3.8'
 # For Travis CI
 gem 'rake', group: :test
 # Make loading large Ruby/Rails apps faster
