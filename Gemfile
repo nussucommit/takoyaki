@@ -5,7 +5,7 @@ source 'https://rubygems.org'
 # Ruby version
 ruby '2.6.0'
 # Rails version
-gem 'rails', '~> 5.2'
+gem 'rails', '~> 5.2', '>= 5.2.3'
 # Use postgres as database
 gem 'pg'
 # Use Puma as the app server
@@ -38,7 +38,7 @@ gem 'mini_racer', platforms: :ruby
 
 group :development do
   # Favicon set
-  gem 'rails_real_favicon', '>= 0.0.7'
+  gem 'rails_real_favicon', '>= 0.1.0'
   # Generate Entity-Relationship Diagram
   gem 'rails-erd', require: false
 end
